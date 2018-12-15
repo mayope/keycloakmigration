@@ -1,0 +1,6 @@
+.gradle
+.idea
+out
+build
+*.swp
+logs
