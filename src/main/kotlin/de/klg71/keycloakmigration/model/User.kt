@@ -18,4 +18,7 @@ data class User(val id: UUID,
                 val totp: Boolean,
                 val access: UserAccess,
                 val disableableCredentialTypes:List<String>,
-                val requiredActions:List<String>)
+                val requiredActions:List<String>,
+                val email:String?,
+                val firstName:String?,
+                val lastName:String?)

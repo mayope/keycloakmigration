@@ -1,0 +1,4 @@
+changelog:
+  includes:
+    - path: changesets/initial.yml
+      relative: true

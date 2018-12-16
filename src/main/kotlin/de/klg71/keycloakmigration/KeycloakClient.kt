@@ -4,6 +4,7 @@ import de.klg71.keycloakmigration.model.*
 import feign.Headers
 import feign.Param
 import feign.RequestLine
+import feign.Response
 import java.util.*
 
 interface KeycloakClient {
@@ -13,18 +14,22 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/users")
     fun users(@Param("realm") realm: String): List<UserListItem>
 
-    @RequestLine("GET /admin/realms/{realm}/users?search={search}")
-    fun searchUsers(@Param("search") search: String, @Param("realm") realm: String): List<UserListItem>
+    @RequestLine("GET /admin/realms/{realm}/users?username={username}")
+    fun searchByUsername(@Param("username") username: String, @Param("realm") realm: String): List<UserListItem>
 
     @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}")
     fun deleteUser(@Param("user-id") userId: UUID, @Param("realm") realm: String)
 
     @RequestLine("POST /admin/realms/{realm}/users")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addUser(user: AddUser, @Param("realm") realm: String)
+    fun addUser(user: AddUser, @Param("realm") realm: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/users/{user-id}")
     fun user(@Param("user-id") userId: UUID, @Param("realm") realm: String): User
+
+    @RequestLine("PUT /admin/realms/{realm}/users/{user-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateUser(@Param("user-id") userId: UUID, user: User, @Param("realm") realm: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/roles")
     fun roles(@Param("realm") realm: String): List<RoleListItem>

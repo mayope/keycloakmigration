@@ -1,0 +1,18 @@
+keycloakChangeSet:
+  id: initial-keycloak
+  author: lmeisege
+  changes:
+    - addUser:
+        realm: master
+        name: test
+        enabled: true
+        emailVerified: true
+        attributes:
+          test:
+            - test
+            - test2
+    - updateUser:
+        realm: master
+        name: test
+        enabled: false
+        lastName: Lukas
