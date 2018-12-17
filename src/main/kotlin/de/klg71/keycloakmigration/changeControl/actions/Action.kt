@@ -1,12 +1,12 @@
 package de.klg71.keycloakmigration.changeControl.actions
 
-import de.klg71.keycloakmigration.KeycloakClient
+import de.klg71.keycloakmigration.rest.KeycloakClient
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.slf4j.LoggerFactory
 
 /**
- * Abstract class describing an keycloak migration Action
+ * Abstract class describing an Keycloak migration Action
  *
  */
 abstract class Action : KoinComponent {
@@ -21,16 +21,12 @@ abstract class Action : KoinComponent {
     private var executed = false
 
     fun executeIt() {
-        if (isRequired()) {
-            execute()
-            executed = true
-        } else {
-            LOG.info("Skipping migration: ${name()}")
-        }
+        execute()
+        executed = true
     }
 
     fun undoIt() {
-        if(executed){
+        if (executed) {
             LOG.info("Undo migration: ${name()}")
             undo()
         }
@@ -47,12 +43,12 @@ abstract class Action : KoinComponent {
     protected abstract fun undo()
 
     /**
-     * Returns true if this migration is necessary
+     * Hash of the migration to check if its already executed
      */
-    protected abstract fun isRequired(): Boolean
+    abstract fun hash(): String
 
     /**
      * Returns the name of the migration for logging purposes
      */
-    protected abstract fun name(): String
+    abstract fun name(): String
 }

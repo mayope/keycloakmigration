@@ -1,50 +1,33 @@
 package de.klg71.keycloakmigration
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
-import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.changeControl.ChangeFile
-import de.klg71.keycloakmigration.model.AccessToken
-import org.koin.standalone.KoinComponent
+import de.klg71.keycloakmigration.changeControl.KeycloakMigration
+import org.koin.log.Logger
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
-import org.koin.standalone.inject
 import org.slf4j.LoggerFactory
 
+val LOG = LoggerFactory.getLogger("de.klg71.keycloakmigration")
+
+class KoinLogger(val log: org.slf4j.Logger) : Logger {
+    override fun debug(msg: String) {
+        log.debug(msg)
+    }
+
+    override fun err(msg: String) {
+        log.error(msg)
+    }
+
+    override fun info(msg: String) {
+        log.info(msg)
+    }
+}
 
 fun main(args: Array<String>) {
 
-    startKoin(listOf(myModule))
+    startKoin(listOf(myModule), logger = KoinLogger(LOG))
 
     KeycloakMigration()
 
     stopKoin()
 }
 
-class KeycloakMigration : KoinComponent {
-    private val yamlObjectMapper by inject<ObjectMapper>(name = "yamlObjectMapper")
-
-    companion object {
-        val LOG = LoggerFactory.getLogger(KeycloakMigration::class.java)!!
-    }
-
-    init {
-        val loader = Thread.currentThread().contextClassLoader
-        val set = yamlObjectMapper.readValue<ChangeFile>(loader.getResourceAsStream("testMigration/changesets/initial.yml"))
-
-        val executedChanges = mutableListOf<Action>()
-        try {
-            set.keycloakChangeSet.changes.forEach {
-                    it.executeIt()
-                    executedChanges.add(it)
-            }
-        } catch (e: Exception) {
-            LOG.error("Error occurred while migrating: ", e)
-            LOG.error("Rolling back changes", e)
-            executedChanges.forEach {
-                it.undoIt()
-            }
-        }
-
-    }
-}

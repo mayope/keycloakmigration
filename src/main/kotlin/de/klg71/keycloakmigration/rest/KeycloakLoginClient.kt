@@ -1,4 +1,4 @@
-package de.klg71.keycloakmigration
+package de.klg71.keycloakmigration.rest
 
 import de.klg71.keycloakmigration.model.*
 import feign.Headers

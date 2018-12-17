@@ -2,45 +2,28 @@ package de.klg71.keycloakmigration.changeControl.actions
 
 import de.klg71.keycloakmigration.changeControl.KeycloakException
 import de.klg71.keycloakmigration.model.AddUser
+import de.klg71.keycloakmigration.rest.isSuccessful
 import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
-import java.util.Objects.isNull
 
 class AddUserAction(
         private val realm: String,
         private val name: String,
-        enabled: Boolean = true,
-        emailVerified: Boolean = true,
-        attributes: Map<String, List<String>> = mapOf()) : Action() {
+        private val enabled: Boolean = true,
+        private val emailVerified: Boolean = true,
+        private val attributes: Map<String, List<String>> = mapOf()) : Action() {
 
     private lateinit var userUuid: UUID
 
-    private val hash = calculateHash(name, enabled, emailVerified, attributes)
+    private val addUser = addUser()
 
-    private val addUser = addUser(name, enabled, emailVerified, attributes)
+    private fun addUser() = AddUser(name, enabled, emailVerified, attributes)
 
-    override fun isRequired(): Boolean =
-            client.getUserByName(name, realm)
-                    .run {
-                        if (isNull(attributes)) {
-                            return true
-                        }
-                        if (!attributes!!.contains("migrations")) {
-                            return true
-                        }
-                        return !attributes["migrations"]!!.contains(hash)
-                    }
+    private val hash = calculateHash()
 
-
-    private fun addUser(username: String, enabled: Boolean, emailVerified: Boolean, attributes: Map<String, List<String>>) =
-            attributes.toMutableMap().let {
-                it["migrations"] = listOf(hash)
-                AddUser(username, enabled, emailVerified, it)
-            }
-
-    private fun calculateHash(username: String, enabled: Boolean, emailVerified: Boolean, attributes: Map<String, List<String>>) =
+    private fun calculateHash() =
             StringBuilder().run {
-                append(username)
+                append(name)
                 append(enabled)
                 append(emailVerified)
                 for ((key, value) in attributes) {
@@ -52,17 +35,22 @@ class AddUserAction(
                 toString()
             }.let {
                 DigestUtils.sha256Hex(it)
-            }
+            }!!
+
+    override fun hash() = hash
 
 
     override fun execute() {
-        val location = client.addUser(addUser, realm).run {
-            if (this.status() != 201) {
+        client.addUser(addUser, realm).run {
+            if (!isSuccessful()) {
                 throw KeycloakException(this.body().asReader().readText())
             }
             headers()["location"]!!.stream().findFirst().get()
+        }.run {
+            split("/").last()
+        }.let {
+            userUuid = UUID.fromString(it)
         }
-        userUuid = UUID.fromString(location.split('/').last())
     }
 
     override fun undo() {

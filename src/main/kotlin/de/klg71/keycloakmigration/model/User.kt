@@ -13,12 +13,14 @@ data class User(val id: UUID,
                 val username: String,
                 val enabled: Boolean,
                 val emailVerified: Boolean,
-                val attributes: Map<String, List<String>>?,
+                val attributes: Attributes?,
                 val notBefore: Long,
                 val totp: Boolean,
                 val access: UserAccess,
-                val disableableCredentialTypes:List<String>,
-                val requiredActions:List<String>,
-                val email:String?,
-                val firstName:String?,
-                val lastName:String?)
+                val disableableCredentialTypes: List<String>,
+                val requiredActions: List<String>,
+                val email: String?,
+                val firstName: String?,
+                val lastName: String?)
+
+typealias Attributes = Map<String, List<String>>

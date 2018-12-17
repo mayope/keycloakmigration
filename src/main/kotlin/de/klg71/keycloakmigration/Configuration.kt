@@ -7,6 +7,9 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import de.klg71.keycloakmigration.changeControl.ActionDeserializer
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.AccessToken
+import de.klg71.keycloakmigration.rest.KeycloakClient
+import de.klg71.keycloakmigration.rest.KeycloakLoginClient
+import de.klg71.keycloakmigration.rest.userByName
 import feign.Feign
 import feign.Logger
 import feign.form.FormEncoder
@@ -21,6 +24,7 @@ val myModule = module {
     single { initKeycloakLoginClient(get("default")) }
     single { TokenHolder(get()) }
     single { initFeignClient(get("default"), get()) }
+    single("migrationUserId") { loadCurrentUser(get()) }
 }
 
 
@@ -38,7 +42,7 @@ private fun initKeycloakLoginClient(objectMapper: ObjectMapper): KeycloakLoginCl
     encoder(FormEncoder(JacksonEncoder(objectMapper)))
     decoder(JacksonDecoder(objectMapper))
     logger(Slf4jLogger())
-    logLevel(Logger.Level.BASIC)
+    logLevel(Logger.Level.NONE)
     target(KeycloakLoginClient::class.java, "http://localhost:8080/auth")
 }
 
@@ -51,8 +55,10 @@ private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder
         }
     }
     logger(Slf4jLogger())
-    logLevel(Logger.Level.FULL)
+    logLevel(Logger.Level.NONE)
     target(KeycloakClient::class.java, "http://localhost:8080/auth")
 }!!
 
 private fun initObjectMapper() = ObjectMapper().registerModule(KotlinModule())!!
+
+private fun loadCurrentUser(client: KeycloakClient) = client.userByName("admin", "master").id

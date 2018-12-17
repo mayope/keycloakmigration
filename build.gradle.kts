@@ -1,6 +1,14 @@
+import groovy.lang.GroovyObject
+import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
+import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
+
 plugins {
     kotlin("jvm") version "1.3.0"
+    id("java-gradle-plugin")
+    id("maven-publish")
+    id("com.jfrog.artifactory") version "4.8.1"
 }
+
 
 dependencies {
     compile(kotlin("stdlib"))
@@ -15,11 +23,46 @@ dependencies {
     compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.7")
     compile("com.fasterxml.jackson.core:jackson-databind:2.9.7")
     compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7")
-    compile( "org.koin:koin-core:1.0.2")
+    compile("org.koin:koin-core:1.0.2")
     compile("commons-codec:commons-codec:1.11")
+
+    implementation(gradleApi())
 
 }
 
 repositories {
     jcenter()
+    maven {
+        setUrl("https://artifactory.klg71.de/artifactory/libs-releases")
+        credentials {
+            username = project.findProperty("artifactory_user") as String
+            password = project.findProperty("artifactory_password") as String
+        }
+    }
+}
+
+publishing {
+    publications {
+        register("mavenJava", MavenPublication::class) {
+            from(components["java"])
+        }
+}}
+
+artifactory {
+    setContextUrl("https://artifactory.klg71.de/artifactory")
+    publish(delegateClosureOf<PublisherConfig> {
+        repository(delegateClosureOf<GroovyObject> {
+            setProperty("repoKey", "keycloakmigration")
+            setProperty("username", project.findProperty("artifactory_user"))
+            setProperty("password", project.findProperty("artifactory_password"))
+            setProperty("maven", true)
+
+        })
+        defaults(delegateClosureOf<GroovyObject> {
+            invokeMethod("publications", "mavenJava")
+        })
+    })
+    resolve(delegateClosureOf<ResolverConfig> {
+        setProperty("repoKey", "libs-release")
+    })
 }

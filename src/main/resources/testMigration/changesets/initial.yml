@@ -16,3 +16,21 @@ keycloakChangeSet:
         name: test
         enabled: false
         lastName: Lukas
+    - addUserAttribute:
+        realm: master
+        name: test
+        attributeName: test1
+        attributeValues:
+          - value1
+          - value2
+    - deleteUserAttribute:
+        realm: master
+        name: test
+        attributeName: test1
+    - addRole:
+        realm: master
+        name: test3
+        attributes:
+          role:
+            - value1
+            - value2

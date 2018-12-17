@@ -7,9 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.module.kotlin.treeToValue
-import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.changeControl.actions.AddUserAction
-import de.klg71.keycloakmigration.changeControl.actions.UpdateUserAction
+import de.klg71.keycloakmigration.changeControl.actions.*
 import java.util.Objects.isNull
 
 class ParseException(message: String) : RuntimeException(message)
@@ -37,12 +35,11 @@ class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializ
 
     private fun createAction(entry: Map.Entry<String, JsonNode>): Action =
             when (entry.key) {
-                "addUser" -> {
-                    objectMapper.treeToValue<AddUserAction>(entry.value)
-                }
-                "updateUser" -> {
-                    objectMapper.treeToValue<UpdateUserAction>(entry.value)
-                }
+                "addUser" -> objectMapper.treeToValue<AddUserAction>(entry.value)
+                "updateUser" -> objectMapper.treeToValue<UpdateUserAction>(entry.value)
+                "addUserAttribute" -> objectMapper.treeToValue<AddUserAttributeAction>(entry.value)
+                "deleteUserAttribute" -> objectMapper.treeToValue<DeleteUserAttributeAction>(entry.value)
+                "addRole" -> objectMapper.treeToValue<AddRoleAction>(entry.value)
                 else -> throw ParseException("Unkown Change type: ${entry.key}")
             }
 }
