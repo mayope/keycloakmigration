@@ -1,7 +1,5 @@
 package de.klg71.keycloakmigration.changeControl.actions
 
-import de.klg71.keycloakmigration.KeycloakClient
-import de.klg71.keycloakmigration.changeControl.Action
 import de.klg71.keycloakmigration.changeControl.KeycloakException
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.model.UserAccess
@@ -22,23 +20,12 @@ class UpdateUserAction(
         private val requiredActions: List<String>?,
         private val email: String?,
         private val firstName: String?,
-        private val lastName: String?) : Action {
+        private val lastName: String?) : Action() {
 
-    private lateinit var user: User
+    private val user = client.getUserByName(name, realm)
     private val hash = calculateHash()
 
-    override fun isRequired(client: KeycloakClient): Boolean {
-        user = client.searchByUsername(name, realm)
-                .run {
-                    if (isEmpty()) {
-                        throw MigrationException("User with name: $name does not exist in $realm")
-                    }
-                    first()
-                }
-                .run {
-                    client.user(id, realm)
-                }
-
+    override fun isRequired(): Boolean {
         user.run {
             if (isNull(attributes)) {
                 return true
@@ -49,6 +36,7 @@ class UpdateUserAction(
             return !attributes["migrations"]!!.contains(hash)
         }
     }
+
 
     private fun updateUser() =
             userAttributes().toMutableMap().let {
@@ -93,21 +81,16 @@ class UpdateUserAction(
                 DigestUtils.sha256Hex(it)
             }
 
-    private var executed: Boolean = false
-
-    override fun execute(client: KeycloakClient) {
+    override fun execute() {
         client.updateUser(user.id, updateUser(), realm).run {
             if (this.status() != 204) {
                 throw KeycloakException(this.body().asReader().readText())
             }
         }
-        executed = true
     }
 
-    override fun undo(client: KeycloakClient) {
-        if (executed) {
-            client.updateUser(user.id, user, realm)
-        }
+    override fun undo() {
+        client.updateUser(user.id, user, realm)
     }
 
     override fun name() = "UpdateUser"

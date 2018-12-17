@@ -1,7 +1,5 @@
 package de.klg71.keycloakmigration.changeControl.actions
 
-import de.klg71.keycloakmigration.KeycloakClient
-import de.klg71.keycloakmigration.changeControl.Action
 import de.klg71.keycloakmigration.changeControl.KeycloakException
 import de.klg71.keycloakmigration.model.AddUser
 import org.apache.commons.codec.digest.DigestUtils
@@ -13,33 +11,26 @@ class AddUserAction(
         private val name: String,
         enabled: Boolean = true,
         emailVerified: Boolean = true,
-        attributes: Map<String, List<String>> = mapOf()) : Action {
+        attributes: Map<String, List<String>> = mapOf()) : Action() {
 
-    override fun isRequired(client: KeycloakClient): Boolean {
-        client.searchByUsername(name, realm)
-                .run {
-                    if (isEmpty()) {
-                        return true
-                    }
-                    first()
-                }
-                .run {
-                    client.user(id, realm)
-                }
-                .run {
-                    if (isNull(attributes)) {
-                        return true
-                    }
-                    if (!attributes!!.contains("migrations")) {
-                        return true
-                    }
-                    return !attributes["migrations"]!!.contains(hash)
-                }
-    }
+    private lateinit var userUuid: UUID
 
     private val hash = calculateHash(name, enabled, emailVerified, attributes)
 
     private val addUser = addUser(name, enabled, emailVerified, attributes)
+
+    override fun isRequired(): Boolean =
+            client.getUserByName(name, realm)
+                    .run {
+                        if (isNull(attributes)) {
+                            return true
+                        }
+                        if (!attributes!!.contains("migrations")) {
+                            return true
+                        }
+                        return !attributes["migrations"]!!.contains(hash)
+                    }
+
 
     private fun addUser(username: String, enabled: Boolean, emailVerified: Boolean, attributes: Map<String, List<String>>) =
             attributes.toMutableMap().let {
@@ -63,24 +54,19 @@ class AddUserAction(
                 DigestUtils.sha256Hex(it)
             }
 
-    private var created: Boolean = false
-    private lateinit var userUuid: UUID
 
-    override fun execute(client: KeycloakClient) {
+    override fun execute() {
         val location = client.addUser(addUser, realm).run {
             if (this.status() != 201) {
                 throw KeycloakException(this.body().asReader().readText())
             }
             headers()["location"]!!.stream().findFirst().get()
         }
-        created = true
         userUuid = UUID.fromString(location.split('/').last())
     }
 
-    override fun undo(client: KeycloakClient) {
-        if (created) {
-            client.deleteUser(userUuid, realm)
-        }
+    override fun undo() {
+        client.deleteUser(userUuid, realm)
     }
 
     override fun name() = "AddUser"
