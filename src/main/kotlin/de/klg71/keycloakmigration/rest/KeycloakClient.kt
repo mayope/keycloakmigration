@@ -46,7 +46,7 @@ interface KeycloakClient {
 
     @RequestLine("PUT /admin/realms/{realm}/roles-by-id/{role-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun updateRole(role:Role, @Param("role-id") roleId: UUID, @Param("realm") realm: String)
+    fun updateRole(role: Role, @Param("role-id") roleId: UUID, @Param("realm") realm: String)
 
     @RequestLine("DELETE /admin/realms/{realm}/roles-by-id/{role-id}")
     fun deleteRole(@Param("role-id") roleId: UUID, @Param("realm") realm: String)
@@ -63,6 +63,31 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}")
     fun client(@Param("client-id") clientId: UUID, @Param("realm") realm: String): Client
 
+    @RequestLine("POST /admin/realms/{realm}/clients")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addSimpleClient(addSimpleClient: AddSimpleClient, @Param("realm") realm: String): Response
+
+    @RequestLine("POST /admin/realms/{realm}/clients")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addClient(addClient: AddClient, @Param("realm") realm: String): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}")
+    fun deleteClient(@Param("client-id") roleId: UUID, @Param("realm") realm: String)
+
     @RequestLine("GET /admin/realms/{realm}/components?parent={realm}&type=org.keycloak.storage.UserStorageProvider")
     fun userFederations(@Param("realm") realm: String): List<UserFederationItem>
+
+    @RequestLine("POST /admin/realms/{realm}/groups")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addGroup(addGroup: AddGroup, @Param("realm") realm: String): Response
+
+    @RequestLine("POST /admin/realms/{realm}/groups/{parent}/children")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addChildGroup(addGroup: AddGroup, @Param("parent") parentGroupId: UUID, @Param("realm") realm: String): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/groups/{group-id}")
+    fun deleteGroup(@Param("group-id") groupUUID: UUID, @Param("realm") realm: String): Response
+
+    @RequestLine("GET /admin/realms/{realm}/groups?search={search}")
+    fun searchGroup(@Param("search") search: String, @Param("realm") realm: String): List<GroupListItem>
 }

@@ -55,7 +55,7 @@ private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder
         }
     }
     logger(Slf4jLogger())
-    logLevel(Logger.Level.NONE)
+    logLevel(Logger.Level.FULL)
     target(KeycloakClient::class.java, "http://localhost:8080/auth")
 }!!
 

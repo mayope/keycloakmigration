@@ -7,7 +7,8 @@ data class ClientAccess(val view: Boolean, val configure: Boolean, val manage: B
 data class Client(
         val id: UUID,
         val clientId: String,
-        val name: String,
+        val name: String?,
+        val description: String?,
         val baseUrl: String?,
         val surrogateAuthRequired: Boolean,
         val enabled: Boolean,
@@ -25,11 +26,13 @@ data class Client(
         val publicClient: Boolean,
         val frontchannelLogout: Boolean,
         val protocol: String?,
-        val attributes: Map<String, List<String>>,
+        val attributes: Map<String, Boolean>,
         val authenticationFlowBindingOverrides: Map<String, List<String>>,
         val fullScopeAllowed: Boolean,
         val nodeReRegistrationTimeout: Int,
-        val protocolMappers:List<ProtocolMapper>?,
+        val protocolMappers: List<ProtocolMapper>?,
         val defaultClientScopes: List<String>,
         val optionalClientScopes: List<String>,
-        val access: ClientAccess)
+        val access: ClientAccess,
+        val adminUrl:String?,
+        val rootUrl: String?)

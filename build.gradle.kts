@@ -25,9 +25,6 @@ dependencies {
     compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7")
     compile("org.koin:koin-core:1.0.2")
     compile("commons-codec:commons-codec:1.11")
-
-    implementation(gradleApi())
-
 }
 
 repositories {

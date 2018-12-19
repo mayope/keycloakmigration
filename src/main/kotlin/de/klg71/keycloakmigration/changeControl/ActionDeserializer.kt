@@ -7,7 +7,15 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.module.kotlin.treeToValue
-import de.klg71.keycloakmigration.changeControl.actions.*
+import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
+import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
+import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
+import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAction
+import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAttributeAction
+import de.klg71.keycloakmigration.changeControl.actions.user.DeleteUserAttributeAction
+import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserAction
 import java.util.Objects.isNull
 
 class ParseException(message: String) : RuntimeException(message)
@@ -40,6 +48,9 @@ class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializ
                 "addUserAttribute" -> objectMapper.treeToValue<AddUserAttributeAction>(entry.value)
                 "deleteUserAttribute" -> objectMapper.treeToValue<DeleteUserAttributeAction>(entry.value)
                 "addRole" -> objectMapper.treeToValue<AddRoleAction>(entry.value)
+                "addSimpleClient" -> objectMapper.treeToValue<AddSimpleClientAction>(entry.value)
+                "deleteClient" -> objectMapper.treeToValue<DeleteClientAction>(entry.value)
+                "addGroup" -> objectMapper.treeToValue<AddGroupAction>(entry.value)
                 else -> throw ParseException("Unkown Change type: ${entry.key}")
             }
 }

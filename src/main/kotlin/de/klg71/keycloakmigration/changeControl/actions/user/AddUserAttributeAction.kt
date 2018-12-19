@@ -1,5 +1,7 @@
-package de.klg71.keycloakmigration.changeControl.actions
+package de.klg71.keycloakmigration.changeControl.actions.user
 
+import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.rest.userByName
 import org.apache.commons.codec.digest.DigestUtils
@@ -67,6 +69,6 @@ class AddUserAttributeAction(
         client.updateUser(user.id, user, realm)
     }
 
-    override fun name() = "AddUserAttribute"
+    override fun name() = "AddUserAttribute $name"
 
 }

@@ -1,10 +1,9 @@
 package de.klg71.keycloakmigration.rest
 
-import de.klg71.keycloakmigration.model.*
+import de.klg71.keycloakmigration.model.AccessToken
 import feign.Headers
 import feign.Param
 import feign.RequestLine
-import java.util.*
 
 interface KeycloakLoginClient {
     @RequestLine("POST /realms/master/protocol/openid-connect/token")

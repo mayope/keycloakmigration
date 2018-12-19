@@ -1,11 +1,10 @@
-package de.klg71.keycloakmigration.changeControl.actions
+package de.klg71.keycloakmigration.changeControl.actions.user
 
+import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.model.UserAccess
 import de.klg71.keycloakmigration.rest.userByName
 import org.apache.commons.codec.digest.DigestUtils
-
-class MigrationException(message: String) : RuntimeException(message)
 
 class UpdateUserAction(
         private val realm: String,
@@ -43,6 +42,7 @@ class UpdateUserAction(
     private val hash = calculateHash()
 
     private fun calculateHash() = StringBuilder().run {
+        append(realm)
         append(name)
         append(enabled)
         append(emailVerified)
@@ -70,6 +70,6 @@ class UpdateUserAction(
         client.updateUser(user.id, user, realm)
     }
 
-    override fun name() = "UpdateUser"
+    override fun name() = "UpdateUser $name"
 
 }

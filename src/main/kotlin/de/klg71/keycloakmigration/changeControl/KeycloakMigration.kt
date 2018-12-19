@@ -43,6 +43,7 @@ class KeycloakMigration : KoinComponent {
             } catch (e: Exception) {
                 LOG.error("Error occurred while migrating: ${e.message} ", e)
                 LOG.error("Rolling back changes")
+                reverse()
                 forEach {
                     it.undoIt()
                 }

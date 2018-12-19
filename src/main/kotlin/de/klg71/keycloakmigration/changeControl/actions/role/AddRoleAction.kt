@@ -1,5 +1,6 @@
-package de.klg71.keycloakmigration.changeControl.actions
+package de.klg71.keycloakmigration.changeControl.actions.role
 
+import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.AddRole
 import de.klg71.keycloakmigration.model.Role
 import org.apache.commons.codec.digest.DigestUtils
@@ -28,6 +29,7 @@ class AddRoleAction(
 
     private fun calculateHash() =
             StringBuilder().run {
+                append(realm)
                 append(name)
                 append(description)
                 toString()
@@ -48,6 +50,6 @@ class AddRoleAction(
         client.deleteRole(createdRole.id, realm)
     }
 
-    override fun name() = "AddRole"
+    override fun name() = "AddRole $name"
 
 }

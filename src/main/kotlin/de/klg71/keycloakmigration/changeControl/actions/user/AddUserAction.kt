@@ -1,7 +1,9 @@
-package de.klg71.keycloakmigration.changeControl.actions
+package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.changeControl.KeycloakException
+import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.AddUser
+import de.klg71.keycloakmigration.rest.extractLocationUUID
 import de.klg71.keycloakmigration.rest.isSuccessful
 import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
@@ -23,6 +25,7 @@ class AddUserAction(
 
     private fun calculateHash() =
             StringBuilder().run {
+                append(realm)
                 append(name)
                 append(enabled)
                 append(emailVerified)
@@ -42,14 +45,7 @@ class AddUserAction(
 
     override fun execute() {
         client.addUser(addUser, realm).run {
-            if (!isSuccessful()) {
-                throw KeycloakException(this.body().asReader().readText())
-            }
-            headers()["location"]!!.stream().findFirst().get()
-        }.run {
-            split("/").last()
-        }.let {
-            userUuid = UUID.fromString(it)
+            userUuid = extractLocationUUID()
         }
     }
 
@@ -57,6 +53,6 @@ class AddUserAction(
         client.deleteUser(userUuid, realm)
     }
 
-    override fun name() = "AddUser"
+    override fun name() = "AddUser $name"
 
 }

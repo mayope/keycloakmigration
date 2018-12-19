@@ -1,10 +1,6 @@
 package de.klg71.keycloakmigration.model
 
-import java.util.*
-
-//@JsonInclude(JsonInclude.Include.NON_NULL)
-data class ClientListItem(
-        val id: UUID,
+data class AddClient(
         val clientId: String,
         val name: String?,
         val description: String?,
@@ -34,5 +30,4 @@ data class ClientListItem(
         val optionalClientScopes: List<String>,
         val access: ClientAccess,
         val adminUrl:String?,
-        val rootUrl:String?)
-
+        val rootUrl: String?)
