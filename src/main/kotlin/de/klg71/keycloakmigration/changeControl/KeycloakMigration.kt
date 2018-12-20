@@ -5,57 +5,104 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.Attributes
+import de.klg71.keycloakmigration.model.ChangeLog
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.rest.KeycloakClient
+import org.apache.commons.codec.digest.DigestUtils
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.slf4j.LoggerFactory
 import java.util.*
 
-class KeycloakMigration : KoinComponent {
+class KeycloakMigration(private val migrationFile: String) : KoinComponent {
     private val yamlObjectMapper by inject<ObjectMapper>(name = "yamlObjectMapper")
     private val client by inject<KeycloakClient>()
-    val migrationUserId by inject<UUID>(name = "migrationUserId")
+    private val migrationUserId by inject<UUID>(name = "migrationUserId")
+
+    private val loader = Thread.currentThread().contextClassLoader!!
+    private val changeHashes = getMigrationsHashes()
 
     companion object {
         val LOG = LoggerFactory.getLogger(KeycloakMigration::class.java)!!
     }
 
     init {
-        val loader = Thread.currentThread().contextClassLoader
-        val set = yamlObjectMapper.readValue<ChangeFile>(loader.getResourceAsStream("testMigration/changesets/initial.yml"))
-
-        mutableListOf<Action>().run {
-            try {
-                val actionHashes = getMigrationsHashes()
-                set.keycloakChangeSet.changes.forEachIndexed { i, it ->
-                    if (i >= actionHashes.size) {
-                        LOG.info("Executing Migration: ${it.name()}")
-                        it.executeIt()
-                        add(it)
-                    } else if (it.hash() == actionHashes[i]) {
-                        LOG.info("Skipping Migration: ${it.name()}")
-                    } else {
-                        throw MigrationException("Invalid hash expected: ${actionHashes[i]} got ${it.hash()}")
-                    }
-                }
-                writeMigrationsToUser(this)
-            } catch (e: Exception) {
-                LOG.error("Error occurred while migrating: ${e.message} ", e)
-                LOG.error("Rolling back changes")
-                reverse()
-                forEach {
-                    it.undoIt()
-                }
+        changesTodo().apply {
+            forEach { change ->
+                LOG.info("Executing change: ${change.id}:${change.author}")
+                doChange(change)
             }
+        }.let {
+            writeChangesToUser(it)
         }
 
     }
 
-    private fun writeMigrationsToUser(actions: List<Action>) {
+    private fun doChange(change: ChangeSet) {
+        mutableListOf<Action>().run {
+            try {
+                change.changes.forEach { action ->
+                    action.handleAction()
+                    add(action)
+                }
+
+                LOG.info("Migration ${change.id}:${change.author} Successful executed: $size actions.")
+            } catch (e: Exception) {
+                LOG.error("Error occurred while migrating: ${e.message} ", e)
+                LOG.error("Rolling back changes")
+                rollback()
+                throw e
+            }
+
+        }
+    }
+
+    private fun ChangeSet.hash() = StringBuilder().let { builder ->
+        builder.append(author)
+        builder.append(id)
+        changes.forEach { builder.append(it.hash()) }
+        builder.toString()
+    }.let {
+        DigestUtils.sha256Hex(it)
+    }!!
+
+    private fun changesTodo():List<ChangeSet> =
+            changes(migrationFile).apply {
+                changeHashes.forEachIndexed { i, it ->
+                    if (get(i).hash() != it) {
+                        throw MigrationException("Invalid hash expected: $it got ${get(i).hash()}")
+                    }
+                    LOG.info("Skipping migration: ${get(i).id}")
+                }
+            }.run {
+                subList(changeHashes.size , size )
+            }
+
+    private fun Action.handleAction() {
+        LOG.info("Executing Migration: ${name()}")
+        executeIt()
+    }
+
+    private fun MutableList<Action>.rollback() {
+        reverse()
+        forEach {
+            it.undoIt()
+        }
+    }
+
+    private fun changes(fileName: String): List<ChangeSet> =
+            readYamlFile<ChangeLog>(fileName).includes.map {
+                readYamlFile<ChangeSet>(it.path)
+            }
+
+    private inline fun <reified T> readYamlFile(fileName: String): T =
+            yamlObjectMapper.readValue(loader.getResourceAsStream(fileName)
+                    ?: throw RuntimeException("File $fileName not found."))
+
+    private fun writeChangesToUser(changes: List<ChangeSet>) {
         client.user(migrationUserId, "master").run {
             userAttributes().run {
-                addMigrations(actions)
+                addMigrations(changes)
             }.let {
                 client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
                         notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName), "master")
@@ -63,14 +110,14 @@ class KeycloakMigration : KoinComponent {
         }
     }
 
-    private fun Attributes.addMigrations(actions: List<Action>): Attributes = toMutableMap().apply {
-        put("migrations", migrations().addActionHashes(actions))
+    private fun Attributes.addMigrations(changes: List<ChangeSet>): Attributes = toMutableMap().apply {
+        put("migrations", migrations().addChangeHashes(changes))
     }
 
-    private fun List<String>.addActionHashes(actions: List<Action>) =
+    private fun List<String>.addChangeHashes(changes: List<ChangeSet>) =
             toMutableList().apply {
-                actions.forEach { action ->
-                    add(action.hash())
+                changes.forEach { change ->
+                    add(change.hash())
                 }
             }
 

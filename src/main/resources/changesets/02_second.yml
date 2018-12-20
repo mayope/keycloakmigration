@@ -1,0 +1,12 @@
+id: second-keycloak
+author: lmeisege
+changes:
+- addUser:
+    realm: master
+    name: test2
+    enabled: true
+    emailVerified: true
+    attributes:
+      test:
+      - test
+      - test2

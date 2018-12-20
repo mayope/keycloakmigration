@@ -5,9 +5,10 @@ import org.koin.log.Logger
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
 import org.slf4j.LoggerFactory
-import java.lang.RuntimeException
+import java.nio.file.Paths
 
 val LOG = LoggerFactory.getLogger("de.klg71.keycloakmigration")!!
+const val defaultChangeLogFile = "keycloak-changelog.yml"
 
 class KoinLogger(private val log: org.slf4j.Logger) : Logger {
     override fun debug(msg: String) {
@@ -26,9 +27,12 @@ class KoinLogger(private val log: org.slf4j.Logger) : Logger {
 fun main(args: Array<String>) {
 
     startKoin(listOf(myModule), logger = KoinLogger(LOG))
-
-    KeycloakMigration()
+    if (args.isNotEmpty()) {
+        KeycloakMigration(args[0])
+    } else {
+        LOG.info("Defaulting to $defaultChangeLogFile")
+        KeycloakMigration(defaultChangeLogFile)
+    }
 
     stopKoin()
 }
-
