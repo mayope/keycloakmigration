@@ -42,7 +42,8 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
         mutableListOf<Action>().run {
             try {
                 change.changes.forEach { action ->
-                    action.handleAction()
+                    LOG.info("Executing Migration: ${action.name()}")
+                    action.executeIt()
                     add(action)
                 }
 
@@ -77,11 +78,6 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
             }.run {
                 subList(changeHashes.size , size )
             }
-
-    private fun Action.handleAction() {
-        LOG.info("Executing Migration: ${name()}")
-        executeIt()
-    }
 
     private fun MutableList<Action>.rollback() {
         reverse()

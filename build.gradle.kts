@@ -4,7 +4,6 @@ import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
 
 plugins {
     kotlin("jvm") version "1.3.0"
-    id("java-gradle-plugin")
     id("maven-publish")
     id("com.jfrog.artifactory") version "4.8.1"
 }

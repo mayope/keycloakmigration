@@ -24,3 +24,9 @@ Configutation:
         level: info
         AppenderRef:
           - ref: Console_Appender
+      Logger:
+        name: de.klg71.keycloakmigration.koinlogger
+        level: warn
+        AppenderRef:
+        - ref: Console_Appender
+
