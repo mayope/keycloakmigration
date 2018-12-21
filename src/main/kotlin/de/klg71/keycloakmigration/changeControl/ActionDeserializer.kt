@@ -8,10 +8,11 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
+import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.*
 import java.util.Objects.isNull
 
@@ -44,9 +45,11 @@ class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializ
                 "updateUser" -> objectMapper.treeToValue<UpdateUserAction>(entry.value)
                 "deleteUser" -> objectMapper.treeToValue<DeleteUserAction>(entry.value)
                 "assignRole" -> objectMapper.treeToValue<AssignRoleAction>(entry.value)
+                "revokeRole" -> objectMapper.treeToValue<RevokeRoleAction>(entry.value)
                 "addUserAttribute" -> objectMapper.treeToValue<AddUserAttributeAction>(entry.value)
                 "deleteUserAttribute" -> objectMapper.treeToValue<DeleteUserAttributeAction>(entry.value)
                 "addRole" -> objectMapper.treeToValue<AddRoleAction>(entry.value)
+                "deleteRole" -> objectMapper.treeToValue<DeleteRoleAction>(entry.value)
                 "addSimpleClient" -> objectMapper.treeToValue<AddSimpleClientAction>(entry.value)
                 "deleteClient" -> objectMapper.treeToValue<DeleteClientAction>(entry.value)
                 "addGroup" -> objectMapper.treeToValue<AddGroupAction>(entry.value)

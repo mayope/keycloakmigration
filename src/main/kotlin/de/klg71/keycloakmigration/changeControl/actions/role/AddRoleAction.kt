@@ -3,21 +3,22 @@ package de.klg71.keycloakmigration.changeControl.actions.role
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.AddRole
 import de.klg71.keycloakmigration.model.Role
+import de.klg71.keycloakmigration.rest.clientRoleByName
+import de.klg71.keycloakmigration.rest.clientUUID
 import org.apache.commons.codec.digest.DigestUtils
 
 class AddRoleAction(
         private val realm: String,
         private val name: String,
+        private val clientId: String?,
         private val description: String = "",
         private val attributes: Map<String, List<String>>?,
         private val composite: Boolean?,
         private val clientRole: Boolean?,
         private val containerId: String?) : Action() {
 
-    private lateinit var createdRole: Role
-
     private fun addRole() = AddRole(name, description)
-    private fun updateRole() = Role(createdRole.id, createdRole.name, createdRole.description,
+    private fun updateRole(createdRole:Role) = Role(createdRole.id, createdRole.name, createdRole.description,
             composite ?: createdRole.composite,
             clientRole ?: createdRole.clientRole,
             containerId ?: createdRole.containerId,
@@ -41,13 +42,26 @@ class AddRoleAction(
 
 
     override fun execute() {
-        client.addRole(addRole(), realm)
-        createdRole = client.roleByName(name, realm)
-        client.updateRole(updateRole(), createdRole.id, realm)
+        if (clientId == null) {
+            client.addRole(addRole(), realm)
+        } else {
+            client.addClientRole(addRole(), client.clientUUID(clientId, realm), realm)
+        }
+        findRole().run {
+            client.updateRole(updateRole(this), id, realm)
+        }
     }
 
     override fun undo() {
-        client.deleteRole(createdRole.id, realm)
+        findRole().run {
+            client.deleteRole(id, realm)
+        }
+    }
+
+    private fun findRole() = if (clientId == null) {
+        client.roleByName(name, realm)
+    } else {
+        client.clientRoleByName(name, clientId, realm)
     }
 
     override fun name() = "AddRole $name"

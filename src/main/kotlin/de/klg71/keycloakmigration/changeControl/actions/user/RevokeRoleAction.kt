@@ -9,7 +9,7 @@ import de.klg71.keycloakmigration.rest.userUUID
 import org.apache.commons.codec.digest.DigestUtils
 import java.util.Objects.isNull
 
-class AssignRoleAction(
+class RevokeRoleAction(
         private val realm: String,
         private val role: String,
         private val user: String,
@@ -35,12 +35,13 @@ class AssignRoleAction(
             assignRole()
         }.let {
             if (clientId != null) {
-                client.assignClientRoles(listOf(it), realm, client.userUUID(user, realm), client.clientUUID(clientId, realm))
+                client.revokeClientRoles(listOf(it), realm, client.userUUID(user, realm), client.clientUUID(clientId, realm))
             } else {
-                client.assignRealmRoles(listOf(it), realm, client.userUUID(user, realm))
+                client.revokeRealmRoles(listOf(it), realm, client.userUUID(user, realm))
             }
         }
     }
+
 
     private fun Role.assignRole() = AssignRole(isNull(client), composite, containerId, id, name)
 
@@ -49,9 +50,9 @@ class AssignRoleAction(
             assignRole()
         }.let {
             if (clientId != null) {
-                client.revokeClientRoles(listOf(it), realm, client.userUUID(user, realm), client.clientUUID(clientId, realm))
+                client.assignClientRoles(listOf(it), realm, client.userUUID(user, realm), client.clientUUID(clientId, realm))
             } else {
-                client.revokeRealmRoles(listOf(it), realm, client.userUUID(user, realm))
+                client.assignRealmRoles(listOf(it), realm, client.userUUID(user, realm))
             }
         }
     }
@@ -62,6 +63,7 @@ class AssignRoleAction(
         client.clientRoleByName(role, clientId, realm)
     }
 
-    override fun name() = "AssignRole $role to $user"
+
+    override fun name() = "RevokeRole $role from $user"
 
 }

@@ -1,11 +1,11 @@
-id: second-keycloak
+id: revoke-roles
 author: klg71
 changes:
-- assignRole:
+- revokeRole:
     realm: master
     role: test3
     user: test
-- assignRole:
+- revokeRole:
     realm: master
     role: test3
     user: test

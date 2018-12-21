@@ -2,3 +2,5 @@ includes:
   - path: changesets/01_initial.yml
   - path: changesets/02_second.yml
   - path: changesets/03_roles.yml
+  - path: changesets/04_revoke_roles.yml
+  - path: changesets/05_add_delete_role.yml

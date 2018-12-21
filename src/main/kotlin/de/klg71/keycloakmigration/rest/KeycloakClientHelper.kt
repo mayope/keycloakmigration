@@ -70,6 +70,10 @@ fun KeycloakClient.clientRoleByName(name: String, clientId: String, realm: Strin
                     }
                 }
 
+fun KeycloakClient.userUUID(user: String, realm: String) = userByName(user, realm).id
+
+fun KeycloakClient.clientUUID(clientId: String, realm: String) = clientById(clientId, realm).id
+
 fun Response.isSuccessful() = when (status()) {
     in 200..299 -> true
     else -> false

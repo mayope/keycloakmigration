@@ -1,0 +1,12 @@
+id: revoke-roles
+author: klg71
+changes:
+- addRole:
+    realm: master
+    name: test4
+    clientId: test
+- deleteRole:
+    realm: master
+    name: test4
+    clientId: test
+

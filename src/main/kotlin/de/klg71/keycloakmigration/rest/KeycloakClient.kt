@@ -44,11 +44,11 @@ interface KeycloakClient {
 
     @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}/role-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun removeRealmRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID)
+    fun revokeRealmRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID)
 
     @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}/role-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun removeClientRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID, @Param("client-id") clientId: UUID)
+    fun revokeClientRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID, @Param("client-id") clientId: UUID)
 
     @RequestLine("GET /admin/realms/{realm}/roles")
     fun roles(@Param("realm") realm: String): List<RoleListItem>
@@ -59,6 +59,10 @@ interface KeycloakClient {
     @RequestLine("POST /admin/realms/{realm}/roles")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addRole(addRole: AddRole, @Param("realm") realm: String)
+
+    @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/roles")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addClientRole(addRole: AddRole,@Param("client-id") clientId: UUID, @Param("realm") realm: String)
 
     @RequestLine("GET /admin/realms/{realm}/roles-by-id/{role-id}")
     fun role(@Param("role-id") roleId: UUID, @Param("realm") realm: String): Role
