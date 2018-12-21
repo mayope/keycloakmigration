@@ -21,6 +21,7 @@ abstract class Action : KoinComponent {
     private var executed = false
 
     fun executeIt() {
+        LOG.info("Executing migration: ${name()}")
         execute()
         executed = true
     }

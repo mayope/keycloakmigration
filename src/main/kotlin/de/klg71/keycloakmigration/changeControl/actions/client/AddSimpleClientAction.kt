@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.client
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.AddSimpleClient
+import de.klg71.keycloakmigration.rest.clientById
 import de.klg71.keycloakmigration.rest.extractLocationUUID
 import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
@@ -51,9 +52,10 @@ class AddSimpleClientAction(
         }
     }
 
-    //FIXME: This fails if delete clients undo operation on the same client happend before, cause the uuids are no longer valid
     override fun undo() {
-        client.deleteClient(clientUuid, realm)
+        client.clientById(clientId, realm).run {
+            client.deleteClient(id, realm)
+        }
     }
 
     override fun name() = "AddSimpleClient $clientId"

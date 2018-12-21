@@ -1,5 +1,5 @@
 id: second-keycloak
-author: lmeisege
+author: klg71
 changes:
 - addUser:
     realm: master

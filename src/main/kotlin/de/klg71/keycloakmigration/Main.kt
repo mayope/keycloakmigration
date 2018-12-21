@@ -3,7 +3,6 @@ package de.klg71.keycloakmigration
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
 import de.klg71.keycloakmigration.changeControl.KeycloakMigration
-import org.koin.log.Logger
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
 import org.slf4j.LoggerFactory
@@ -13,20 +12,6 @@ val KOIN_LOGGER = LoggerFactory.getLogger("de.klg71.keycloakmigration.koinlogger
 const val defaultChangeLogFile = "keycloak-changelog.yml"
 const val defaultAdminUser = "admin"
 const val defaultAdminPassword = "admin"
-
-class KoinLogger(private val log: org.slf4j.Logger) : Logger {
-    override fun debug(msg: String) {
-        log.debug(msg)
-    }
-
-    override fun err(msg: String) {
-        log.error(msg)
-    }
-
-    override fun info(msg: String) {
-        log.info(msg)
-    }
-}
 
 class Args(parser: ArgParser) {
     val adminUser by parser.storing(names = *arrayOf("-u", "--user"),
@@ -42,9 +27,13 @@ class Args(parser: ArgParser) {
 }
 
 fun main(args: Array<String>) {
+    ArgParser(args).parseInto(::Args).let {
+        migrate(it)
+    }
+}
 
-    ArgParser(args).parseInto(::Args).run {
-
+fun migrate(args: Args) {
+    args.run {
         startKoin(listOf(myModule(adminUser, adminPassword)), logger = KoinLogger(KOIN_LOGGER))
         if (migrationFile.isNotEmpty()) {
             KeycloakMigration(migrationFile.first())
@@ -52,8 +41,6 @@ fun main(args: Array<String>) {
             LOG.info("Defaulting to $defaultChangeLogFile")
             KeycloakMigration(defaultChangeLogFile)
         }
-
         stopKoin()
     }
-
 }

@@ -27,13 +27,17 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
     }
 
     init {
-        changesTodo().apply {
-            forEach { change ->
-                LOG.info("Executing change: ${change.id}:${change.author}")
-                doChange(change)
+        try {
+            changesTodo().apply {
+                forEach { change ->
+                    LOG.info("Executing change: ${change.id}:${change.author}")
+                    doChange(change)
+                }
+            }.let {
+                writeChangesToUser(it)
             }
-        }.let {
-            writeChangesToUser(it)
+        } catch (e:Throwable){
+            LOG.info("Migration were unsuccessful see errors above!",e)
         }
 
     }
@@ -42,7 +46,6 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
         mutableListOf<Action>().run {
             try {
                 change.changes.forEach { action ->
-                    LOG.info("Executing Migration: ${action.name()}")
                     action.executeIt()
                     add(action)
                 }

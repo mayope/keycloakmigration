@@ -12,10 +12,7 @@ import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
-import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAction
-import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAttributeAction
-import de.klg71.keycloakmigration.changeControl.actions.user.DeleteUserAttributeAction
-import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserAction
+import de.klg71.keycloakmigration.changeControl.actions.user.*
 import java.util.Objects.isNull
 
 class ParseException(message: String) : RuntimeException(message)
@@ -45,6 +42,7 @@ class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializ
             when (entry.key) {
                 "addUser" -> objectMapper.treeToValue<AddUserAction>(entry.value)
                 "updateUser" -> objectMapper.treeToValue<UpdateUserAction>(entry.value)
+                "deleteUser" -> objectMapper.treeToValue<DeleteUserAction>(entry.value)
                 "addUserAttribute" -> objectMapper.treeToValue<AddUserAttributeAction>(entry.value)
                 "deleteUserAttribute" -> objectMapper.treeToValue<DeleteUserAttributeAction>(entry.value)
                 "addRole" -> objectMapper.treeToValue<AddRoleAction>(entry.value)
