@@ -43,6 +43,7 @@ class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializ
                 "addUser" -> objectMapper.treeToValue<AddUserAction>(entry.value)
                 "updateUser" -> objectMapper.treeToValue<UpdateUserAction>(entry.value)
                 "deleteUser" -> objectMapper.treeToValue<DeleteUserAction>(entry.value)
+                "assignRole" -> objectMapper.treeToValue<AssignRoleAction>(entry.value)
                 "addUserAttribute" -> objectMapper.treeToValue<AddUserAttributeAction>(entry.value)
                 "deleteUserAttribute" -> objectMapper.treeToValue<DeleteUserAttributeAction>(entry.value)
                 "addRole" -> objectMapper.treeToValue<AddRoleAction>(entry.value)

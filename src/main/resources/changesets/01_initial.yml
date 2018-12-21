@@ -37,9 +37,6 @@ changes:
     realm: master
     clientId: test
     protocol: openid-connect
-- deleteClient:
-    realm: master
-    clientId: test
 - addGroup:
     realm: master
     name: testGroup

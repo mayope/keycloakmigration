@@ -28,16 +28,12 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
 
     init {
         try {
-            changesTodo().apply {
-                forEach { change ->
-                    LOG.info("Executing change: ${change.id}:${change.author}")
-                    doChange(change)
-                }
-            }.let {
-                writeChangesToUser(it)
+            changesTodo().forEach { change ->
+                LOG.info("Executing change: ${change.id}:${change.author}")
+                doChange(change)
             }
-        } catch (e:Throwable){
-            LOG.info("Migration were unsuccessful see errors above!",e)
+        } catch (e: Throwable) {
+            LOG.info("Migration were unsuccessful see errors above!", e)
         }
 
     }
@@ -50,6 +46,7 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
                     add(action)
                 }
 
+                writeChangesToUser(change)
                 LOG.info("Migration ${change.id}:${change.author} Successful executed: $size actions.")
             } catch (e: Exception) {
                 LOG.error("Error occurred while migrating: ${e.message} ", e)
@@ -57,7 +54,6 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
                 rollback()
                 throw e
             }
-
         }
     }
 
@@ -70,7 +66,7 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
         DigestUtils.sha256Hex(it)
     }!!
 
-    private fun changesTodo():List<ChangeSet> =
+    private fun changesTodo(): List<ChangeSet> =
             changes(migrationFile).apply {
                 changeHashes.forEachIndexed { i, it ->
                     if (get(i).hash() != it) {
@@ -79,7 +75,7 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
                     LOG.info("Skipping migration: ${get(i).id}")
                 }
             }.run {
-                subList(changeHashes.size , size )
+                subList(changeHashes.size, size)
             }
 
     private fun MutableList<Action>.rollback() {
@@ -98,10 +94,10 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
             yamlObjectMapper.readValue(loader.getResourceAsStream(fileName)
                     ?: throw RuntimeException("File $fileName not found."))
 
-    private fun writeChangesToUser(changes: List<ChangeSet>) {
+    private fun writeChangesToUser(changes: ChangeSet) {
         client.user(migrationUserId, "master").run {
             userAttributes().run {
-                addMigrations(changes)
+                addMigration(changes)
             }.let {
                 client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
                         notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName), "master")
@@ -109,15 +105,13 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
         }
     }
 
-    private fun Attributes.addMigrations(changes: List<ChangeSet>): Attributes = toMutableMap().apply {
-        put("migrations", migrations().addChangeHashes(changes))
+    private fun Attributes.addMigration(change: ChangeSet): Attributes = toMutableMap().apply {
+        put("migrations", migrations().addChangeHash(change))
     }
 
-    private fun List<String>.addChangeHashes(changes: List<ChangeSet>) =
+    private fun List<String>.addChangeHash(change: ChangeSet) =
             toMutableList().apply {
-                changes.forEach { change ->
-                    add(change.hash())
-                }
+                add(change.hash())
             }
 
     private fun User.userAttributes() = attributes ?: emptyMap()

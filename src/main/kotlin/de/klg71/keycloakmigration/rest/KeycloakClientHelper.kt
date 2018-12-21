@@ -3,6 +3,7 @@ package de.klg71.keycloakmigration.rest
 import de.klg71.keycloakmigration.changeControl.KeycloakException
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.ClientListItem
+import de.klg71.keycloakmigration.model.Role
 import feign.Response
 import java.util.*
 
@@ -43,7 +44,7 @@ fun KeycloakClient.clientById(clientId: String, realm: String): ClientListItem =
                         throw MigrationException("User with name: $clientId does not exist in $realm")
                     }
                     find { it.clientId == clientId }.let {
-                        return it ?: throw MigrationException("Client with name $clientId does not exist in $realm")
+                        it ?: throw MigrationException("Client with name $clientId does not exist in $realm")
                     }
                 }
 
@@ -54,6 +55,19 @@ fun KeycloakClient.groupByName(name: String, realm: String) =
                         throw MigrationException("Group with name: $name does not exist in $realm")
                     }
                     first()
+                }
+
+fun KeycloakClient.clientRoleByName(name: String, clientId: String, realm: String): Role =
+        clientById(clientId, realm)
+                .run {
+                    clientRoles(realm, id)
+                }.run {
+                    find { it.name == name }.let {
+                        if (it == null) {
+                            throw MigrationException("Role with name: $name does not exist on client $clientId on realm $realm")
+                        }
+                        clientRole(it.id, realm, UUID.fromString(it.containerId))
+                    }
                 }
 
 fun Response.isSuccessful() = when (status()) {

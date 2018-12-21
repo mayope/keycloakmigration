@@ -1,0 +1,12 @@
+id: second-keycloak
+author: klg71
+changes:
+- assignRole:
+    realm: master
+    role: test3
+    user: test
+- assignRole:
+    realm: master
+    role: test1
+    user: test
+    clientId: test

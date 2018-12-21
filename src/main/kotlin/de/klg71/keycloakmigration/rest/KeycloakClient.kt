@@ -34,8 +34,27 @@ interface KeycloakClient {
     @Headers("Content-Type: application/json; charset=utf-8")
     fun updateUser(@Param("user-id") userId: UUID, user: User, @Param("realm") realm: String)
 
+    @RequestLine("POST /admin/realms/{realm}/users/{user-id}/role-mappings/realm")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun assignRealmRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID)
+
+    @RequestLine("POST /admin/realms/{realm}/users/{user-id}/role-mappings/clients/{client-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun assignClientRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID, @Param("client-id") clientId: UUID)
+
+    @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}/role-mappings/realm")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun removeRealmRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID)
+
+    @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}/role-mappings/clients/{client-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun removeClientRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID, @Param("client-id") clientId: UUID)
+
     @RequestLine("GET /admin/realms/{realm}/roles")
     fun roles(@Param("realm") realm: String): List<RoleListItem>
+
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/roles")
+    fun clientRoles(@Param("realm") realm: String,@Param("client-id") clientId:UUID): List<RoleListItem>
 
     @RequestLine("POST /admin/realms/{realm}/roles")
     @Headers("Content-Type: application/json; charset=utf-8")
@@ -43,6 +62,9 @@ interface KeycloakClient {
 
     @RequestLine("GET /admin/realms/{realm}/roles-by-id/{role-id}")
     fun role(@Param("role-id") roleId: UUID, @Param("realm") realm: String): Role
+
+    @RequestLine("GET /admin/realms/{realm}/roles-by-id/{role-id}?client={client-id}")
+    fun clientRole(@Param("role-id") roleId: UUID, @Param("realm") realm: String,@Param("client-id") clientId:UUID): Role
 
     @RequestLine("PUT /admin/realms/{realm}/roles-by-id/{role-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
