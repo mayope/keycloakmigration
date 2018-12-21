@@ -18,25 +18,27 @@ import feign.jackson.JacksonEncoder
 import feign.slf4j.Slf4jLogger
 import org.koin.dsl.module.module
 
-val myModule = module {
+fun myModule(adminUser: String, adminPassword: String) = module {
     single("default") { initObjectMapper() }
     single("yamlObjectMapper") { initYamlObjectMapper() }
     single { initKeycloakLoginClient(get("default")) }
-    single { TokenHolder(get()) }
+    single { TokenHolder(get(), adminUser, adminPassword) }
     single { initFeignClient(get("default"), get()) }
     single("migrationUserId") { loadCurrentUser(get()) }
 }
 
 
-private class TokenHolder(client: KeycloakLoginClient) {
-    val token: AccessToken = client.login("password", "admin-cli", "admin", "admin")
+private class TokenHolder(client: KeycloakLoginClient, adminUser: String, adminPassword: String) {
+    val token: AccessToken = client.login("password", "admin-cli", adminUser, adminPassword)
 }
 
 private fun kotlinObjectMapper() = ObjectMapper(YAMLFactory()).registerModule(KotlinModule())!!
 
-private fun initYamlObjectMapper(): ObjectMapper = ObjectMapper(YAMLFactory()).registerModule(actionModule(kotlinObjectMapper())).registerModule(KotlinModule())!!
+private fun initYamlObjectMapper(): ObjectMapper = ObjectMapper(YAMLFactory())
+        .registerModule(actionModule(kotlinObjectMapper())).registerModule(KotlinModule())!!
 
-private fun actionModule(objectMapper: ObjectMapper) = SimpleModule().addDeserializer(Action::class.java, ActionDeserializer(objectMapper))!!
+private fun actionModule(objectMapper: ObjectMapper) = SimpleModule()
+        .addDeserializer(Action::class.java, ActionDeserializer(objectMapper))!!
 
 private fun initKeycloakLoginClient(objectMapper: ObjectMapper): KeycloakLoginClient = Feign.builder().run {
     encoder(FormEncoder(JacksonEncoder(objectMapper)))
