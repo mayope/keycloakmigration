@@ -54,7 +54,7 @@ interface KeycloakClient {
     fun roles(@Param("realm") realm: String): List<RoleListItem>
 
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/roles")
-    fun clientRoles(@Param("realm") realm: String,@Param("client-id") clientId:UUID): List<RoleListItem>
+    fun clientRoles(@Param("realm") realm: String, @Param("client-id") clientId: UUID): List<RoleListItem>
 
     @RequestLine("POST /admin/realms/{realm}/roles")
     @Headers("Content-Type: application/json; charset=utf-8")
@@ -62,13 +62,13 @@ interface KeycloakClient {
 
     @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/roles")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addClientRole(addRole: AddRole,@Param("client-id") clientId: UUID, @Param("realm") realm: String)
+    fun addClientRole(addRole: AddRole, @Param("client-id") clientId: UUID, @Param("realm") realm: String)
 
     @RequestLine("GET /admin/realms/{realm}/roles-by-id/{role-id}")
     fun role(@Param("role-id") roleId: UUID, @Param("realm") realm: String): Role
 
     @RequestLine("GET /admin/realms/{realm}/roles-by-id/{role-id}?client={client-id}")
-    fun clientRole(@Param("role-id") roleId: UUID, @Param("realm") realm: String,@Param("client-id") clientId:UUID): Role
+    fun clientRole(@Param("role-id") roleId: UUID, @Param("realm") realm: String, @Param("client-id") clientId: UUID): Role
 
     @RequestLine("PUT /admin/realms/{realm}/roles-by-id/{role-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
@@ -116,4 +116,11 @@ interface KeycloakClient {
 
     @RequestLine("GET /admin/realms/{realm}/groups?search={search}")
     fun searchGroup(@Param("search") search: String, @Param("realm") realm: String): List<GroupListItem>
+
+    @RequestLine("POST /admin/realms/{realm}/components")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addLdap(addLdap: AddLdap, @Param("realm") realm: String)
+
+    @RequestLine("DELETE /admin/realms/{realm}/components/{user-federation-id}")
+    fun deleteUserFederation(@Param("realm") realm:String, @Param("user-federation-id") userFederationId:UUID)
 }

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.changeControl.actions.AddAdLdapAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
@@ -53,6 +54,7 @@ class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializ
                 "addSimpleClient" -> objectMapper.treeToValue<AddSimpleClientAction>(entry.value)
                 "deleteClient" -> objectMapper.treeToValue<DeleteClientAction>(entry.value)
                 "addGroup" -> objectMapper.treeToValue<AddGroupAction>(entry.value)
+                "addAdLdap" -> objectMapper.treeToValue<AddAdLdapAction>(entry.value)
                 else -> throw ParseException("Unkown Change type: ${entry.key}")
             }
 }

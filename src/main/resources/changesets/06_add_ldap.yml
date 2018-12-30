@@ -1,0 +1,12 @@
+id: add-ldaps
+author: klg71
+changes:
+- addAdLdap:
+    realm: master
+    name: test4
+    config:
+     connectionUrl: test
+     bindDN: bindDn
+     usersDN: test
+     bindCredential: testIt
+
