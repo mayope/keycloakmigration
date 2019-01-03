@@ -14,7 +14,7 @@ import org.koin.standalone.inject
 import org.slf4j.LoggerFactory
 import java.util.*
 
-class KeycloakMigration(private val migrationFile: String) : KoinComponent {
+class KeycloakMigrationExecute(private val migrationFile: String) : KoinComponent {
     private val yamlObjectMapper by inject<ObjectMapper>(name = "yamlObjectMapper")
     private val client by inject<KeycloakClient>()
     private val migrationUserId by inject<UUID>(name = "migrationUserId")
@@ -23,7 +23,7 @@ class KeycloakMigration(private val migrationFile: String) : KoinComponent {
     private val changeHashes = getMigrationsHashes()
 
     companion object {
-        val LOG = LoggerFactory.getLogger(KeycloakMigration::class.java)!!
+        val LOG = LoggerFactory.getLogger(KeycloakMigrationExecute::class.java)!!
     }
 
     init {

@@ -43,7 +43,8 @@ publishing {
         register("mavenJava", MavenPublication::class) {
             from(components["java"])
         }
-}}
+    }
+}
 
 artifactory {
     setContextUrl("https://artifactory.klg71.de/artifactory")

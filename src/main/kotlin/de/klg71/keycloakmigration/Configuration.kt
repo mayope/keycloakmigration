@@ -18,12 +18,12 @@ import feign.jackson.JacksonEncoder
 import feign.slf4j.Slf4jLogger
 import org.koin.dsl.module.module
 
-fun myModule(adminUser: String, adminPassword: String) = module {
+fun myModule(adminUser: String, adminPassword: String, baseUrl: String) = module {
     single("default") { initObjectMapper() }
     single("yamlObjectMapper") { initYamlObjectMapper() }
-    single { initKeycloakLoginClient(get("default")) }
+    single { initKeycloakLoginClient(get("default"), baseUrl) }
     single { TokenHolder(get(), adminUser, adminPassword) }
-    single { initFeignClient(get("default"), get()) }
+    single { initFeignClient(get("default"), get(), baseUrl) }
     single("migrationUserId") { loadCurrentUser(get()) }
 }
 
@@ -40,15 +40,15 @@ private fun initYamlObjectMapper(): ObjectMapper = ObjectMapper(YAMLFactory())
 private fun actionModule(objectMapper: ObjectMapper) = SimpleModule()
         .addDeserializer(Action::class.java, ActionDeserializer(objectMapper))!!
 
-private fun initKeycloakLoginClient(objectMapper: ObjectMapper): KeycloakLoginClient = Feign.builder().run {
+private fun initKeycloakLoginClient(objectMapper: ObjectMapper, baseUrl: String): KeycloakLoginClient = Feign.builder().run {
     encoder(FormEncoder(JacksonEncoder(objectMapper)))
     decoder(JacksonDecoder(objectMapper))
     logger(Slf4jLogger())
     logLevel(Logger.Level.NONE)
-    target(KeycloakLoginClient::class.java, "http://localhost:8080/auth")
+    target(KeycloakLoginClient::class.java, baseUrl)
 }
 
-private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder) = Feign.builder().run {
+private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder, baseUrl: String) = Feign.builder().run {
     encoder(JacksonEncoder(objectMapper))
     decoder(JacksonDecoder(objectMapper))
     requestInterceptor {
@@ -58,7 +58,7 @@ private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder
     }
     logger(Slf4jLogger())
     logLevel(Logger.Level.FULL)
-    target(KeycloakClient::class.java, "http://localhost:8080/auth")
+    target(KeycloakClient::class.java, baseUrl)
 }!!
 
 private fun initObjectMapper() = ObjectMapper().registerModule(KotlinModule())!!
