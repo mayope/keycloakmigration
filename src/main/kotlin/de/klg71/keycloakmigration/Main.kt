@@ -55,7 +55,7 @@ fun main(args: Array<String>) {
 
 fun migrate(commandLineMigrationArgs: MigrationArgs) {
     commandLineMigrationArgs.run {
-        startKoin(listOf(myModule(adminUser(), adminPassword())), logger = KoinLogger(KOIN_LOGGER))
+        startKoin(listOf(myModule(adminUser(), adminPassword(), baseUrl())), logger = KoinLogger(KOIN_LOGGER))
         if (migrationFile().isNotEmpty()) {
             KeycloakMigrationExecute(migrationFile())
         } else {
