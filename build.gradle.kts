@@ -1,16 +1,23 @@
+import de.undercouch.gradle.tasks.download.Download
 import groovy.lang.GroovyObject
+import org.apache.commons.compress.parallel.InputStreamSupplier
+import org.apache.tools.ant.taskdefs.condition.Os
 import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
 import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
+import java.net.ConnectException
 
 plugins {
     kotlin("jvm") version "1.3.0"
     id("maven-publish")
     id("com.jfrog.artifactory") version "4.8.1"
+    id("de.undercouch.download").version("3.4.3")
 }
 
 
 dependencies {
     compile(kotlin("stdlib"))
+    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
+
     compile("io.github.openfeign:feign-core:10.1.0")
     compile("io.github.openfeign:feign-jackson:10.1.0")
     compile("io.github.openfeign:feign-slf4j:10.1.0")
@@ -25,6 +32,10 @@ dependencies {
     compile("org.koin:koin-core:1.0.2")
     compile("commons-codec:commons-codec:1.11")
     compile("com.xenomachina:kotlin-argparser:2.0.7")
+
+    testCompile(kotlin("test"))
+    testCompile(kotlin("test-junit"))
+    testCompile("org.assertj:assertj-core:3.11.1")
 }
 
 repositories {
@@ -64,3 +75,108 @@ artifactory {
         setProperty("repoKey", "libs-release")
     })
 }
+
+tasks {
+    register<Download>("downloadKeycloak") {
+        description = "Download local keycloak distribution for testing purposes"
+        src("https://downloads.jboss.org/keycloak/4.7.0.Final/keycloak-4.7.0.Final.zip")
+        dest("$buildDir/keycloak.zip")
+        overwrite(false)
+    }
+    register<Copy>("setupKeycloak") {
+        dependsOn("downloadKeycloak")
+        description = "Setup local keycloak for testing purposes"
+
+        from(zipTree("$buildDir/keycloak.zip"))
+        into("keycloak")
+    }
+    register("startLocalKeycloak") {
+        if (!File("keycloak").exists()) {
+            dependsOn("setupKeycloak")
+        }
+
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            finalizedBy("startWindowsKeycloak")
+        } else {
+            finalizedBy("startLinuxKeycloak")
+        }
+    }
+
+    register("startWindowsKeycloak") {
+        dependsOn("addWindowsAdminUser")
+        finalizedBy("execWindowsKeycloak")
+    }
+    register("startLinuxKeycloak") {
+        dependsOn("addLinuxAdminUser")
+        finalizedBy("execLinuxKeycloak")
+    }
+    register<Exec>("addWindowsAdminUser") {
+        workingDir("keycloak/keycloak-4.7.0.Final/bin")
+        commandLine("cmd", "/c", "add-user-keycloak.bat", "-r", "master", "-u", "admin", "-p", "admin")
+        environment("NOPAUSE", "true")
+        standardOutput = System.out
+    }
+
+    fun waitForKeycloak() {
+        while (true) {
+            try {
+                if (uri("http://localhost:8080/auth/").toURL().readBytes().isNotEmpty())
+                    return
+            } catch (e: ConnectException) {
+            }
+            println("Waiting for Keycloak to become ready")
+            Thread.sleep(1000)
+        }
+    }
+
+    register("execWindowsKeycloak") {
+        doLast {
+            ProcessBuilder("cmd", "/c", "standalone.bat", ">", "output.txt").run {
+                directory(File("keycloak/keycloak-4.7.0.Final/bin"))
+                println("Starting local Keycloak on windows")
+                environment()["NOPAUSE"] = "true"
+                start()
+                waitForKeycloak()
+            }
+        }
+    }
+    register("execLinuxKeycloak") {
+        doLast {
+            ProcessBuilder("sh", "/c", "standalone.sh", ">", "output.txt").run {
+                directory(File("keycloak/keycloak-4.7.0.Final/bin"))
+                println("Starting local Keycloak on linux")
+                environment()["NOPAUSE"] = "true"
+                start()
+                waitForKeycloak()
+                Thread.sleep(30000)
+            }
+        }
+    }
+    register("stopLocalKeycloak") {
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            finalizedBy("stopWindowsKeycloak")
+        } else {
+            finalizedBy("stopLinuxKeycloak")
+        }
+    }
+    register<Exec>("stopWindowsKeycloak") {
+        // Use jboss cli to shutdown local server
+        workingDir("keycloak/keycloak-4.7.0.Final/bin")
+        commandLine("cmd", "/c", "jboss-cli.bat", "--connect", "--command=:shutdown")
+        environment("NOPAUSE", "true")
+        standardOutput = System.out
+    }
+
+    register<Exec>("stopLinuxKeycloak") {
+        workingDir("keycloak/keycloak-4.7.0.Final/bin")
+        commandLine("sh", "/c", "jboss-cli.sh", "--connect", "--command=:shutdown")
+        environment("NOPAUSE", "true")
+        standardOutput = System.out
+    }
+
+    "test"{
+        dependsOn("startLocalKeycloak")
+        finalizedBy("stopLocalKeycloak")
+    }
+}
+
