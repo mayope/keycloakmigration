@@ -9,7 +9,8 @@ import org.apache.commons.codec.digest.DigestUtils
 class DeleteUserAttributeAction(
         private val realm: String,
         private val name: String,
-        private val attributeName: String) : Action() {
+        private val attributeName: String,
+        private val failOnMissing: Boolean = true) : Action() {
 
     private lateinit var user: User
 
@@ -21,8 +22,8 @@ class DeleteUserAttributeAction(
                 it["migrations"] = it["migrations"]!!.toMutableList().apply {
                     add(hash())
                 }
-                if (attributeName !in it) {
-                    throw MigrationException("Attribute $attributeName is not present on ${user.username}")
+                if (attributeName !in it && failOnMissing) {
+                    throw MigrationException("Attribute $attributeName is not present on user ${user.username}!")
                 }
                 it.remove(attributeName)
                 User(user.id, user.createdTimestamp,

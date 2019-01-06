@@ -10,7 +10,8 @@ class AddUserAttributeAction(
         private val realm: String,
         private val name: String,
         private val attributeName: String,
-        private val attributeValues: List<String>) : Action() {
+        private val attributeValues: List<String>,
+        private val override: Boolean = false) : Action() {
 
     private lateinit var user: User
 
@@ -22,8 +23,8 @@ class AddUserAttributeAction(
                 it["migrations"] = it["migrations"]!!.toMutableList().apply {
                     add(hash())
                 }
-                if (attributeName in it) {
-                    throw MigrationException("Attribute $attributeName is already present on ${user.username}")
+                if (attributeName in it && !override) {
+                    throw MigrationException("Attribute $attributeName is already present on user ${user.username}!")
                 }
                 it[attributeName] = attributeValues
                 User(user.id, user.createdTimestamp,

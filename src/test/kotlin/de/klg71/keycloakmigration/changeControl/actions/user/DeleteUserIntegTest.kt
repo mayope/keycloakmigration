@@ -1,7 +1,6 @@
-package de.klg71.keycloakmigration
+package de.klg71.keycloakmigration.changeControl.actions.user
 
-import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAction
-import de.klg71.keycloakmigration.changeControl.actions.user.DeleteUserAction
+import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.model.UserListItem
 import de.klg71.keycloakmigration.rest.KeycloakClient
 import org.assertj.core.api.Assertions.assertThat
