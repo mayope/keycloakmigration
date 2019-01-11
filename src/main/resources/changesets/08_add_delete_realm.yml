@@ -1,0 +1,13 @@
+id: add-delete-realm
+author: klg71
+changes:
+- addRealm:
+    name: test
+    enabled: true
+
+- addRealm:
+    name: test2
+    id: test2
+
+- deleteRealm:
+    name: test2

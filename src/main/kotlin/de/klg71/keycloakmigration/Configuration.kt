@@ -1,6 +1,9 @@
 package de.klg71.keycloakmigration
 
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
@@ -32,7 +35,12 @@ private class TokenHolder(client: KeycloakLoginClient, adminUser: String, adminP
     val token: AccessToken = client.login("password", "admin-cli", adminUser, adminPassword)
 }
 
-private fun kotlinObjectMapper() = ObjectMapper(YAMLFactory()).registerModule(KotlinModule())!!
+private fun kotlinObjectMapper() = ObjectMapper(YAMLFactory()).apply {
+    enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
+    registerModule(KotlinModule())!!
+    enable(MapperFeature.ALLOW_EXPLICIT_PROPERTY_RENAMING)
+    propertyNamingStrategy = PropertyNamingStrategy.LOWER_CAMEL_CASE
+}
 
 private fun initYamlObjectMapper(): ObjectMapper = ObjectMapper(YAMLFactory())
         .registerModule(actionModule(kotlinObjectMapper())).registerModule(KotlinModule())!!

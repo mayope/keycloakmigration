@@ -26,9 +26,9 @@ dependencies {
     compile("org.apache.logging.log4j:log4j-core:2.11.1")
     compile("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
 
-    compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.7")
-    compile("com.fasterxml.jackson.core:jackson-databind:2.9.7")
-    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.7")
+    compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.8")
+    compile("com.fasterxml.jackson.core:jackson-databind:2.9.8")
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
     compile("org.koin:koin-core:1.0.2")
     compile("commons-codec:commons-codec:1.11")
     compile("com.xenomachina:kotlin-argparser:2.0.7")
@@ -91,6 +91,9 @@ tasks {
         into("keycloak")
     }
     register("startLocalKeycloak") {
+        group="keycloakmigration"
+        description="Starts local keycloak"
+
         if (!File("keycloak").exists()) {
             dependsOn("setupKeycloak")
         }
@@ -153,6 +156,8 @@ tasks {
         }
     }
     register("stopLocalKeycloak") {
+        group="keycloakmigration"
+        description="Stops local keycloak"
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             finalizedBy("stopWindowsKeycloak")
         } else {

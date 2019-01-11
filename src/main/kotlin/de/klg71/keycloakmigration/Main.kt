@@ -7,12 +7,11 @@ import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
 import org.slf4j.LoggerFactory
 
-val LOG = LoggerFactory.getLogger("de.klg71.keycloakmigration")!!
 val KOIN_LOGGER = LoggerFactory.getLogger("de.klg71.keycloakmigration.koinlogger")!!
 const val defaultChangeLogFile = "keycloak-changelog.yml"
 const val defaultAdminUser = "admin"
 const val defaultAdminPassword = "admin"
-const val defaultKeycloakServer = "http://localhost:8080"
+const val defaultKeycloakServer = "http://localhost:8080/auth"
 
 interface MigrationArgs {
     fun adminUser(): String
@@ -30,7 +29,7 @@ class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
             help = "Password for the migration user ,defaulting to $defaultAdminPassword.")
             .default(defaultAdminPassword)
 
-    private val baseUrl by parser.storing(names = *arrayOf("-u", "--url"),
+    private val baseUrl by parser.storing(names = *arrayOf("-b", "--baseurl"),
             help = "Base url of keycloak server ,defaulting to $defaultKeycloakServer.")
             .default(defaultKeycloakServer)
 
@@ -41,27 +40,20 @@ class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
 
     override fun adminPassword() = adminPassword
 
-    override fun migrationFile() = migrationFile.first()
+    override fun migrationFile() = migrationFile.firstOrNull() ?: defaultChangeLogFile
 
     override fun baseUrl() = baseUrl
 
 }
 
 fun main(args: Array<String>) {
-    ArgParser(args).parseInto(::CommandLineMigrationArgs).let {
-        migrate(it)
-    }
+    migrate(ArgParser(args).parseInto(::CommandLineMigrationArgs))
 }
 
 fun migrate(commandLineMigrationArgs: MigrationArgs) {
     commandLineMigrationArgs.run {
         startKoin(listOf(myModule(adminUser(), adminPassword(), baseUrl())), logger = KoinLogger(KOIN_LOGGER))
-        if (migrationFile().isNotEmpty()) {
-            KeycloakMigrationExecute(migrationFile())
-        } else {
-            LOG.info("Defaulting to $defaultChangeLogFile")
-            KeycloakMigrationExecute(defaultChangeLogFile)
-        }
+        KeycloakMigrationExecute(migrationFile())
         stopKoin()
     }
 }

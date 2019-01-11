@@ -1,8 +1,10 @@
 includes:
-  - path: changesets/01_initial.yml
-  - path: changesets/02_second.yml
-  - path: changesets/03_roles.yml
-  - path: changesets/04_revoke_roles.yml
-  - path: changesets/05_add_delete_role.yml
-  - path: changesets/06_add_ldap.yml
+- path: changesets/01_initial.yml
+- path: changesets/02_second.yml
+- path: changesets/03_roles.yml
+- path: changesets/04_revoke_roles.yml
+- path: changesets/05_add_delete_role.yml
+- path: changesets/06_add_ldap.yml
+- path: changesets/07_add_delete_group.yml
+- path: changesets/08_add_delete_realm.yml
 

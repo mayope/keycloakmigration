@@ -12,6 +12,9 @@ import de.klg71.keycloakmigration.changeControl.actions.AddAdLdapAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.group.DeleteGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.*
@@ -42,19 +45,30 @@ class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializ
 
     private fun createAction(entry: Map.Entry<String, JsonNode>): Action =
             when (entry.key) {
+
                 "addUser" -> objectMapper.treeToValue<AddUserAction>(entry.value)
                 "updateUser" -> objectMapper.treeToValue<UpdateUserAction>(entry.value)
                 "deleteUser" -> objectMapper.treeToValue<DeleteUserAction>(entry.value)
-                "assignRole" -> objectMapper.treeToValue<AssignRoleAction>(entry.value)
-                "revokeRole" -> objectMapper.treeToValue<RevokeRoleAction>(entry.value)
                 "addUserAttribute" -> objectMapper.treeToValue<AddUserAttributeAction>(entry.value)
                 "deleteUserAttribute" -> objectMapper.treeToValue<DeleteUserAttributeAction>(entry.value)
+
+                "assignRole" -> objectMapper.treeToValue<AssignRoleAction>(entry.value)
+                "revokeRole" -> objectMapper.treeToValue<RevokeRoleAction>(entry.value)
+
                 "addRole" -> objectMapper.treeToValue<AddRoleAction>(entry.value)
                 "deleteRole" -> objectMapper.treeToValue<DeleteRoleAction>(entry.value)
+
                 "addSimpleClient" -> objectMapper.treeToValue<AddSimpleClientAction>(entry.value)
                 "deleteClient" -> objectMapper.treeToValue<DeleteClientAction>(entry.value)
+
                 "addGroup" -> objectMapper.treeToValue<AddGroupAction>(entry.value)
+                "deleteGroup" -> objectMapper.treeToValue<DeleteGroupAction>(entry.value)
+
                 "addAdLdap" -> objectMapper.treeToValue<AddAdLdapAction>(entry.value)
+
+                "addRealm" -> objectMapper.treeToValue<AddRealmAction>(entry.value)
+                "deleteRealm" -> objectMapper.treeToValue<DeleteRealmAction>(entry.value)
+
                 else -> throw ParseException("Unkown Change type: ${entry.key}")
             }
 }

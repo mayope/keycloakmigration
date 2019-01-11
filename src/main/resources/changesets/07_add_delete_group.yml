@@ -1,0 +1,18 @@
+id: add-delete-groups
+author: klg71
+changes:
+- addGroup:
+    realm: master
+    name: parent
+- addGroup:
+    realm: master
+    name: child1
+    parent: parent
+- addGroup:
+    realm: master
+    name: child2
+    parent: parent
+- deleteGroup:
+    realm: master
+    name: child2
+

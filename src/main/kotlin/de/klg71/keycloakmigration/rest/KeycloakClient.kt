@@ -122,5 +122,12 @@ interface KeycloakClient {
     fun addLdap(addLdap: AddLdap, @Param("realm") realm: String)
 
     @RequestLine("DELETE /admin/realms/{realm}/components/{user-federation-id}")
-    fun deleteUserFederation(@Param("realm") realm:String, @Param("user-federation-id") userFederationId:UUID)
+    fun deleteUserFederation(@Param("realm") realm: String, @Param("user-federation-id") userFederationId: UUID)
+
+    @RequestLine("POST /admin/realms/")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addRealm(addRealm: AddRealm)
+
+    @RequestLine("DELETE /admin/realms/{realm-id}")
+    fun deleteRealm(@Param("realm-id") id: String)
 }
