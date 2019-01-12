@@ -116,6 +116,7 @@ tasks {
     register<Exec>("addLinuxAdminUser") {
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
         commandLine("sh", "add-user-keycloak.sh", "-r", "master", "-u", "admin", "-p", "admin")
+        isIgnoreExitValue = true
         standardOutput = System.out
     }
 
@@ -123,6 +124,7 @@ tasks {
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
         commandLine("cmd", "/c", "add-user-keycloak.bat", "-r", "master", "-u", "admin", "-p", "admin")
         environment("NOPAUSE", "true")
+        isIgnoreExitValue = true
         standardOutput = System.out
     }
 
@@ -154,10 +156,8 @@ tasks {
             ProcessBuilder("sh", "standalone.sh", "-Djboss.socket.binding.port-offset=10000", ">", "output.txt").run {
                 directory(File("keycloak/keycloak-4.7.0.Final/bin"))
                 println("Starting local Keycloak on linux")
-                environment()["NOPAUSE"] = "true"
                 start()
                 waitForKeycloak()
-                Thread.sleep(30000)
             }
         }
     }
@@ -181,7 +181,6 @@ tasks {
     register<Exec>("stopLinuxKeycloak") {
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
         commandLine("sh", "jboss-cli.sh", "--connect", "--command=:shutdown", "--controller=127.0.0.1:19990")
-        environment("NOPAUSE", "true")
         standardOutput = System.out
     }
 
