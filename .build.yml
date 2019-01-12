@@ -3,12 +3,14 @@ packages:
   - openjdk8
 sources:
   - https://git.sr.ht/~klg71/keycloakmigration
+secrets:
+  - e0da86bb-a713-4007-8135-c3eae2fa83e2
 tasks:
   - build: |
       cd keycloakmigration
       chmod +x gradlew
-      ./gradlew build
+      ./gradlew build --stacktrace
   - publish: |
       cd keycloakmigration
       chmod +x gradlew
-      ./gradlew artifactoryPublish
+      ./gradlew artifactoryPublish --stacktrace
