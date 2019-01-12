@@ -5,9 +5,10 @@ sources:
   - https://git.sr.ht/~klg71/keycloakmigration
 tasks:
   - build: |
-      ls
+      cd keycloakmigration
       chmod +x gradlew
       .\\gradlew build
   - publish: |
+      cd keycloakmigration
       chmod +x gradlew
       .\\gradlew artifactoryPublish
