@@ -1,6 +1,8 @@
 image: alpine/edge
 packages:
   - openjdk8
+sources:
+  - https://git.sr.ht/~klg71/keycloakmigration
 tasks:
   - build: |
       ls
