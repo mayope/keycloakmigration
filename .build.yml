@@ -1,0 +1,8 @@
+image: alpine/edge
+packages:
+  - openjdk8
+tasks:
+  - build: |
+      .\gradlew build
+  - publish: |
+      .\gradlew artifactoryPublish
