@@ -113,6 +113,12 @@ tasks {
         dependsOn("addLinuxAdminUser")
         finalizedBy("execLinuxKeycloak")
     }
+    register<Exec>("addLinuxAdminUser") {
+        workingDir("keycloak/keycloak-4.7.0.Final/bin")
+        commandLine("cmd", "/c", "add-user-keycloak.sh", "-r", "master", "-u", "admin", "-p", "admin")
+        standardOutput = System.out
+    }
+
     register<Exec>("addWindowsAdminUser") {
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
         commandLine("cmd", "/c", "add-user-keycloak.bat", "-r", "master", "-u", "admin", "-p", "admin")
