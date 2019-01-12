@@ -129,7 +129,7 @@ tasks {
     fun waitForKeycloak() {
         while (true) {
             try {
-                if (uri("http://localhost:8080/auth/").toURL().readBytes().isNotEmpty())
+                if (uri("http://localhost:18080/auth/").toURL().readBytes().isNotEmpty())
                     return
             } catch (e: ConnectException) {
             }
@@ -140,7 +140,7 @@ tasks {
 
     register("execWindowsKeycloak") {
         doLast {
-            ProcessBuilder("cmd", "/c", "standalone.bat", ">", "output.txt").run {
+            ProcessBuilder("cmd", "/c", "standalone.bat", ">", "output.txt","-Djboss.socket.binding.port-offset=10000").run {
                 directory(File("keycloak/keycloak-4.7.0.Final/bin"))
                 println("Starting local Keycloak on windows")
                 environment()["NOPAUSE"] = "true"
@@ -151,7 +151,7 @@ tasks {
     }
     register("execLinuxKeycloak") {
         doLast {
-            ProcessBuilder("sh", "standalone.sh", ">", "output.txt").run {
+            ProcessBuilder("sh", "standalone.sh", ">", "output.txt","-Djboss.socket.binding.port-offset=10000").run {
                 directory(File("keycloak/keycloak-4.7.0.Final/bin"))
                 println("Starting local Keycloak on linux")
                 environment()["NOPAUSE"] = "true"

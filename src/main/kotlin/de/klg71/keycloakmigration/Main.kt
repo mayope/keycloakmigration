@@ -11,7 +11,7 @@ val KOIN_LOGGER = LoggerFactory.getLogger("de.klg71.keycloakmigration.koinlogger
 const val defaultChangeLogFile = "keycloak-changelog.yml"
 const val defaultAdminUser = "admin"
 const val defaultAdminPassword = "admin"
-const val defaultKeycloakServer = "http://localhost:8080/auth"
+const val defaultKeycloakServer = "http://localhost:18080/auth"
 
 interface MigrationArgs {
     fun adminUser(): String
