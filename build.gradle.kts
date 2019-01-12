@@ -153,8 +153,7 @@ tasks {
     }
     register("execLinuxKeycloak") {
         doLast {
-            ProcessBuilder("sh", "standalone.sh", "-Djboss.socket.binding.port-offset=10000", ">", "output.txt").run {
-                directory(File("keycloak/keycloak-4.7.0.Final/bin"))
+            ProcessBuilder("keycloak/keycloak-4.7.0.Final/bin/standalone.sh", "-Djboss.socket.binding.port-offset=10000").run {
                 println("Starting local Keycloak on linux")
                 start()
                 waitForKeycloak()
