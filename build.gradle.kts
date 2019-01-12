@@ -140,7 +140,7 @@ tasks {
 
     register("execWindowsKeycloak") {
         doLast {
-            ProcessBuilder("cmd", "/c", "standalone.bat", ">", "output.txt","-Djboss.socket.binding.port-offset=10000").run {
+            ProcessBuilder("cmd", "/c", "standalone.bat", "-Djboss.socket.binding.port-offset=10000", ">", "output.txt").run {
                 directory(File("keycloak/keycloak-4.7.0.Final/bin"))
                 println("Starting local Keycloak on windows")
                 environment()["NOPAUSE"] = "true"
@@ -151,7 +151,7 @@ tasks {
     }
     register("execLinuxKeycloak") {
         doLast {
-            ProcessBuilder("sh", "standalone.sh", ">", "output.txt","-Djboss.socket.binding.port-offset=10000").run {
+            ProcessBuilder("sh", "standalone.sh", "-Djboss.socket.binding.port-offset=10000", ">", "output.txt").run {
                 directory(File("keycloak/keycloak-4.7.0.Final/bin"))
                 println("Starting local Keycloak on linux")
                 environment()["NOPAUSE"] = "true"
@@ -173,14 +173,14 @@ tasks {
     register<Exec>("stopWindowsKeycloak") {
         // Use jboss cli to shutdown local server
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
-        commandLine("cmd", "/c", "jboss-cli.bat", "--connect", "--command=:shutdown")
+        commandLine("cmd", "/c", "jboss-cli.bat", "--connect", "--command=:shutdown", "--controller=127.0.0.1:19990")
         environment("NOPAUSE", "true")
         standardOutput = System.out
     }
 
     register<Exec>("stopLinuxKeycloak") {
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
-        commandLine("sh", "jboss-cli.sh", "--connect", "--command=:shutdown")
+        commandLine("sh", "jboss-cli.sh", "--connect", "--command=:shutdown", "--controller=127.0.0.1:19990")
         environment("NOPAUSE", "true")
         standardOutput = System.out
     }
