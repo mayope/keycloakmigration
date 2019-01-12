@@ -6,10 +6,9 @@ sources:
 tasks:
   - build: |
       cd keycloakmigration
-      ls
       chmod +x gradlew
-      .\\gradlew build
+      ./gradlew build
   - publish: |
       cd keycloakmigration
       chmod +x gradlew
-      .\\gradlew artifactoryPublish
+      ./gradlew artifactoryPublish
