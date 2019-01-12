@@ -3,6 +3,8 @@ packages:
   - openjdk8
 tasks:
   - build: |
-      .\gradlew build
+      chmod +x gradlew
+      .\\gradlew build
   - publish: |
-      .\gradlew artifactoryPublish
+      chmod +x gradlew
+      .\\gradlew artifactoryPublish
