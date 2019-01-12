@@ -91,8 +91,8 @@ tasks {
         into("keycloak")
     }
     register("startLocalKeycloak") {
-        group="keycloakmigration"
-        description="Starts local keycloak"
+        group = "keycloakmigration"
+        description = "Starts local keycloak"
 
         if (!File("keycloak").exists()) {
             dependsOn("setupKeycloak")
@@ -115,7 +115,7 @@ tasks {
     }
     register<Exec>("addLinuxAdminUser") {
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
-        commandLine("cmd", "/c", "add-user-keycloak.sh", "-r", "master", "-u", "admin", "-p", "admin")
+        commandLine("sh", "add-user-keycloak.sh", "-r", "master", "-u", "admin", "-p", "admin")
         standardOutput = System.out
     }
 
@@ -151,7 +151,7 @@ tasks {
     }
     register("execLinuxKeycloak") {
         doLast {
-            ProcessBuilder("sh", "/c", "standalone.sh", ">", "output.txt").run {
+            ProcessBuilder("sh", "standalone.sh", ">", "output.txt").run {
                 directory(File("keycloak/keycloak-4.7.0.Final/bin"))
                 println("Starting local Keycloak on linux")
                 environment()["NOPAUSE"] = "true"
@@ -162,8 +162,8 @@ tasks {
         }
     }
     register("stopLocalKeycloak") {
-        group="keycloakmigration"
-        description="Stops local keycloak"
+        group = "keycloakmigration"
+        description = "Stops local keycloak"
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             finalizedBy("stopWindowsKeycloak")
         } else {
@@ -180,7 +180,7 @@ tasks {
 
     register<Exec>("stopLinuxKeycloak") {
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
-        commandLine("sh", "/c", "jboss-cli.sh", "--connect", "--command=:shutdown")
+        commandLine("sh", "jboss-cli.sh", "--connect", "--command=:shutdown")
         environment("NOPAUSE", "true")
         standardOutput = System.out
     }
