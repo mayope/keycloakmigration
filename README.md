@@ -36,6 +36,30 @@ The migration hashes are stored in the attribute named 'migration' in the migrat
 There are no transactions in keycloak though if the rollback fails there might be a non deterministic state.
 If it fails I would like to receive a bug report for this.
 
+# Supported migrations
+This are the currently implemented commands. I hope I can find the time to implement more of them.
+## User Migrations
+### addUser
+### deleteUser
+### updateUser
+### addUserAttribute
+### deleteUserAttribute
+### assignRole
+### revokeRole
+
+## Group Migrations
+### addGroup
+
+## Role Migrations
+### addRole
+### deleteRole
+
+## Client Migrations
+### addSimpleClient
+### deleteClient
+
+## User Federation Migrations
+### AddAdLdap
 
 # TODOS:
 - Add more commands
