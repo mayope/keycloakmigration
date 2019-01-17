@@ -9,7 +9,7 @@ import org.koin.standalone.StandAloneContext.stopKoin
 
 private val adminUser = "admin"
 private val adminPass = "admin"
-private val baseUrl = "http://localhost:8080/auth"
+private val baseUrl = "http://localhost:18080/auth"
 
 abstract class AbstractIntegrationTest : KoinComponent {
 

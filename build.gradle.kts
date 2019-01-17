@@ -91,8 +91,8 @@ tasks {
         into("keycloak")
     }
     register("startLocalKeycloak") {
-        group="keycloakmigration"
-        description="Starts local keycloak"
+        group = "keycloakmigration"
+        description = "Starts local keycloak"
 
         if (!File("keycloak").exists()) {
             dependsOn("setupKeycloak")
@@ -113,17 +113,25 @@ tasks {
         dependsOn("addLinuxAdminUser")
         finalizedBy("execLinuxKeycloak")
     }
+    register<Exec>("addLinuxAdminUser") {
+        workingDir("keycloak/keycloak-4.7.0.Final/bin")
+        commandLine("sh", "add-user-keycloak.sh", "-r", "master", "-u", "admin", "-p", "admin")
+        isIgnoreExitValue = true
+        standardOutput = System.out
+    }
+
     register<Exec>("addWindowsAdminUser") {
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
         commandLine("cmd", "/c", "add-user-keycloak.bat", "-r", "master", "-u", "admin", "-p", "admin")
         environment("NOPAUSE", "true")
+        isIgnoreExitValue = true
         standardOutput = System.out
     }
 
     fun waitForKeycloak() {
         while (true) {
             try {
-                if (uri("http://localhost:8080/auth/").toURL().readBytes().isNotEmpty())
+                if (uri("http://localhost:18080/auth/").toURL().readBytes().isNotEmpty())
                     return
             } catch (e: ConnectException) {
             }
@@ -134,7 +142,7 @@ tasks {
 
     register("execWindowsKeycloak") {
         doLast {
-            ProcessBuilder("cmd", "/c", "standalone.bat", ">", "output.txt").run {
+            ProcessBuilder("cmd", "/c", "standalone.bat", "-Djboss.socket.binding.port-offset=10000", ">", "output.txt").run {
                 directory(File("keycloak/keycloak-4.7.0.Final/bin"))
                 println("Starting local Keycloak on windows")
                 environment()["NOPAUSE"] = "true"
@@ -145,19 +153,16 @@ tasks {
     }
     register("execLinuxKeycloak") {
         doLast {
-            ProcessBuilder("sh", "/c", "standalone.sh", ">", "output.txt").run {
-                directory(File("keycloak/keycloak-4.7.0.Final/bin"))
+            ProcessBuilder("keycloak/keycloak-4.7.0.Final/bin/standalone.sh", "-Djboss.socket.binding.port-offset=10000").run {
                 println("Starting local Keycloak on linux")
-                environment()["NOPAUSE"] = "true"
                 start()
                 waitForKeycloak()
-                Thread.sleep(30000)
             }
         }
     }
     register("stopLocalKeycloak") {
-        group="keycloakmigration"
-        description="Stops local keycloak"
+        group = "keycloakmigration"
+        description = "Stops local keycloak"
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             finalizedBy("stopWindowsKeycloak")
         } else {
@@ -167,15 +172,14 @@ tasks {
     register<Exec>("stopWindowsKeycloak") {
         // Use jboss cli to shutdown local server
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
-        commandLine("cmd", "/c", "jboss-cli.bat", "--connect", "--command=:shutdown")
+        commandLine("cmd", "/c", "jboss-cli.bat", "--connect", "--command=:shutdown", "--controller=127.0.0.1:19990")
         environment("NOPAUSE", "true")
         standardOutput = System.out
     }
 
     register<Exec>("stopLinuxKeycloak") {
         workingDir("keycloak/keycloak-4.7.0.Final/bin")
-        commandLine("sh", "/c", "jboss-cli.sh", "--connect", "--command=:shutdown")
-        environment("NOPAUSE", "true")
+        commandLine("sh", "jboss-cli.sh", "--connect", "--command=:shutdown", "--controller=127.0.0.1:19990")
         standardOutput = System.out
     }
 

@@ -39,7 +39,7 @@ class DeleteGroupAction(
             group.path.split("/").run {
                 get(size - 2)
             }.let {
-                client.groupByName(it, realm)?.id
+                client.groupByName(it, realm).id
             }
 
     override fun undo() {
