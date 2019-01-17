@@ -98,9 +98,86 @@ Removes a user from keycloak. Fails if a user with that name does not exists.
         realm: master
         name: test
 ### updateUser
+Updates an exiting user in keycloak. Fails if no user with given name exists.
+#### Parameters
+- realm: String, not optional
+- name: String, not optional
+- enabled: Boolean, default=no change
+- emailVerified: Boolean, default=no change
+- access: String, default=no change
+- notBefore: Long, default=no change
+- totp: Boolean, default=no change
+- disableableCredentialTypes: List<String>, default=no change
+- requiredActions: List<String>, default=no change
+- email: String, default=no change
+- firstName: String, default=no change
+- lastName: String, default=no change
+#### Example
+    id: test
+    author: klg71
+    changes:
+    - updateUser:
+        realm: master
+        name: test
+        enabled: false
+        lastName: Lukas
+
 ### addUserAttribute
+Adds an attribute to an existing user. Throws an error if the user does not exist.
+
+User attributes can't be set deterministic with the updateUser action.
+#### Parameters
+- realm: String, not optional
+- name: String, not optional
+- attributeName: String, not optional
+- attributeValues: List<String>, not optional
+- override: Boolean, default=false
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+    - addUserAttribute:
+        realm: master
+        name: test
+        attributeName: test1
+        attributeValues:
+        - value1
+        - value2
+
 ### deleteUserAttribute
+Deletes an attribute to an existing user. Throws an error if the user does not exist.
+#### Parameters
+- realm: String, not optional
+- name: String, not optional
+- attributeName: String, not optional
+- failOnMissing: Boolean, default=true
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+    - deleteUserAttribute:
+        realm: master
+        name: test
+        attributeName: test1
+
 ### assignRole
+Assigns a role to the given user. Fails if the user or the role doesn't exist.
+#### Parameters
+- realm: String, not optional
+- user: String, not optional
+- role: String, not optional
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+    - assignRole:
+        realm: master
+        user: testUser
+        role: testRole
+
 ### revokeRole
 
 ## Group Migrations

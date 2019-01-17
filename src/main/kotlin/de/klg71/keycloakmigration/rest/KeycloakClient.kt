@@ -81,6 +81,9 @@ interface KeycloakClient {
     fun roleByName(@Param("name") name: String, @Param("realm") realm: String): Role
 
     @RequestLine("GET /admin/realms/{realm}/roles/{name}")
+    fun roleByNameResponse(@Param("name") name: String, @Param("realm") realm: String): Response
+
+    @RequestLine("GET /admin/realms/{realm}/roles/{name}")
     fun checkRoleByName(@Param("name") name: String, @Param("realm") realm: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/clients")
@@ -130,4 +133,7 @@ interface KeycloakClient {
 
     @RequestLine("DELETE /admin/realms/{realm-id}")
     fun deleteRealm(@Param("realm-id") id: String)
+
+    @RequestLine("GET /admin/realms/{realm}/users/{user-id}/role-mappings/realm/composite")
+    fun userRoles(@Param("realm") realm: String, @Param("user-id") id:UUID): List<RoleListItem>
 }

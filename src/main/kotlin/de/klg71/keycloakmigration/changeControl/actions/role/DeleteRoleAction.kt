@@ -6,12 +6,11 @@ import de.klg71.keycloakmigration.model.Role
 import de.klg71.keycloakmigration.rest.clientRoleByName
 import de.klg71.keycloakmigration.rest.clientUUID
 import org.apache.commons.codec.digest.DigestUtils
-import org.koin.standalone.release
 
 class DeleteRoleAction(
         private val realm: String,
         private val name: String,
-        private val clientId: String?) : Action() {
+        private val clientId: String? = null) : Action() {
 
     private lateinit var deletedRole: Role
 
@@ -44,7 +43,7 @@ class DeleteRoleAction(
     }
 
     override fun undo() {
-        if(clientId==null) {
+        if (clientId == null) {
             client.addRole(addRole(), realm)
         } else {
             client.addClientRole(addRole(), client.clientUUID(clientId, realm), realm)

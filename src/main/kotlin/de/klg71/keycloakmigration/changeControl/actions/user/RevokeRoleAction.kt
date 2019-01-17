@@ -13,7 +13,7 @@ class RevokeRoleAction(
         private val realm: String,
         private val role: String,
         private val user: String,
-        private val clientId: String?) : Action() {
+        private val clientId: String? = null) : Action() {
 
     private val hash = calculateHash()
 
