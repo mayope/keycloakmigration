@@ -10,7 +10,8 @@ plugins {
     kotlin("jvm") version "1.3.0"
     id("maven-publish")
     id("com.jfrog.artifactory") version "4.8.1"
-    id("de.undercouch.download").version("3.4.3")
+    id("de.undercouch.download") version ("3.4.3")
+    id("net.researchgate.release") version ("2.8.0")
 }
 
 
@@ -77,6 +78,19 @@ artifactory {
 }
 
 tasks {
+
+    withType(Jar::class) {
+        manifest {
+            attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
+        }
+
+        from(configurations.runtime.map { if (it.isDirectory) it else zipTree(it) })
+    }
+
+    "afterReleaseBuild"{
+        dependsOn("artifactoryPublish")
+    }
+
     register<Download>("downloadKeycloak") {
         description = "Download local keycloak distribution for testing purposes"
         src("https://downloads.jboss.org/keycloak/4.7.0.Final/keycloak-4.7.0.Final.zip")

@@ -7,4 +7,5 @@ includes:
 - path: changesets/06_add_ldap.yml
 - path: changesets/07_add_delete_group.yml
 - path: changesets/08_add_delete_realm.yml
+- path: changesets/09_add_delete_user.yml
 

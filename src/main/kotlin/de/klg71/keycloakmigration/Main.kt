@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration
 
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
+import com.xenomachina.argparser.mainBody
 import de.klg71.keycloakmigration.changeControl.KeycloakMigrationExecute
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
@@ -26,14 +27,14 @@ class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
             .default(defaultAdminUser)
 
     private val adminPassword by parser.storing(names = *arrayOf("-p", "--password"),
-            help = "Password for the migration user ,defaulting to $defaultAdminPassword.")
+            help = "Password for the migration user, defaulting to $defaultAdminPassword.")
             .default(defaultAdminPassword)
 
     private val baseUrl by parser.storing(names = *arrayOf("-b", "--baseurl"),
-            help = "Base url of keycloak server ,defaulting to $defaultKeycloakServer.")
+            help = "Base url of keycloak server, defaulting to $defaultKeycloakServer.")
             .default(defaultKeycloakServer)
 
-    private val migrationFile by parser.positionalList(help = "File to migrate, default to $defaultChangeLogFile",
+    private val migrationFile by parser.positionalList(help = "File to migrate, defaulting to $defaultChangeLogFile",
             sizeRange = 0..1)
 
     override fun adminUser() = adminUser
@@ -46,7 +47,7 @@ class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
 
 }
 
-fun main(args: Array<String>) {
+fun main(args: Array<String>) = mainBody {
     migrate(ArgParser(args).parseInto(::CommandLineMigrationArgs))
 }
 

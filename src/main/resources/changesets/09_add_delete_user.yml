@@ -1,0 +1,9 @@
+id: add-delete-user
+author: klg71
+changes:
+- addUser:
+      realm: master
+      name: testDelete
+- deleteUser:
+      realm: master
+      name: testDelete
