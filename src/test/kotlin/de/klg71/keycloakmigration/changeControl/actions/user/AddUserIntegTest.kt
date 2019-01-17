@@ -18,7 +18,7 @@ class AddUserIntegTest : AbstractIntegrationTest() {
         AddUserAction("master", "test").executeIt()
 
         UserListItem(UUID.randomUUID(), 0L, "test", true, true).let {
-            assertThat(client.users("master")).hasSize(2).usingElementComparatorOnFields("username", "enabled", "emailVerified").contains(it)
+            assertThat(client.users("master")).usingElementComparatorOnFields("username", "enabled", "emailVerified").contains(it)
         }
 
     }
