@@ -14,28 +14,29 @@ import org.junit.Test
 import org.koin.standalone.inject
 import java.util.*
 
-class AssignRoleIntegTest : AbstractIntegrationTest() {
+class RevokeRoleIntegTest : AbstractIntegrationTest() {
 
     private val client by inject<KeycloakClient>()
 
     @Test
-    fun testAssignRole() {
+    fun testRevokeRole() {
         AddUserAction("master", "testIntegration").executeIt()
         AddRoleAction("master", "testRole").executeIt()
-        AssignRoleAction("master", "testRole", "testIntegration").executeIt()
+        AssignRoleAction("master", "testRole", "test").executeIt()
+        RevokeRoleAction("master", "testRole", "test").executeIt()
 
         val testRole = RoleListItem(UUID.randomUUID(), "testRole", null, false, false, "master")
 
         client.userRoles("master", client.userByName("testIntegration", "master").id).let {
-            assertThat(it).usingElementComparatorOnFields("name", "containerId").contains(testRole)
+            assertThat(it).usingElementComparatorOnFields("name", "containerId").doesNotContain(testRole)
         }
     }
 
     @Test
-    fun testAssignRole_userNotExisting() {
+    fun testRevokeRole_userNotExisting() {
         AddRoleAction("master", "testRole").executeIt()
         assertThatThrownBy {
-            AssignRoleAction("master", "testRole", "testIntegration").executeIt()
+            RevokeRoleAction("master", "testRole", "testIntegration").executeIt()
         }.isInstanceOf(MigrationException::class.java).hasMessage("User with name: testIntegration does not exist in realm: master!")
     }
 
@@ -43,8 +44,17 @@ class AssignRoleIntegTest : AbstractIntegrationTest() {
     fun testAssignRole_roleNotExisting() {
         AddUserAction("master", "testIntegration").executeIt()
         assertThatThrownBy {
-            AssignRoleAction("master", "testRole", "testIntegration").executeIt()
+            RevokeRoleAction("master", "testRole", "testIntegration").executeIt()
         }.isInstanceOf(MigrationException::class.java).hasMessage("Role with name: testRole does not exist in realm: master!")
+    }
+
+    @Test
+    fun testAssignRole_roleNotAssigned() {
+        AddUserAction("master", "testIntegration").executeIt()
+        AddRoleAction("master", "testRole").executeIt()
+        assertThatThrownBy {
+            RevokeRoleAction("master", "testRole", "testIntegration").executeIt()
+        }.isInstanceOf(MigrationException::class.java).hasMessage("User with name: testIntegration in realm: master does not have role: testRole!")
     }
 
     @After

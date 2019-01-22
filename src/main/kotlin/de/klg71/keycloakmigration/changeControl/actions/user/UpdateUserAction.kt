@@ -1,24 +1,26 @@
 package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.model.UserAccess
+import de.klg71.keycloakmigration.rest.existsUser
 import de.klg71.keycloakmigration.rest.userByName
 import org.apache.commons.codec.digest.DigestUtils
 
 class UpdateUserAction(
         private val realm: String,
         private val name: String,
-        private val enabled: Boolean?,
-        private val emailVerified: Boolean?,
-        private val access: UserAccess?,
-        private val notBefore: Long?,
-        private val totp: Boolean?,
-        private val disableableCredentialTypes: List<String>?,
-        private val requiredActions: List<String>?,
-        private val email: String?,
-        private val firstName: String?,
-        private val lastName: String?) : Action() {
+        private val enabled: Boolean? = null,
+        private val emailVerified: Boolean? = null,
+        private val access: UserAccess? = null,
+        private val notBefore: Long? = null,
+        private val totp: Boolean? = null,
+        private val disableableCredentialTypes: List<String>? = null,
+        private val requiredActions: List<String>? = null,
+        private val email: String? = null,
+        private val firstName: String? = null,
+        private val lastName: String? = null) : Action() {
 
     lateinit var user: User
 
@@ -62,7 +64,11 @@ class UpdateUserAction(
     override fun hash() = hash
 
     override fun execute() {
-        user = client.userByName(name,realm)
+        if (!client.existsUser(name, realm)) {
+            throw MigrationException("User with name: $name does not exist in realm: $realm!")
+        }
+
+        user = client.userByName(name, realm)
         client.updateUser(user.id, updateUser(), realm)
     }
 

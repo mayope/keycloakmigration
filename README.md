@@ -179,9 +179,53 @@ Assigns a role to the given user. Fails if the user or the role doesn't exist.
         role: testRole
 
 ### revokeRole
+Revokes a role from the given user. Fails if the user or the role doesn't exist or the user does not have the role assigned.
+
+#### Parameters
+- realm: String, not optional
+- user: String, not optional
+- role: String, not optional
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+    - revokeRole:
+        realm: master
+        user: testUser
+        role: testRole
 
 ## Group Migrations
 ### addGroup
+Adds a new group to keycloak. Fails if the group already exists.
+
+#### Parameters
+- realm: String, not optional
+- name: String, not optional
+- parent: String, default=empty
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+    - addGroup:
+        realm: master
+        name: testUser
+
+### deleteGroup
+Removes a group from keycloak. Fails if the group does not exist.
+
+#### Parameters
+- realm: String, not optional
+- name: String, not optional
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+    - deleteGroup:
+        realm: master
+        name: testUser
 
 ## Role Migrations
 ### addRole
@@ -193,6 +237,11 @@ Assigns a role to the given user. Fails if the user or the role doesn't exist.
 
 ## User Federation Migrations
 ### AddAdLdap
+
+# Hacking
+To start developing on this project you can use the gradle tasks.
+
+To start the local development keycloak you can just use the task ```startLocalKeycloak```
 
 # TODOS:
 - Add more commands
