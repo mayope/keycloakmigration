@@ -9,5 +9,4 @@ data class AccessToken(@JsonProperty("access_token") val accessToken:String,
                        @JsonProperty("token_type") val tokenType:String,
                        @JsonProperty("not-before-policy") val notBeforePolicy:Int,
                        @JsonProperty("session_state") val sessionState:String,
-                       val scope:String) {
-}
+                       val scope:String)

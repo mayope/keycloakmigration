@@ -91,6 +91,8 @@ fun Response.extractLocationUUID(): UUID {
 }
 
 fun KeycloakClient.realmById(id: String) =
-        realms().firstOrNull() { it.id == id } ?: throw MigrationException("Realm with id: $id does not exist!")
+        realms().firstOrNull { it.id == id } ?: throw MigrationException("Realm with id: $id does not exist!")
 
-fun KeycloakClient.realmExistsById(id: String) = realms().any() { it.id == id }
+fun KeycloakClient.realmExistsById(id: String) = realms().any { it.id == id }
+
+fun KeycloakClient.roleExistsByName(name: String, realm: String) = roles(realm).any { it.name == name }

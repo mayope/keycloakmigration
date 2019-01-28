@@ -1,10 +1,8 @@
 package de.klg71.keycloakmigration.changeControl.actions.user
 
-import de.klg71.keycloakmigration.changeControl.KeycloakException
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.AddUser
 import de.klg71.keycloakmigration.rest.extractLocationUUID
-import de.klg71.keycloakmigration.rest.isSuccessful
 import de.klg71.keycloakmigration.rest.userByName
 import org.apache.commons.codec.digest.DigestUtils
 import java.util.*

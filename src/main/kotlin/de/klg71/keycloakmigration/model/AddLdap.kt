@@ -6,8 +6,7 @@ data class AddLdap(val name: String,
                    val parentId: String,
                    val config: Map<String, List<String>>,
                    val providerId: String = "ldap",
-                   val providerType: String = "org.keycloak.storage.UserStorageProvider") {
-}
+                   val providerType: String = "org.keycloak.storage.UserStorageProvider")
 
 fun constructAdLdapConfig(config: Map<String, String>): Map<String, List<String>> =
         mutableMapOf<String, List<String>>().apply {
@@ -29,7 +28,7 @@ fun constructAdLdapConfig(config: Map<String, String>): Map<String, List<String>
             put("maxLifespan", listOf())
             put("batchSizeForSync", listOf(batchSize(config)))
             put("editMode", listOf(editMode(config)))
-            put("importEnabled", listOf(importUsers(config).toString()))
+            put("importEnabled", listOf(importUsers(config)))
             put("syncRegistrations", listOf("false"))
             put("vendor", listOf("ad"))
             put("usernameLDAPAttribute", listOf(usernameLdapAttribute(config)))
@@ -43,9 +42,9 @@ fun constructAdLdapConfig(config: Map<String, String>): Map<String, List<String>
             put("bindCredenial", listOf(bindCredential(config)))
             put("customUserSearchFilter", listOf(ldapFilter(config)))
             put("searchScope", listOf(searchScope(config)))
-            put("validatePasswordPolicy", listOf(validatePasswordPolicy(config).toString()))
+            put("validatePasswordPolicy", listOf(validatePasswordPolicy(config)))
             put("useTruststoreSpi", listOf(useTruststoreSPI(config)))
-            put("connectionPooling", listOf(connectionPooling(config).toString()))
+            put("connectionPooling", listOf(connectionPooling(config)))
             put("connectionPoolingAuthentication", listOf())
             put("connectionPoolingDebug", listOf())
             put("connectionPoolingInitSize", listOf())
@@ -55,13 +54,13 @@ fun constructAdLdapConfig(config: Map<String, String>): Map<String, List<String>
             put("connectionPoolingTimeout", listOf())
             put("connectionTimeout", listOf(connectionTimeout(config)))
             put("readTimeout", listOf(readTimeout(config)))
-            put("pagination", listOf(pagination(config).toString()))
-            put("allowKerberosAuthentication", listOf(allowKerberosAuthentication(config).toString()))
+            put("pagination", listOf(pagination(config)))
+            put("allowKerberosAuthentication", listOf(allowKerberosAuthentication(config)))
             put("serverPrincipal", listOf())
             put("keyTab", listOf())
             put("kerberosRealm", listOf())
             put("debug", listOf("false"))
-            put("useKerberosForPasswordAuthentication", listOf(useKerberosAuthentication(config).toString()))
+            put("useKerberosForPasswordAuthentication", listOf(useKerberosAuthentication(config)))
         }
 
 fun changedSyncPeriod(config: Map<String, String>)=config["changedSyncPeriod"]?:"86400"
