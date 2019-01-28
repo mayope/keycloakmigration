@@ -1,11 +1,10 @@
 package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.AssignRole
 import de.klg71.keycloakmigration.model.Role
-import de.klg71.keycloakmigration.rest.clientRoleByName
-import de.klg71.keycloakmigration.rest.clientUUID
-import de.klg71.keycloakmigration.rest.userUUID
+import de.klg71.keycloakmigration.rest.*
 import org.apache.commons.codec.digest.DigestUtils
 import java.util.Objects.isNull
 
@@ -13,7 +12,7 @@ class RevokeRoleAction(
         private val realm: String,
         private val role: String,
         private val user: String,
-        private val clientId: String?) : Action() {
+        private val clientId: String? = null) : Action() {
 
     private val hash = calculateHash()
 
@@ -31,6 +30,17 @@ class RevokeRoleAction(
 
 
     override fun execute() {
+        if (!client.existsUser(user, realm)) {
+            throw MigrationException("User with name: $user does not exist in realm: $realm!")
+        }
+        if (!client.existsRole(role, realm)) {
+            throw MigrationException("Role with name: $role does not exist in realm: $realm!")
+        }
+        client.userRoles(realm, client.userUUID(user, realm)).run {
+            if (!map { it.name }.contains(role)) {
+                throw MigrationException("User with name: $user in realm: $realm does not have role: $role!")
+            }
+        }
         findRole().run {
             assignRole()
         }.let {

@@ -12,7 +12,7 @@ fun KeycloakClient.userByName(name: String, realm: String) =
         searchByUsername(name, realm)
                 .run {
                     if (isEmpty()) {
-                        throw MigrationException("User with name: $name does not exist in $realm")
+                        throw MigrationException("User with name: $name does not exist in $realm!")
                     }
                     first()
                 }
@@ -24,7 +24,7 @@ fun KeycloakClient.clientById(clientId: String, realm: String): ClientListItem =
         clients(realm)
                 .run {
                     if (isEmpty()) {
-                        throw MigrationException("User with name: $clientId does not exist in $realm")
+                        throw MigrationException("User with name: $clientId does not exist in $realm!")
                     }
                     find { it.clientId == clientId }.let {
                         it ?: throw MigrationException("Client with name $clientId does not exist in realm: $realm!")
@@ -50,6 +50,24 @@ fun KeycloakClient.existsGroup(name: String, realm: String): Boolean =
                         return false
                     }
                     return true
+                }
+
+fun KeycloakClient.existsUser(name: String, realm: String): Boolean =
+        searchUser(name, realm)
+                .run {
+                    if (isEmpty()) {
+                        return false
+                    }
+                    return true
+                }
+
+fun KeycloakClient.existsRole(name: String, realm: String): Boolean =
+        roleByNameResponse(name, realm)
+                .run {
+                    if (isSuccessful()) {
+                        return true
+                    }
+                    return false
                 }
 
 private fun List<GroupListItem>.searchByName(name: String): GroupListItem? {
