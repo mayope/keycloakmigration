@@ -14,6 +14,9 @@ plugins {
     id("net.researchgate.release") version ("2.8.0")
 }
 
+tasks.withType<Wrapper> {
+    gradleVersion = "5.1"
+}
 
 dependencies {
     compile(kotlin("stdlib"))
@@ -38,6 +41,7 @@ dependencies {
     testCompile(kotlin("test-junit"))
     testCompile("org.assertj:assertj-core:3.11.1")
 }
+
 
 repositories {
     jcenter()
