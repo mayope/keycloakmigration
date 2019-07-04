@@ -1,14 +1,15 @@
 # Keycloakmigration
 
-This project is inspired by the database migration tool liquibase.
-It aims to provide a similiar mechanism for Keycloak. There also exists a gradle plugin for automated build pipelines: [keycloakmigrationplugin](https://github.com/klg71/keycloakmigrationplugin).
+This projects aims to automate the configuration of the keycloak authentication provider.
+It is inspired by the database migration tool liquibase.
+The goal is to provide a similar mechanism for Keycloak. There also exists a gradle plugin for automated build pipelines: [keycloakmigrationplugin](https://github.com/klg71/keycloakmigrationplugin).
 
 # Usage
 Then migration can simply be invoked through the jar.
 
-    java -jar keycloakmigration.jar
+    java -jar keycloakmigration.jar --help
 
-    usage: [-h] [-u USER] [-p PASSWORD] [-b BASEURL] [MIGRATION-FILE]
+    usage: [-h] [-u USER] [-p PASSWORD] [-b BASEURL] [MIGRATION-FILE] [-r REALM]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -21,9 +22,16 @@ Then migration can simply be invoked through the jar.
       -b BASEURL,           Base url of keycloak server, defaulting to
       --baseurl BASEURL     http://localhost:18080/auth.
 
+      -r REALM,             Realm to use for migration, defaulting to master
+      --realm REALM
 
-positional arguments:
-  MIGRATION-FILE        File to migrate, defaulting to keycloak-changelog.yml
+
+    positional arguments:
+      MIGRATION-FILE        File to migrate, defaulting to keycloak-changelog.yml
+
+
+    positional arguments:
+      MIGRATION-FILE        File to migrate, defaulting to keycloak-changelog.yml
 
 # Migration Details
 Migrations are controlled through the changelog. It contains the changeSets used to execute the migration.
