@@ -1,10 +1,8 @@
 package de.klg71.keycloakmigration.rest
 
 import de.klg71.keycloakmigration.model.*
-import feign.Headers
-import feign.Param
-import feign.RequestLine
-import feign.Response
+import de.klg71.keycloakmigration.model.Client
+import feign.*
 import java.util.*
 
 interface KeycloakClient {
@@ -98,13 +96,21 @@ interface KeycloakClient {
 
     @RequestLine("POST /admin/realms/{realm}/clients")
     @Headers("Content-Type: application/json; charset=utf-8")
+    @Body("{content}")
+    fun importClient(@Param("content") importClientRepresentation: String, @Param("realm") realm: String): Response
+
+    @RequestLine("POST /admin/realms/{realm}/clients")
+    @Headers("Content-Type: application/json; charset=utf-8")
     fun addClient(addClient: AddClient, @Param("realm") realm: String): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}")
-    fun deleteClient(@Param("client-id") roleId: UUID, @Param("realm") realm: String)
+    fun deleteClient(@Param("client-id") clientId: UUID, @Param("realm") realm: String)
 
     @RequestLine("GET /admin/realms/{realm}/components?parent={realm}&type=org.keycloak.storage.UserStorageProvider")
     fun userFederations(@Param("realm") realm: String): List<UserFederationItem>
+
+    @RequestLine("GET /admin/realms/{realm}/groups/{group-id}")
+    fun group(@Param("realm") realm: String, @Param("group-id") groupId:UUID): Group
 
     @RequestLine("POST /admin/realms/{realm}/groups")
     @Headers("Content-Type: application/json; charset=utf-8")
@@ -119,6 +125,10 @@ interface KeycloakClient {
 
     @RequestLine("GET /admin/realms/{realm}/groups?search={search}")
     fun searchGroup(@Param("search") search: String, @Param("realm") realm: String): List<GroupListItem>
+
+    @RequestLine("PUT /admin/realms/{realm}/groups/{group-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateGroup(updateGroup: UpdateGroup, @Param("realm") realm: String, @Param("group-id") groupId:UUID): Response
 
     @RequestLine("POST /admin/realms/{realm}/components")
     @Headers("Content-Type: application/json; charset=utf-8")

@@ -4,8 +4,9 @@ includes:
 - path: changesets/03_roles.yml
 - path: changesets/04_revoke_roles.yml
 - path: changesets/05_add_delete_role.yml
-- path: changesets/06_add_ldap.yml
 - path: changesets/07_add_delete_group.yml
 - path: changesets/08_add_delete_realm.yml
 - path: changesets/09_add_delete_user.yml
+- path: changesets/10_import_client.yml
+- path: changesets/11_update_group.yml
 

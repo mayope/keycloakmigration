@@ -1,0 +1,9 @@
+id: update-group
+author: klg71
+changes:
+  - updateGroup:
+      realm: master
+      name: child1
+      attributes:
+        lkz:
+          - "1234"

@@ -81,7 +81,9 @@ artifactory {
     })
 }
 
-tasks {
+tasks{
+
+    val keycloakVersion = "4.8.0.Final"
 
     withType(Jar::class) {
         manifest {
@@ -97,22 +99,22 @@ tasks {
 
     register<Download>("downloadKeycloak") {
         description = "Download local keycloak distribution for testing purposes"
-        src("https://downloads.jboss.org/keycloak/4.7.0.Final/keycloak-4.7.0.Final.zip")
-        dest("$buildDir/keycloak.zip")
+        src("https://downloads.jboss.org/keycloak/$keycloakVersion/keycloak-$keycloakVersion.zip")
+        dest("$buildDir/keycloak-$keycloakVersion.zip")
         overwrite(false)
     }
     register<Copy>("setupKeycloak") {
         dependsOn("downloadKeycloak")
         description = "Setup local keycloak for testing purposes"
 
-        from(zipTree("$buildDir/keycloak.zip"))
+        from(zipTree("$buildDir/keycloak-$keycloakVersion.zip"))
         into("keycloak")
     }
     register("startLocalKeycloak") {
         group = "keycloakmigration"
         description = "Starts local keycloak"
 
-        if (!File("keycloak").exists()) {
+        if (!File("keycloak/keycloak-$keycloakVersion").exists()) {
             dependsOn("setupKeycloak")
         }
 
@@ -132,15 +134,16 @@ tasks {
         finalizedBy("execLinuxKeycloak")
     }
     register<Exec>("addLinuxAdminUser") {
-        workingDir("keycloak/keycloak-4.7.0.Final/bin")
+        workingDir("keycloak/keycloak-$keycloakVersion/bin")
         commandLine("sh", "add-user-keycloak.sh", "-r", "master", "-u", "admin", "-p", "admin")
         isIgnoreExitValue = true
         standardOutput = System.out
     }
 
     register<Exec>("addWindowsAdminUser") {
-        workingDir("keycloak/keycloak-4.7.0.Final/bin")
+        workingDir("keycloak/keycloak-$keycloakVersion/bin")
         commandLine("cmd", "/c", "add-user-keycloak.bat", "-r", "master", "-u", "admin", "-p", "admin")
+        environment("JAVA_OPTS","--add-modules=java.se")
         environment("NOPAUSE", "true")
         isIgnoreExitValue = true
         standardOutput = System.out
@@ -161,7 +164,7 @@ tasks {
     register("execWindowsKeycloak") {
         doLast {
             ProcessBuilder("cmd", "/c", "standalone.bat", "-Djboss.socket.binding.port-offset=10000", ">", "output.txt").run {
-                directory(File("keycloak/keycloak-4.7.0.Final/bin"))
+                directory(File("keycloak/keycloak-$keycloakVersion/bin"))
                 println("Starting local Keycloak on windows")
                 environment()["NOPAUSE"] = "true"
                 start()
@@ -171,7 +174,7 @@ tasks {
     }
     register("execLinuxKeycloak") {
         doLast {
-            ProcessBuilder("keycloak/keycloak-4.7.0.Final/bin/standalone.sh", "-Djboss.socket.binding.port-offset=10000").run {
+            ProcessBuilder("keycloak/keycloak-$keycloakVersion/bin/standalone.sh", "-Djboss.socket.binding.port-offset=10000").run {
                 println("Starting local Keycloak on linux")
                 start()
                 waitForKeycloak()
@@ -189,14 +192,14 @@ tasks {
     }
     register<Exec>("stopWindowsKeycloak") {
         // Use jboss cli to shutdown local server
-        workingDir("keycloak/keycloak-4.7.0.Final/bin")
+        workingDir("keycloak/keycloak-$keycloakVersion/bin")
         commandLine("cmd", "/c", "jboss-cli.bat", "--connect", "--command=:shutdown", "--controller=127.0.0.1:19990")
         environment("NOPAUSE", "true")
         standardOutput = System.out
     }
 
     register<Exec>("stopLinuxKeycloak") {
-        workingDir("keycloak/keycloak-4.7.0.Final/bin")
+        workingDir("keycloak/keycloak-$keycloakVersion/bin")
         commandLine("sh", "jboss-cli.sh", "--connect", "--command=:shutdown", "--controller=127.0.0.1:19990")
         standardOutput = System.out
     }

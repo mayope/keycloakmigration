@@ -8,13 +8,14 @@ import de.klg71.keycloakmigration.model.Attributes
 import de.klg71.keycloakmigration.model.ChangeLog
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.rest.KeycloakClient
-import org.apache.commons.codec.digest.DigestUtils
+import org.apache.commons.codec.digest.DigestUtils.sha256Hex
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.slf4j.LoggerFactory
 import java.util.*
+import java.util.Objects.isNull
 
-class KeycloakMigrationExecute(private val migrationFile: String) : KoinComponent {
+class KeycloakMigrationExecute(private val migrationFile: String, private val realm:String) : KoinComponent {
     private val yamlObjectMapper by inject<ObjectMapper>(name = "yamlObjectMapper")
     private val client by inject<KeycloakClient>()
     private val migrationUserId by inject<UUID>(name = "migrationUserId")
@@ -33,7 +34,7 @@ class KeycloakMigrationExecute(private val migrationFile: String) : KoinComponen
                 doChange(change)
             }
         } catch (e: Throwable) {
-            LOG.info("Migration were unsuccessful see errors above!", e)
+            LOG.error("Migration were unsuccessful see errors above!", e)
         }
 
     }
@@ -63,7 +64,7 @@ class KeycloakMigrationExecute(private val migrationFile: String) : KoinComponen
         changes.forEach { builder.append(it.hash()) }
         builder.toString()
     }.let {
-        DigestUtils.sha256Hex(it)
+        sha256Hex(it)
     }!!
 
     private fun changesTodo(): List<ChangeSet> =
@@ -95,12 +96,12 @@ class KeycloakMigrationExecute(private val migrationFile: String) : KoinComponen
                     ?: throw RuntimeException("File $fileName not found."))
 
     private fun writeChangesToUser(changes: ChangeSet) {
-        client.user(migrationUserId, "master").run {
+        client.user(migrationUserId, realm).run {
             userAttributes().run {
                 addMigration(changes)
             }.let {
                 client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
-                        notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName), "master")
+                        notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName), realm)
             }
         }
     }
@@ -119,8 +120,8 @@ class KeycloakMigrationExecute(private val migrationFile: String) : KoinComponen
     private fun Attributes.migrations() = get("migrations") ?: emptyList()
 
     private fun getMigrationsHashes(): List<String> =
-            client.user(migrationUserId, "master").run {
-                if (Objects.isNull(attributes)) {
+            client.user(migrationUserId, realm).run {
+                if (isNull(attributes)) {
                     return emptyList()
                 }
                 if ("migrations" !in attributes!!) {

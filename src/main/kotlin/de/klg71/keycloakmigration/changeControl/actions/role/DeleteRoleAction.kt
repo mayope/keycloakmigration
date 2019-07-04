@@ -38,8 +38,14 @@ class DeleteRoleAction(
 
 
     override fun execute() {
-        if(!client.roleExistsByName(name, realm)){
-            throw MigrationException("Role with name: $name does not exist in realm: $realm!")
+        if (clientId != null) {
+            if (!client.roleExistsByName(name, realm, clientId)) {
+                throw MigrationException("Role with name: $name does not exist in realm: $realm!")
+            }
+        }else {
+            if (!client.roleExistsByName(name, realm)) {
+                throw MigrationException("Role with name: $name does not exist in realm: $realm!")
+            }
         }
         findRole().run {
             deletedRole = this

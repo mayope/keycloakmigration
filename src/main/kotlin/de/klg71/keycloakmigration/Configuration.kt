@@ -21,18 +21,18 @@ import feign.jackson.JacksonEncoder
 import feign.slf4j.Slf4jLogger
 import org.koin.dsl.module.module
 
-fun myModule(adminUser: String, adminPassword: String, baseUrl: String) = module {
+fun myModule(adminUser: String, adminPassword: String, baseUrl: String, realm: String) = module {
     single("default") { initObjectMapper() }
     single("yamlObjectMapper") { initYamlObjectMapper() }
     single { initKeycloakLoginClient(get("default"), baseUrl) }
-    single { TokenHolder(get(), adminUser, adminPassword) }
+    single { TokenHolder(get(), adminUser, adminPassword, realm) }
     single { initFeignClient(get("default"), get(), baseUrl) }
     single("migrationUserId") { loadCurrentUser(get()) }
 }
 
 
-private class TokenHolder(client: KeycloakLoginClient, adminUser: String, adminPassword: String) {
-    val token: AccessToken = client.login("password", "admin-cli", adminUser, adminPassword)
+private class TokenHolder(client: KeycloakLoginClient, adminUser: String, adminPassword: String, realm: String) {
+    val token: AccessToken = client.login(realm, "password", "admin-cli", adminUser, adminPassword)
 }
 
 private fun kotlinObjectMapper() = ObjectMapper(YAMLFactory()).apply {

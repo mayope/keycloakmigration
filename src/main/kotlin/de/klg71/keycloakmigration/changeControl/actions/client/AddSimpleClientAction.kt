@@ -17,7 +17,7 @@ class AddSimpleClientAction(
 
     private lateinit var clientUuid: UUID
 
-    private val addUser = addClient()
+    private val addClient = addClient()
 
     private fun addClient() = AddSimpleClient(clientId, enabled, attributes, protocol, redirectUris)
 
@@ -47,7 +47,7 @@ class AddSimpleClientAction(
 
 
     override fun execute() {
-        client.addSimpleClient(addUser, realm).run {
+        client.addSimpleClient(addClient, realm).run {
             clientUuid = extractLocationUUID()
         }
     }

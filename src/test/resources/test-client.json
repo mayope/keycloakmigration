@@ -1,0 +1,150 @@
+{
+  "id": "f5631da6-514d-49b1-a423-0edd3d1d2402",
+  "clientId": "test-client",
+  "surrogateAuthRequired": false,
+  "enabled": true,
+  "clientAuthenticatorType": "client-secret",
+  "secret": "**********",
+  "redirectUris": [],
+  "webOrigins": [],
+  "notBefore": 0,
+  "bearerOnly": false,
+  "consentRequired": false,
+  "standardFlowEnabled": false,
+  "implicitFlowEnabled": false,
+  "directAccessGrantsEnabled": true,
+  "serviceAccountsEnabled": false,
+  "publicClient": true,
+  "frontchannelLogout": false,
+  "protocol": "openid-connect",
+  "attributes": {
+    "saml.assertion.signature": "false",
+    "saml.multivalued.roles": "false",
+    "saml.force.post.binding": "false",
+    "saml.encrypt": "false",
+    "saml.server.signature": "false",
+    "saml.server.signature.keyinfo.ext": "false",
+    "exclude.session.state.from.auth.response": "false",
+    "saml_force_name_id_format": "false",
+    "saml.client.signature": "false",
+    "tls.client.certificate.bound.access.tokens": "false",
+    "saml.authnstatement": "false",
+    "display.on.consent.screen": "false",
+    "saml.onetimeuse.condition": "false"
+  },
+  "authenticationFlowBindingOverrides": {},
+  "fullScopeAllowed": true,
+  "nodeReRegistrationTimeout": -1,
+  "protocolMappers": [
+    {
+      "id": "e9417094-f81b-468e-9d7c-711a70448bc3",
+      "name": "username",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-property-mapper",
+      "consentRequired": false,
+      "config": {
+        "userinfo.token.claim": "true",
+        "user.attribute": "username",
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "claim.name": "preferred_username",
+        "jsonType.label": "String"
+      }
+    },
+    {
+      "id": "b4d58c3e-52f4-4244-ba80-0d848b605184",
+      "name": "aud client api consumer",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-audience-mapper",
+      "consentRequired": false,
+      "config": {
+        "included.client.audience": "coco-api-consumer",
+        "id.token.claim": "false",
+        "access.token.claim": "true"
+      }
+    },
+    {
+      "id": "11536641-f4bd-49ca-9aff-3c76b000a5a8",
+      "name": "full name",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-full-name-mapper",
+      "consentRequired": false,
+      "config": {
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "userinfo.token.claim": "true"
+      }
+    },
+    {
+      "id": "898301c4-6f5d-472b-a7c8-34ee1f04f2c9",
+      "name": "family name",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-property-mapper",
+      "consentRequired": false,
+      "config": {
+        "userinfo.token.claim": "true",
+        "user.attribute": "lastName",
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "claim.name": "family_name",
+        "jsonType.label": "String"
+      }
+    },
+    {
+      "id": "abc81be3-6847-4a5e-b62e-6e5a7a88fd17",
+      "name": "given name",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-property-mapper",
+      "consentRequired": false,
+      "config": {
+        "userinfo.token.claim": "true",
+        "user.attribute": "firstName",
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "claim.name": "given_name",
+        "jsonType.label": "String"
+      }
+    },
+    {
+      "id": "1a7e2cf5-eb65-49f9-96f4-fd844954393c",
+      "name": "arteria-roles",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-realm-role-mapper",
+      "consentRequired": false,
+      "config": {
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "claim.name": "arteria.roles",
+        "multivalued": "true",
+        "userinfo.token.claim": "true"
+      }
+    },
+    {
+      "id": "9c327dd6-938b-49e1-a4c6-6f35db6759cc",
+      "name": "email",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-property-mapper",
+      "consentRequired": false,
+      "config": {
+        "userinfo.token.claim": "true",
+        "user.attribute": "email",
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "claim.name": "email",
+        "jsonType.label": "String"
+      }
+    }
+  ],
+  "defaultClientScopes": [
+    "web-origins",
+    "role_list",
+    "profile",
+    "roles",
+    "email"
+  ],
+  "optionalClientScopes": [
+    "address",
+    "phone",
+    "offline_access"
+  ]
+}

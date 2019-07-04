@@ -227,6 +227,28 @@ Removes a group from keycloak. Fails if the group does not exist.
         realm: master
         name: testUser
 
+### updateGroup
+Updates a group from keycloak. Fails if the group does not exist.
+
+#### Parameters
+- realm: String, not optional
+- name: String, not optional
+- attributes: Map<String,List<String>>, optional, default=existing attributes
+- realmRoles: List<String>, optional, default=existing realm roles
+- clientRoles: Map<String,List<String>>, optional, default=existing client roles
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+      - updateGroup:
+          realm: master
+          name: child1
+          attributes:
+            lkz:
+              - "1234"
+        
+
 ## Role Migrations
 ### addRole
 ### deleteRole
@@ -234,6 +256,20 @@ Removes a group from keycloak. Fails if the group does not exist.
 ## Client Migrations
 ### addSimpleClient
 ### deleteClient
+### importClient
+Imports a client using the json representation.
+
+#### Parameters
+- realm: String, not optional
+- clientRepresentationJsonFilename: String, not optional
+
+#### Example
+    id: import-client
+    author: klg71
+    changes:
+    - importClient:
+          realm: master
+          clientRepresentationJsonFilename: client.json
 
 ## User Federation Migrations
 ### AddAdLdap
@@ -248,3 +284,4 @@ To start the local development keycloak you can just use the task ```startLocalK
 - Add gradle plugin
 - Add sophisticated unit and integration Tests
 - Test Keycloak with PostgreSQL instead of H2 backend.
+- Add token refresh logic

@@ -2,7 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.group
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.AddGroup
-import de.klg71.keycloakmigration.model.GroupListItem
+import de.klg71.keycloakmigration.model.Group
 import de.klg71.keycloakmigration.rest.groupByName
 import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
@@ -13,7 +13,7 @@ class DeleteGroupAction(
 
 
     private fun addGroup() = AddGroup(name)
-    lateinit var group: GroupListItem
+    lateinit var group: Group
 
     private val hash = calculateHash()
 

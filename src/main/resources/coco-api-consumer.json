@@ -1,0 +1,150 @@
+{
+  "id": "f77f6c5c-9970-4eab-a139-6870b9d32efa",
+  "clientId": "coco-api-consumer",
+  "surrogateAuthRequired": false,
+  "enabled": true,
+  "clientAuthenticatorType": "client-secret",
+  "secret": "**********",
+  "redirectUris": [],
+  "webOrigins": [],
+  "notBefore": 0,
+  "bearerOnly": false,
+  "consentRequired": false,
+  "standardFlowEnabled": false,
+  "implicitFlowEnabled": false,
+  "directAccessGrantsEnabled": true,
+  "serviceAccountsEnabled": false,
+  "publicClient": true,
+  "frontchannelLogout": false,
+  "protocol": "openid-connect",
+  "attributes": {
+    "saml.assertion.signature": "false",
+    "saml.multivalued.roles": "false",
+    "saml.force.post.binding": "false",
+    "saml.encrypt": "false",
+    "saml.server.signature": "false",
+    "saml.server.signature.keyinfo.ext": "false",
+    "exclude.session.state.from.auth.response": "false",
+    "saml_force_name_id_format": "false",
+    "saml.client.signature": "false",
+    "tls.client.certificate.bound.access.tokens": "false",
+    "saml.authnstatement": "false",
+    "display.on.consent.screen": "false",
+    "saml.onetimeuse.condition": "false"
+  },
+  "authenticationFlowBindingOverrides": {},
+  "fullScopeAllowed": true,
+  "nodeReRegistrationTimeout": -1,
+  "protocolMappers": [
+    {
+      "id": "8e4c2735-e6d5-46db-a536-8c152938028f",
+      "name": "username",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-property-mapper",
+      "consentRequired": false,
+      "config": {
+        "userinfo.token.claim": "true",
+        "user.attribute": "username",
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "claim.name": "preferred_username",
+        "jsonType.label": "String"
+      }
+    },
+    {
+      "id": "3a6225b1-0256-4117-af52-0a7f79563ba5",
+      "name": "aud coco api consumer",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-audience-mapper",
+      "consentRequired": false,
+      "config": {
+        "included.client.audience": "coco-api-consumer",
+        "id.token.claim": "false",
+        "access.token.claim": "true"
+      }
+    },
+    {
+      "id": "23d642d8-e590-43c9-b4f2-e303585a96ee",
+      "name": "full name",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-full-name-mapper",
+      "consentRequired": false,
+      "config": {
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "userinfo.token.claim": "true"
+      }
+    },
+    {
+      "id": "898301c4-6f5d-472b-a7c8-34ee1f04f2c9",
+      "name": "family name",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-property-mapper",
+      "consentRequired": false,
+      "config": {
+        "userinfo.token.claim": "true",
+        "user.attribute": "lastName",
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "claim.name": "family_name",
+        "jsonType.label": "String"
+      }
+    },
+    {
+      "id": "d342ca79-ef13-4098-8767-9e39c024cd47",
+      "name": "given name",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-property-mapper",
+      "consentRequired": false,
+      "config": {
+        "userinfo.token.claim": "true",
+        "user.attribute": "firstName",
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "claim.name": "given_name",
+        "jsonType.label": "String"
+      }
+    },
+    {
+      "id": "e6464010-5b44-4c7a-babc-7bf5aef9ebd1",
+      "name": "arteria-roles",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-realm-role-mapper",
+      "consentRequired": false,
+      "config": {
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "claim.name": "arteria.roles",
+        "multivalued": "true",
+        "userinfo.token.claim": "true"
+      }
+    },
+    {
+      "id": "d2e01884-9dca-4a59-94f0-fc4b35c4c696",
+      "name": "email",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-usermodel-property-mapper",
+      "consentRequired": false,
+      "config": {
+        "userinfo.token.claim": "true",
+        "user.attribute": "email",
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "claim.name": "email",
+        "jsonType.label": "String"
+      }
+    }
+  ],
+  "defaultClientScopes": [
+    "web-origins",
+    "role_list",
+    "profile",
+    "roles",
+    "email"
+  ],
+  "optionalClientScopes": [
+    "address",
+    "phone",
+    "offline_access"
+  ]
+}

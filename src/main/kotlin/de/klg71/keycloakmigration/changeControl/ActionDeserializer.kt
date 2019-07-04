@@ -11,8 +11,10 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.AddAdLdapAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
+import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.DeleteGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.group.UpdateGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
@@ -68,6 +70,8 @@ class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializ
 
                 "addRealm" -> objectMapper.treeToValue<AddRealmAction>(entry.value)
                 "deleteRealm" -> objectMapper.treeToValue<DeleteRealmAction>(entry.value)
+                "importClient" -> objectMapper.treeToValue<ImportClientAction>(entry.value)
+                "updateGroup" -> objectMapper.treeToValue<UpdateGroupAction>(entry.value)
 
                 else -> throw ParseException("Unkown Change type: ${entry.key}")
             }

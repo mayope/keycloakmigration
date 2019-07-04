@@ -1,0 +1,6 @@
+id: import-client
+author: klg71
+changes:
+- importClient:
+      realm: master
+      clientRepresentationJsonFilename: coco-api-consumer.json

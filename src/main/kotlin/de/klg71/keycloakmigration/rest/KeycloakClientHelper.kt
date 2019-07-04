@@ -38,6 +38,8 @@ fun KeycloakClient.groupByName(name: String, realm: String) =
                         throw MigrationException("Group with name: $name does not exist in realm: $realm!")
                     }
                     searchByName(name) ?: throw MigrationException("Group with name: $name does not exist in $realm")
+                }.run {
+                    group(realm,id)
                 }
 
 fun KeycloakClient.existsGroup(name: String, realm: String): Boolean =
@@ -114,3 +116,5 @@ fun KeycloakClient.realmById(id: String) =
 fun KeycloakClient.realmExistsById(id: String) = realms().any { it.id == id }
 
 fun KeycloakClient.roleExistsByName(name: String, realm: String) = roles(realm).any { it.name == name }
+
+fun KeycloakClient.roleExistsByName(name: String, realm: String, client: String) = clientRoles(realm, clientById(client, realm).id).any { it.name == name }

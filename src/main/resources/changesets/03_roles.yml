@@ -5,7 +5,3 @@ changes:
     realm: master
     role: test3
     user: test
-- assignRole:
-    realm: master
-    role: test3
-    user: test

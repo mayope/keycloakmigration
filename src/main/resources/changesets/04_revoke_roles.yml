@@ -5,7 +5,3 @@ changes:
     realm: master
     role: test3
     user: test
-- revokeRole:
-    realm: master
-    role: test3
-    user: test
