@@ -21,18 +21,18 @@ import feign.jackson.JacksonEncoder
 import feign.slf4j.Slf4jLogger
 import org.koin.dsl.module.module
 
-fun myModule(adminUser: String, adminPassword: String, baseUrl: String, realm: String) = module {
+fun myModule(adminUser: String, adminPassword: String, baseUrl: String, realm: String, clientId:String) = module {
     single("default") { initObjectMapper() }
     single("yamlObjectMapper") { initYamlObjectMapper() }
     single { initKeycloakLoginClient(get("default"), baseUrl) }
-    single { TokenHolder(get(), adminUser, adminPassword, realm) }
+    single { TokenHolder(get(), adminUser, adminPassword, realm, clientId) }
     single { initFeignClient(get("default"), get(), baseUrl) }
-    single("migrationUserId") { loadCurrentUser(get()) }
+    single("migrationUserId") { loadCurrentUser(get(), adminUser, realm) }
 }
 
 
-private class TokenHolder(client: KeycloakLoginClient, adminUser: String, adminPassword: String, realm: String) {
-    val token: AccessToken = client.login(realm, "password", "admin-cli", adminUser, adminPassword)
+private class TokenHolder(client: KeycloakLoginClient, adminUser: String, adminPassword: String, realm: String, clientId:String) {
+    val token: AccessToken = client.login(realm, "password", clientId, adminUser, adminPassword)
 }
 
 private fun kotlinObjectMapper() = ObjectMapper(YAMLFactory()).apply {
@@ -52,7 +52,7 @@ private fun initKeycloakLoginClient(objectMapper: ObjectMapper, baseUrl: String)
     encoder(FormEncoder(JacksonEncoder(objectMapper)))
     decoder(JacksonDecoder(objectMapper))
     logger(Slf4jLogger())
-    logLevel(Logger.Level.NONE)
+    logLevel(Logger.Level.FULL)
     target(KeycloakLoginClient::class.java, baseUrl)
 }
 
@@ -71,4 +71,4 @@ private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder
 
 private fun initObjectMapper() = ObjectMapper().registerModule(KotlinModule())!!
 
-private fun loadCurrentUser(client: KeycloakClient) = client.userByName("admin", "master").id
+private fun loadCurrentUser(client: KeycloakClient, userName:String, realm:String) = client.userByName(userName, realm).id

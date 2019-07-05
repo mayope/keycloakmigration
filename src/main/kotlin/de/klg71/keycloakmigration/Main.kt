@@ -14,6 +14,7 @@ const val defaultAdminUser = "admin"
 const val defaultAdminPassword = "admin"
 const val defaultKeycloakServer = "http://localhost:18080/auth"
 const val defaultRealm = "master"
+const val defaultClientId = "admin-cli"
 
 interface MigrationArgs {
     fun adminUser(): String
@@ -21,6 +22,7 @@ interface MigrationArgs {
     fun baseUrl(): String
     fun migrationFile(): String
     fun realm(): String
+    fun clientId(): String
 }
 
 class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
@@ -42,6 +44,9 @@ class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
     private val realm by parser.storing(names = *arrayOf("-r", "--realm"), help = "Realm to use for migration, defaulting to $defaultRealm")
             .default(defaultRealm)
 
+    private val clientId by parser.storing(names = *arrayOf("-c", "--client"), help = "Client to use for migration, defaulting to $defaultRealm")
+            .default(defaultClientId)
+
     override fun adminUser() = adminUser
 
     override fun adminPassword() = adminPassword
@@ -52,6 +57,8 @@ class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
 
     override fun realm() = realm
 
+    override fun clientId() = clientId
+
 }
 
 fun main(args: Array<String>) = mainBody {
@@ -61,7 +68,7 @@ fun main(args: Array<String>) = mainBody {
 fun migrate(commandLineMigrationArgs: MigrationArgs) {
     commandLineMigrationArgs.run {
         try {
-            startKoin(listOf(myModule(adminUser(), adminPassword(), baseUrl(), realm())), logger = KoinLogger(KOIN_LOGGER))
+            startKoin(listOf(myModule(adminUser(), adminPassword(), baseUrl(), realm(), clientId())), logger = KoinLogger(KOIN_LOGGER))
             KeycloakMigrationExecute(migrationFile(), realm())
         } finally {
             stopKoin()

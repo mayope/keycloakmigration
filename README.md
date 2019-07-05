@@ -10,6 +10,7 @@ Then migration can simply be invoked through the jar.
     java -jar keycloakmigration.jar --help
 
     usage: [-h] [-u USER] [-p PASSWORD] [-b BASEURL] [MIGRATION-FILE] [-r REALM]
+           [-c CLIENT]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -25,13 +26,9 @@ Then migration can simply be invoked through the jar.
       -r REALM,             Realm to use for migration, defaulting to master
       --realm REALM
 
+      -c CLIENT,            Client to use for migration, defaulting to master
+      --client CLIENT
 
-    positional arguments:
-      MIGRATION-FILE        File to migrate, defaulting to keycloak-changelog.yml
-
-
-    positional arguments:
-      MIGRATION-FILE        File to migrate, defaulting to keycloak-changelog.yml
 
 # Migration Details
 Migrations are controlled through the changelog. It contains the changeSets used to execute the migration.
