@@ -3,6 +3,7 @@ package de.klg71.keycloakmigration.changeControl.actions.client
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.rest.extractLocationUUID
 import org.apache.commons.codec.digest.DigestUtils
+import java.io.FileInputStream
 import java.util.*
 
 class ImportClientAction(
@@ -16,7 +17,7 @@ class ImportClientAction(
 
 
     private fun readJsonContent() =
-            loader.getResourceAsStream(clientRepresentationJsonFilename).bufferedReader().use { it.readText()}
+            FileInputStream(clientRepresentationJsonFilename).bufferedReader().use { it.readText() }
 
     private val hash = calculateHash()
 

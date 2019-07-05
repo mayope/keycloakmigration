@@ -12,10 +12,12 @@ import org.apache.commons.codec.digest.DigestUtils.sha256Hex
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 import org.slf4j.LoggerFactory
+import java.io.File
+import java.io.FileInputStream
 import java.util.*
 import java.util.Objects.isNull
 
-class KeycloakMigrationExecute(private val migrationFile: String, private val realm:String) : KoinComponent {
+class KeycloakMigrationExecute(private val migrationFile: String, private val realm: String) : KoinComponent {
     private val yamlObjectMapper by inject<ObjectMapper>(name = "yamlObjectMapper")
     private val client by inject<KeycloakClient>()
     private val migrationUserId by inject<UUID>(name = "migrationUserId")
@@ -91,9 +93,12 @@ class KeycloakMigrationExecute(private val migrationFile: String, private val re
                 readYamlFile<ChangeSet>(it.path)
             }
 
-    private inline fun <reified T> readYamlFile(fileName: String): T =
-            yamlObjectMapper.readValue(loader.getResourceAsStream(fileName)
-                    ?: throw RuntimeException("File $fileName not found."))
+    private inline fun <reified T> readYamlFile(fileName: String): T {
+        if (!File(fileName).exists()) {
+            throw RuntimeException("File $fileName not found.")
+        }
+        return yamlObjectMapper.readValue(FileInputStream(fileName))
+    }
 
     private fun writeChangesToUser(changes: ChangeSet) {
         client.user(migrationUserId, realm).run {

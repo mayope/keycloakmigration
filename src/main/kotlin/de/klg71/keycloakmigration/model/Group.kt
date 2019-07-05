@@ -8,5 +8,5 @@ data class Group (val id:UUID,
                   val attributes:Map<String,List<String>>,
                   val realmRoles: List<String>,
                   val clientRoles: Map<String,List<String>>,
-                  val subGroups: List<String>,
-                  val access: Map<String,Boolean>)
+                  val subGroups: List<Group>,
+                  val access: Map<String,Boolean>?)

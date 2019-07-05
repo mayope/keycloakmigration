@@ -33,10 +33,12 @@ Then migration can simply be invoked through the jar.
 # Migration Details
 Migrations are controlled through the changelog. It contains the changeSets used to execute the migration.
 
+(Currently are file references are only allowed in the same directory)
+
     
     includes:
-      - path: changesets/01_initial.yml
-      - path: changesets/02_second.yml
+      - path: 01_initial.yml
+      - path: 02_second.yml
 
 A changeset may then look like this:
 
@@ -290,3 +292,4 @@ To start the local development keycloak you can just use the task ```startLocalK
 - Add sophisticated unit and integration Tests
 - Test Keycloak with PostgreSQL instead of H2 backend.
 - Add token refresh logic
+- Allow relative file references

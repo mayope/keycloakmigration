@@ -7,4 +7,4 @@ data class UpdateGroup(val name: String,
                        val access: Map<String, Boolean>,
                        val clientRoles: Map<String,List<String>>,
                        val realmRoles: List<String>,
-                       val subGroups: List<String>)
+                       val subGroups: List<Group>)

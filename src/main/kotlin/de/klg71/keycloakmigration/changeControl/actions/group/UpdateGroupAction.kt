@@ -20,7 +20,8 @@ class UpdateGroupAction(
 
     private fun updateGroup() = UpdateGroup(name, group.path,
             attributes ?: group.attributes,
-            group.access,
+            //FIXME
+            group.access!!,
             clientRoles ?: group.clientRoles,
             realmRoles ?: group.realmRoles,
             group.subGroups
@@ -69,7 +70,7 @@ class UpdateGroupAction(
     }
 
     override fun undo() {
-        client.updateGroup(UpdateGroup(group.name, group.path, group.attributes, group.access,
+        client.updateGroup(UpdateGroup(group.name, group.path, group.attributes, group.access!!,
                 group.clientRoles, group.realmRoles, group.subGroups),
                 realm, group.id)
     }
