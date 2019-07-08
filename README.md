@@ -33,12 +33,16 @@ Then migration can simply be invoked through the jar.
 # Migration Details
 Migrations are controlled through the changelog. It contains the changeSets used to execute the migration.
 
-(Currently are file references are only allowed in the same directory)
-
     
     includes:
       - path: 01_initial.yml
       - path: 02_second.yml
+      - path: changes/03_third.yml
+        relativeToFile: true
+
+## Include Parameters
+- path: String, not optional, path to changeset
+- relativeToFile: Boolean, optional, default=true, whether the file should be searched from the working dir or relative to the keycloak changelog file.
 
 A changeset may then look like this:
 
@@ -269,6 +273,7 @@ Imports a client using the json representation.
 #### Parameters
 - realm: String, not optional
 - clientRepresentationJsonFilename: String, not optional
+- relativeToFile: Boolean, optional, default=true
 
 #### Example
     id: import-client
@@ -277,6 +282,7 @@ Imports a client using the json representation.
     - importClient:
           realm: master
           clientRepresentationJsonFilename: client.json
+          relativeTofile: true
 
 ## User Federation Migrations
 ### AddAdLdap
@@ -292,4 +298,4 @@ To start the local development keycloak you can just use the task ```startLocalK
 - Add sophisticated unit and integration Tests
 - Test Keycloak with PostgreSQL instead of H2 backend.
 - Add token refresh logic
-- Allow relative file references
+- Don't use master realm for testing

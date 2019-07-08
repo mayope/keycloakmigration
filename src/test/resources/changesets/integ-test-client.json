@@ -1,10 +1,7 @@
 {
-  "id": "f77f6c5c-9970-4eab-a139-6870b9d32efa",
-  "clientId": "coco-api-consumer",
+  "clientId": "integ-test-client",
   "surrogateAuthRequired": false,
   "enabled": true,
-  "clientAuthenticatorType": "client-secret",
-  "secret": "**********",
   "redirectUris": [],
   "webOrigins": [],
   "notBefore": 0,
@@ -37,7 +34,7 @@
   "nodeReRegistrationTimeout": -1,
   "protocolMappers": [
     {
-      "id": "8e4c2735-e6d5-46db-a536-8c152938028f",
+      "id": "e9417094-f81b-468e-9d7c-711a70448bc3",
       "name": "username",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usermodel-property-mapper",
@@ -52,8 +49,8 @@
       }
     },
     {
-      "id": "3a6225b1-0256-4117-af52-0a7f79563ba5",
-      "name": "aud coco api consumer",
+      "id": "b4d58c3e-52f4-4244-ba80-0d848b605184",
+      "name": "aud client api consumer",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-audience-mapper",
       "consentRequired": false,
@@ -64,7 +61,7 @@
       }
     },
     {
-      "id": "23d642d8-e590-43c9-b4f2-e303585a96ee",
+      "id": "11536641-f4bd-49ca-9aff-3c76b000a5a8",
       "name": "full name",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-full-name-mapper",
@@ -91,7 +88,7 @@
       }
     },
     {
-      "id": "d342ca79-ef13-4098-8767-9e39c024cd47",
+      "id": "abc81be3-6847-4a5e-b62e-6e5a7a88fd17",
       "name": "given name",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usermodel-property-mapper",
@@ -106,7 +103,7 @@
       }
     },
     {
-      "id": "e6464010-5b44-4c7a-babc-7bf5aef9ebd1",
+      "id": "1a7e2cf5-eb65-49f9-96f4-fd844954393c",
       "name": "arteria-roles",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usermodel-realm-role-mapper",
@@ -120,7 +117,7 @@
       }
     },
     {
-      "id": "d2e01884-9dca-4a59-94f0-fc4b35c4c696",
+      "id": "9c327dd6-938b-49e1-a4c6-6f35db6759cc",
       "name": "email",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usermodel-property-mapper",

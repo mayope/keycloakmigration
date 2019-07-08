@@ -4,6 +4,7 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.model.UserAccess
+import de.klg71.keycloakmigration.model.UserCredential
 import de.klg71.keycloakmigration.rest.existsUser
 import de.klg71.keycloakmigration.rest.userByName
 import org.apache.commons.codec.digest.DigestUtils
@@ -20,7 +21,8 @@ class UpdateUserAction(
         private val requiredActions: List<String>? = null,
         private val email: String? = null,
         private val firstName: String? = null,
-        private val lastName: String? = null) : Action() {
+        private val lastName: String? = null,
+        private val credentials: List<UserCredential>? = null) : Action() {
 
     lateinit var user: User
 
@@ -37,7 +39,8 @@ class UpdateUserAction(
             requiredActions ?: user.requiredActions,
             email ?: user.email,
             firstName ?: user.firstName,
-            lastName ?: user.lastName)
+            lastName ?: user.lastName,
+            credentials ?: user.credentials)
 
     private fun userAttributes(): Map<String, List<String>> = user.attributes ?: emptyMap()
 
@@ -55,6 +58,17 @@ class UpdateUserAction(
         append(notBefore)
         append(firstName)
         append(lastName)
+        credentials?.forEach {
+            append(it.algorithm)
+            append(it.config)
+            append(it.counter)
+            append(it.digits)
+            append(it.hashIterations)
+            append(it.hashedSaltedValue)
+            append(it.period)
+            append(it.salt)
+            append(it.type)
+        }
 
         toString()
     }.let {

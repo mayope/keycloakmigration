@@ -39,7 +39,7 @@ class AddUserAttributeAction(
                         user.requiredActions,
                         user.email,
                         user.firstName,
-                        user.lastName)
+                        user.lastName, null)
             }
 
     private fun userAttributes(): Map<String, List<String>> = user.attributes ?: emptyMap()

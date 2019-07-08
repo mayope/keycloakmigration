@@ -14,6 +14,7 @@ import org.koin.standalone.inject
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.FileInputStream
+import java.nio.file.Paths
 import java.util.*
 import java.util.Objects.isNull
 
@@ -63,7 +64,10 @@ class KeycloakMigrationExecute(private val migrationFile: String, private val re
     private fun ChangeSet.hash() = StringBuilder().let { builder ->
         builder.append(author)
         builder.append(id)
-        changes.forEach { builder.append(it.hash()) }
+        changes.forEach {
+            it.path = path
+            builder.append(it.hash())
+        }
         builder.toString()
     }.let {
         sha256Hex(it)
@@ -90,8 +94,25 @@ class KeycloakMigrationExecute(private val migrationFile: String, private val re
 
     private fun changes(fileName: String): List<ChangeSet> =
             readYamlFile<ChangeLog>(fileName).includes.map {
-                readYamlFile<ChangeSet>(it.path)
+                if (it.relativeToFile) {
+                    readYamlFile<ChangeSet>(parentPath(fileName, it.path).toString()).apply {
+                        path = parentPath(fileName, it.path).parent.toString()
+                        changes.forEach { action ->
+                            action.path = path
+                        }
+                    }
+                } else {
+                    readYamlFile<ChangeSet>(it.path).apply {
+                        path = File(it.path).absoluteFile.parent.toString()
+                        changes.forEach { action ->
+                            action.path = path
+                        }
+                    }
+                }
             }
+
+    private fun parentPath(fileName: String, path: String) =
+            Paths.get(File(fileName).absoluteFile.parentFile.absolutePath, path)
 
     private inline fun <reified T> readYamlFile(fileName: String): T {
         if (!File(fileName).exists()) {
@@ -106,7 +127,7 @@ class KeycloakMigrationExecute(private val migrationFile: String, private val re
                 addMigration(changes)
             }.let {
                 client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
-                        notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName), realm)
+                        notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName, null), realm)
             }
         }
     }

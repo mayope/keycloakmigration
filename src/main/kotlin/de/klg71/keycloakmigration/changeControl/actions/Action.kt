@@ -15,6 +15,8 @@ abstract class Action : KoinComponent {
         val LOG = LoggerFactory.getLogger(Action::class.java)!!
     }
 
+    lateinit var path:String
+
     @Suppress("unused")
     protected val client by inject<KeycloakClient>()
 

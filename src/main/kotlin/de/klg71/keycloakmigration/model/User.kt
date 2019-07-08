@@ -1,5 +1,6 @@
 package de.klg71.keycloakmigration.model
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import java.util.*
 
 data class UserAccess(val impersonate: Boolean,
@@ -21,6 +22,8 @@ data class User(val id: UUID,
                 val requiredActions: List<String>,
                 val email: String?,
                 val firstName: String?,
-                val lastName: String?)
+                val lastName: String?,
+                @JsonInclude(JsonInclude.Include.NON_NULL)
+                val credentials:List<UserCredential>?)
 
 typealias Attributes = Map<String, List<String>>

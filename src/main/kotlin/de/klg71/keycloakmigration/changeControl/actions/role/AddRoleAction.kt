@@ -7,7 +7,6 @@ import de.klg71.keycloakmigration.model.Role
 import de.klg71.keycloakmigration.rest.clientRoleByName
 import de.klg71.keycloakmigration.rest.clientUUID
 import de.klg71.keycloakmigration.rest.roleExistsByName
-import de.klg71.keycloakmigration.rest.existsUser
 import org.apache.commons.codec.digest.DigestUtils
 
 class AddRoleAction(

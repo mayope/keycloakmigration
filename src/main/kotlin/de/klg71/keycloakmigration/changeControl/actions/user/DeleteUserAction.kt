@@ -44,7 +44,7 @@ class DeleteUserAction(
     private fun addUser() = AddUser(user.username, user.enabled, user.emailVerified, user.attributes ?: emptyMap())
     private fun updateUser(userUUID: UUID) = User(userUUID, user.createdTimestamp, user.username, user.enabled,
             user.emailVerified, user.attributes, user.notBefore, user.totp, user.access,
-            user.disableableCredentialTypes, user.requiredActions, user.email, user.firstName, user.lastName)
+            user.disableableCredentialTypes, user.requiredActions, user.email, user.firstName, user.lastName, null)
 
     override fun name() = "DeleteUser $name"
 
