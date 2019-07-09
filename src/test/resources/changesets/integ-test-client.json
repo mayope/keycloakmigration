@@ -34,7 +34,6 @@
   "nodeReRegistrationTimeout": -1,
   "protocolMappers": [
     {
-      "id": "e9417094-f81b-468e-9d7c-711a70448bc3",
       "name": "username",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usermodel-property-mapper",
@@ -49,7 +48,6 @@
       }
     },
     {
-      "id": "b4d58c3e-52f4-4244-ba80-0d848b605184",
       "name": "aud client api consumer",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-audience-mapper",
@@ -61,7 +59,6 @@
       }
     },
     {
-      "id": "11536641-f4bd-49ca-9aff-3c76b000a5a8",
       "name": "full name",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-full-name-mapper",
@@ -73,7 +70,6 @@
       }
     },
     {
-      "id": "898301c4-6f5d-472b-a7c8-34ee1f04f2c9",
       "name": "family name",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usermodel-property-mapper",
@@ -88,7 +84,6 @@
       }
     },
     {
-      "id": "abc81be3-6847-4a5e-b62e-6e5a7a88fd17",
       "name": "given name",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usermodel-property-mapper",
@@ -103,7 +98,6 @@
       }
     },
     {
-      "id": "1a7e2cf5-eb65-49f9-96f4-fd844954393c",
       "name": "arteria-roles",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usermodel-realm-role-mapper",
@@ -117,7 +111,6 @@
       }
     },
     {
-      "id": "9c327dd6-938b-49e1-a4c6-6f35db6759cc",
       "name": "email",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usermodel-property-mapper",

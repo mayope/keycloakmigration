@@ -17,25 +17,20 @@ class AddRoleIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testAddRole() {
-        AddRoleAction("master", "integrationTest").executeIt()
+        AddRoleAction(testRealm, "integrationTest").executeIt()
 
-        RoleListItem(UUID.randomUUID(), "integrationTest", "", false, false, "master").let {
-            assertThat(client.roleByName("integrationTest", "master")).isEqualToComparingOnlyGivenFields(it, "name", "description", "clientRole", "composite", "containerId")
+        RoleListItem(UUID.randomUUID(), "integrationTest", "", false, false, testRealm).let {
+            assertThat(client.roleByName("integrationTest", testRealm)).isEqualToComparingOnlyGivenFields(it, "name", "description", "clientRole", "composite", "containerId")
         }
     }
 
     @Test
     fun testAddRoleAlreadyExisting() {
-        AddRoleAction("master", "integrationTest").executeIt()
+        AddRoleAction(testRealm, "integrationTest").executeIt()
         assertThatThrownBy {
-            AddRoleAction("master", "integrationTest").executeIt()
+            AddRoleAction(testRealm, "integrationTest").executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("Role with name: integrationTest already exists in realm: master!")
+                .hasMessage("Role with name: integrationTest already exists in realm: ${testRealm}!")
 
-    }
-
-    @After
-    fun cleanup() {
-        DeleteRoleAction("master", "integrationTest").executeIt()
     }
 }

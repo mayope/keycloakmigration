@@ -17,24 +17,19 @@ class AddGroupIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testAddGroup() {
-        AddGroupAction("master", "integrationTest").executeIt()
+        AddGroupAction(testRealm, "integrationTest").executeIt()
 
         GroupListItem(UUID.randomUUID(), "integrationTest", "integrationTest", listOf()).let {
-            assertThat(client.searchGroup("integrationTest","master")).hasSize(1).usingElementComparatorOnFields("name").contains(it)
+            assertThat(client.searchGroup("integrationTest",testRealm)).hasSize(1).usingElementComparatorOnFields("name").contains(it)
         }
     }
 
     @Test
     fun testAddGroupAlreadyExisting() {
-        AddGroupAction("master", "integrationTest").executeIt()
+        AddGroupAction(testRealm, "integrationTest").executeIt()
         assertThatThrownBy {
-            AddGroupAction("master", "integrationTest").executeIt()
+            AddGroupAction(testRealm, "integrationTest").executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("Group with name: integrationTest already exists in realm: master!")
-    }
-
-    @After
-    fun cleanup() {
-        DeleteGroupAction("master", "integrationTest").executeIt()
+                .hasMessage("Group with name: integrationTest already exists in realm: ${testRealm}!")
     }
 }

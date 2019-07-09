@@ -72,6 +72,11 @@ fun KeycloakClient.existsRole(name: String, realm: String): Boolean =
                     return false
                 }
 
+fun KeycloakClient.existsClientRole(name: String, realm: String, clientId: String): Boolean =
+        clientRoles(realm, clientUUID(clientId, realm)).any {
+            it.name == name
+        }
+
 private fun List<GroupListItem>.searchByName(name: String): GroupListItem? {
     return firstOrNull { it.name == name } ?: map { it.subGroups.searchByName(name) }.filterNotNull().firstOrNull()
 }
@@ -90,6 +95,8 @@ fun KeycloakClient.clientRoleByName(name: String, clientId: String, realm: Strin
                 }
 
 fun KeycloakClient.userUUID(user: String, realm: String) = userByName(user, realm).id
+
+fun KeycloakClient.groupUUID(group: String, realm: String) = groupByName(group, realm).id
 
 fun KeycloakClient.clientUUID(clientId: String, realm: String) = clientById(clientId, realm).id
 

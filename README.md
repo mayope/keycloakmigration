@@ -258,17 +258,117 @@ Updates a group from keycloak. Fails if the group does not exist.
           attributes:
             lkz:
               - "1234"
-        
+              
+### assignRoleToGroup
+Assigns a role to a group in keycloak. Fails if the group or the role does not exist.
+
+#### Parameters
+- realm: String, not optional
+- role: String, not optional
+- group: String, not optional
+- clientId: String, optional, default=realmRole
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+      - assignRoleToGroup:
+          realm: integ-test
+          role: parent
+          group: test3
+          
+### revokeRoleFromGroup
+Revokes a role from a group in keycloak. Fails if the group or the role does not exist or the role is not assigned to the group.
+
+#### Parameters
+- realm: String, not optional
+- role: String, not optional
+- group: String, not optional
+- clientId: String, optional, default=realmRole
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+      - revokeRoleFromGroup:
+          realm: integ-test
+          group: parent
+          role: test3
 
 ## Role Migrations
 ### addRole
+Add a role to keycloak, fails if the role already exists
+#### Parameter
+- realm: String, not optional
+- name: String, not optional,
+- clientId: String, optional, default=realmRole,
+- description: String, optional, default=""
+- attributes: Map<String,List<String>>, optional, default=empty
+- composite: Boolean, optional, default=false
+- clientRole: Boolean, optional, default=false,
+- containerId: String, optional, default=not set
+
+#### Example
+    id: add-role
+    author: klg71
+    changes:
+    - addRole:
+        realm: master
+        name: test3
+        attributes:
+          role:
+          - value1
+          - value2
 ### deleteRole
+Delete a role from keycloak, fails if the role does not exist
+#### Parameter
+- realm: String, not optional
+- name: String, not optional,
+- clientId: String, optional, default=realmRole
+#### Example
+    id: delete-role
+    author: klg71
+    changes:
+    - deleteRole:
+        realm: master
+        name: test4
+        clientId: test
 
 ## Client Migrations
 ### addSimpleClient
+Simple command to add a client to keycloak, TODO: add more fields
+#### Parameter
+- realm: String, not optional
+- clientId: String, not optional,
+- enabled: Boolean, optional, default=true
+- attributes: Map<String, List<String>>, optional, default = empty
+- protocol: String, optional, default="openid-connect"
+- redirectUris: List<String>, optional, default=empty
+#### Example
+    id: add-simple-client
+    author: klg71
+    changes:
+    - addSimpleClient:
+        realm: master
+        clientId: test
+
 ### deleteClient
+Delete a client in keycloak
+#### Parameter
+- realm: String, not optional
+- clientId: String, not optional,
+#### Example
+    id: delete-client
+    author: klg71
+    changes:
+    - deleteClient:
+        realm: master
+        clientId: test
+
 ### importClient
 Imports a client using the json representation.
+- realm: String, not optional
+- clientId: String, not optional,
 
 #### Parameters
 - realm: String, not optional
@@ -298,4 +398,3 @@ To start the local development keycloak you can just use the task ```startLocalK
 - Add sophisticated unit and integration Tests
 - Test Keycloak with PostgreSQL instead of H2 backend.
 - Add token refresh logic
-- Don't use master realm for testing

@@ -12,9 +12,7 @@ import de.klg71.keycloakmigration.changeControl.actions.AddAdLdapAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
-import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
-import de.klg71.keycloakmigration.changeControl.actions.group.DeleteGroupAction
-import de.klg71.keycloakmigration.changeControl.actions.group.UpdateGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.group.*
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
@@ -65,6 +63,8 @@ class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializ
 
                 "addGroup" -> objectMapper.treeToValue<AddGroupAction>(entry.value)
                 "deleteGroup" -> objectMapper.treeToValue<DeleteGroupAction>(entry.value)
+                "assignRoleToGroup" -> objectMapper.treeToValue<AssignRoleToGroupAction>(entry.value)
+                "revokeRoleFromGroup" -> objectMapper.treeToValue<RevokeRoleFromGroupAction>(entry.value)
 
                 "addAdLdap" -> objectMapper.treeToValue<AddAdLdapAction>(entry.value)
 

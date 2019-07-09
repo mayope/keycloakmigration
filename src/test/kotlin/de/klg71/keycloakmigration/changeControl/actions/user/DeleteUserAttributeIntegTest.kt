@@ -16,31 +16,26 @@ class DeleteUserAttributeIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testDeleteUserAttribute() {
-        AddUserAction("master", "test").executeIt()
-        AddUserAttributeAction("master", "test", "testAttribute", listOf("testValue1", "testValue2")).executeIt()
-        DeleteUserAttributeAction("master", "test", "testAttribute").executeIt()
+        AddUserAction(testRealm, "test").executeIt()
+        AddUserAttributeAction(testRealm, "test", "testAttribute", listOf("testValue1", "testValue2")).executeIt()
+        DeleteUserAttributeAction(testRealm, "test", "testAttribute").executeIt()
 
-        client.userByName("test", "master").let {
+        client.userByName("test", testRealm).let {
             assertThat(it.attributes).doesNotContainEntry("testAttribute", listOf("testValue1", "testValue2"))
         }
     }
 
     @Test
     fun testDeleteUserAttribute_notExisting() {
-        AddUserAction("master", "test").executeIt()
+        AddUserAction(testRealm, "test").executeIt()
         assertThatThrownBy {
-            DeleteUserAttributeAction("master", "test", "testAttribute").executeIt()
+            DeleteUserAttributeAction(testRealm, "test", "testAttribute").executeIt()
         }.isInstanceOf(MigrationException::class.java)
                 .hasMessage("Attribute testAttribute is not present on user test!")
     }
     @Test
     fun testDeleteUserAttribute_notExisting_failOnMissingFalse() {
-        AddUserAction("master", "test").executeIt()
-        DeleteUserAttributeAction("master", "test", "testAttribute", false).executeIt()
-    }
-
-    @After
-    fun cleanup() {
-        DeleteUserAction("master", "test").executeIt()
+        AddUserAction(testRealm, "test").executeIt()
+        DeleteUserAttributeAction(testRealm, "test", "testAttribute", false).executeIt()
     }
 }

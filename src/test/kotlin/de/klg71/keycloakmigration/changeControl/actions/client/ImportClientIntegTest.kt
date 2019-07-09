@@ -14,18 +14,13 @@ class ImportClientIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testImportClient() {
-        ImportClientAction("master", "integ-test-client.json").apply {
+        ImportClientAction(testRealm, "integ-test-client.json").apply {
             path="src/test/resources/changesets"
         }.executeIt()
 
-        val testClient = client.clientById("integ-test-client", "master")
+        val testClient = client.clientById("integ-test-client", testRealm)
 
         assertThat(testClient.directAccessGrantsEnabled).isEqualTo(true)
         assertThat(testClient.protocolMappers).hasSize(7)
-    }
-
-    @After
-    fun cleanup() {
-        DeleteClientAction("master", "integ-test-client").executeIt()
     }
 }

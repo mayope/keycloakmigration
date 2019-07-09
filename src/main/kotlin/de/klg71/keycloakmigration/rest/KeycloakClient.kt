@@ -36,17 +36,33 @@ interface KeycloakClient {
     @Headers("Content-Type: application/json; charset=utf-8")
     fun assignRealmRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID)
 
+    @RequestLine("POST /admin/realms/{realm}/groups/{group-id}/role-mappings/realm")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun assignRealmRolesToGroup(roles: List<AssignRole>, @Param("realm") realm: String, @Param("group-id") groupId: UUID)
+
     @RequestLine("POST /admin/realms/{realm}/users/{user-id}/role-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun assignClientRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID, @Param("client-id") clientId: UUID)
+
+    @RequestLine("POST /admin/realms/{realm}/groups/{group-id}/role-mappings/clients/{client-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun assignClientRolesToGroup(roles: List<AssignRole>, @Param("realm") realm: String, @Param("group-id") groupId: UUID, @Param("client-id") clientId: UUID)
 
     @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}/role-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun revokeRealmRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID)
 
+    @RequestLine("DELETE /admin/realms/{realm}/groups/{group-id}/role-mappings/realm")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun revokeRealmRolesFromGroup(roles: List<AssignRole>, @Param("realm") realm: String, @Param("group-id") groupId: UUID)
+
     @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}/role-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun revokeClientRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID, @Param("client-id") clientId: UUID)
+
+    @RequestLine("DELETE /admin/realms/{realm}/groups/{group-id}/role-mappings/clients/{client-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun revokeClientRolesFromGroup(roles: List<AssignRole>, @Param("realm") realm: String, @Param("group-id") groupId: UUID, @Param("client-id") clientId: UUID)
 
     @RequestLine("GET /admin/realms/{realm}/roles")
     fun roles(@Param("realm") realm: String): List<RoleListItem>
@@ -80,9 +96,6 @@ interface KeycloakClient {
 
     @RequestLine("GET /admin/realms/{realm}/roles/{name}")
     fun roleByNameResponse(@Param("name") name: String, @Param("realm") realm: String): Response
-
-    @RequestLine("GET /admin/realms/{realm}/roles/{name}")
-    fun checkRoleByName(@Param("name") name: String, @Param("realm") realm: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/clients")
     fun clients(@Param("realm") realm: String): List<ClientListItem>
@@ -146,4 +159,7 @@ interface KeycloakClient {
 
     @RequestLine("GET /admin/realms/{realm}/users/{user-id}/role-mappings/realm/composite")
     fun userRoles(@Param("realm") realm: String, @Param("user-id") id:UUID): List<RoleListItem>
+
+    @RequestLine("GET /admin/realms/{realm}/groups/{group-id}/role-mappings/realm/composite")
+    fun groupRoles(@Param("realm") realm: String, @Param("group-id") id:UUID): List<RoleListItem>
 }

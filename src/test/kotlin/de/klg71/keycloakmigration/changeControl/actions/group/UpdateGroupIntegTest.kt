@@ -13,7 +13,7 @@ class UpdateGroupIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
     private val groupName = "integrationTest"
-    val realm = "master"
+    val realm = testRealm
 
     @Before
     fun setupTest() {
@@ -34,13 +34,5 @@ class UpdateGroupIntegTest : AbstractIntegrationTest() {
     @Test
     fun testUpdateSpecialCharacters() {
         UpdateGroupAction(realm, "Möbel", null, null, null).executeIt()
-    }
-
-    @After
-    fun cleanup() {
-        DeleteGroupAction(realm, groupName).executeIt()
-        DeleteGroupAction(realm, "Möbel").executeIt()
-        DeleteGroupAction(realm, "Otto").executeIt()
-        DeleteGroupAction(realm, "Möbel test").executeIt()
     }
 }

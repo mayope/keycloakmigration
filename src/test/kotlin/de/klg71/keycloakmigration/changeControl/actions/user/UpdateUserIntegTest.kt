@@ -19,10 +19,10 @@ class UpdateUserIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testUpdateUser() {
-        AddUserAction("master", "testIntegration").executeIt()
-        UpdateUserAction("master", "testIntegration", email = "testemail").executeIt()
+        AddUserAction(testRealm, "testIntegration").executeIt()
+        UpdateUserAction(testRealm, "testIntegration", email = "testemail").executeIt()
 
-        client.userByName("testIntegration", "master").let {
+        client.userByName("testIntegration", testRealm).let {
             assertThat(it.email).isEqualTo("testemail")
         }
 
@@ -31,32 +31,24 @@ class UpdateUserIntegTest : AbstractIntegrationTest() {
     @Test
     fun testUpdateUser_userDoesNotExist() {
         assertThatThrownBy {
-            UpdateUserAction("master", "testIntegration", email = "testEmail").executeIt()
-        }.isInstanceOf(MigrationException::class.java).hasMessage("User with name: testIntegration does not exist in realm: master!")
+            UpdateUserAction(testRealm, "testIntegration", email = "testEmail").executeIt()
+        }.isInstanceOf(MigrationException::class.java).hasMessage("User with name: testIntegration does not exist in realm: ${testRealm}!")
 
 
     }
 
     @Test
     fun testUpdateUser_password() {
-        AddUserAction("master", "testIntegration").executeIt()
+        AddUserAction(testRealm, "testIntegration").executeIt()
         val hashedSaltedValue = "1tWf95Drz6t8/9kKE3tiJXOywCzG/C0KDnmCIFXEDdFQMPB6iVWWxjLO9HJI3YwTfWZa78N+hcmYHcT1tkavcA=="
         val salt = "dGVzdA=="
         val password = "1234"
 
-        UpdateUserAction("master", "testIntegration", credentials = listOf(UserCredential(
+        UpdateUserAction(testRealm, "testIntegration", credentials = listOf(UserCredential(
                 salt = salt,
                 hashedSaltedValue = hashedSaltedValue)))
                 .executeIt()
-        val answer = loginClient.login("master", "password", "admin-cli", "testIntegration", password)
+        val answer = loginClient.login(testRealm, "password", "admin-cli", "testIntegration", password)
         assertThat(answer.accessToken).isNotEmpty()
-    }
-
-    @After
-    fun cleanup() {
-        try {
-            DeleteUserAction("master", "testIntegration").executeIt()
-        } catch (t: Throwable) {
-        }
     }
 }

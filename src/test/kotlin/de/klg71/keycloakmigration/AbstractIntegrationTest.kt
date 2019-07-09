@@ -1,5 +1,7 @@
 package de.klg71.keycloakmigration
 
+import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import org.junit.After
 import org.junit.Before
 import org.koin.standalone.KoinComponent
@@ -15,13 +17,18 @@ private val clientId = "admin-cli"
 
 abstract class AbstractIntegrationTest : KoinComponent {
 
+    protected val testRealm="test";
+
     @Before
     fun setup() {
         startKoin(listOf(myModule(adminUser, adminPass, baseUrl, realm, clientId)))
+
+        AddRealmAction(testRealm).executeIt()
     }
 
     @After
     fun tearDown() {
+        DeleteRealmAction(testRealm).executeIt()
         stopKoin()
     }
 }

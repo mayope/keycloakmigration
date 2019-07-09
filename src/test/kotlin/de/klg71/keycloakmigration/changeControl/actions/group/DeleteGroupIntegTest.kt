@@ -15,17 +15,17 @@ class DeleteGroupIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testDeleteGroup() {
-        AddGroupAction("master", "integrationTest").executeIt()
-        DeleteGroupAction("master", "integrationTest").executeIt()
+        AddGroupAction(testRealm, "integrationTest").executeIt()
+        DeleteGroupAction(testRealm, "integrationTest").executeIt()
 
-        assertThat(client.existsGroup("integrationTest", "master")).isFalse()
+        assertThat(client.existsGroup("integrationTest", testRealm)).isFalse()
     }
 
     @Test
     fun testDeleteGroupNotExisting() {
         assertThatThrownBy {
-            DeleteGroupAction("master", "integrationTest").executeIt()
+            DeleteGroupAction(testRealm, "integrationTest").executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("Group with name: integrationTest does not exist in realm: master!")
+                .hasMessage("Group with name: integrationTest does not exist in realm: ${testRealm}!")
     }
 }

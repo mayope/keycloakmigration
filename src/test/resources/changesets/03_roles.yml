@@ -2,6 +2,6 @@ id: second-keycloak
 author: klg71
 changes:
 - assignRole:
-    realm: master
+    realm: integ-test
     role: test3
     user: test

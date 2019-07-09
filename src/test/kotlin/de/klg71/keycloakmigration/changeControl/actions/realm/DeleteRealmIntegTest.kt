@@ -15,19 +15,19 @@ class DeleteRealmIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testDeleteRealm(){
-        AddRealmAction("test",id = "test").executeIt()
-        DeleteRealmAction("test").executeIt()
+        AddRealmAction("testRealm",id = "testRealm").executeIt()
+        DeleteRealmAction("testRealm").executeIt()
 
-        assertThat(client.realmExistsById("test")).isFalse()
+        assertThat(client.realmExistsById("testRealm")).isFalse()
     }
 
     @Test
     fun testDeleteRealmNotExisting(){
         assertThatThrownBy {
-            DeleteRealmAction("test").executeIt()
+            DeleteRealmAction("testRealm").executeIt()
         }
                 .isInstanceOf(MigrationException::class.java)
-                .hasMessage("Realm with id: test does not exist!")
+                .hasMessage("Realm with id: testRealm does not exist!")
 
     }
 }

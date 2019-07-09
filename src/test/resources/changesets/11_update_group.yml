@@ -2,7 +2,7 @@ id: update-group
 author: klg71
 changes:
   - updateGroup:
-      realm: master
+      realm: integ-test
       name: child1
       attributes:
         lkz:

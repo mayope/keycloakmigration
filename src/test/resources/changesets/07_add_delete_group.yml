@@ -2,17 +2,17 @@ id: add-delete-groups
 author: klg71
 changes:
 - addGroup:
-    realm: master
+    realm: integ-test
     name: parent
 - addGroup:
-    realm: master
+    realm: integ-test
     name: child1
     parent: parent
 - addGroup:
-    realm: master
+    realm: integ-test
     name: child2
     parent: parent
 - deleteGroup:
-    realm: master
+    realm: integ-test
     name: child2
 

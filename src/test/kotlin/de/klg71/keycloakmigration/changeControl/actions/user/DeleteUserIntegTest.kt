@@ -14,12 +14,12 @@ class DeleteUserIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testDeleteUser() {
-        AddUserAction("master", "test").executeIt()
+        AddUserAction(testRealm, "test").executeIt()
 
-        DeleteUserAction("master", "test").executeIt()
+        DeleteUserAction(testRealm, "test").executeIt()
 
         UserListItem(UUID.randomUUID(), 0L, "test", true, true).let {
-            assertThat(client.users("master")).usingElementComparatorOnFields("username", "enabled", "emailVerified").doesNotContain(it)
+            assertThat(client.users(testRealm)).usingElementComparatorOnFields("username", "enabled", "emailVerified").doesNotContain(it)
         }
 
     }

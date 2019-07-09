@@ -1,0 +1,11 @@
+id: assign-revoke-role-group
+author: klg71
+changes:
+  - assignRoleToGroup:
+      realm: integ-test
+      group: parent
+      role: test3
+  - revokeRoleFromGroup:
+      realm: integ-test
+      group: parent
+      role: test3

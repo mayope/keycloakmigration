@@ -17,20 +17,20 @@ class DeleteRoleIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testDeleteRole() {
-        AddRoleAction("master", "integrationTest").executeIt()
-        DeleteRoleAction("master", "integrationTest").executeIt()
+        AddRoleAction(testRealm, "integrationTest").executeIt()
+        DeleteRoleAction(testRealm, "integrationTest").executeIt()
 
-        RoleListItem(UUID.randomUUID(), "integrationTest", "", false, false, "master").let {
-            assertThat(client.roleExistsByName("integrationTest", "master")).isFalse()
+        RoleListItem(UUID.randomUUID(), "integrationTest", "", false, false, testRealm).let {
+            assertThat(client.roleExistsByName("integrationTest", testRealm)).isFalse()
         }
     }
 
     @Test
     fun testDeleteRoleNotExisting() {
         assertThatThrownBy {
-            DeleteRoleAction("master", "integrationTest").executeIt()
+            DeleteRoleAction(testRealm, "integrationTest").executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("Role with name: integrationTest does not exist in realm: master!")
+                .hasMessage("Role with name: integrationTest does not exist in realm: ${testRealm}!")
 
     }
 }

@@ -2,7 +2,7 @@ id: second-keycloak
 author: klg71
 changes:
 - addUser:
-    realm: master
+    realm: integ-test
     name: test2
     enabled: true
     emailVerified: true

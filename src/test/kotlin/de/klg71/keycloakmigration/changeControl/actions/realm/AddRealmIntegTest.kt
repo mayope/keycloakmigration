@@ -17,26 +17,26 @@ class AddRealmIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testAddRealm() {
-        AddRealmAction("test",id = "test").executeIt()
+        AddRealmAction("testRealm",id = "testRealm").executeIt()
 
-        Realm("test", "test", null, true).let {
-            assertThat(client.realmById("test")).isEqualTo(it)
+        Realm("testRealm", "testRealm", null, true).let {
+            assertThat(client.realmById("testRealm")).isEqualTo(it)
         }
 
     }
 
     @Test
     fun testAddRealmExisting() {
-        AddRealmAction("test",id="test").executeIt()
+        AddRealmAction("testRealm",id="testRealm").executeIt()
         assertThatThrownBy {
-            AddRealmAction("test",id="test").executeIt()
+            AddRealmAction("testRealm",id="testRealm").executeIt()
         }
                 .isInstanceOf(MigrationException::class.java)
-                .hasMessage("Realm with id: test already exists!")
+                .hasMessage("Realm with id: testRealm already exists!")
     }
 
     @After
     fun cleanup() {
-        DeleteRealmAction("test").executeIt()
+        DeleteRealmAction("testRealm").executeIt()
     }
 }

@@ -2,11 +2,11 @@ id: revoke-roles
 author: klg71
 changes:
 - addRole:
-    realm: master
+    realm: integ-test
     name: test4
     clientId: test
 - deleteRole:
-    realm: master
+    realm: integ-test
     name: test4
     clientId: test
 

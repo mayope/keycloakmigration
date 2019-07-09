@@ -2,8 +2,8 @@ id: add-delete-user
 author: klg71
 changes:
 - addUser:
-      realm: master
+      realm: integ-test
       name: testDelete
 - deleteUser:
-      realm: master
+      realm: integ-test
       name: testDelete

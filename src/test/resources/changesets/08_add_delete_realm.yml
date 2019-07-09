@@ -2,12 +2,12 @@ id: add-delete-realm
 author: klg71
 changes:
 - addRealm:
-    name: test
+    name: testAdd
     enabled: true
 
 - addRealm:
-    name: test2
-    id: test2
+    name: test2Add
+    id: test2Add
 
 - deleteRealm:
-    name: test2
+    name: test2Add

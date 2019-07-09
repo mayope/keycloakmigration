@@ -2,5 +2,5 @@ id: import-client
 author: klg71
 changes:
 - importClient:
-      realm: master
+      realm: integ-test
       clientRepresentationJsonFilename: integ-test-client.json

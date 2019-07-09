@@ -1,0 +1,17 @@
+id: add-client-role
+author: klg71
+changes:
+  - addRole:
+      realm: integ-test
+      name: testIntegRole
+      clientId: integ-test-client
+  - assignRole:
+      realm: integ-test
+      user: test
+      role: testIntegRole
+      clientId: integ-test-client
+  - assignRoleToGroup:
+      realm: integ-test
+      group: parent
+      role: testIntegRole
+      clientId: integ-test-client

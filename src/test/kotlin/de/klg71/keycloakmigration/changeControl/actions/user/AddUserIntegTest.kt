@@ -15,16 +15,11 @@ class AddUserIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testAddUser() {
-        AddUserAction("master", "test").executeIt()
+        AddUserAction(testRealm, "test").executeIt()
 
         UserListItem(UUID.randomUUID(), 0L, "test", true, true).let {
-            assertThat(client.users("master")).usingElementComparatorOnFields("username", "enabled", "emailVerified").contains(it)
+            assertThat(client.users(testRealm)).usingElementComparatorOnFields("username", "enabled", "emailVerified").contains(it)
         }
 
-    }
-
-    @After
-    fun cleanup() {
-        DeleteUserAction("master", "test").executeIt()
     }
 }
