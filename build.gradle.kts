@@ -1,6 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
 import groovy.lang.GroovyObject
-import org.apache.commons.compress.parallel.InputStreamSupplier
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
 import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
@@ -56,7 +55,7 @@ repositories {
 
 publishing {
     publications {
-        register("mavenJava", MavenPublication::class) {
+        register("jars", MavenPublication::class) {
             from(components["java"])
         }
     }
@@ -73,7 +72,7 @@ artifactory {
 
         })
         defaults(delegateClosureOf<GroovyObject> {
-            invokeMethod("publications", "mavenJava")
+            invokeMethod("publications", "jars")
         })
     })
     resolve(delegateClosureOf<ResolverConfig> {
@@ -81,16 +80,23 @@ artifactory {
     })
 }
 
-tasks{
+tasks {
 
     val keycloakVersion = "4.8.0.Final"
 
-    withType(Jar::class) {
+    register<Jar>("fatJar") {
+        classifier="fat"
         manifest {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
         }
 
         from(configurations.runtime.map { if (it.isDirectory) it else zipTree(it) })
+    }
+
+    register<Jar>("libJar") {
+
+        from(sourceSets["main"].output)
+
     }
 
     "afterReleaseBuild"{
@@ -143,7 +149,7 @@ tasks{
     register<Exec>("addWindowsAdminUser") {
         workingDir("keycloak/keycloak-$keycloakVersion/bin")
         commandLine("cmd", "/c", "add-user-keycloak.bat", "-r", "master", "-u", "admin", "-p", "admin")
-        environment("JAVA_OPTS","--add-modules=java.se")
+        environment("JAVA_OPTS", "--add-modules=java.se")
         environment("NOPAUSE", "true")
         isIgnoreExitValue = true
         standardOutput = System.out

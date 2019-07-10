@@ -73,7 +73,6 @@ If it fails I would like to receive a bug report for this.
 This are the currently implemented commands. I hope I can find the time to implement more of them.
 ## User Migrations
 ### addUser
-#### Descriptions
 Adds a user to keycloak. Fails if a user with that name already exists.
 #### Parameters
 - realm: String, not optional
@@ -96,7 +95,6 @@ Adds a user to keycloak. Fails if a user with that name already exists.
           - test2
 
 ### deleteUser
-#### Descriptions
 Removes a user from keycloak. Fails if a user with that name does not exists.
 #### Parameters
 - realm: String, not optional

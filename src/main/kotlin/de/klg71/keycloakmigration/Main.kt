@@ -65,8 +65,8 @@ fun main(args: Array<String>) = mainBody {
     migrate(ArgParser(args).parseInto(::CommandLineMigrationArgs))
 }
 
-fun migrate(commandLineMigrationArgs: MigrationArgs) {
-    commandLineMigrationArgs.run {
+fun migrate(migrationArgs: MigrationArgs) {
+    migrationArgs.run {
         try {
             startKoin(listOf(myModule(adminUser(), adminPassword(), baseUrl(), realm(), clientId())), logger = KoinLogger(KOIN_LOGGER))
             KeycloakMigrationExecute(migrationFile(), realm())
