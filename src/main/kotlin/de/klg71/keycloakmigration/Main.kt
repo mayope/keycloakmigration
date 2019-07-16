@@ -3,7 +3,7 @@ package de.klg71.keycloakmigration
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
 import com.xenomachina.argparser.mainBody
-import de.klg71.keycloakmigration.changeControl.KeycloakMigrationExecute
+import de.klg71.keycloakmigration.changeControl.KeycloakMigration
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.StandAloneContext.stopKoin
 import org.slf4j.LoggerFactory
@@ -25,7 +25,7 @@ interface MigrationArgs {
     fun clientId(): String
 }
 
-class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
+internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
     private val adminUser by parser.storing(names = *arrayOf("-u", "--user"),
             help = "Username for the migration user, defaulting to $defaultAdminUser.")
             .default(defaultAdminUser)
@@ -69,7 +69,7 @@ fun migrate(migrationArgs: MigrationArgs) {
     migrationArgs.run {
         try {
             startKoin(listOf(myModule(adminUser(), adminPassword(), baseUrl(), realm(), clientId())), logger = KoinLogger(KOIN_LOGGER))
-            KeycloakMigrationExecute(migrationFile(), realm())
+            KeycloakMigration(migrationFile(), realm()).execute()
         } finally {
             stopKoin()
         }

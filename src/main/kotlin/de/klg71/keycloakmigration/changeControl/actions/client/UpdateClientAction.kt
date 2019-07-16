@@ -11,7 +11,7 @@ class UpdateClientAction(
         private val realm: String,
         private val clientId: String,
         private val enabled: Boolean = true,
-        private val attributes: Map<String, List<String>> = mapOf(),
+        private val attributes: Map<String, String> = mapOf(),
         private val protocol: String = "openid-connect",
         private val redirectUris: List<String> = emptyList()) : Action() {
 

@@ -203,6 +203,38 @@ Revokes a role from the given user. Fails if the user or the role doesn't exist 
         realm: master
         user: testUser
         role: testRole
+        
+### assignGroup
+Assigns a group to the given user. Fails if the user or the group doesn't exist.
+#### Parameters
+- realm: String, not optional
+- user: String, not optional
+- group: String, not optional
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+    - assignGroup:
+        realm: master
+        user: testUser
+        group: testGroup
+        
+### revokeGroup
+Revokes a group from the given user. Fails if the user or the group doesn't exist or the user doesnt have the group assigned .
+#### Parameters
+- realm: String, not optional
+- user: String, not optional
+- group: String, not optional
+
+#### Example
+    id: test
+    author: klg71
+    changes:
+    - revokeGroup:
+        realm: master
+        user: testUser
+        group: testGroup
 
 ## Group Migrations
 ### addGroup
@@ -339,7 +371,7 @@ Simple command to add a client to keycloak, TODO: add more fields
 - realm: String, not optional
 - clientId: String, not optional,
 - enabled: Boolean, optional, default=true
-- attributes: Map<String, List<String>>, optional, default = empty
+- attributes: Map<String, String>, optional, default = empty
 - protocol: String, optional, default="openid-connect"
 - redirectUris: List<String>, optional, default=empty
 #### Example
@@ -392,7 +424,5 @@ To start the local development keycloak you can just use the task ```startLocalK
 
 # TODOS:
 - Add more commands
-- Add gradle plugin
 - Add sophisticated unit and integration Tests
-- Test Keycloak with PostgreSQL instead of H2 backend.
 - Add token refresh logic

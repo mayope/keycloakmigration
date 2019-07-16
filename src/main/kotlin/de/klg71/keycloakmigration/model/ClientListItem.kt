@@ -25,7 +25,7 @@ data class ClientListItem(
         val publicClient: Boolean,
         val frontchannelLogout: Boolean,
         val protocol: String?,
-        val attributes: Map<String, Boolean>,
+        val attributes: Map<String, String>,
         val authenticationFlowBindingOverrides: Map<String, List<String>>,
         val fullScopeAllowed: Boolean,
         val nodeReRegistrationTimeout: Int,
