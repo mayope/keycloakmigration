@@ -23,7 +23,6 @@ class KeycloakMigrationExecute(private val migrationFile: String, private val re
     private val client by inject<KeycloakClient>()
     private val migrationUserId by inject<UUID>(name = "migrationUserId")
 
-    private val loader = Thread.currentThread().contextClassLoader!!
     private val changeHashes = getMigrationsHashes()
 
     companion object {

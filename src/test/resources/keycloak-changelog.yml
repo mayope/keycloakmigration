@@ -12,4 +12,5 @@ includes:
 - path: changesets/12_update_user_password.yml
 - path: changesets/13_assign_revoke_role_group.yml
 - path: changesets/14_add_client_role.yml
+- path: changesets/15_assign_group.yml
 
