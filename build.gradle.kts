@@ -44,13 +44,6 @@ dependencies {
 
 repositories {
     jcenter()
-    maven {
-        setUrl("https://artifactory.klg71.de/artifactory/libs-releases")
-        credentials {
-            username = project.findProperty("artifactory_user") as String
-            password = project.findProperty("artifactory_password") as String
-        }
-    }
 }
 
 publishing {
