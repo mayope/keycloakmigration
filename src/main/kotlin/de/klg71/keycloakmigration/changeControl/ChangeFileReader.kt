@@ -3,8 +3,9 @@ package de.klg71.keycloakmigration.changeControl
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import de.klg71.keycloakmigration.model.ChangeLog
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import org.koin.core.qualifier.named
 import java.io.File
 import java.io.FileInputStream
 import java.nio.file.Paths
@@ -14,7 +15,7 @@ import java.nio.file.Paths
  */
 internal class ChangeFileReader : KoinComponent {
 
-    private val yamlObjectMapper by inject<ObjectMapper>(name = "yamlObjectMapper")
+    private val yamlObjectMapper by inject<ObjectMapper>(named("yamlObjectMapper"))
 
 
     /**

@@ -6,9 +6,8 @@ import de.klg71.keycloakmigration.model.GroupListItem
 import de.klg71.keycloakmigration.rest.KeycloakClient
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.After
 import org.junit.Test
-import org.koin.standalone.inject
+import org.koin.core.inject
 import java.util.*
 
 class AddGroupIntegTest : AbstractIntegrationTest() {
@@ -20,7 +19,7 @@ class AddGroupIntegTest : AbstractIntegrationTest() {
         AddGroupAction(testRealm, "integrationTest").executeIt()
 
         GroupListItem(UUID.randomUUID(), "integrationTest", "integrationTest", listOf()).let {
-            assertThat(client.searchGroup("integrationTest",testRealm)).hasSize(1).usingElementComparatorOnFields("name").contains(it)
+            assertThat(client.searchGroup("integrationTest", testRealm)).hasSize(1).usingElementComparatorOnFields("name").contains(it)
         }
     }
 

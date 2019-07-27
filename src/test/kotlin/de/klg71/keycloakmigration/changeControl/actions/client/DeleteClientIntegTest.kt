@@ -4,7 +4,7 @@ import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.rest.KeycloakClient
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.standalone.inject
+import org.koin.core.inject
 
 class DeleteClientIntegTest : AbstractIntegrationTest() {
 

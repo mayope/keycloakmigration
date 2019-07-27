@@ -3,18 +3,13 @@ package de.klg71.keycloakmigration.changeControl.actions.group
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
-import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
-import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAction
-import de.klg71.keycloakmigration.changeControl.actions.user.DeleteUserAction
 import de.klg71.keycloakmigration.model.RoleListItem
 import de.klg71.keycloakmigration.rest.KeycloakClient
 import de.klg71.keycloakmigration.rest.groupByName
-import de.klg71.keycloakmigration.rest.userByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.After
 import org.junit.Test
-import org.koin.standalone.inject
+import org.koin.core.inject
 import java.util.*
 
 class AssignRoleToGroupIntegTest : AbstractIntegrationTest() {

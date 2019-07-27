@@ -6,7 +6,7 @@ import de.klg71.keycloakmigration.rest.clientById
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Test
-import org.koin.standalone.inject
+import org.koin.core.inject
 
 class ImportClientIntegTest : AbstractIntegrationTest() {
 

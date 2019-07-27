@@ -1,8 +1,8 @@
 package de.klg71.keycloakmigration.changeControl.actions
 
 import de.klg71.keycloakmigration.rest.KeycloakClient
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import org.slf4j.LoggerFactory
 
 /**

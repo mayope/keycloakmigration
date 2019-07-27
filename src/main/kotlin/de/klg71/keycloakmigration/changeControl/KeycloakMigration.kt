@@ -1,8 +1,9 @@
 package de.klg71.keycloakmigration.changeControl
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
+import org.koin.core.qualifier.named
 import org.slf4j.LoggerFactory
 import java.util.*
 
@@ -10,7 +11,7 @@ import java.util.*
  * Execute the keycloakmigration
  */
 internal class KeycloakMigration(private val migrationFile: String, realm: String) : KoinComponent {
-    private val migrationUserId by inject<UUID>(name = "migrationUserId")
+    private val migrationUserId by inject<UUID>(named("migrationUserId"))
     private val changeFileReader = ChangeFileReader()
     private val changelog = MigrationChangelog(migrationUserId, realm)
 
@@ -40,7 +41,7 @@ internal class KeycloakMigration(private val migrationFile: String, realm: Strin
                     add(action)
                 }
 
-                changelog.writeChangesToUser(change)
+                changelog.writeChangeToUser(change)
                 LOG.info("Migration ${change.id}:${change.author} Successful executed: $size actions.")
             } catch (e: Exception) {
                 LOG.error("Error occurred while migrating: ${e.message} ", e)

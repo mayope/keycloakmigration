@@ -4,8 +4,8 @@ import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.default
 import com.xenomachina.argparser.mainBody
 import de.klg71.keycloakmigration.changeControl.KeycloakMigration
-import org.koin.standalone.StandAloneContext.startKoin
-import org.koin.standalone.StandAloneContext.stopKoin
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import org.slf4j.LoggerFactory
 
 val KOIN_LOGGER = LoggerFactory.getLogger("de.klg71.keycloakmigration.koinlogger")!!
@@ -68,8 +68,11 @@ fun main(args: Array<String>) = mainBody {
 fun migrate(migrationArgs: MigrationArgs) {
     migrationArgs.run {
         try {
-            startKoin(listOf(myModule(adminUser(), adminPassword(), baseUrl(), realm(), clientId())), logger = KoinLogger(KOIN_LOGGER))
-            KeycloakMigration(migrationFile(), realm()).execute()
+            startKoin {
+                logger(KoinLogger(KOIN_LOGGER))
+                modules(myModule(adminUser(), adminPassword(), baseUrl(), realm(), clientId()))
+                KeycloakMigration(migrationFile(), realm()).execute()
+            }
         } finally {
             stopKoin()
         }

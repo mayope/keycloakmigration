@@ -1,17 +1,17 @@
 package de.klg71.keycloakmigration
 
-import org.koin.log.Logger
+import org.koin.core.logger.Level
+import org.koin.core.logger.Logger
+import org.koin.core.logger.MESSAGE
 
-class KoinLogger(private val log: org.slf4j.Logger) : Logger {
-    override fun debug(msg: String) {
-        log.debug(msg)
+
+class KoinLogger(private val log: org.slf4j.Logger) : Logger() {
+    override fun log(level: Level, msg: MESSAGE) {
+        when(level){
+            Level.DEBUG -> log.debug(msg)
+            Level.ERROR -> log.error(msg)
+            Level.INFO -> log.info(msg)
+        }
     }
 
-    override fun err(msg: String) {
-        log.error(msg)
-    }
-
-    override fun info(msg: String) {
-        log.info(msg)
-    }
 }

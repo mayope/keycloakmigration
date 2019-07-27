@@ -8,9 +8,8 @@ import de.klg71.keycloakmigration.rest.KeycloakLoginClient
 import de.klg71.keycloakmigration.rest.userByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.After
 import org.junit.Test
-import org.koin.standalone.inject
+import org.koin.core.inject
 
 class UpdateUserIntegTest : AbstractIntegrationTest() {
 

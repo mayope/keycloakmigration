@@ -7,22 +7,22 @@ import de.klg71.keycloakmigration.rest.realmExistsById
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.standalone.inject
+import org.koin.core.inject
 
 class DeleteRealmIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
 
     @Test
-    fun testDeleteRealm(){
-        AddRealmAction("testRealm",id = "testRealm").executeIt()
+    fun testDeleteRealm() {
+        AddRealmAction("testRealm", id = "testRealm").executeIt()
         DeleteRealmAction("testRealm").executeIt()
 
         assertThat(client.realmExistsById("testRealm")).isFalse()
     }
 
     @Test
-    fun testDeleteRealmNotExisting(){
+    fun testDeleteRealmNotExisting() {
         assertThatThrownBy {
             DeleteRealmAction("testRealm").executeIt()
         }

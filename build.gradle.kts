@@ -32,12 +32,15 @@ dependencies {
     compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.8")
     compile("com.fasterxml.jackson.core:jackson-databind:2.9.8")
     compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
-    compile("org.koin:koin-core:1.0.2")
+    compile("org.koin:koin-core:2.0.1")
     compile("commons-codec:commons-codec:1.11")
     compile("com.xenomachina:kotlin-argparser:2.0.7")
 
     testCompile(kotlin("test"))
     testCompile(kotlin("test-junit"))
+    testCompile("org.assertj:assertj-core:3.11.1")
+    testCompile("org.koin:koin-test:2.0.1")
+    testCompile("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     testCompile("org.assertj:assertj-core:3.11.1")
 }
 

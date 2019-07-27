@@ -6,9 +6,8 @@ import de.klg71.keycloakmigration.model.RoleListItem
 import de.klg71.keycloakmigration.rest.KeycloakClient
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.junit.After
 import org.junit.Test
-import org.koin.standalone.inject
+import org.koin.core.inject
 import java.util.*
 
 class AddRoleIntegTest : AbstractIntegrationTest() {

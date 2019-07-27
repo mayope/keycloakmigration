@@ -9,7 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.After
 import org.junit.Test
-import org.koin.standalone.inject
+import org.koin.core.inject
 
 class AddRealmIntegTest : AbstractIntegrationTest() {
 
@@ -17,7 +17,7 @@ class AddRealmIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testAddRealm() {
-        AddRealmAction("testRealm",id = "testRealm").executeIt()
+        AddRealmAction("testRealm", id = "testRealm").executeIt()
 
         Realm("testRealm", "testRealm", null, true).let {
             assertThat(client.realmById("testRealm")).isEqualTo(it)
@@ -27,9 +27,9 @@ class AddRealmIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testAddRealmExisting() {
-        AddRealmAction("testRealm",id="testRealm").executeIt()
+        AddRealmAction("testRealm", id = "testRealm").executeIt()
         assertThatThrownBy {
-            AddRealmAction("testRealm",id="testRealm").executeIt()
+            AddRealmAction("testRealm", id = "testRealm").executeIt()
         }
                 .isInstanceOf(MigrationException::class.java)
                 .hasMessage("Realm with id: testRealm already exists!")

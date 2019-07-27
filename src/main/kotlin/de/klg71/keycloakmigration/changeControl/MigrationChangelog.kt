@@ -4,9 +4,8 @@ import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.Attributes
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.rest.KeycloakClient
-import org.apache.commons.codec.digest.DigestUtils.sha256Hex
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import org.slf4j.LoggerFactory
 import java.util.*
 import java.util.Objects.isNull
@@ -20,6 +19,7 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
 
     companion object {
         val LOG = LoggerFactory.getLogger(MigrationChangelog::class.java)!!
+        const val migrationAttributeName = "migrations"
     }
 
     /**
@@ -43,10 +43,10 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
     /**
      * Write the information about an executed changeSet to keycloak
      */
-    internal fun writeChangesToUser(changes: ChangeSet) {
+    internal fun writeChangeToUser(change: ChangeSet) {
         client.user(migrationUserId, realm).run {
             userAttributes().run {
-                addMigration(changes)
+                addMigration(change)
             }.let {
                 client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
                         notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName, null), realm)
@@ -55,7 +55,7 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
     }
 
     private fun Attributes.addMigration(change: ChangeSet): Attributes = toMutableMap().apply {
-        put("migrations", migrations().addChangeHash(change))
+        put(migrationAttributeName, migrations().addChangeHash(change))
     }
 
     private fun List<String>.addChangeHash(change: ChangeSet) =
@@ -65,29 +65,19 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
 
     private fun User.userAttributes() = attributes ?: emptyMap()
 
-    private fun Attributes.migrations() = get("migrations") ?: emptyList()
+    private fun Attributes.migrations() = get(migrationAttributeName) ?: emptyList()
 
     private fun getMigrationsHashes(): List<String> =
             client.user(migrationUserId, realm).run {
                 if (isNull(attributes)) {
                     return emptyList()
                 }
-                if ("migrations" !in attributes!!) {
+                if (migrationAttributeName !in attributes!!) {
                     return emptyList()
                 }
-                return attributes["migrations"]!!
+                return attributes[migrationAttributeName]!!
             }
 
 
-    private fun ChangeSet.hash() = StringBuilder().let { builder ->
-        builder.append(author)
-        builder.append(id)
-        changes.forEach {
-            it.path = path
-            builder.append(it.hash())
-        }
-        builder.toString()
-    }.let {
-        sha256Hex(it)
-    }!!
 }
+

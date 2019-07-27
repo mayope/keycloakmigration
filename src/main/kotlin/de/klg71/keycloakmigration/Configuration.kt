@@ -9,7 +9,6 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import de.klg71.keycloakmigration.changeControl.ActionDeserializer
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.model.AccessToken
 import de.klg71.keycloakmigration.rest.KeycloakClient
 import de.klg71.keycloakmigration.rest.KeycloakLoginClient
 import de.klg71.keycloakmigration.rest.userByName
@@ -19,21 +18,18 @@ import feign.form.FormEncoder
 import feign.jackson.JacksonDecoder
 import feign.jackson.JacksonEncoder
 import feign.slf4j.Slf4jLogger
-import org.koin.dsl.module.module
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 
-fun myModule(adminUser: String, adminPassword: String, baseUrl: String, realm: String, clientId:String) = module {
-    single("default") { initObjectMapper() }
-    single("yamlObjectMapper") { initYamlObjectMapper() }
-    single { initKeycloakLoginClient(get("default"), baseUrl) }
-    single { TokenHolder(get(), adminUser, adminPassword, realm, clientId) }
-    single { initFeignClient(get("default"), get(), baseUrl) }
-    single("migrationUserId") { loadCurrentUser(get(), adminUser, realm) }
+fun myModule(adminUser: String, adminPassword: String, baseUrl: String, realm: String, clientId: String) = module {
+    single(named("default")) { initObjectMapper() }
+    single(named("yamlObjectMapper")) { initYamlObjectMapper() }
+    single { initKeycloakLoginClient(get(named("default")), baseUrl) }
+    single { TokenHolder(get<KeycloakLoginClient>(), adminUser, adminPassword, realm, clientId) }
+    single { initFeignClient(get(named("default")), get(), baseUrl) }
+    single(named("migrationUserId")) { loadCurrentUser(get(), adminUser, realm) }
 }
 
-
-private class TokenHolder(client: KeycloakLoginClient, adminUser: String, adminPassword: String, realm: String, clientId:String) {
-    val token: AccessToken = client.login(realm, "password", clientId, adminUser, adminPassword)
-}
 
 private fun kotlinObjectMapper() = ObjectMapper(YAMLFactory()).apply {
     enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
@@ -71,4 +67,4 @@ private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder
 
 private fun initObjectMapper() = ObjectMapper().registerModule(KotlinModule())!!
 
-private fun loadCurrentUser(client: KeycloakClient, userName:String, realm:String) = client.userByName(userName, realm).id
+private fun loadCurrentUser(client: KeycloakClient, userName: String, realm: String) = client.userByName(userName, realm).id

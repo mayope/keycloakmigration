@@ -4,9 +4,9 @@ import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import org.junit.After
 import org.junit.Before
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.StandAloneContext.startKoin
-import org.koin.standalone.StandAloneContext.stopKoin
+import org.koin.core.KoinComponent
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 
 
 private val adminUser = "admin"
@@ -19,10 +19,14 @@ abstract class AbstractIntegrationTest : KoinComponent {
 
     protected val testRealm="test";
 
+    init {
+        startKoin{
+            modules(myModule(adminUser, adminPass, baseUrl, realm, clientId))
+        }
+    }
+
     @Before
     fun setup() {
-        startKoin(listOf(myModule(adminUser, adminPass, baseUrl, realm, clientId)))
-
         AddRealmAction(testRealm).executeIt()
     }
 
