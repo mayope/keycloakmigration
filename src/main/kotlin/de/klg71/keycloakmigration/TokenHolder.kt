@@ -12,12 +12,12 @@ class TokenHolder(private val client: KeycloakLoginClient,
     val timer = Timer()
 
     init {
-        timer.schedule(RefreshTokenTask(client, realm, token, clientId, this::callback), token.expiresIn - 1000L)
+        timer.schedule(RefreshTokenTask(client, realm, token, clientId, this::callback), token.expiresIn - 100L)
     }
 
     private fun callback(token: AccessToken) {
         this.token = token
-        timer.schedule(RefreshTokenTask(client, realm, token, clientId, this::callback), token.expiresIn - 1000L)
+        timer.schedule(RefreshTokenTask(client, realm, token, clientId, this::callback), token.expiresIn - 100L)
     }
 
 }
