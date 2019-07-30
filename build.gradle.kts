@@ -81,12 +81,13 @@ tasks {
     val keycloakVersion = "4.8.0.Final"
 
     register<Jar>("fatJar") {
+        from(sourceSets["main"].output)
         classifier="fat"
         manifest {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
         }
 
-        from(configurations.runtime.map { if (it.isDirectory) it else zipTree(it) })
+        from(configurations.compile.map { if (it.isDirectory) it else zipTree(it) })
     }
 
     register<Jar>("libJar") {

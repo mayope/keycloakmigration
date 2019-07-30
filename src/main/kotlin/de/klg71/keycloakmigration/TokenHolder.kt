@@ -6,35 +6,28 @@ import org.slf4j.LoggerFactory
 import java.util.*
 
 class TokenHolder(private val client: KeycloakLoginClient,
-                  adminUser: String, adminPassword: String,
+                  private val adminUser: String, private val adminPassword: String,
                   private val realm: String, private val clientId: String) {
-    var token: AccessToken = client.login(realm, "password", clientId, adminUser, adminPassword)
+    private var tokenReceived: Long = 0L
+
+    private var token: AccessToken = client.login(realm, "password", clientId, adminUser, adminPassword)
 
     companion object {
         val LOG = LoggerFactory.getLogger(TokenHolder::class.java)!!
     }
 
-    val timer = Timer()
+    private fun tokenExpired() = System.currentTimeMillis() - tokenReceived > token.expiresIn
 
     init {
-        timer.schedule(RefreshTokenTask(client, realm, token, clientId, this::callback), token.expiresIn.toLong()*1000)
-        LOG.info("Scheduling new token task in: ${token.expiresIn} milliseconds")
+        tokenReceived=System.currentTimeMillis()
     }
 
-    private fun callback(token: AccessToken) {
-        this.token = token
-        timer.schedule(RefreshTokenTask(client, realm, token, clientId, this::callback), token.expiresIn.toLong()*1000)
+    fun token(): AccessToken {
+        if (tokenExpired()) {
+            LOG.info("Token expired retrieving new one.")
+            token = client.login(realm, "password", clientId, adminUser, adminPassword)
+            tokenReceived=System.currentTimeMillis()
+        }
+        return token
     }
-
-}
-
-private class RefreshTokenTask(private val client: KeycloakLoginClient,
-                               private val realm: String,
-                               private val token: AccessToken,
-                               private val clientId: String,
-                               private val callback: (AccessToken) -> Unit) : TimerTask() {
-    override fun run() {
-        client.login(realm, "request_token", token.refreshToken, clientId)
-    }
-
 }

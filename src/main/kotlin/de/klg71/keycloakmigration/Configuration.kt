@@ -56,7 +56,7 @@ private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder
     encoder(JacksonEncoder(objectMapper))
     decoder(JacksonDecoder(objectMapper))
     requestInterceptor {
-        tokenHolder.token.run {
+        tokenHolder.token().run {
             it.header("Authorization", "Bearer $accessToken")
         }
     }
