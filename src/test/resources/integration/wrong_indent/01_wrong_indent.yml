@@ -1,0 +1,7 @@
+id: wrong-indent
+author: klg71
+changes:
+  - assignGroup:
+    realm: integ-test
+    user: test
+    group: parent

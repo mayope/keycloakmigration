@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.rest
 
 import de.klg71.keycloakmigration.changeControl.KeycloakException
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.model.Client
 import de.klg71.keycloakmigration.model.ClientListItem
 import de.klg71.keycloakmigration.model.GroupListItem
 import de.klg71.keycloakmigration.model.Role
@@ -20,15 +21,17 @@ fun KeycloakClient.userByName(name: String, realm: String) =
                     user(id, realm)
                 }
 
-fun KeycloakClient.clientById(clientId: String, realm: String): ClientListItem =
+fun KeycloakClient.clientById(clientId: String, realm: String): Client =
         clients(realm)
                 .run {
                     if (isEmpty()) {
-                        throw MigrationException("User with name: $clientId does not exist in $realm!")
+                        throw MigrationException("Client with id: $clientId does not exist in $realm!")
                     }
                     find { it.clientId == clientId }.let {
-                        it ?: throw MigrationException("Client with name $clientId does not exist in realm: $realm!")
+                        it ?: throw MigrationException("Client with id: $clientId does not exist in realm: $realm!")
                     }
+                }.let {
+                    client(it.id, realm)
                 }
 
 fun KeycloakClient.groupByName(name: String, realm: String) =
@@ -62,6 +65,19 @@ fun KeycloakClient.existsUser(name: String, realm: String): Boolean =
                     }
                     return true
                 }
+
+fun KeycloakClient.existsClient(clientId: String, realm: String): Boolean =
+        clients(realm)
+                .run {
+                    if (isEmpty()) {
+                        return false
+                    }
+                    find { it.clientId == clientId }?.let {
+                        return true
+                    }
+                    return false
+                }
+
 
 fun KeycloakClient.existsRole(name: String, realm: String): Boolean =
         roleByNameResponse(name, realm)

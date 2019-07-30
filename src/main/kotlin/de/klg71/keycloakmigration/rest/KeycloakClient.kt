@@ -126,6 +126,10 @@ interface KeycloakClient {
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}")
     fun deleteClient(@Param("client-id") clientId: UUID, @Param("realm") realm: String)
 
+    @RequestLine("PUT /admin/realms/{realm}/clients/{client-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateClient(@Param("client-id") clientId: UUID, updateClient: Client, @Param("realm") realm: String): Response
+
     @RequestLine("GET /admin/realms/{realm}/components?parent={realm}&type=org.keycloak.storage.UserStorageProvider")
     fun userFederations(@Param("realm") realm: String): List<UserFederationItem>
 

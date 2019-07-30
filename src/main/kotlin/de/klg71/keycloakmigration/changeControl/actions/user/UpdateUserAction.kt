@@ -87,8 +87,8 @@ class UpdateUserAction(
     }
 
     override fun undo() {
-        client.userByName(user.username, realm).run {
-            client.updateUser(id, user, realm)
+        if (client.existsUser(name, realm)) {
+            client.updateUser(user.id, user, realm)
         }
     }
 

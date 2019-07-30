@@ -397,8 +397,6 @@ Delete a client in keycloak
 
 ### importClient
 Imports a client using the json representation.
-- realm: String, not optional
-- clientId: String, not optional,
 
 #### Parameters
 - realm: String, not optional
@@ -414,6 +412,36 @@ Imports a client using the json representation.
           clientRepresentationJsonFilename: client.json
           relativeTofile: true
 
+### updateClient
+Update a client
+
+#### Parameters
+- realm: String, not optional
+- clientId: String, not optional
+- name: String, optional, default=no change
+- description: String, optional, default=no change
+- enabled: Boolean, optional, default=no change
+- attributes: Map<String, String>, optional, default=no change
+- protocol: String, optional, default=no change
+- redirectUris: List<String>, optional, default=no change
+- bearerOnly: Boolean, optional, default=no change
+- directAccessGrantEnabled: Boolean, optional, default=no change
+- implicitFlowEnabled: Boolean, optional, default=no change
+- standardFlowEnabled: Boolean, optional, default=no change
+- adminUrl: String, optional, default=no change
+- baseUrl: String, optional, default=no change
+- rootUrl: String, optional, default=no change
+
+#### Example
+    id: update-client
+    author: klg71
+    changes:
+    - updateClient:
+        realm: master
+        clientId: testClient
+        redirectUris: 
+            - http://localhost:8080
+            - https://www.example.com
 ## User Federation Migrations
 ### AddAdLdap
 
