@@ -83,7 +83,7 @@ The changeSet contains the actual changes as a list of migrations (see [Supporte
         
 
 
-#Supported migrations
+# Supported migrations
 This are the currently implemented commands. I hope I can find the time to implement more of them.
 ## User Migrations
 ### addUser
