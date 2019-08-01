@@ -7,10 +7,10 @@ import de.klg71.keycloakmigration.rest.userByName
 import org.apache.commons.codec.digest.DigestUtils
 
 class DeleteUserAttributeAction(
-        private val realm: String,
+        realm:String?=null,
         private val name: String,
         private val attributeName: String,
-        private val failOnMissing: Boolean = true) : Action() {
+        private val failOnMissing: Boolean = true) : Action(realm) {
 
     private lateinit var user: User
 
@@ -57,12 +57,12 @@ class DeleteUserAttributeAction(
     override fun hash() = hash
 
     override fun execute() {
-        user = client.userByName(name, realm)
-        client.updateUser(user.id, updateUser(), realm)
+        user = client.userByName(name, realm())
+        client.updateUser(user.id, updateUser(), realm())
     }
 
     override fun undo() {
-        client.updateUser(user.id, user, realm)
+        client.updateUser(user.id, user, realm())
     }
 
     override fun name() = "DeleteUserAttribute $name"

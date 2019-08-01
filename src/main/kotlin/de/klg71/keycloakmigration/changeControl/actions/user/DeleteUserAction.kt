@@ -9,8 +9,8 @@ import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 class DeleteUserAction(
-        private val realm: String,
-        private val name: String) : Action() {
+        realm:String?=null,
+        private val name: String) : Action(realm) {
 
     private lateinit var user: User
 
@@ -29,15 +29,15 @@ class DeleteUserAction(
 
 
     override fun execute() {
-        user = client.userByName(name, realm)
-        client.deleteUser(user.id, realm)
+        user = client.userByName(name, realm())
+        client.deleteUser(user.id, realm())
     }
 
     override fun undo() {
-        client.addUser(addUser(), realm).run {
+        client.addUser(addUser(), realm()).run {
             extractLocationUUID()
         }.let {
-            client.updateUser(it, updateUser(it), realm)
+            client.updateUser(it, updateUser(it), realm())
         }
     }
 

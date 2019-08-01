@@ -8,11 +8,11 @@ import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 class AddUserAction(
-        private val realm: String,
+        realm:String?=null,
         private val name: String,
         private val enabled: Boolean = true,
         private val emailVerified: Boolean = true,
-        private val attributes: Map<String, List<String>> = mapOf()) : Action() {
+        private val attributes: Map<String, List<String>> = mapOf()) : Action(realm) {
 
     private lateinit var userUuid: UUID
 
@@ -43,14 +43,14 @@ class AddUserAction(
 
 
     override fun execute() {
-        client.addUser(addUser, realm).run {
+        client.addUser(addUser, realm()).run {
             userUuid = extractLocationUUID()
         }
     }
 
     override fun undo() {
-        client.userByName(name,realm).run {
-            client.deleteUser(id, realm)
+        client.userByName(name,realm()).run {
+            client.deleteUser(id, realm())
         }
     }
 

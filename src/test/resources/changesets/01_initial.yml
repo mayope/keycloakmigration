@@ -1,10 +1,10 @@
 id: initial-keycloak
 author: klg71
+realm: integ-test
 changes:
   - addRealm:
       name: integ-test
   - addUser:
-      realm: integ-test
       name: test
       enabled: true
       emailVerified: true
@@ -13,36 +13,29 @@ changes:
           - test
           - test2
   - updateUser:
-      realm: integ-test
       name: test
       enabled: false
       lastName: Lukas
   - addUserAttribute:
-      realm: integ-test
       name: test
       attributeName: test1
       attributeValues:
         - value1
         - value2
   - deleteUserAttribute:
-      realm: integ-test
       name: test
       attributeName: test1
   - addRole:
-      realm: integ-test
       name: test3
       attributes:
         role:
           - value1
           - value2
   - addSimpleClient:
-      realm: integ-test
       clientId: test
       protocol: openid-connect
   - addGroup:
-      realm: integ-test
       name: testGroup
   - addGroup:
-      realm: integ-test
       name: testChild
       parent: testGroup

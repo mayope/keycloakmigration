@@ -1,6 +1,7 @@
 package de.klg71.keycloakmigration.changeControl
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.model.ChangeSet
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.qualifier.named

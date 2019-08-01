@@ -8,12 +8,12 @@ import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 class AddSimpleClientAction(
-        private val realm: String,
+        realm: String?,
         private val clientId: String,
         private val enabled: Boolean = true,
         private val attributes: Map<String, String> = mapOf(),
         private val protocol: String = "openid-connect",
-        private val redirectUris: List<String> = emptyList()) : Action() {
+        private val redirectUris: List<String> = emptyList()) : Action(realm) {
 
     private lateinit var clientUuid: UUID
 
@@ -45,16 +45,15 @@ class AddSimpleClientAction(
 
     override fun hash() = hash
 
-
     override fun execute() {
-        client.addSimpleClient(addClient, realm).run {
+        client.addSimpleClient(addClient, realm()).run {
             clientUuid = extractLocationUUID()
         }
     }
 
     override fun undo() {
-        client.clientById(clientId, realm).run {
-            client.deleteClient(id, realm)
+        client.clientById(clientId, realm()).run {
+            client.deleteClient(id, realm())
         }
     }
 

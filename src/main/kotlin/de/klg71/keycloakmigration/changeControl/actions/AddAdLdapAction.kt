@@ -5,9 +5,9 @@ import de.klg71.keycloakmigration.model.constructAdLdapConfig
 import org.apache.commons.codec.digest.DigestUtils
 
 class AddAdLdapAction(
-        private val realm: String,
+        realm: String?=null,
         private val name: String,
-        private val config: Map<String, String>) : Action() {
+        private val config: Map<String, String>) : Action(realm) {
 
 
     private val hash = calculateHash()
@@ -29,16 +29,16 @@ class AddAdLdapAction(
 
 
     override fun execute() {
-        client.addLdap(addLdap(), realm)
+        client.addLdap(addLdap(), realm())
     }
 
-    private fun addLdap(): AddLdap = AddLdap(name, realm, constructAdLdapConfig(config))
+    private fun addLdap(): AddLdap = AddLdap(name, realm(), constructAdLdapConfig(config))
 
     override fun undo() {
-        client.userFederations(realm).find {
+        client.userFederations(realm()).find {
             it.name == name
         }?.let {
-            client.deleteUserFederation(realm, it.id)
+            client.deleteUserFederation(realm(), it.id)
         }
     }
 

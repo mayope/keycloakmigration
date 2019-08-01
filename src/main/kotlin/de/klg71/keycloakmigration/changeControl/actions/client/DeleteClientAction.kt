@@ -7,8 +7,8 @@ import de.klg71.keycloakmigration.rest.clientById
 import org.apache.commons.codec.digest.DigestUtils
 
 class DeleteClientAction(
-        private val realm: String,
-        private val clientId: String) : Action() {
+        realm:String?=null,
+        private val clientId: String) : Action(realm) {
 
 
     private val hash = calculateHash()
@@ -27,15 +27,15 @@ class DeleteClientAction(
 
 
     override fun execute() {
-        client.clientById(clientId, realm).let {
-            clientRepresentation = client.client(it.id, realm)
-            client.deleteClient(it.id, realm)
+        client.clientById(clientId, realm()).let {
+            clientRepresentation = client.client(it.id, realm())
+            client.deleteClient(it.id, realm())
         }
 
     }
 
     override fun undo() {
-        client.addClient(addClient(), realm)
+        client.addClient(addClient(), realm())
     }
 
     private fun addClient(): AddClient =

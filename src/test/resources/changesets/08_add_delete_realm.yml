@@ -10,4 +10,4 @@ changes:
     id: test2Add
 
 - deleteRealm:
-    name: test2Add
+    id: test2Add

@@ -1,11 +1,11 @@
 package de.klg71.keycloakmigration.changeControl.actions.realm
 
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
 import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.AddRealm
 import de.klg71.keycloakmigration.model.Realm
 import de.klg71.keycloakmigration.rest.realmById
+import de.klg71.keycloakmigration.rest.realmExistsById
 import org.apache.commons.codec.digest.DigestUtils
 
 /**
@@ -13,16 +13,16 @@ import org.apache.commons.codec.digest.DigestUtils
  *
  * INFO: Strange annotations have to be done because jackson fails on one argument constructors else
  */
-class DeleteRealmAction @JsonCreator constructor(@JsonProperty("name") private val name: String) : Action() {
+class DeleteRealmAction(private val id: String) : Action() {
 
     private val hash = calculateHash()
-    private fun addRealm() = AddRealm(realm.displayName?:realm.id, realm.enabled, realm.id)
+    private fun addRealm() = AddRealm(oldRealm.displayName ?: oldRealm.id, oldRealm.enabled, oldRealm.id)
 
-    private lateinit var realm: Realm
+    private lateinit var oldRealm: Realm
 
     private fun calculateHash() =
             StringBuilder().run {
-                append(name)
+                append(id)
                 toString()
             }.let {
                 DigestUtils.sha256Hex(it)
@@ -32,8 +32,8 @@ class DeleteRealmAction @JsonCreator constructor(@JsonProperty("name") private v
 
 
     override fun execute() {
-        realm = client.realmById(name)
-        client.deleteRealm(name)
+        oldRealm = client.realmById(id)
+        client.deleteRealm(id)
     }
 
     override fun undo() {
@@ -41,6 +41,6 @@ class DeleteRealmAction @JsonCreator constructor(@JsonProperty("name") private v
     }
 
 
-    override fun name() = "DeleteRealm $name"
+    override fun name() = "DeleteRealm $id"
 
 }

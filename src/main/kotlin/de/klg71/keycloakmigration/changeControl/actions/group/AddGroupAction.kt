@@ -10,9 +10,9 @@ import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 class AddGroupAction(
-        private val realm: String,
+        realm:String?=null,
         private val name: String,
-        private val parent: String? = null) : Action() {
+        private val parent: String? = null) : Action(realm) {
 
     private lateinit var groupUUID: UUID
 
@@ -34,22 +34,22 @@ class AddGroupAction(
 
 
     override fun execute() {
-        if(client.existsGroup(name,realm)){
-            throw MigrationException("Group with name: $name already exists in realm: $realm!")
+        if(client.existsGroup(name,realm())){
+            throw MigrationException("Group with name: $name already exists in realm: ${realm()}!")
         }
         when (parent.isNullOrBlank()) {
-            true -> client.addGroup(addGroup(), realm)
-            false -> client.addChildGroup(addGroup(), parentId(), realm)
+            true -> client.addGroup(addGroup(), realm())
+            false -> client.addChildGroup(addGroup(), parentId(), realm())
         }.run {
             groupUUID = extractLocationUUID()
         }
 
     }
 
-    private fun parentId() = client.groupByName(parent!!, realm).id
+    private fun parentId() = client.groupByName(parent!!, realm()).id
 
     override fun undo() {
-        client.deleteGroup(groupUUID, realm)
+        client.deleteGroup(groupUUID, realm())
     }
 
     override fun name() = "AddGroup $name"

@@ -10,7 +10,7 @@ import de.klg71.keycloakmigration.rest.userByName
 import org.apache.commons.codec.digest.DigestUtils
 
 class UpdateUserAction(
-        private val realm: String,
+        realm:String?=null,
         private val name: String,
         private val enabled: Boolean? = null,
         private val emailVerified: Boolean? = null,
@@ -22,7 +22,7 @@ class UpdateUserAction(
         private val email: String? = null,
         private val firstName: String? = null,
         private val lastName: String? = null,
-        private val credentials: List<UserCredential>? = null) : Action() {
+        private val credentials: List<UserCredential>? = null) : Action(realm) {
 
     lateinit var user: User
 
@@ -78,17 +78,17 @@ class UpdateUserAction(
     override fun hash() = hash
 
     override fun execute() {
-        if (!client.existsUser(name, realm)) {
-            throw MigrationException("User with name: $name does not exist in realm: $realm!")
+        if (!client.existsUser(name, realm())) {
+            throw MigrationException("User with name: $name does not exist in realm: ${realm()}!")
         }
 
-        user = client.userByName(name, realm)
-        client.updateUser(user.id, updateUser(), realm)
+        user = client.userByName(name, realm())
+        client.updateUser(user.id, updateUser(), realm())
     }
 
     override fun undo() {
-        if (client.existsUser(name, realm)) {
-            client.updateUser(user.id, user, realm)
+        if (client.existsUser(name, realm())) {
+            client.updateUser(user.id, user, realm())
         }
     }
 

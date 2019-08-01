@@ -30,27 +30,44 @@ Then migration can simply be invoked through the jar.
       --client CLIENT
 
 
-# Migration Details
+# Migration Files
+There are two types of files to control migrations in keycloak. ChangeLog and ChangeSet (may sound similar in liquibase).
+The Changelog references all changeSets to apply and the ChangeSets contain the actual changes.
+
+## Changelog
 Migrations are controlled through the changelog. It contains the changeSets used to execute the migration.
 
-    
+### Parameters
+- includes: List of changesets to apply consisting of:
+    - path: String, not optional, path to changeset
+    - relativeToFile: Boolean, optional, default=true, whether the file should be searched from the working dir or relative to the keycloak changelog file.
+
+### Example
     includes:
       - path: 01_initial.yml
       - path: 02_second.yml
       - path: changes/03_third.yml
         relativeToFile: true
 
-## Include Parameters
-- path: String, not optional, path to changeset
-- relativeToFile: Boolean, optional, default=true, whether the file should be searched from the working dir or relative to the keycloak changelog file.
 
-A changeset may then look like this:
+## ChangeSet
+The changeSet contains the actual changes as a list of migrations (see [Supported Migrations](#supported-migrations))
+
+### Parameters
+- id: String, not optional, describe the change
+- author: String, not optional, author of the changeset
+- realm: String, optional, preset realm for actions
+> Please note that you must either provide a realm in the ChangeSet or in each action! Even though both parameters are optional one must be set!
+
+- changes: List of Migrations
+
+### Example
 
     id: initial-keycloak
     author: klg71
+    realm: master
     changes:
     - addUser:
-        realm: master
         name: test
         enabled: true
         emailVerified: true
@@ -59,23 +76,20 @@ A changeset may then look like this:
           - test
           - test2
     - updateUser:
-        realm: master
+        realm: otherRealm
         name: test
         enabled: false
         lastName: Lukas
+        
 
-The migration hashes are stored in the attribute named 'migration' in the migration user.
 
-There are no transactions in keycloak though if the rollback fails there might be a non deterministic state.
-If it fails I would like to receive a bug report for this.
-
-# Supported migrations
+#Supported migrations
 This are the currently implemented commands. I hope I can find the time to implement more of them.
 ## User Migrations
 ### addUser
 Adds a user to keycloak. Fails if a user with that name already exists.
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - name: String, not optional
 - enabled: Boolean,  default=true
 - emailVerified: Boolean,  default=true
@@ -97,7 +111,7 @@ Adds a user to keycloak. Fails if a user with that name already exists.
 ### deleteUser
 Removes a user from keycloak. Fails if a user with that name does not exists.
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - name: String, not optional
 #### Example
     id: test
@@ -109,7 +123,7 @@ Removes a user from keycloak. Fails if a user with that name does not exists.
 ### updateUser
 Updates an exiting user in keycloak. Fails if no user with given name exists.
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - name: String, not optional
 - enabled: Boolean, default=no change
 - emailVerified: Boolean, default=no change
@@ -136,7 +150,7 @@ Adds an attribute to an existing user. Throws an error if the user does not exis
 
 User attributes can't be set deterministic with the updateUser action.
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - name: String, not optional
 - attributeName: String, not optional
 - attributeValues: List<String>, not optional
@@ -157,7 +171,7 @@ User attributes can't be set deterministic with the updateUser action.
 ### deleteUserAttribute
 Deletes an attribute to an existing user. Throws an error if the user does not exist.
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - name: String, not optional
 - attributeName: String, not optional
 - failOnMissing: Boolean, default=true
@@ -174,7 +188,7 @@ Deletes an attribute to an existing user. Throws an error if the user does not e
 ### assignRole
 Assigns a role to the given user. Fails if the user or the role doesn't exist.
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - user: String, not optional
 - role: String, not optional
 
@@ -191,7 +205,7 @@ Assigns a role to the given user. Fails if the user or the role doesn't exist.
 Revokes a role from the given user. Fails if the user or the role doesn't exist or the user does not have the role assigned.
 
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - user: String, not optional
 - role: String, not optional
 
@@ -207,7 +221,7 @@ Revokes a role from the given user. Fails if the user or the role doesn't exist 
 ### assignGroup
 Assigns a group to the given user. Fails if the user or the group doesn't exist.
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - user: String, not optional
 - group: String, not optional
 
@@ -223,7 +237,7 @@ Assigns a group to the given user. Fails if the user or the group doesn't exist.
 ### revokeGroup
 Revokes a group from the given user. Fails if the user or the group doesn't exist or the user doesnt have the group assigned .
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - user: String, not optional
 - group: String, not optional
 
@@ -241,7 +255,7 @@ Revokes a group from the given user. Fails if the user or the group doesn't exis
 Adds a new group to keycloak. Fails if the group already exists.
 
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - name: String, not optional
 - parent: String, default=empty
 
@@ -257,7 +271,7 @@ Adds a new group to keycloak. Fails if the group already exists.
 Removes a group from keycloak. Fails if the group does not exist.
 
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - name: String, not optional
 
 #### Example
@@ -272,7 +286,7 @@ Removes a group from keycloak. Fails if the group does not exist.
 Updates a group from keycloak. Fails if the group does not exist.
 
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - name: String, not optional
 - attributes: Map<String,List<String>>, optional, default=existing attributes
 - realmRoles: List<String>, optional, default=existing realm roles
@@ -293,7 +307,7 @@ Updates a group from keycloak. Fails if the group does not exist.
 Assigns a role to a group in keycloak. Fails if the group or the role does not exist.
 
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - role: String, not optional
 - group: String, not optional
 - clientId: String, optional, default=realmRole
@@ -311,7 +325,7 @@ Assigns a role to a group in keycloak. Fails if the group or the role does not e
 Revokes a role from a group in keycloak. Fails if the group or the role does not exist or the role is not assigned to the group.
 
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - role: String, not optional
 - group: String, not optional
 - clientId: String, optional, default=realmRole
@@ -329,7 +343,7 @@ Revokes a role from a group in keycloak. Fails if the group or the role does not
 ### addRole
 Add a role to keycloak, fails if the role already exists
 #### Parameter
-- realm: String, not optional
+- realm: String, optional
 - name: String, not optional,
 - clientId: String, optional, default=realmRole,
 - description: String, optional, default=""
@@ -352,7 +366,7 @@ Add a role to keycloak, fails if the role already exists
 ### deleteRole
 Delete a role from keycloak, fails if the role does not exist
 #### Parameter
-- realm: String, not optional
+- realm: String, optional
 - name: String, not optional,
 - clientId: String, optional, default=realmRole
 #### Example
@@ -368,7 +382,7 @@ Delete a role from keycloak, fails if the role does not exist
 ### addSimpleClient
 Simple command to add a client to keycloak, TODO: add more fields
 #### Parameter
-- realm: String, not optional
+- realm: String, optional
 - clientId: String, not optional,
 - enabled: Boolean, optional, default=true
 - attributes: Map<String, String>, optional, default = empty
@@ -385,7 +399,7 @@ Simple command to add a client to keycloak, TODO: add more fields
 ### deleteClient
 Delete a client in keycloak
 #### Parameter
-- realm: String, not optional
+- realm: String, optional
 - clientId: String, not optional,
 #### Example
     id: delete-client
@@ -399,7 +413,7 @@ Delete a client in keycloak
 Imports a client using the json representation.
 
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - clientRepresentationJsonFilename: String, not optional
 - relativeToFile: Boolean, optional, default=true
 
@@ -416,7 +430,7 @@ Imports a client using the json representation.
 Update a client
 
 #### Parameters
-- realm: String, not optional
+- realm: String, optional
 - clientId: String, not optional
 - name: String, optional, default=no change
 - description: String, optional, default=no change
@@ -442,8 +456,47 @@ Update a client
         redirectUris: 
             - http://localhost:8080
             - https://www.example.com
+            
+            
+## Realm Migrations
+
+### addRealm
+adds a Realm, throws error if realm with that id already exists
+
+#### Parameters
+- name: String, not optional
+- enabled: Boolean, optional, default=true
+- id: String, optional, default=name
+
+#### Example
+    id: add-realm
+    author: klg71
+    changes:
+      - addRealm:
+          name: integ-test
+          
+### deleteRealm
+deletes a Realm, throws error if realm with that id does not exists
+
+#### Parameters
+- id: String, not optional
+
+#### Example
+    id: add-realm
+    author: klg71
+    changes:
+      - deleteRealm:
+          id: integ-test
+
 ## User Federation Migrations
 ### AddAdLdap
+
+# Technical Hints
+
+The migration hashes are stored in the attribute named 'migration' in the migration user.
+
+There are no transactions in keycloak though if the rollback fails there might be a non deterministic state.
+If it fails I would like to receive a bug report for this.
 
 # Hacking
 To start developing on this project you can use the gradle tasks.

@@ -1,13 +1,14 @@
 package de.klg71.keycloakmigration.changeControl
 
+import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import de.klg71.keycloakmigration.model.ChangeLog
+import de.klg71.keycloakmigration.model.ChangeSet
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.qualifier.named
 import java.io.File
-import java.io.FileInputStream
 import java.nio.file.Paths
 
 /**
@@ -26,16 +27,16 @@ internal class ChangeFileReader : KoinComponent {
     internal fun changes(fileName: String): List<ChangeSet> =
             readYamlFile<ChangeLog>(fileName).includes.map {
                 val path = if (it.relativeToFile) {
-                    parentPath(fileName, it.path).parent.toString()
+                    parentPath(fileName, it.path)
                 } else {
-                    File(it.path).absoluteFile.parent.toString()
+                    File(it.path).absoluteFile.toPath()
                 }
-                readYamlFile<ChangeSet>(parentPath(fileName, it.path).toString()).apply {
+                readYamlFile<ChangeSet>(path.toString()).apply {
                     if (changes.any { change -> change == null }) {
                         throw ParseException("Unable to parse: ${parentPath(fileName, it.path)}, check formatting or report a bug report!")
                     }
                     changes.forEach { action ->
-                        action.path = path
+                        action.path = path.parent.toString()
                     }
                 }
             }
@@ -47,7 +48,11 @@ internal class ChangeFileReader : KoinComponent {
         if (!File(fileName).exists()) {
             throw RuntimeException("File $fileName not found.")
         }
-        return yamlObjectMapper.readValue(FileInputStream(fileName))
+        try {
+            return yamlObjectMapper.readValue(File(fileName).toURI().toURL())
+        } catch (e: JsonProcessingException) {
+            throw ParseException("Unable to parse: $fileName, check formatting or report a bug report!", e)
+        }
     }
 
 }

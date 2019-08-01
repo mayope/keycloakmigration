@@ -8,9 +8,9 @@ import java.nio.file.Paths
 import java.util.*
 
 class ImportClientAction(
-        private val realm: String,
+        realm: String? = null,
         private val clientRepresentationJsonFilename: String,
-        private val relativeToFile: Boolean = true) : Action() {
+        private val relativeToFile: Boolean = true) : Action(realm) {
     private lateinit var clientUuid: UUID
 
     private fun readJsonContent() =
@@ -33,13 +33,13 @@ class ImportClientAction(
 
 
     override fun execute() {
-        client.importClient(readJsonContent(), realm).run {
+        client.importClient(readJsonContent(), realm()).run {
             clientUuid = extractLocationUUID()
         }
     }
 
     override fun undo() {
-        client.deleteClient(clientUuid, realm)
+        client.deleteClient(clientUuid, realm())
     }
 
     override fun name() = "ImportClient $clientRepresentationJsonFilename"

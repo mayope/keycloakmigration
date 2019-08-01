@@ -9,10 +9,10 @@ import org.apache.commons.codec.digest.DigestUtils
 import java.util.Objects.isNull
 
 class AssignRoleAction(
-        private val realm: String,
+        realm:String?=null,
         private val role: String,
         private val user: String,
-        private val clientId: String? = null) : Action() {
+        private val clientId: String? = null) : Action(realm) {
 
     private val hash = calculateHash()
 
@@ -31,16 +31,16 @@ class AssignRoleAction(
 
 
     override fun execute() {
-        if(!client.existsUser(user,realm)){
-            throw MigrationException("User with name: $user does not exist in realm: $realm!")
+        if(!client.existsUser(user,realm())){
+            throw MigrationException("User with name: $user does not exist in realm: ${realm()}!")
         }
         if(clientId==null) {
-            if (!client.existsRole(role, realm)) {
-                throw MigrationException("Role with name: $role does not exist in realm: $realm!")
+            if (!client.existsRole(role, realm())) {
+                throw MigrationException("Role with name: $role does not exist in realm: ${realm()}!")
             }
         } else {
-             if (!client.existsClientRole(role, realm,clientId)) {
-                 throw MigrationException("Role with name: $role in client: $client does not exist in realm: $realm!")
+             if (!client.existsClientRole(role, realm(),clientId)) {
+                 throw MigrationException("Role with name: $role in client: $client does not exist in realm: ${realm()}!")
              }
         }
 
@@ -48,9 +48,9 @@ class AssignRoleAction(
             assignRole()
         }.let {
             if (clientId != null) {
-                client.assignClientRoles(listOf(it), realm, client.userUUID(user, realm), client.clientUUID(clientId, realm))
+                client.assignClientRoles(listOf(it), realm(), client.userUUID(user, realm()), client.clientUUID(clientId, realm()))
             } else {
-                client.assignRealmRoles(listOf(it), realm, client.userUUID(user, realm))
+                client.assignRealmRoles(listOf(it), realm(), client.userUUID(user, realm()))
             }
         }
     }
@@ -62,17 +62,17 @@ class AssignRoleAction(
             assignRole()
         }.let {
             if (clientId != null) {
-                client.revokeClientRoles(listOf(it), realm, client.userUUID(user, realm), client.clientUUID(clientId, realm))
+                client.revokeClientRoles(listOf(it), realm(), client.userUUID(user, realm()), client.clientUUID(clientId, realm()))
             } else {
-                client.revokeRealmRoles(listOf(it), realm, client.userUUID(user, realm))
+                client.revokeRealmRoles(listOf(it), realm(), client.userUUID(user, realm()))
             }
         }
     }
 
     private fun findRole() = if (clientId == null) {
-        client.roleByName(role, realm)
+        client.roleByName(role, realm())
     } else {
-        client.clientRoleByName(role, clientId, realm)
+        client.clientRoleByName(role, clientId, realm())
     }
 
     override fun name() = "AssignRole $role to $user"

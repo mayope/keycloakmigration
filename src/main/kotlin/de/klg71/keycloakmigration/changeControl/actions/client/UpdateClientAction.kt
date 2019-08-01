@@ -8,7 +8,7 @@ import de.klg71.keycloakmigration.rest.existsClient
 import org.apache.commons.codec.digest.DigestUtils
 
 class UpdateClientAction(
-        private val realm: String,
+        realm:String?=null,
         private val clientId: String,
         private val name: String? = null,
         private val description: String? = null,
@@ -22,7 +22,7 @@ class UpdateClientAction(
         private val standardFlowEnabled: Boolean? = null,
         private val adminUrl: String? = null,
         private val baseUrl: String? = null,
-        private val rootUrl: String? = null) : Action() {
+        private val rootUrl: String? = null) : Action(realm) {
 
     lateinit var oldClient: Client
 
@@ -89,17 +89,17 @@ class UpdateClientAction(
 
 
     override fun execute() {
-        if (!client.existsClient(clientId, realm)) {
+        if (!client.existsClient(clientId, realm())) {
             throw MigrationException("Client with id: $clientId does not exist in realm: $realm!")
         }
 
-        oldClient = client.clientById(clientId, realm)
-        client.updateClient(oldClient.id, updateClient(), realm)
+        oldClient = client.clientById(clientId, realm())
+        client.updateClient(oldClient.id, updateClient(), realm())
     }
 
     override fun undo() {
-        if (client.existsClient(clientId, realm)) {
-            client.updateClient(oldClient.id, oldClient, realm)
+        if (client.existsClient(clientId, realm())) {
+            client.updateClient(oldClient.id, oldClient, realm())
         }
     }
 

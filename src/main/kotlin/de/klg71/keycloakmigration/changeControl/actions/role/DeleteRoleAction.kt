@@ -10,9 +10,9 @@ import de.klg71.keycloakmigration.rest.roleExistsByName
 import org.apache.commons.codec.digest.DigestUtils
 
 class DeleteRoleAction(
-        private val realm: String,
+        realm:String?=null,
         private val name: String,
-        private val clientId: String? = null) : Action() {
+        private val clientId: String? = null) : Action(realm) {
 
     private lateinit var deletedRole: Role
 
@@ -39,35 +39,35 @@ class DeleteRoleAction(
 
     override fun execute() {
         if (clientId != null) {
-            if (!client.roleExistsByName(name, realm, clientId)) {
-                throw MigrationException("Role with name: $name does not exist in realm: $realm!")
+            if (!client.roleExistsByName(name, realm(), clientId)) {
+                throw MigrationException("Role with name: $name does not exist in realm: ${realm()}!")
             }
         }else {
-            if (!client.roleExistsByName(name, realm)) {
-                throw MigrationException("Role with name: $name does not exist in realm: $realm!")
+            if (!client.roleExistsByName(name, realm())) {
+                throw MigrationException("Role with name: $name does not exist in realm: ${realm()}!")
             }
         }
         findRole().run {
             deletedRole = this
-            client.deleteRole(id, realm)
+            client.deleteRole(id, realm())
         }
     }
 
     override fun undo() {
         if (clientId == null) {
-            client.addRole(addRole(), realm)
+            client.addRole(addRole(), realm())
         } else {
-            client.addClientRole(addRole(), client.clientUUID(clientId, realm), realm)
+            client.addClientRole(addRole(), client.clientUUID(clientId, realm()), realm())
         }
         findRole().run {
-            client.updateRole(updateRole(), id, realm)
+            client.updateRole(updateRole(), id, realm())
         }
     }
 
     private fun findRole() = if (clientId == null) {
-        client.roleByName(name, realm)
+        client.roleByName(name, realm())
     } else {
-        client.clientRoleByName(name, clientId, realm)
+        client.clientRoleByName(name, clientId, realm())
     }
 
     override fun name() = "DeleteRole $name"

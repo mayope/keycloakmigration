@@ -9,13 +9,13 @@ import org.slf4j.LoggerFactory
  * Abstract class describing an Keycloak migration Action
  *
  */
-abstract class Action : KoinComponent {
+abstract class Action(var realm: String? = null) : KoinComponent {
 
     companion object {
         val LOG = LoggerFactory.getLogger(Action::class.java)!!
     }
 
-    lateinit var path:String
+    lateinit var path: String
 
     @Suppress("unused")
     protected val client by inject<KeycloakClient>()
@@ -54,4 +54,7 @@ abstract class Action : KoinComponent {
      * Returns the name of the migration for logging purposes
      */
     abstract fun name(): String
+
+    protected fun realm(): String = realm
+            ?: throw de.klg71.keycloakmigration.changeControl.ParseException("Realm is null for ${name()}, either provide it in the change or the changeset!")
 }

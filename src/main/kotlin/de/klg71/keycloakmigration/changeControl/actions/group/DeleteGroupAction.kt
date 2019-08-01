@@ -8,8 +8,8 @@ import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 class DeleteGroupAction(
-        private val realm: String,
-        private val name: String) : Action() {
+        realm:String?=null,
+        private val name: String) : Action(realm) {
 
 
     private fun addGroup() = AddGroup(name)
@@ -30,22 +30,22 @@ class DeleteGroupAction(
 
 
     override fun execute() {
-        group = client.groupByName(name, realm)
+        group = client.groupByName(name, realm())
 
-        client.deleteGroup(group.id, realm)
+        client.deleteGroup(group.id, realm())
     }
 
     private fun parentId(): UUID? =
             group.path.split("/").run {
                 get(size - 2)
             }.let {
-                client.groupByName(it, realm).id
+                client.groupByName(it, realm()).id
             }
 
     override fun undo() {
         when (parentId() == null) {
-            true -> client.addGroup(addGroup(), realm)
-            false -> client.addChildGroup(addGroup(), parentId()!!, realm)
+            true -> client.addGroup(addGroup(), realm())
+            false -> client.addChildGroup(addGroup(), parentId()!!, realm())
         }
     }
 

@@ -9,11 +9,11 @@ import de.klg71.keycloakmigration.rest.groupByName
 import org.apache.commons.codec.digest.DigestUtils
 
 class UpdateGroupAction(
-        private val realm: String,
+        realm:String?=null,
         private val name: String,
         private val attributes: Map<String, List<String>>?,
         private val realmRoles: List<String>?,
-        private val clientRoles: Map<String, List<String>>?) : Action() {
+        private val clientRoles: Map<String, List<String>>?) : Action(realm) {
 
     private lateinit var group: Group
 
@@ -31,7 +31,7 @@ class UpdateGroupAction(
 
     private fun calculateHash() =
             StringBuilder().run {
-                append(realm)
+                append(realm())
                 append(name)
                 attributes?.entries?.forEach {
                     append(it.key)
@@ -57,22 +57,22 @@ class UpdateGroupAction(
 
 
     override fun execute() {
-        if (!client.existsGroup(name, realm)) {
-            throw MigrationException("Group with name: $name does not exists in realm: $realm!")
+        if (!client.existsGroup(name, realm())) {
+            throw MigrationException("Group with name: $name does not exists in realm: ${realm()}!")
         }
 
-        group = client.groupByName(name, realm).run {
-            client.group(realm, id)
+        group = client.groupByName(name, realm()).run {
+            client.group(realm(), id)
         }
 
-        client.updateGroup(updateGroup(), realm, group.id)
+        client.updateGroup(updateGroup(), realm(), group.id)
 
     }
 
     override fun undo() {
         client.updateGroup(UpdateGroup(group.name, group.path, group.attributes, group.access!!,
                 group.clientRoles, group.realmRoles, group.subGroups),
-                realm, group.id)
+                realm(), group.id)
     }
 
     override fun name() = "UpdateGroup $name"

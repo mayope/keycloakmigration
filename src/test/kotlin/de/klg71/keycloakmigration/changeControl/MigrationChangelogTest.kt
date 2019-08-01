@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.*
 import de.klg71.keycloakmigration.KoinLogger
 import de.klg71.keycloakmigration.changeControl.MigrationChangelog.Companion.migrationAttributeName
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.model.ChangeSet
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.model.UserAccess
 import de.klg71.keycloakmigration.rest.KeycloakClient

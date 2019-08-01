@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.module.kotlin.treeToValue
+import com.fasterxml.jackson.databind.exc.InvalidDefinitionException
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.AddAdLdapAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
@@ -21,7 +22,9 @@ import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.*
 import java.util.Objects.isNull
 
-class ParseException(message: String) : RuntimeException(message)
+class ParseException(message: String, cause:Exception?) : RuntimeException(message, cause){
+    constructor(message:String):this(message,null)
+}
 
 class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializer<Action>(Action::class.java) {
     override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): Action {
