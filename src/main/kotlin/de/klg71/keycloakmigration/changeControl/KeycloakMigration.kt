@@ -29,7 +29,8 @@ internal class KeycloakMigration(private val migrationFile: String, realm: Strin
                 doChange(change)
             }
         } catch (e: Throwable) {
-            LOG.error("Migration were unsuccessful see errors above!", e)
+            LOG.error("Migrations were unsuccessful:", e)
+            throw e
         }
 
     }

@@ -8,6 +8,7 @@ import java.net.ConnectException
 plugins {
     kotlin("jvm") version "1.3.0"
     id("maven-publish")
+    id("signing")
     id("com.jfrog.artifactory") version "4.8.1"
     id("de.undercouch.download") version ("3.4.3")
     id("net.researchgate.release") version ("2.8.0")
@@ -49,14 +50,6 @@ repositories {
     jcenter()
 }
 
-publishing {
-    publications {
-        register("jars", MavenPublication::class) {
-            from(components["java"])
-        }
-    }
-}
-
 artifactory {
     setContextUrl("https://artifactory.klg71.de/artifactory")
     publish(delegateClosureOf<PublisherConfig> {
@@ -68,7 +61,7 @@ artifactory {
 
         })
         defaults(delegateClosureOf<GroovyObject> {
-            invokeMethod("publications", "jars")
+            invokeMethod("publications", "mavenJava")
         })
     })
     resolve(delegateClosureOf<ResolverConfig> {
@@ -90,14 +83,21 @@ tasks {
         from(configurations.compile.map { if (it.isDirectory) it else zipTree(it) })
     }
 
-    register<Jar>("libJar") {
-
-        from(sourceSets["main"].output)
-
-    }
-
     "afterReleaseBuild"{
         dependsOn("artifactoryPublish")
+        dependsOn("publishMavenJavaPublicationToMavenRepository")
+    }
+
+    register<Jar>("sourcesJar"){
+        dependsOn(JavaPlugin.CLASSES_TASK_NAME)
+        classifier="sources"
+        from(sourceSets["main"].allJava)
+    }
+
+    register<Jar>("javadocJar"){
+        dependsOn(JavaPlugin.JAVADOC_TASK_NAME)
+        classifier="javadoc"
+        from(tasks["javadoc"])
     }
 
     register<Download>("downloadKeycloak") {
@@ -210,6 +210,73 @@ tasks {
     "test"{
         dependsOn("startLocalKeycloak")
         finalizedBy("stopLocalKeycloak")
+    }
+}
+
+publishing {
+    publications {
+        register("mavenJava", MavenPublication::class) {
+            groupId = "de.klg71.keycloakmigration"
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
+            from(components["java"])
+        }
+    }
+    repositories {
+        maven {
+            setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+            credentials {
+                username=project.findProperty("ossrhUser") as String
+                password=project.findProperty("ossrhPassword") as String
+            }
+        }
+    }
+}
+
+val publications = project.publishing.publications.withType(MavenPublication::class.java).map {
+    with(it.pom) {
+        withXml {
+            val root = asNode()
+            root.appendNode("name", "keycloakmigration")
+            root.appendNode("description", "Keycloak configuration as migration files")
+            root.appendNode("url", "https://github.com/klg71/keycloakmigration")
+        }
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://github.com/klg71/keycloakmigration")
+                distribution.set("repo")
+            }
+        }
+        developers {
+            developer {
+                id.set("klg71")
+                name.set("Lukas Meisegeier")
+                email.set("MeisegeierLukas@gmx.de")
+            }
+        }
+        scm {
+            url.set("https://github.com/klg71/keycloakmigration")
+            connection.set("scm:git:git://github.com/klg71/keycloakmigration.git")
+            developerConnection.set("scm:git:ssh://git@github.com/klg71/keycloakmigration.git")
+        }
+    }
+}
+
+signing{
+
+    sign(publishing.publications["mavenJava"])
+}
+
+
+
+gradle.taskGraph.whenReady {
+    if (allTasks.any { it is Sign }) {
+        allprojects {
+            extra["signing.keyId"] ="5357AC31"
+            extra["signing.secretKeyRingFile"] = project.findProperty("signing_key_ring_file")
+            extra["signing.password"] = project.findProperty("signing_key_ring_file_password")
+        }
     }
 }
 
