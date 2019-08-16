@@ -1,6 +1,7 @@
 import de.undercouch.gradle.tasks.download.Download
 import groovy.lang.GroovyObject
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.jetbrains.kotlin.org.jline.utils.Log
 import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
 import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
 import java.net.ConnectException
@@ -226,8 +227,13 @@ publishing {
         maven {
             setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2")
             credentials {
-                username=project.findProperty("ossrhUser") as String
-                password=project.findProperty("ossrhPassword") as String
+                val ossrhUser=project.findProperty("ossrhUser") as String? ?: ""
+                username=ossrhUser
+                val ossrhPassword=project.findProperty("ossrhPassword")as String? ?: ""
+                password=ossrhPassword
+                if(ossrhUser.isBlank() || ossrhPassword.isBlank()){
+                    Log.warn("Sonatype user and password are not set you won't be able to publish!")
+                }
             }
         }
     }
