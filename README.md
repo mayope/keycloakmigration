@@ -510,6 +510,8 @@ To start developing on this project you can use the gradle tasks.
 
 To start the local development keycloak you can just use the task ```startLocalKeycloak```
 
+Tested with OpenJdk 12
+
 # TODOS:
 - Add more commands
 - Add sophisticated unit and integration Tests
