@@ -29,6 +29,8 @@ Then migration can simply be invoked through the jar.
       -c CLIENT,            Client to use for migration, defaulting to master
       --client CLIENT
 
+      --correct-hashes      Correct hashes to most recent version, defaulting to
+                            false
 
 # Migration Files
 There are two types of files to control migrations in keycloak. ChangeLog and ChangeSet (may sound similar in liquibase).
@@ -498,7 +500,8 @@ The migration hashes are stored in the attribute named 'migration' in the migrat
 There are no transactions in keycloak though if the rollback fails there might be a non deterministic state!
 If it fails I would like to receive a bug report for this.
 
-If you struggle with invalid hashes on a linux-windows setup check the line endings of the json-import files as git might check them out as LF where on windows its CRLF and thus producing the change in hashing.
+If you struggle with invalid hashes on a linux-windows setup check the line endings of the json-import files as git might check them out as LF where on windows its CRLF and thus producing the error in hashing.
+
 If you are using git you can place the following file into the dir with the json-import-files to reassure that the line ending is always LF.
 
 `.gitattributes`:

@@ -26,13 +26,21 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
     /**
      * Calculate which Changeset should be executed and which are already done depending on information in keycloak
      */
-    internal fun changesTodo(changes: List<ChangeSet>): List<ChangeSet> {
+    internal fun changesTodo(changes: List<ChangeSet>, correctHashes: Boolean = false): List<ChangeSet> {
         val changeHashes = getMigrationsHashes()
 
         return changes.apply {
             changeHashes.forEachIndexed { i, it ->
                 if (get(i).hash() != it) {
-                    throw MigrationException("Invalid hash expected: $it (remote) got ${get(i).hash()} (local) in migration: ${get(i).id}")
+                    if (get(i).alternativeHashes().contains(it)) {
+                        LOG.warn("Alternative change found, continuing for now but you might use a newer keycloakmigration version. Start with the replaceAlternative switch to replace old hashes.")
+                        if (correctHashes) {
+                            replaceHash(it, get(i).hash())
+                            LOG.warn("Replaced oldHash: $it with newHash: ${get(i).hash()}!")
+                        }
+                    } else {
+                        throw MigrationException("Invalid hash expected: $it (remote) got ${get(i).hash()} (local) in migration: ${get(i).id}")
+                    }
                 }
                 LOG.info("Skipping migration: ${get(i).id}")
             }
@@ -51,6 +59,29 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
             }.let {
                 client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
                         notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName, null), realm)
+            }
+        }
+    }
+
+    private fun replaceHash(oldHash: String, newHash: String) {
+        client.user(migrationUserId, realm).run {
+            userAttributes().run {
+                toMutableMap().apply {
+                    put(migrationAttributeName, migrations().replaceString(oldHash, newHash))
+                }
+            }.let {
+                client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
+                        notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName, null), realm)
+            }
+        }
+    }
+
+    private fun List<String>.replaceString(oldHash: String, newHash: String): List<String> {
+        return map {
+            if (it == oldHash) {
+                newHash
+            } else {
+                it
             }
         }
     }

@@ -76,12 +76,12 @@ tasks {
 
     register<Jar>("fatJar") {
         from(sourceSets["main"].output)
-        classifier="fat"
+        classifier = "fat"
         manifest {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
         }
 
-        from(configurations.compile.map { if (it.isDirectory) it else zipTree(it) })
+        from( configurations["runtimeClasspath"].map { if (it.isDirectory) it else zipTree(it) } )
     }
 
     "afterReleaseBuild"{
@@ -89,17 +89,6 @@ tasks {
         dependsOn("publishMavenJavaPublicationToMavenRepository")
     }
 
-    register<Jar>("sourcesJar"){
-        dependsOn(JavaPlugin.CLASSES_TASK_NAME)
-        classifier="sources"
-        from(sourceSets["main"].allJava)
-    }
-
-    register<Jar>("javadocJar"){
-        dependsOn(JavaPlugin.JAVADOC_TASK_NAME)
-        classifier="javadoc"
-        from(tasks["javadoc"])
-    }
 
     register<Download>("downloadKeycloak") {
         description = "Download local keycloak distribution for testing purposes"
@@ -214,12 +203,24 @@ tasks {
     }
 }
 
+val sourcesJar by tasks.creating (Jar::class) {
+    dependsOn.add(tasks.javadoc)
+    archiveClassifier.set("sources")
+    from(sourceSets.main.get().allSource)
+}
+
+val javadocJar by tasks.creating(Jar::class) {
+    dependsOn.add(tasks.javadoc)
+    archiveClassifier.set("javadoc")
+    from(tasks.javadoc)
+}
+
 publishing {
     publications {
         register("mavenJava", MavenPublication::class) {
             groupId = "de.klg71.keycloakmigration"
-            artifact(tasks["sourcesJar"])
-            artifact(tasks["javadocJar"])
+            artifact(sourcesJar)
+            artifact(javadocJar)
             from(components["java"])
         }
     }
@@ -227,13 +228,14 @@ publishing {
         maven {
             setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2")
             credentials {
-                val ossrhUser=project.findProperty("ossrhUser") as String? ?: ""
-                username=ossrhUser
-                val ossrhPassword=project.findProperty("ossrhPassword")as String? ?: ""
-                password=ossrhPassword
-                if(ossrhUser.isBlank() || ossrhPassword.isBlank()){
-                    Log.warn("Sonatype user and password are not set you won't be able to publish!")
-                }
+                val ossrhUser = project.findProperty("ossrhUser") as String? ?: ""
+
+                username = ossrhUser
+                val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
+                password = ossrhPassword
+                //  if(ossrhUser.isBlank() || ossrhPassword.isBlank()){
+                Log.warn("Sonatype user and password are not set you won't be able to publish!")
+                // }
             }
         }
     }
@@ -269,7 +271,7 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
     }
 }
 
-signing{
+signing {
 
     sign(publishing.publications["mavenJava"])
 }
@@ -279,7 +281,7 @@ signing{
 gradle.taskGraph.whenReady {
     if (allTasks.any { it is Sign }) {
         allprojects {
-            extra["signing.keyId"] ="5357AC31"
+            extra["signing.keyId"] = "5357AC31"
             extra["signing.secretKeyRingFile"] = project.findProperty("signing_key_ring_file")
             extra["signing.password"] = project.findProperty("signing_key_ring_file_password")
         }

@@ -51,6 +51,15 @@ abstract class Action(var realm: String? = null) : KoinComponent {
     abstract fun hash(): String
 
     /**
+     * alternative hashes for this migration action
+     *
+     * If one of this hash is found and not the main hash() function it will echo a warning and if you use the --replace-hash switch will replace the alternative hash with the main hash
+     * This is useful for hash migrations.
+     * Example given may be if the line endings of the files to hash differ producing the error
+     */
+    open fun alternativeHashes() = emptyList<String>()
+
+    /**
      * Returns the name of the migration for logging purposes
      */
     abstract fun name(): String

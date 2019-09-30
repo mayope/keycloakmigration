@@ -23,6 +23,7 @@ interface MigrationArgs {
     fun migrationFile(): String
     fun realm(): String
     fun clientId(): String
+    fun correctHashes():Boolean
 }
 
 internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
@@ -47,6 +48,9 @@ internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
     private val clientId by parser.storing(names = *arrayOf("-c", "--client"), help = "Client to use for migration, defaulting to $defaultRealm")
             .default(defaultClientId)
 
+    private val correctHashes by parser.flagging(names = *arrayOf("--correct-hashes"), help = "Correct hashes to most recent version, defaulting to false")
+            .default(false)
+
     override fun adminUser() = adminUser
 
     override fun adminPassword() = adminPassword
@@ -58,6 +62,8 @@ internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
     override fun realm() = realm
 
     override fun clientId() = clientId
+
+    override fun correctHashes() = correctHashes
 
 }
 
@@ -71,7 +77,7 @@ fun migrate(migrationArgs: MigrationArgs) {
             startKoin {
                 logger(KoinLogger(KOIN_LOGGER))
                 modules(myModule(adminUser(), adminPassword(), baseUrl(), realm(), clientId()))
-                KeycloakMigration(migrationFile(), realm()).execute()
+                KeycloakMigration(migrationFile(), realm(), correctHashes()).execute()
             }
         } finally {
             stopKoin()

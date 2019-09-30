@@ -1,5 +1,7 @@
 package de.klg71.keycloakmigration.changeControl.actions.client
 
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.rest.extractLocationUUID
 import org.apache.commons.codec.digest.DigestUtils
@@ -12,13 +14,22 @@ class ImportClientAction(
         private val clientRepresentationJsonFilename: String,
         private val relativeToFile: Boolean = true) : Action(realm) {
     private lateinit var clientUuid: UUID
+    private val objectMapper = ObjectMapper()
+
+
+    private fun fileBufferedReader() =
+            if (relativeToFile) {
+                FileInputStream(Paths.get(path, clientRepresentationJsonFilename).toString()).bufferedReader()
+            } else {
+                FileInputStream(clientRepresentationJsonFilename).bufferedReader()
+            }
+
+    private fun readJsonContentWithWhitespace() = fileBufferedReader().use { it.readText() }
 
     private fun readJsonContent() =
-            if (relativeToFile) {
-                FileInputStream(Paths.get(path, clientRepresentationJsonFilename).toString()).bufferedReader().use { it.readText() }
-            } else {
-                FileInputStream(clientRepresentationJsonFilename).bufferedReader().use { it.readText() }
-            }
+            fileBufferedReader()
+                    .use { objectMapper.readValue(it.readText(), JsonNode::class.java) }
+                    .run { toString() }
 
     private fun calculateHash() =
             StringBuilder().run {
@@ -31,9 +42,20 @@ class ImportClientAction(
 
     override fun hash() = calculateHash()
 
+    override fun alternativeHashes(): List<String> =
+            StringBuilder().run {
+                append(realm)
+                append(readJsonContentWithWhitespace())
+                toString()
+            }.let {
+                DigestUtils.sha256Hex(it)
+            }!!.let {
+                listOf(it)
+            }
+
 
     override fun execute() {
-        client.importClient(readJsonContent(), realm()).run {
+        client.importClient(readJsonContentWithWhitespace(), realm()).run {
             clientUuid = extractLocationUUID()
         }
     }
