@@ -8,9 +8,8 @@ The goal is to provide a similar mechanism for Keycloak. There also exists a gra
 Then migration can simply be invoked through the jar.
 
     java -jar keycloakmigration.jar --help
-
     usage: [-h] [-u USER] [-p PASSWORD] [-b BASEURL] [MIGRATION-FILE] [-r REALM]
-           [-c CLIENT]
+           [-c CLIENT] [--correct-hashes]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -30,7 +29,16 @@ Then migration can simply be invoked through the jar.
       --client CLIENT
 
       --correct-hashes      Correct hashes to most recent version, defaulting to
-                            false
+                            false!
+                            Just choose this option if you didn't change
+                            anything in the changelog since the last migration!
+                            This will replace all old hashes with the new hash
+                            version and can be omitted next time the migration is
+                            run. See README.md for further explanation!
+
+
+    positional arguments:
+      MIGRATION-FILE        File to migrate, defaulting to keycloak-changelog.yml
 
 # Migration Files
 There are two types of files to control migrations in keycloak. ChangeLog and ChangeSet (may sound similar in liquibase).
@@ -103,6 +111,16 @@ This format supports substitution of environment variables for dynamic content. 
           - test2
 
 This will replace `${JAVA_HOME}` with the system variable JAVA_HOME present at runtime
+
+
+# Troubleshooting hashes
+The hash implementation from 0.0.12 to 0.1.0 has changed so the old hashes will always throw an error.
+An hash error may also occur if you did make a syntactic but not semantic change to the changelog.
+You can however call the migration script with the `--correct-hashes` switch and it will just replace the failing hashes.
+This will skip any control mechanism and you must to make sure that you have the same changelog that you migrated before.
+It will only check for the number of hashes to skip or execute migrations!
+
+> **Dont use the `--correct-hashes` switch in build pipelines!**
 
 # Supported migrations
 This are the currently implemented commands. I hope I can find the time to implement more of them.
@@ -649,10 +667,8 @@ To start developing on this project you can use the gradle tasks.
 
 To start the local development keycloak you can just use the task ```startLocalKeycloak```
 
-Tested with OpenJdk 12
+Tested with OpenJdk 12 and Keycloak 8.0.2
 
 # TODOS:
 - Add more commands
 - Add sophisticated unit and integration Tests
-- Add token refresh logic
-- add runtime parameters

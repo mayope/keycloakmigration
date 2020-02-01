@@ -32,8 +32,13 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
         return changes.apply {
             changeHashes.forEachIndexed { i, it ->
                 if (get(i).hash() != it) {
-                    // Only for migration purpose, hash will be replaced with file-level hash which will hopefully render action hashes useless
-                    throw MigrationException("Invalid hash expected: $it (remote) got ${get(i).hash()} (local) in migration: ${get(i).id}")
+                    if (!correctHashes) {
+                        throw MigrationException(
+                                "Invalid hash expected: $it (remote) got ${get(i).hash()} (local) in migration: ${get(
+                                        i).id}")
+                    }
+                    replaceHash(it, get(i).hash)
+                    LOG.warn("Replaced hash: $it with ${get(i).hash} for migration ${get(i).id}")
                 }
                 LOG.info("Skipping migration: ${get(i).id}")
             }
@@ -51,7 +56,8 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
                 addMigration(change)
             }.let {
                 client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
-                        notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName, null), realm)
+                        notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName,
+                        lastName, null), realm)
             }
         }
     }
@@ -64,7 +70,8 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
                 }
             }.let {
                 client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
-                        notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName, lastName, null), realm)
+                        notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName,
+                        lastName, null), realm)
             }
         }
     }

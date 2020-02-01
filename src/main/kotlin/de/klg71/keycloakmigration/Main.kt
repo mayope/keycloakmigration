@@ -15,6 +15,7 @@ const val defaultAdminPassword = "admin"
 const val defaultKeycloakServer = "http://localhost:18080/auth"
 const val defaultRealm = "master"
 const val defaultClientId = "admin-cli"
+const val defaultCorrectHashes = false
 
 interface MigrationArgs {
     fun adminUser(): String
@@ -23,7 +24,7 @@ interface MigrationArgs {
     fun migrationFile(): String
     fun realm(): String
     fun clientId(): String
-    fun correctHashes():Boolean
+    fun correctHashes(): Boolean
 }
 
 internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
@@ -42,13 +43,20 @@ internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
     private val migrationFile by parser.positionalList(help = "File to migrate, defaulting to $defaultChangeLogFile",
             sizeRange = 0..1)
 
-    private val realm by parser.storing(names = *arrayOf("-r", "--realm"), help = "Realm to use for migration, defaulting to $defaultRealm")
+    private val realm by parser.storing(names = *arrayOf("-r", "--realm"),
+            help = "Realm to use for migration, defaulting to $defaultRealm")
             .default(defaultRealm)
 
-    private val clientId by parser.storing(names = *arrayOf("-c", "--client"), help = "Client to use for migration, defaulting to $defaultRealm")
+    private val clientId by parser.storing(names = *arrayOf("-c", "--client"),
+            help = "Client to use for migration, defaulting to $defaultRealm")
             .default(defaultClientId)
 
-    private val correctHashes by parser.flagging(names = *arrayOf("--correct-hashes"), help = "Correct hashes to most recent version, defaulting to false")
+    private val correctHashes by parser.flagging(names = *arrayOf("--correct-hashes"),
+            help = "Correct hashes to most recent version, defaulting to $defaultCorrectHashes \r\n" +
+                    "Just choose this option if you didn't change anything in the changelog since the last migration! \n" +
+                    "This will replace all old hashes with the new hash version and can be omitted next time the migration is run.\n" +
+                    "See README.md for further explanation!").default(
+            defaultCorrectHashes)
 
     override fun adminUser() = adminUser
 
