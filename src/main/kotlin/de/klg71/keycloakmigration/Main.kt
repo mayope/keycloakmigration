@@ -49,7 +49,6 @@ internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
             .default(defaultClientId)
 
     private val correctHashes by parser.flagging(names = *arrayOf("--correct-hashes"), help = "Correct hashes to most recent version, defaulting to false")
-            .default(false)
 
     override fun adminUser() = adminUser
 

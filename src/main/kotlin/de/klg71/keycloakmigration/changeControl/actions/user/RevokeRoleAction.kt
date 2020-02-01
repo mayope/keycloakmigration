@@ -5,29 +5,14 @@ import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.AssignRole
 import de.klg71.keycloakmigration.model.Role
 import de.klg71.keycloakmigration.rest.*
-import org.apache.commons.codec.digest.DigestUtils
+import org.apache.commons.codec.digest.DigestUtils.sha256Hex
 import java.util.Objects.isNull
 
 class RevokeRoleAction(
-        realm:String?=null,
+        realm: String? = null,
         private val role: String,
         private val user: String,
         private val clientId: String? = null) : Action(realm) {
-
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(role)
-                append(client)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
 
     override fun execute() {
         if (!client.existsUser(user, realm())) {

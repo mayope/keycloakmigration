@@ -21,30 +21,6 @@ class AddSimpleClientAction(
 
     private fun addClient() = AddSimpleClient(clientId, enabled, attributes, protocol, redirectUris)
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(clientId)
-                append(enabled)
-                for ((key, value) in attributes) {
-                    append(key)
-                    value.forEach {
-                        append(it)
-                    }
-                }
-                append(protocol)
-                redirectUris.forEach {
-                    append(it)
-                }
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
     override fun execute() {
         client.addSimpleClient(addClient, realm()).run {
             clientUuid = extractLocationUUID()

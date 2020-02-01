@@ -16,12 +16,6 @@ class DeleteUserAttributeAction(
 
     private fun updateUser() =
             userAttributes().toMutableMap().let {
-                if ("migrations" !in it) {
-                    it["migrations"] = mutableListOf()
-                }
-                it["migrations"] = it["migrations"]!!.toMutableList().apply {
-                    add(hash())
-                }
                 if (attributeName !in it && failOnMissing) {
                     throw MigrationException("Attribute $attributeName is not present on user ${user.username}!")
                 }
@@ -42,19 +36,6 @@ class DeleteUserAttributeAction(
             }
 
     private fun userAttributes(): Map<String, List<String>> = user.attributes ?: emptyMap()
-
-    private val hash = calculateHash()
-
-    private fun calculateHash() = StringBuilder().run {
-        append(realm)
-        append(name)
-        append(attributeName)
-        toString()
-    }.let {
-        DigestUtils.sha256Hex(it)
-    }!!
-
-    override fun hash() = hash
 
     override fun execute() {
         user = client.userByName(name, realm())

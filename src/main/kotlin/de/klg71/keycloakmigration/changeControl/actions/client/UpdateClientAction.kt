@@ -85,8 +85,6 @@ class UpdateClientAction(
                 DigestUtils.sha256Hex(it)
             }!!
 
-    override fun hash() = hash
-
 
     override fun execute() {
         if (!client.existsClient(clientId, realm())) {

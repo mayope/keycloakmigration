@@ -13,21 +13,6 @@ class AddRealmAction(
 
     private fun addRealm() = AddRealm(name, enabled, id())
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(name)
-                append(enabled)
-                append(id)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
-
     override fun execute() {
         if (client.realmExistsById(id())) {
             throw MigrationException("Realm with id: ${id()} already exists!")

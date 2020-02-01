@@ -28,21 +28,6 @@ class AddRoleAction(
 
     private fun attributes(): Map<String, List<String>> = attributes ?: emptyMap()
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(name)
-                append(description)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
-
     override fun execute() {
         if(client.roleExistsByName(name, realm())){
             throw MigrationException("Role with name: $name already exists in realm: ${realm()}!")

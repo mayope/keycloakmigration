@@ -1,5 +1,7 @@
 package de.klg71.keycloakmigration.changeControl.actions.realm
 
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.AddRealm
@@ -13,23 +15,11 @@ import org.apache.commons.codec.digest.DigestUtils
  *
  * INFO: Strange annotations have to be done because jackson fails on one argument constructors else
  */
-class DeleteRealmAction(private val id: String) : Action() {
+class DeleteRealmAction @JsonCreator constructor(@JsonProperty("id") private val id: String) : Action() {
 
-    private val hash = calculateHash()
     private fun addRealm() = AddRealm(oldRealm.displayName ?: oldRealm.id, oldRealm.enabled, oldRealm.id)
 
     private lateinit var oldRealm: Realm
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(id)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
 
     override fun execute() {
         oldRealm = client.realmById(id)

@@ -20,7 +20,7 @@ class DeleteUserAttributeIntegTest : AbstractIntegrationTest() {
         DeleteUserAttributeAction(testRealm, "test", "testAttribute").executeIt()
 
         client.userByName("test", testRealm).let {
-            assertThat(it.attributes).doesNotContainEntry("testAttribute", listOf("testValue1", "testValue2"))
+            assertThat(it.attributes).isNullOrEmpty()
         }
     }
 

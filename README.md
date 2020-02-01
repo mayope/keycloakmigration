@@ -36,6 +36,8 @@ Then migration can simply be invoked through the jar.
 There are two types of files to control migrations in keycloak. ChangeLog and ChangeSet (may sound similar in liquibase).
 The Changelog references all changeSets to apply and the ChangeSets contain the actual changes.
 
+
+
 ## Changelog
 Migrations are controlled through the changelog. It contains the changeSets used to execute the migration.
 
@@ -83,7 +85,24 @@ The changeSet contains the actual changes as a list of migrations (see [Supporte
         enabled: false
         lastName: Lukas
         
+# Parameter substitution
+This format supports substitution of environment variables for dynamic content. The hash however will not include the resolved variable and just encode the file as a hash.
+### Example
 
+    id: initial-keycloak
+    author: klg71
+    realm: master
+    changes:
+    - addUser:
+        name: test
+        enabled: true
+        emailVerified: true
+        attributes:
+          test:
+          - ${JAVA_HOME}
+          - test2
+
+This will replace `${JAVA_HOME}` with the system variable JAVA_HOME present at runtime
 
 # Supported migrations
 This are the currently implemented commands. I hope I can find the time to implement more of them.
@@ -489,6 +508,123 @@ deletes a Realm, throws error if realm with that id does not exists
     changes:
       - deleteRealm:
           id: integ-test
+          
+### updateRealm
+updates a Realm, throws error if realm with that id does not exists
+
+#### Parameters
+- id: String, not optional
+- realmName: String, optional
+- displayName:String, optional
+- displayNameHtml:String, optional
+- revokeRefreshToken:Boolean, optional
+- refreshTokenMaxReuse:Int, optional
+- accessTokenLifespan:Int, optional
+- accessTokenLifespanForImplicitFlow:Int, optional
+- ssoSessionIdleTimeout:Int, optional
+- ssoSessionMaxLifespan:Int, optional
+- ssoSessionIdleTimeoutRememberMe:Int, optional
+- ssoSessionMaxLifespanRememberMe:Int, optional
+- offlineSessionIdleTimeout:Int, optional
+- offlineSessionMaxLifespanEnabled:Boolean, optional
+- offlineSessionMaxLifespan:Int, optional
+- accessCodeLifespan:Int, optional
+- accessCodeLifespanUserAction:Int, optional
+- accessCodeLifespanLogin:Int, optional
+- actionTokenGeneratedByAdminLifespan:Int, optional
+- actionTokenGeneratedByUserLifespan:Int, optional
+- enabled:Boolean, optional
+- sslRequired:String, optional
+- registrationAllowed:Boolean, optional
+- registrationEmailAsUsername:Boolean, optional
+- rememberMe:Boolean, optional
+- verifyEmail:Boolean, optional
+- loginWithEmailAllowed:Boolean, optional
+- duplicateEmailsAllowed:Boolean, optional
+- resetPasswordAllowed:Boolean, optional
+- editUsernameAllowed:Boolean, optional
+- bruteForceProtected:Boolean, optional
+- permanentLockout:Boolean, optional
+- maxFailureWaitSeconds:Int, optional
+- minimumQuickLoginWaitSeconds:Int, optional
+- waitIncrementSeconds:Int, optional
+- quickLoginCheckMilliSeconds:Int, optional
+- maxDeltaTimeSeconds:Int, optional
+- failureFactor:Int, optional
+- defaultRoles:List<String>, optional
+- requiredCredentials:List<String>, optional
+- otpPolicyType:String, optional
+- otpPolicyAlgorithm:String, optional
+- otpPolicyInitialCounter:Int, optional
+- otpPolicyDigits:Int, optional
+- otpPolicyLookAheadWindow:Int, optional
+- otpPolicyPeriod:Int, optional
+- otpSupportedApplications:List<String>, optional
+- webAuthnPolicyRpEntityName:String, optional
+- webAuthnPolicySignatureAlgorithms:List<String>, optional
+- webAuthnPolicyRpId:String, optional
+- webAuthnPolicyAttestationConveyancePreference:String, optional
+- webAuthnPolicyAuthenticatorAttachment:String, optional
+- webAuthnPolicyRequireResidentKey:String, optional
+- webAuthnPolicyUserVerificationRequirement:String, optional
+- webAuthnPolicyCreateTimeout:Int, optional
+- webAuthnPolicyAvoidSameAuthenticatorRegister:Boolean, optional
+- webAuthnPolicyAcceptableAaguids:List<String>,
+- browserSecurityHeaders:Map<String,String>, optional
+- smtpServer:Map<String,String>, optional
+- eventsEnabled:Boolean, optional
+- eventsListeners:List<String>, optional
+- enabledEventTypes:List<String>, optional
+- adminEventsEnabled:Boolean, optional
+- adminEventsDetailsEnabled:Boolean, optional
+- internationalizationEnabled:Boolean, optional
+- supportedLocales:List<String>, optional
+- browserFlow:String, optional
+- registrationFlow:String, optional
+- directGrantFlow:String, optional
+- resetCredentialsFlow:String, optional
+- clientAuthenticationFlow:String, optional
+- dockerAuthenticationFlow:String, optional
+- attributes:Map<String,String>, optional (Map gets merged if attributes are not present in yaml). Following keys are supported in keycloak 8.0.1:
+    - webAuthnPolicyAuthenticatorAttachment
+    - _browser_header.xRobotsTag
+    - webAuthnPolicyRpEntityName
+    - failureFactor
+    - actionTokenGeneratedByUserLifespan
+    - maxDeltaTimeSeconds
+    - webAuthnPolicySignatureAlgorithms
+    - frontendUrl
+    - offlineSessionMaxLifespan
+    - _browser_header.contentSecurityPolicyReportOnly
+    - bruteForceProtected
+    - _browser_header.contentSecurityPolicy
+    - _browser_header.xXSSProtection
+    - _browser_header.xFrameOptions
+    - _browser_header.strictTransportSecurity
+    - webAuthnPolicyUserVerificationRequirement
+    - permanentLockout
+    - quickLoginCheckMilliSeconds
+    - webAuthnPolicyCreateTimeout
+    - webAuthnPolicyRequireResidentKey
+    - webAuthnPolicyRpId
+    - webAuthnPolicyAttestationConveyancePreference
+    - maxFailureWaitSeconds
+    - minimumQuickLoginWaitSeconds
+    - webAuthnPolicyAvoidSameAuthenticatorRegister
+    - _browser_header.xContentTypeOptions
+    - actionTokenGeneratedByAdminLifespan
+    - waitIncrementSeconds
+    - offlineSessionMaxLifespanEnabled
+- userManagedAccessAllowed:Boolean, optional
+
+#### Example
+    id: update-realm
+    author: klg71
+    changes:
+      - updateRealm:
+          id: integ-test
+          displayName: UpdatedRealm
+          
 
 ## User Federation Migrations
 ### AddAdLdap

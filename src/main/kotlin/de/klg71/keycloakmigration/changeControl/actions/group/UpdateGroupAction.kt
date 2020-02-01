@@ -27,35 +27,6 @@ class UpdateGroupAction(
             group.subGroups
     )
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm())
-                append(name)
-                attributes?.entries?.forEach {
-                    append(it.key)
-                    it.value.forEach {
-                        append(it)
-                    }
-                }
-                realmRoles?.forEach {
-                    append(it)
-                }
-                clientRoles?.entries?.forEach {
-                    append(it.key)
-                    it.value.forEach {
-                        append(it)
-                    }
-                }
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
-
     override fun execute() {
         if (!client.existsGroup(name, realm())) {
             throw MigrationException("Group with name: $name does not exists in realm: ${realm()}!")

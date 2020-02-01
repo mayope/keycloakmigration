@@ -10,24 +10,6 @@ class AddAdLdapAction(
         private val config: Map<String, String>) : Action(realm) {
 
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(name)
-                config.forEach { key, value ->
-                    append(key)
-                    append(value)
-                }
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
-
     override fun execute() {
         client.addLdap(addLdap(), realm())
     }

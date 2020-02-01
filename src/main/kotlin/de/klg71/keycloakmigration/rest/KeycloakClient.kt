@@ -165,6 +165,10 @@ interface KeycloakClient {
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addRealm(addRealm: AddRealm)
 
+    @RequestLine("PUT /admin/realms/{id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateRealm(@Param("id") realmId:String, realm: Realm)
+
     @RequestLine("DELETE /admin/realms/{realm-id}")
     fun deleteRealm(@Param("realm-id") id: String)
 

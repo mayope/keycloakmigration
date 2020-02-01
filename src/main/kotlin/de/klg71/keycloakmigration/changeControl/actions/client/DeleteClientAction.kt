@@ -10,21 +10,7 @@ class DeleteClientAction(
         realm:String?=null,
         private val clientId: String) : Action(realm) {
 
-
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(clientId)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
     lateinit var clientRepresentation: Client
-
 
     override fun execute() {
         client.clientById(clientId, realm()).let {

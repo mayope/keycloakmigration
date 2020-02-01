@@ -32,15 +32,8 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
         return changes.apply {
             changeHashes.forEachIndexed { i, it ->
                 if (get(i).hash() != it) {
-                    if (get(i).alternativeHashes().contains(it)) {
-                        LOG.warn("Alternative change found, continuing for now but you might use a newer keycloakmigration version. Start with the replaceAlternative switch to replace old hashes.")
-                        if (correctHashes) {
-                            replaceHash(it, get(i).hash())
-                            LOG.warn("Replaced oldHash: $it with newHash: ${get(i).hash()}!")
-                        }
-                    } else {
-                        throw MigrationException("Invalid hash expected: $it (remote) got ${get(i).hash()} (local) in migration: ${get(i).id}")
-                    }
+                    // Only for migration purpose, hash will be replaced with file-level hash which will hopefully render action hashes useless
+                    throw MigrationException("Invalid hash expected: $it (remote) got ${get(i).hash()} (local) in migration: ${get(i).id}")
                 }
                 LOG.info("Skipping migration: ${get(i).id}")
             }

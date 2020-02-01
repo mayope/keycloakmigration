@@ -16,18 +16,25 @@ abstract class Action(var realm: String? = null) : KoinComponent {
     }
 
     lateinit var path: String
+    lateinit var yamlNodeValue: String
 
     @Suppress("unused")
     protected val client by inject<KeycloakClient>()
 
     private var executed = false
 
+    /**
+     * Executes the Action
+     */
     fun executeIt() {
         LOG.info("Executing migration: ${name()}")
         execute()
         executed = true
     }
 
+    /**
+     * Undos the Action
+     */
     fun undoIt() {
         if (executed) {
             LOG.info("Undo migration: ${name()}")
@@ -37,23 +44,22 @@ abstract class Action(var realm: String? = null) : KoinComponent {
 
     /**
      * Will only be executed if isRequired returns true
+     *
+     * @implNote This method contains the change procedure for the migration
      */
     protected abstract fun execute()
 
     /**
      * Will only be executed if execute() was executed without an Exception
+     *
+     * @implNote This method contains the change-undo procedure for the migration
      */
     protected abstract fun undo()
 
     /**
-     * Hash of the migration to check if its already executed
-     */
-    abstract fun hash(): String
-
-    /**
      * alternative hashes for this migration action
      *
-     * If one of this hash is found and not the main hash() function it will echo a warning and if you use the --replace-hash switch will replace the alternative hash with the main hash
+     * If one of this hash is found and not the main hash() function it will echo a warning and if you use the --correct-hashes switch will replace the alternative hash with the main hash
      * This is useful for hash migrations.
      * Example given may be if the line endings of the files to hash differ producing the error
      */

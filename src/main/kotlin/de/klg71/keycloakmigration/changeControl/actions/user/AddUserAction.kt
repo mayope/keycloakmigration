@@ -20,28 +20,6 @@ class AddUserAction(
 
     private fun addUser() = AddUser(name, enabled, emailVerified, attributes)
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(name)
-                append(enabled)
-                append(emailVerified)
-                for ((key, value) in attributes) {
-                    append(key)
-                    value.forEach {
-                        append(it)
-                    }
-                }
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
-
     override fun execute() {
         client.addUser(addUser, realm()).run {
             userUuid = extractLocationUUID()

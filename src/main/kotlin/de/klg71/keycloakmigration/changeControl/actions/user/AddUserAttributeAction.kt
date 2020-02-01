@@ -17,12 +17,6 @@ class AddUserAttributeAction(
 
     private fun updateUser() =
             userAttributes().toMutableMap().let {
-                if ("migrations" !in it) {
-                    it["migrations"] = mutableListOf()
-                }
-                it["migrations"] = it["migrations"]!!.toMutableList().apply {
-                    add(hash())
-                }
                 if (attributeName in it && !override) {
                     throw MigrationException("Attribute $attributeName is already present on user ${user.username}!")
                 }
@@ -43,23 +37,6 @@ class AddUserAttributeAction(
             }
 
     private fun userAttributes(): Map<String, List<String>> = user.attributes ?: emptyMap()
-
-    private val hash = calculateHash()
-
-    private fun calculateHash() = StringBuilder().run {
-        append(realm)
-        append(name)
-        append(attributeName)
-        attributeValues.forEach {
-            append(it)
-        }
-        toString()
-    }.let {
-        DigestUtils.sha256Hex(it)
-    }!!
-
-    override fun hash() = hash
-
 
     override fun execute() {
         user = client.userByName(name, realm())

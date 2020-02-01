@@ -15,20 +15,6 @@ class DeleteGroupAction(
     private fun addGroup() = AddGroup(name)
     lateinit var group: Group
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(name)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
-
     override fun execute() {
         group = client.groupByName(name, realm())
 

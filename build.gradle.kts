@@ -1,5 +1,6 @@
 import de.undercouch.gradle.tasks.download.Download
 import groovy.lang.GroovyObject
+import org.apache.tools.ant.taskdefs.ExecTask
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.jetbrains.kotlin.org.jline.utils.Log
 import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
@@ -37,6 +38,7 @@ dependencies {
     compile("org.koin:koin-core:2.0.1")
     compile("commons-codec:commons-codec:1.11")
     compile("com.xenomachina:kotlin-argparser:2.0.7")
+    compile("org.apache.commons:commons-text:1.8")
 
     testCompile(kotlin("test"))
     testCompile(kotlin("test-junit"))
@@ -72,7 +74,7 @@ artifactory {
 
 tasks {
 
-    val keycloakVersion = "4.8.0.Final"
+    val keycloakVersion = "8.0.1"
 
     register<Jar>("fatJar") {
         from(sourceSets["main"].output)
@@ -81,7 +83,7 @@ tasks {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
         }
 
-        from( configurations["runtimeClasspath"].map { if (it.isDirectory) it else zipTree(it) } )
+        from(configurations["runtimeClasspath"].map { if (it.isDirectory) it else zipTree(it) })
     }
 
     "afterReleaseBuild"{
@@ -203,7 +205,7 @@ tasks {
     }
 }
 
-val sourcesJar by tasks.creating (Jar::class) {
+val sourcesJar by tasks.creating(Jar::class) {
     dependsOn.add(tasks.javadoc)
     archiveClassifier.set("sources")
     from(sourceSets.main.get().allSource)
@@ -233,9 +235,9 @@ publishing {
                 username = ossrhUser
                 val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
                 password = ossrhPassword
-                //  if(ossrhUser.isBlank() || ossrhPassword.isBlank()){
-                Log.warn("Sonatype user and password are not set you won't be able to publish!")
-                // }
+                if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
+                    Log.warn("Sonatype user and password are not set you won't be able to publish!")
+                }
             }
         }
     }

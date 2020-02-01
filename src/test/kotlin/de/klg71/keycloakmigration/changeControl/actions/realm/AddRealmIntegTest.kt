@@ -18,11 +18,8 @@ class AddRealmIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddRealm() {
         AddRealmAction("testRealm", id = "testRealm").executeIt()
-
-        Realm("testRealm", "testRealm", null, true).let {
-            assertThat(client.realmById("testRealm")).isEqualTo(it)
-        }
-
+        val realm = client.realmById("testRealm")
+        assertThat(realm.realm).isEqualTo("testRealm")
     }
 
     @Test

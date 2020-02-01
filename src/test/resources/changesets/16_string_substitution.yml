@@ -1,0 +1,12 @@
+id: string-substitution
+author: klg71
+realm: integ-test
+changes:
+  - addUser:
+      name: test5
+      enabled: true
+      emailVerified: true
+      attributes:
+        test:
+          - ${OS}
+          - test2

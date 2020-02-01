@@ -18,21 +18,6 @@ class AddGroupAction(
 
     private fun addGroup() = AddGroup(name)
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(name)
-                append(parent)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
-
     override fun execute() {
         if(client.existsGroup(name,realm())){
             throw MigrationException("Group with name: $name already exists in realm: ${realm()}!")

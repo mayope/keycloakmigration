@@ -14,22 +14,6 @@ class AssignRoleToGroupAction(
         private val group: String,
         private val clientId: String? = null) : Action(realm) {
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(role)
-                append(group)
-                append(client)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
-
     override fun execute() {
         if (!client.existsGroup(group, realm())) {
             throw MigrationException("Group with name: $group does not exist in realm: ${realm()}!")

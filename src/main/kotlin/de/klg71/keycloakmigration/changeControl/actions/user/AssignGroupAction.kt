@@ -12,20 +12,6 @@ class AssignGroupAction(
         private val user: String,
         private val group: String) : Action(realm) {
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(group)
-                append(user)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
     override fun execute() {
         if (!client.existsUser(user, realm())) {
             throw MigrationException("User with name: $user does not exist in realm: ${realm()}!")

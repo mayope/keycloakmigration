@@ -97,45 +97,4 @@ class ChangeSetTest :KoinTest{
         val hash2 = ChangeSet("test", "author", listOf(testAction2),"testRealm","testPath2").hash()
         assertThat(hash1).isNotEqualTo(hash2)
     }
-
-    @Test
-    fun testHash_alternativeHashes_size(){
-        val testAction1 = mock<Action>{
-            on{alternativeHashes()} doReturn (listOf("hash1","hash2"));
-        }
-        val hashes = ChangeSet("test", "author", listOf(testAction1),"testRealm","testPath1").alternativeHashes()
-        assertThat(hashes).hasSize(3)
-    }
-
-    @Test
-    fun testHash_alternativeHashes_sizeContainMainHash(){
-        val testAction1 = mock<Action>{
-            on{hash()} doReturn "hashA"
-            on{alternativeHashes()} doReturn (listOf("hash1","hash2"));
-        }
-        val testAction2 = mock<Action>{
-            on{hash()} doReturn "hashB"
-            on{alternativeHashes()} doReturn (listOf("hash3","hash4"));
-        }
-        val hashes = ChangeSet("test", "author", listOf(testAction1,testAction2),"testRealm","testPath1").alternativeHashes()
-        val hash = ChangeSet("test", "author", listOf(testAction1,testAction2),"testRealm","testPath1").hash()
-        assertThat(hashes).contains(hash)
-        assertThat(hashes).hasSize(9)
-    }
-
-    @Test
-    fun testHash_alternativeHashes_(){
-        val testAction1 = mock<Action>{
-            on{hash()} doReturn "hashA"
-            on{alternativeHashes()} doReturn (listOf("hash1","hash2"));
-        }
-        val testAction2 = mock<Action>{
-            on{hash()} doReturn "hashB"
-            on{alternativeHashes()} doReturn (listOf("hash3","hash4"));
-        }
-        val hashes = ChangeSet("test", "author", listOf(testAction1,testAction2),"testRealm","testPath1").alternativeHashes()
-        val hash = ChangeSet("test", "author", listOf(testAction1,testAction2),"testRealm","testPath1").hash()
-        assertThat(hashes).contains(hash)
-        assertThat(hashes).hasSize(9)
-    }
 }

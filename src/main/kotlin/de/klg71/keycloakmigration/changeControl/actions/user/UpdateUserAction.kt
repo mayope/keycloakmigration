@@ -7,10 +7,9 @@ import de.klg71.keycloakmigration.model.UserAccess
 import de.klg71.keycloakmigration.model.UserCredential
 import de.klg71.keycloakmigration.rest.existsUser
 import de.klg71.keycloakmigration.rest.userByName
-import org.apache.commons.codec.digest.DigestUtils
 
 class UpdateUserAction(
-        realm:String?=null,
+        realm: String? = null,
         private val name: String,
         private val enabled: Boolean? = null,
         private val emailVerified: Boolean? = null,
@@ -43,39 +42,6 @@ class UpdateUserAction(
             credentials ?: user.credentials)
 
     private fun userAttributes(): Map<String, List<String>> = user.attributes ?: emptyMap()
-
-    private val hash = calculateHash()
-
-    private fun calculateHash() = StringBuilder().run {
-        append(realm)
-        append(name)
-        append(enabled)
-        append(emailVerified)
-        append(access)
-        disableableCredentialTypes?.forEach {
-            append(it)
-        }
-        append(notBefore)
-        append(firstName)
-        append(lastName)
-        credentials?.forEach {
-            append(it.algorithm)
-            append(it.config)
-            append(it.counter)
-            append(it.digits)
-            append(it.hashIterations)
-            append(it.hashedSaltedValue)
-            append(it.period)
-            append(it.salt)
-            append(it.type)
-        }
-
-        toString()
-    }.let {
-        DigestUtils.sha256Hex(it)
-    }!!
-
-    override fun hash() = hash
 
     override fun execute() {
         if (!client.existsUser(name, realm())) {

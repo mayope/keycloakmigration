@@ -14,20 +14,6 @@ class DeleteUserAction(
 
     private lateinit var user: User
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(name)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
-
     override fun execute() {
         user = client.userByName(name, realm())
         client.deleteUser(user.id, realm())

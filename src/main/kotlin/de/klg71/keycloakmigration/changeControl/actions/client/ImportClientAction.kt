@@ -14,8 +14,6 @@ class ImportClientAction(
         private val clientRepresentationJsonFilename: String,
         private val relativeToFile: Boolean = true) : Action(realm) {
     private lateinit var clientUuid: UUID
-    private val objectMapper = ObjectMapper()
-
 
     private fun fileBufferedReader() =
             if (relativeToFile) {
@@ -25,33 +23,6 @@ class ImportClientAction(
             }
 
     private fun readJsonContentWithWhitespace() = fileBufferedReader().use { it.readText() }
-
-    private fun readJsonContent() =
-            fileBufferedReader()
-                    .use { objectMapper.readValue(it.readText(), JsonNode::class.java) }
-                    .run { toString() }
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(readJsonContent())
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = calculateHash()
-
-    override fun alternativeHashes(): List<String> =
-            StringBuilder().run {
-                append(realm)
-                append(readJsonContentWithWhitespace())
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!.let {
-                listOf(it)
-            }
 
 
     override fun execute() {

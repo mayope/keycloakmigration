@@ -23,19 +23,6 @@ class DeleteRoleAction(
             deletedRole.containerId,
             deletedRole.attributes)
 
-    private val hash = calculateHash()
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(name)
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
-    override fun hash() = hash
-
 
     override fun execute() {
         if (clientId != null) {
