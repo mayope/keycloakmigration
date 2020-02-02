@@ -25,7 +25,7 @@ fun myModule(adminUser: String, adminPassword: String, baseUrl: String, realm: S
     single(named("default")) { initObjectMapper() }
     single(named("yamlObjectMapper")) { initYamlObjectMapper() }
     single { initKeycloakLoginClient(get(named("default")), baseUrl) }
-    single { TokenHolder(get<KeycloakLoginClient>(), adminUser, adminPassword, realm, clientId) }
+    single { TokenHolder(get(), adminUser, adminPassword, realm, clientId) }
     single { initFeignClient(get(named("default")), get(), baseUrl) }
     single(named("migrationUserId")) { loadCurrentUser(get(), adminUser, realm) }
 }
@@ -44,7 +44,8 @@ private fun initYamlObjectMapper(): ObjectMapper = ObjectMapper(YAMLFactory())
 private fun actionModule(objectMapper: ObjectMapper) = SimpleModule()
         .addDeserializer(Action::class.java, ActionDeserializer(objectMapper))!!
 
-private fun initKeycloakLoginClient(objectMapper: ObjectMapper, baseUrl: String): KeycloakLoginClient = Feign.builder().run {
+private fun initKeycloakLoginClient(objectMapper: ObjectMapper,
+                                    baseUrl: String): KeycloakLoginClient = Feign.builder().run {
     encoder(FormEncoder(JacksonEncoder(objectMapper)))
     decoder(JacksonDecoder(objectMapper))
     logger(Slf4jLogger())
@@ -52,7 +53,8 @@ private fun initKeycloakLoginClient(objectMapper: ObjectMapper, baseUrl: String)
     target(KeycloakLoginClient::class.java, baseUrl)
 }
 
-private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder, baseUrl: String) = Feign.builder().run {
+private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder,
+                            baseUrl: String) = Feign.builder().run {
     encoder(JacksonEncoder(objectMapper))
     decoder(JacksonDecoder(objectMapper))
     requestInterceptor {
@@ -67,4 +69,5 @@ private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder
 
 private fun initObjectMapper() = ObjectMapper().registerModule(KotlinModule())!!
 
-private fun loadCurrentUser(client: KeycloakClient, userName: String, realm: String) = client.userByName(userName, realm).id
+private fun loadCurrentUser(client: KeycloakClient, userName: String, realm: String) = client.userByName(userName,
+        realm).id

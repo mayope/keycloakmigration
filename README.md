@@ -653,9 +653,9 @@ Adds an active directory to the realm
 - name: String, not optional
 - config: Map<String, String> values:
     - connectionUrl, not optional
-    - usersDN, not optional
+    - usersDn, not optional
     - bindCredential, not optional
-    - bindDN, not optional
+    - bindDn, not optional
     - changedSyncPeriod, optional, default:"86400"
     - fullSyncPeriod, optional, default:"604800"
     - useKerberosAuthentication, optional, default: "false"

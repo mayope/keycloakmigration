@@ -90,11 +90,11 @@ fun ldapFilter(config: Map<String, String>) = config["ldapFilter"] ?: ""
 fun bindCredential(config: Map<String, String>) = config["bindCredential"]
         ?: throw MigrationException("BindCredential on ldap not given!")
 
-fun bindDN(config: Map<String, String>) = config["bindDN"] ?: throw MigrationException("BindDN on ldap not given!")
+fun bindDN(config: Map<String, String>) = config["bindDn"] ?: throw MigrationException("BindDn on ldap not given!")
 
 fun authenticationType(config: Map<String, String>) = config["authenticationType"] ?: "simple"
 
-fun usersDN(config: Map<String, String>) = config["usersDN"] ?: throw MigrationException("UsersDN on ldap not given!")
+fun usersDN(config: Map<String, String>) = config["usersDn"] ?: throw MigrationException("UsersDn on ldap not given!")
 
 fun connectionUrl(config: Map<String, String>) = config["connectionUrl"]
         ?: throw MigrationException("connectionUrl on ldap not given!")

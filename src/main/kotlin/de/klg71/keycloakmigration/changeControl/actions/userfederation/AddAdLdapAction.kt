@@ -1,8 +1,10 @@
 package de.klg71.keycloakmigration.changeControl.actions.userfederation
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.AddUserFederation
 import de.klg71.keycloakmigration.model.constructAdLdapConfig
+import de.klg71.keycloakmigration.rest.userFederationExistsByName
 
 class AddAdLdapAction(
         realm: String?=null,
@@ -11,6 +13,9 @@ class AddAdLdapAction(
 
 
     override fun execute() {
+        if(client.userFederationExistsByName(name, realm())){
+            throw MigrationException("UserFederation with name: $name already exists in realm: ${realm()}!")
+        }
         client.addLdap(addLdap(), realm())
     }
 

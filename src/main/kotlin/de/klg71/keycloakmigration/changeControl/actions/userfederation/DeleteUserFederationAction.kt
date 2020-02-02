@@ -16,7 +16,7 @@ class DeleteUserFederationAction(
         client.userFederations(realm()).find {
             it.name == name
         }.let {
-            it ?: throw MigrationException("UserFederation with name: $name not found!")
+            it ?: throw MigrationException("UserFederation with name: $name does not exist in realm: ${realm()}!")
         }.let {
             oldUserFederation = it
             client.deleteUserFederation(realm(), it.id)

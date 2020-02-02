@@ -3,7 +3,6 @@ package de.klg71.keycloakmigration.rest
 import de.klg71.keycloakmigration.changeControl.KeycloakException
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.Client
-import de.klg71.keycloakmigration.model.ClientListItem
 import de.klg71.keycloakmigration.model.GroupListItem
 import de.klg71.keycloakmigration.model.Role
 import feign.Response
@@ -104,7 +103,8 @@ fun KeycloakClient.clientRoleByName(name: String, clientId: String, realm: Strin
                 }.run {
                     find { it.name == name }.let {
                         if (it == null) {
-                            throw MigrationException("Role with name: $name does not exist on client $clientId on realm $realm!")
+                            throw MigrationException(
+                                    "Role with name: $name does not exist on client $clientId on realm $realm!")
                         }
                         clientRole(it.id, realm, UUID.fromString(it.containerId))
                     }
@@ -140,4 +140,14 @@ fun KeycloakClient.realmExistsById(id: String) = realms().any { it.id == id }
 
 fun KeycloakClient.roleExistsByName(name: String, realm: String) = roles(realm).any { it.name == name }
 
-fun KeycloakClient.roleExistsByName(name: String, realm: String, client: String) = clientRoles(realm, clientById(client, realm).id).any { it.name == name }
+fun KeycloakClient.roleExistsByName(name: String, realm: String, client: String) = clientRoles(realm,
+        clientById(client, realm).id).any { it.name == name }
+
+fun KeycloakClient.userFederationByName(name: String, realm: String) =
+        userFederations(realm).firstOrNull { it.name == name }
+                .let {
+                    it ?: throw MigrationException("UserFederation with name: $name does not exist in $realm!")
+                }
+
+fun KeycloakClient.userFederationExistsByName(name: String, realm: String) =
+        userFederations(realm).any { it.name == name }
