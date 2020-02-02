@@ -646,6 +646,64 @@ updates a Realm, throws error if realm with that id does not exists
 
 ## User Federation Migrations
 ### AddAdLdap
+Adds an active directory to the realm
+
+#### Parameters
+- realm: String, optional
+- name: String, not optional
+- config: Map<String, String> values:
+    - connectionUrl, not optional
+    - usersDN, not optional
+    - bindCredential, not optional
+    - bindDN, not optional
+    - changedSyncPeriod, optional, default:"86400"
+    - fullSyncPeriod, optional, default:"604800"
+    - useKerberosAuthentication, optional, default: "false"
+    - allowKerberosAuthentication, optional, default: "false"
+    - pagination, optional, default: "true"
+    - readTimeout, optional, default: ""
+    - connectionTimeout, optional, default: ""
+    - connectionPooling, optional, default: "true"
+    - useTruststoreSPI, optional, default: "ldapsOnly"
+    - validatePasswordPolicy, optional, default: "false"
+    - searchScope, optional, default: "1"
+    - ldapFilter, optional, default: ""
+    - authenticationType, optional, default: "simple"
+    - userObjectClasses, optional, default: "person, organizationalPerson, user"
+    - uuidLdapAttribute, optional, default: "cn"
+    - rdnLdapAttribute, optional, default: "cn"
+    - usernameLdapAttribute, optional, default: "cn"
+    - importUsers, optional, default: "true"
+    - editMode, optional, default: "READ_ONLY"
+    - batchSize, optional, default: "1000"
+    - cachePolicy, optional, default: "DEFAULT"
+    - periodicChangedUsersSync, optional, default: "false"
+    - priority, optional, default: "0"
+
+#### Example
+    id: add-ad-ldap
+    author: klg71
+    changes:
+      - addAdLdap:
+            realm: master
+            name: testLdap
+            config: 
+                connectionUrl: https://testldap
+                usersDN: usersTestDn
+                bindCredential: testPassword
+                bindDN: testBindDn
+                
+### DeleteUserFederation
+Deletes an userFederation from the realm, throws an exception if it doesn't exist.
+
+#### Parameters
+- realm: String, optional
+- name: String, not optional
+                
+#### Example
+      - deleteUserFederation:
+          realm: integ-test
+          name: testLdap
 
 # Technical Hints
 

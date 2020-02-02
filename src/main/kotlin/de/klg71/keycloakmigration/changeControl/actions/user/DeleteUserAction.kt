@@ -5,11 +5,10 @@ import de.klg71.keycloakmigration.model.AddUser
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.rest.extractLocationUUID
 import de.klg71.keycloakmigration.rest.userByName
-import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 class DeleteUserAction(
-        realm:String?=null,
+        realm: String? = null,
         private val name: String) : Action(realm) {
 
     private lateinit var user: User

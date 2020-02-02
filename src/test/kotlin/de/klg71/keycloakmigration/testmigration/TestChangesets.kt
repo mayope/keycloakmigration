@@ -7,6 +7,8 @@ import de.klg71.keycloakmigration.migrate
 
 /**
  * executes the changesets from test/resources
+ *
+ * INFO: This file must has its run configuration set to test/resources
  */
 fun main(args: Array<String>) = mainBody {
     migrate(ArgParser(args).parseInto(::CommandLineMigrationArgs))

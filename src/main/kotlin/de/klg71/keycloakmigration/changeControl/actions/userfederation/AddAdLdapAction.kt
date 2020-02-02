@@ -1,8 +1,8 @@
-package de.klg71.keycloakmigration.changeControl.actions
+package de.klg71.keycloakmigration.changeControl.actions.userfederation
 
-import de.klg71.keycloakmigration.model.AddLdap
+import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.model.AddUserFederation
 import de.klg71.keycloakmigration.model.constructAdLdapConfig
-import org.apache.commons.codec.digest.DigestUtils
 
 class AddAdLdapAction(
         realm: String?=null,
@@ -14,7 +14,7 @@ class AddAdLdapAction(
         client.addLdap(addLdap(), realm())
     }
 
-    private fun addLdap(): AddLdap = AddLdap(name, realm(), constructAdLdapConfig(config))
+    private fun addLdap(): AddUserFederation = AddUserFederation(name, realm(), constructAdLdapConfig(config))
 
     override fun undo() {
         client.userFederations(realm()).find {

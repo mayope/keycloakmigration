@@ -131,7 +131,7 @@ interface KeycloakClient {
     fun updateClient(@Param("client-id") clientId: UUID, updateClient: Client, @Param("realm") realm: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/components?parent={realm}&type=org.keycloak.storage.UserStorageProvider")
-    fun userFederations(@Param("realm") realm: String): List<UserFederationItem>
+    fun userFederations(@Param("realm") realm: String): List<UserFederation>
 
     @RequestLine("GET /admin/realms/{realm}/groups/{group-id}")
     fun group(@Param("realm") realm: String, @Param("group-id") groupId:UUID): Group
@@ -156,7 +156,7 @@ interface KeycloakClient {
 
     @RequestLine("POST /admin/realms/{realm}/components")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addLdap(addLdap: AddLdap, @Param("realm") realm: String)
+    fun addLdap(addUserFederation: AddUserFederation, @Param("realm") realm: String)
 
     @RequestLine("DELETE /admin/realms/{realm}/components/{user-federation-id}")
     fun deleteUserFederation(@Param("realm") realm: String, @Param("user-federation-id") userFederationId: UUID)

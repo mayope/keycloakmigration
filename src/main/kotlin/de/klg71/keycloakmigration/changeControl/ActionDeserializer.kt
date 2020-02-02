@@ -6,11 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.node.ObjectNode
-import com.fasterxml.jackson.module.kotlin.treeToValue
-import com.fasterxml.jackson.databind.exc.InvalidDefinitionException
 import com.fasterxml.jackson.module.kotlin.readValue
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.changeControl.actions.AddAdLdapAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
@@ -21,17 +18,17 @@ import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.*
-import org.apache.commons.text.StringEscapeUtils
+import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddAdLdapAction
+import de.klg71.keycloakmigration.changeControl.actions.userfederation.DeleteUserFederationAction
 import org.apache.commons.text.StringSubstitutor
 import java.util.Objects.isNull
 
-class ParseException(message: String, cause:Exception?) : RuntimeException(message, cause){
-    constructor(message:String):this(message,null)
+class ParseException(message: String, cause: Exception?) : RuntimeException(message, cause) {
+    constructor(message: String) : this(message, null)
 }
 
 class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializer<Action>(Action::class.java) {
-    private val stringSubstitutor = StringSubstitutor(System.getenv())
-    private val escaper = StringEscapeUtils.ESCAPE_JSON;
+    private val systemEnvSubstitutor = StringSubstitutor(System.getenv())
 
     override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): Action {
         if (isNull(p)) {
@@ -55,43 +52,47 @@ class ActionDeserializer(private val objectMapper: ObjectMapper) : StdDeserializ
 
     private fun createAction(entry: Map.Entry<String, JsonNode>): Action =
             entry.value.toString().let {
-                stringSubstitutor.replace(it)
+                systemEnvSubstitutor.replace(it)
             }.let {
-            when (entry.key) {
-                "addUser" -> objectMapper.readValue<AddUserAction>(it)
-                "updateUser" -> objectMapper.readValue<UpdateUserAction>(it)
-                "deleteUser" -> objectMapper.readValue<DeleteUserAction>(it)
-                "addUserAttribute" -> objectMapper.readValue<AddUserAttributeAction>(it)
-                "deleteUserAttribute" -> objectMapper.readValue<DeleteUserAttributeAction>(it)
-                "assignGroup" -> objectMapper.readValue<AssignGroupAction>(it)
-                "revokeGroup" -> objectMapper.readValue<RevokeGroupAction>(it)
-
-                "assignRole" -> objectMapper.readValue<AssignRoleAction>(it)
-                "revokeRole" -> objectMapper.readValue<RevokeRoleAction>(it)
-
-                "addRole" -> objectMapper.readValue<AddRoleAction>(it)
-                "deleteRole" -> objectMapper.readValue<DeleteRoleAction>(it)
-
-                "addSimpleClient" -> objectMapper.readValue<AddSimpleClientAction>(it)
-                "importClient" -> objectMapper.readValue<ImportClientAction>(it)
-                "updateClient" -> objectMapper.readValue<UpdateClientAction>(it)
-                "deleteClient" -> objectMapper.readValue<DeleteClientAction>(it)
-
-                "addGroup" -> objectMapper.readValue<AddGroupAction>(it)
-                "deleteGroup" -> objectMapper.readValue<DeleteGroupAction>(it)
-                "assignRoleToGroup" -> objectMapper.readValue<AssignRoleToGroupAction>(it)
-                "revokeRoleFromGroup" -> objectMapper.readValue<RevokeRoleFromGroupAction>(it)
-
-                "addAdLdap" -> objectMapper.readValue<AddAdLdapAction>(it)
-
-                "addRealm" -> objectMapper.readValue<AddRealmAction>(it)
-                "deleteRealm" -> objectMapper.readValue<DeleteRealmAction>(it)
-                "updateGroup" -> objectMapper.readValue<UpdateGroupAction>(it)
-
-                else -> throw ParseException("Unkown Change type: ${entry.key}")
-            }
+                mapToAction(entry.key, it)
             }.apply {
                 yamlNodeValue = entry.value.toString()
+            }
+
+    private fun mapToAction(actionName: String, actionJson: String): Action =
+            when (actionName) {
+                "addUser" -> objectMapper.readValue<AddUserAction>(actionJson)
+                "updateUser" -> objectMapper.readValue<UpdateUserAction>(actionJson)
+                "deleteUser" -> objectMapper.readValue<DeleteUserAction>(actionJson)
+                "addUserAttribute" -> objectMapper.readValue<AddUserAttributeAction>(actionJson)
+                "deleteUserAttribute" -> objectMapper.readValue<DeleteUserAttributeAction>(actionJson)
+                "assignGroup" -> objectMapper.readValue<AssignGroupAction>(actionJson)
+                "revokeGroup" -> objectMapper.readValue<RevokeGroupAction>(actionJson)
+
+                "assignRole" -> objectMapper.readValue<AssignRoleAction>(actionJson)
+                "revokeRole" -> objectMapper.readValue<RevokeRoleAction>(actionJson)
+
+                "addRole" -> objectMapper.readValue<AddRoleAction>(actionJson)
+                "deleteRole" -> objectMapper.readValue<DeleteRoleAction>(actionJson)
+
+                "addSimpleClient" -> objectMapper.readValue<AddSimpleClientAction>(actionJson)
+                "importClient" -> objectMapper.readValue<ImportClientAction>(actionJson)
+                "updateClient" -> objectMapper.readValue<UpdateClientAction>(actionJson)
+                "deleteClient" -> objectMapper.readValue<DeleteClientAction>(actionJson)
+
+                "addGroup" -> objectMapper.readValue<AddGroupAction>(actionJson)
+                "deleteGroup" -> objectMapper.readValue<DeleteGroupAction>(actionJson)
+                "assignRoleToGroup" -> objectMapper.readValue<AssignRoleToGroupAction>(actionJson)
+                "revokeRoleFromGroup" -> objectMapper.readValue<RevokeRoleFromGroupAction>(actionJson)
+
+                "addAdLdap" -> objectMapper.readValue<AddAdLdapAction>(actionJson)
+                "deleteUserFederation" -> objectMapper.readValue<DeleteUserFederationAction>(actionJson)
+
+                "addRealm" -> objectMapper.readValue<AddRealmAction>(actionJson)
+                "deleteRealm" -> objectMapper.readValue<DeleteRealmAction>(actionJson)
+                "updateGroup" -> objectMapper.readValue<UpdateGroupAction>(actionJson)
+
+                else -> throw ParseException("Unknown Change type: $actionName")
             }
 }
 

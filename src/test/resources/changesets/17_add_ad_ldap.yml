@@ -1,0 +1,14 @@
+id: add-ad-ldap
+author: klg71
+changes:
+  - addAdLdap:
+      realm: integ-test
+      name: testLdap
+      config:
+        connectionUrl: https://testldap
+        usersDN: usersTestDn
+        bindCredential: testPassword
+        bindDN: testBindDn
+  - deleteUserFederation:
+      realm: integ-test
+      name: testLdap

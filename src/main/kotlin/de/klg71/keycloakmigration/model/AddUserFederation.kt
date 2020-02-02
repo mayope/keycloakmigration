@@ -2,22 +2,22 @@ package de.klg71.keycloakmigration.model
 
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 
-data class AddLdap(val name: String,
-                   val parentId: String,
-                   val config: Map<String, List<String>>,
-                   val providerId: String = "ldap",
-                   val providerType: String = "org.keycloak.storage.UserStorageProvider")
+data class AddUserFederation(val name: String,
+                             val parentId: String,
+                             val config: Map<String, List<String>>,
+                             val providerId: String = "ldap",
+                             val providerType: String = "org.keycloak.storage.UserStorageProvider")
 
 fun constructAdLdapConfig(config: Map<String, String>): Map<String, List<String>> =
         mutableMapOf<String, List<String>>().apply {
             put("enabled", listOf("true"))
             put("priority", listOf(priority(config)))
-            if (config["periodicFullSync"].equals("true",ignoreCase = true))
+            if (config["periodicFullSync"].equals("true", ignoreCase = true))
                 put("fullSyncPeriod", listOf(fullSyncPeriod(config)))
             else
                 put("fullSyncPeriod", listOf("-1"))
 
-            if (config["periodicChangedUsersSync"].equals("true",ignoreCase = true))
+            if (config["periodicChangedUsersSync"].equals("true", ignoreCase = true))
                 put("changedSyncPeriod", listOf(changedSyncPeriod(config)))
             else
                 put("changedSyncPeriod", listOf("-1"))
@@ -39,7 +39,7 @@ fun constructAdLdapConfig(config: Map<String, String>): Map<String, List<String>
             put("usersDn", listOf(usersDN(config)))
             put("authType", listOf(authenticationType(config)))
             put("bindDn", listOf(bindDN(config)))
-            put("bindCredenial", listOf(bindCredential(config)))
+            put("bindCredential", listOf(bindCredential(config)))
             put("customUserSearchFilter", listOf(ldapFilter(config)))
             put("searchScope", listOf(searchScope(config)))
             put("validatePasswordPolicy", listOf(validatePasswordPolicy(config)))
@@ -63,9 +63,9 @@ fun constructAdLdapConfig(config: Map<String, String>): Map<String, List<String>
             put("useKerberosForPasswordAuthentication", listOf(useKerberosAuthentication(config)))
         }
 
-fun changedSyncPeriod(config: Map<String, String>)=config["changedSyncPeriod"]?:"86400"
+fun changedSyncPeriod(config: Map<String, String>) = config["changedSyncPeriod"] ?: "86400"
 
-fun fullSyncPeriod(config: Map<String, String>)=config["fullSyncPeriod"]?:"604800"
+fun fullSyncPeriod(config: Map<String, String>) = config["fullSyncPeriod"] ?: "604800"
 
 fun useKerberosAuthentication(config: Map<String, String>) = config["useKerberosAuthentication"] ?: "false"
 
@@ -75,7 +75,7 @@ fun pagination(config: Map<String, String>) = config["pagination"] ?: "true"
 
 fun readTimeout(config: Map<String, String>) = config["readTimeout"] ?: ""
 
-fun connectionTimeout(config: Map<String, String>) = config["readTimeout"] ?: ""
+fun connectionTimeout(config: Map<String, String>) = config["connectionTimeout"] ?: ""
 
 fun connectionPooling(config: Map<String, String>) = config["connectionPooling"] ?: "true"
 
@@ -114,7 +114,5 @@ fun editMode(config: Map<String, String>) = config["editMode"] ?: "READ_ONLY"
 fun batchSize(config: Map<String, String>) = config["batchSize"] ?: "1000"
 
 fun cachePolicy(config: Map<String, String>) = config["cachePolicy"] ?: "DEFAULT"
-
-fun periodicChangedUsersSync(config: Map<String, String>) = config["periodicChangedUsersSync"] ?: "false"
 
 fun priority(config: Map<String, String>) = config["priority"] ?: "0"
