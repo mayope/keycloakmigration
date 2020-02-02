@@ -1,6 +1,6 @@
 pipeline {
-    agent {
-        label 'jdk-13'
+    tools {
+       jdk "jdk-13"
     }
 
     stages {
