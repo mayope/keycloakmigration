@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'jdk-13'
+    }
 
     stages {
         stage('Prepare') {
