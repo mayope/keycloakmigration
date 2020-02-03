@@ -88,6 +88,7 @@ tasks {
     "afterReleaseBuild"{
         dependsOn("artifactoryPublish")
         dependsOn("publishMavenJavaPublicationToMavenRepository")
+        dependsOn("publishMavenJavaPublicationToGitHubPackagesRepository")
     }
 
 
