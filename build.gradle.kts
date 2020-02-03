@@ -1,6 +1,5 @@
 import de.undercouch.gradle.tasks.download.Download
 import groovy.lang.GroovyObject
-import org.apache.tools.ant.taskdefs.ExecTask
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.jetbrains.kotlin.org.jline.utils.Log
 import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
@@ -158,7 +157,8 @@ tasks {
 
     register("execWindowsKeycloak") {
         doLast {
-            ProcessBuilder("cmd", "/c", "standalone.bat", "-Djboss.socket.binding.port-offset=10000", ">", "output.txt").run {
+            ProcessBuilder("cmd", "/c", "standalone.bat", "-Djboss.socket.binding.port-offset=10000", ">",
+                    "output.txt").run {
                 directory(File("keycloak/keycloak-$keycloakVersion/bin"))
                 println("Starting local Keycloak on windows")
                 environment()["NOPAUSE"] = "true"
@@ -169,7 +169,8 @@ tasks {
     }
     register("execLinuxKeycloak") {
         doLast {
-            ProcessBuilder("keycloak/keycloak-$keycloakVersion/bin/standalone.sh", "-Djboss.socket.binding.port-offset=10000").run {
+            ProcessBuilder("keycloak/keycloak-$keycloakVersion/bin/standalone.sh",
+                    "-Djboss.socket.binding.port-offset=10000").run {
                 println("Starting local Keycloak on linux")
                 start()
                 waitForKeycloak()
@@ -241,6 +242,14 @@ publishing {
                 if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
                     Log.warn("Sonatype user and password are not set you won't be able to publish!")
                 }
+            }
+        }
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/klg71/keycloakmigration")
+            credentials {
+                username = project.findProperty("githubPublishUser") as String? ?: ""
+                password = project.findProperty("githubPublishKey") as String? ?: ""
             }
         }
     }
