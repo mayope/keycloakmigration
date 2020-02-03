@@ -241,7 +241,7 @@ publishing {
                 val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
                 password = ossrhPassword
                 if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
-                    Log.warn("Sonatype user and password are not set you won't be able to publish!")
+                    Log.warn("Sonatype user and password are not set you won't be able to publish to maven central!")
                 }
             }
         }
@@ -249,8 +249,13 @@ publishing {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/klg71/keycloakmigration")
             credentials {
-                username = project.findProperty("githubPublishUser") as String? ?: ""
-                password = project.findProperty("githubPublishKey") as String? ?: ""
+                val githubUser = project.findProperty("githubPublishUser") as String? ?: ""
+                username = githubUser
+                val githubAccessToken = project.findProperty("githubPublishKey") as String? ?: ""
+                password = githubAccessToken
+                if (githubUser.isBlank() || githubAccessToken.isBlank()) {
+                    Log.warn("Github user and password are not set you won't be able to publish to github!")
+                }
             }
         }
     }
