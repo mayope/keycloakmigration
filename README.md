@@ -727,6 +727,41 @@ To start the local development keycloak you can just use the task ```startLocalK
 
 Tested with OpenJdk 12 and Keycloak 8.0.2
 
+## Use keycloakmigration through maven dependency:
+### Gradle dependency:
+     // https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigration
+     compile group: 'de.klg71.keycloakmigration', name: 'keycloakmigration', version: '0.1.0'
+ ## Usage
+ Kotlin
+ 
+    class MyMigrationArgs(private val adminUser: String,
+                          private val adminPassword: String,
+                          private val migrationFile: String,
+                          private val baseUrl: String,
+                          private val realm: String,
+                          private val clientId: String,
+                          private val correctHashes: Boolean) : MigrationArgs {
+        override fun adminUser() = adminUser
+        override fun adminPassword() = adminPassword
+        override fun baseUrl() = baseUrl
+        override fun migrationFile() = migrationFile
+        override fun realm() = realm
+        override fun clientId() = clientId
+        override fun correctHashes() = correctHashes
+    }
+
+    class KeycloakMigrationExecution  {
+        fun migrate() {
+            MyMigrationArgs("admin", "adminPass", "keycloak-changelog.yml",
+                            "https://myauthserver", "master",
+                            "admin-cli", false)
+                    .let {
+                        de.klg71.keycloakmigration.migrate(it)
+                    }
+        }
+
+    }
+
 # TODOS:
 - Add more commands
 - Add sophisticated unit and integration Tests
