@@ -8,6 +8,10 @@ import de.klg71.keycloakmigration.model.Role
 import feign.Response
 import java.util.*
 
+/**
+ * File contains a lot of convenience functions when interacting with the keycloak clien
+ */
+
 fun KeycloakClient.userByName(name: String, realm: String) =
         searchByUsername(name, realm)
                 .run {

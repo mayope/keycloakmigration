@@ -11,7 +11,8 @@ import java.util.*
 /**
  * Execute the keycloakmigration
  */
-internal class KeycloakMigration(private val migrationFile: String, realm: String,private val correctHashes:Boolean) : KoinComponent {
+internal class KeycloakMigration(private val migrationFile: String, realm: String,
+                                 private val correctHashes: Boolean) : KoinComponent {
     private val migrationUserId by inject<UUID>(named("migrationUserId"))
     private val changeFileReader = ChangeFileReader()
     private val changelog = MigrationChangelog(migrationUserId, realm)

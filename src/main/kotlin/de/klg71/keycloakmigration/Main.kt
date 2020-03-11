@@ -25,6 +25,7 @@ interface MigrationArgs {
     fun realm(): String
     fun clientId(): String
     fun correctHashes(): Boolean
+    fun parameters(): Map<String, String>
 }
 
 internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
@@ -58,6 +59,10 @@ internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
                     "See README.md for further explanation!").default(
             defaultCorrectHashes)
 
+    private val parameters by parser.adding(names = *arrayOf("-k", "--parameter"),
+            help = "Parameters to substitute in changelog, syntax is: -k param1=value1 will replace \${param1} with value1 in changelog").default(
+            emptyList<String>())
+
     override fun adminUser() = adminUser
 
     override fun adminPassword() = adminPassword
@@ -72,6 +77,17 @@ internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
 
     override fun correctHashes() = correctHashes
 
+    override fun parameters(): Map<String, String> = parameters.map {
+        if (!it.contains("=")) {
+            throw RuntimeException("Invalid parameter detected: $it, syntax for parameter is param1=value1!")
+        }
+        it.split("=").run {
+            first() to get(1)
+        }
+    }.run {
+        toMap()
+    }
+
 }
 
 fun main(args: Array<String>) = mainBody {
@@ -83,7 +99,7 @@ fun migrate(migrationArgs: MigrationArgs) {
         try {
             startKoin {
                 logger(KoinLogger(KOIN_LOGGER))
-                modules(myModule(adminUser(), adminPassword(), baseUrl(), realm(), clientId()))
+                modules(myModule(adminUser(), adminPassword(), baseUrl(), realm(), clientId(), parameters()))
                 KeycloakMigration(migrationFile(), realm(), correctHashes()).execute()
             }
         } finally {

@@ -41,6 +41,7 @@ dependencies {
 
     testCompile(kotlin("test"))
     testCompile(kotlin("test-junit"))
+    testImplementation("io.mockk:mockk:1.9")
     testCompile("org.assertj:assertj-core:3.11.1")
     testCompile("org.koin:koin-test:2.0.1")
     testCompile("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")

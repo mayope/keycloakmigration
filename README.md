@@ -765,3 +765,4 @@ Tested with OpenJdk 12 and Keycloak 8.0.2
 # TODOS:
 - Add more commands
 - Add sophisticated unit and integration Tests
+- batch updates for users

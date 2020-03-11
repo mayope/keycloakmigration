@@ -23,7 +23,7 @@ internal class ChangeFileReader : KoinComponent {
     /**
      * Read changelog file and return the list of desired ChangeSets
      */
-    // Actually Jackson can parse null into ChangeSet
+    // Actually Jackson can parse null into ChangeSet through reflection
     @Suppress("SENSELESS_COMPARISON")
     internal fun changes(fileName: String): List<ChangeSet> =
             readYamlFile<ChangeLog>(fileName).includes.map {

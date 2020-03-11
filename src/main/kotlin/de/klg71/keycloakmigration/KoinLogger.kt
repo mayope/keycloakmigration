@@ -5,6 +5,9 @@ import org.koin.core.logger.Logger
 import org.koin.core.logger.MESSAGE
 
 
+/**
+ * Wrapper for slf4j Logger into koin compatible logger
+ */
 class KoinLogger(private val log: org.slf4j.Logger) : Logger() {
     override fun log(level: Level, msg: MESSAGE) {
         when(level){

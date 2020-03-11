@@ -17,11 +17,11 @@ private val clientId = "admin-cli"
 
 abstract class AbstractIntegrationTest : KoinComponent {
 
-    protected val testRealm="test";
+    protected val testRealm = "test";
 
     init {
-        startKoin{
-            modules(myModule(adminUser, adminPass, baseUrl, realm, clientId))
+        startKoin {
+            modules(myModule(adminUser, adminPass, baseUrl, realm, clientId, emptyMap()))
         }
     }
 

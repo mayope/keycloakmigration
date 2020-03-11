@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import de.klg71.keycloakmigration.changeControl.ActionDeserializer
+import de.klg71.keycloakmigration.changeControl.ActionFactory
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.rest.KeycloakClient
 import de.klg71.keycloakmigration.rest.KeycloakLoginClient
@@ -21,9 +22,17 @@ import feign.slf4j.Slf4jLogger
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-fun myModule(adminUser: String, adminPassword: String, baseUrl: String, realm: String, clientId: String) = module {
+/**
+ * Initialize dependency injection and create the beans according to the given parameters
+ */
+fun myModule(adminUser: String,
+             adminPassword: String,
+             baseUrl: String,
+             realm: String,
+             clientId: String,
+             parameters: Map<String, String>) = module {
     single(named("default")) { initObjectMapper() }
-    single(named("yamlObjectMapper")) { initYamlObjectMapper() }
+    single(named("yamlObjectMapper")) { initYamlObjectMapper(parameters) }
     single { initKeycloakLoginClient(get(named("default")), baseUrl) }
     single { TokenHolder(get(), adminUser, adminPassword, realm, clientId) }
     single { initFeignClient(get(named("default")), get(), baseUrl) }
@@ -38,11 +47,15 @@ private fun kotlinObjectMapper() = ObjectMapper(YAMLFactory()).apply {
     propertyNamingStrategy = PropertyNamingStrategy.LOWER_CAMEL_CASE
 }
 
-private fun initYamlObjectMapper(): ObjectMapper = ObjectMapper(YAMLFactory())
-        .registerModule(actionModule(kotlinObjectMapper())).registerModule(KotlinModule())!!
+private fun initYamlObjectMapper(parameters: Map<String, String>): ObjectMapper = ObjectMapper(YAMLFactory())
+        .registerModule(actionModule(initActionFactory(kotlinObjectMapper(), parameters)))
+        .registerModule(KotlinModule())!!
 
-private fun actionModule(objectMapper: ObjectMapper) = SimpleModule()
-        .addDeserializer(Action::class.java, ActionDeserializer(objectMapper))!!
+private fun actionModule(actionFactory: ActionFactory) = SimpleModule()
+        .addDeserializer(Action::class.java, ActionDeserializer(actionFactory))!!
+
+private fun initActionFactory(objectMapper: ObjectMapper, parameters: Map<String, String>) = ActionFactory(objectMapper,
+        parameters)
 
 private fun initKeycloakLoginClient(objectMapper: ObjectMapper,
                                     baseUrl: String): KeycloakLoginClient = Feign.builder().run {
