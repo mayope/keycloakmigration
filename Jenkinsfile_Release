@@ -14,7 +14,7 @@ pipeline {
         stage('release') {
             steps {
                 echo 'Building..'
-                sh './gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=$release_version -Prelease.newVersion=$dev_version -Partifactory_user=$ARTIFACTORY_USER -Partifactory_password=$ARTIFACTORY_PASSWORD -PossrhUser=$OSSRH_USER -PossrhPassword=$OSSRH_PASSWORD -Psigning_key_ring_file=$SIGNING_KEY_RING_FILE -Psigning_key_ring_file_password=$SIGNING_KEY_RING_FILE_PASSWORD --stacktrace'
+                sh './gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=$release_version -Prelease.newVersion=$dev_version -Partifactory_user=$ARTIFACTORY_USER -Partifactory_password=$ARTIFACTORY_PASSWORD -PossrhUser=$OSSRH_USER -PossrhPassword=$OSSRH_PASSWORD -Psigning_key_ring_file=$SIGNING_KEY_RING_FILE -Psigning_key_ring_file_password=$SIGNING_KEY_RING_FILE_PASSWORD -PgithubPublishUser=$GITHUB_PUBLISH_USER -PgithubPublishKey=$GITHUB_PUBLISH_KEY --stacktrace'
             }
         }
     }
