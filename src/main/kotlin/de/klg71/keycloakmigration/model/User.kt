@@ -24,6 +24,7 @@ data class User(val id: UUID,
                 val firstName: String?,
                 val lastName: String?,
                 @JsonInclude(JsonInclude.Include.NON_NULL)
-                val credentials:List<UserCredential>?)
+                val credentials: List<UserCredential>?,
+                val federationLink: String? = null)
 
 typealias Attributes = Map<String, List<String>>

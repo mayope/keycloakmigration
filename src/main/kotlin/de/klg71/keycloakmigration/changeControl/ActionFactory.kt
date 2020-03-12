@@ -1,6 +1,5 @@
 package de.klg71.keycloakmigration.changeControl
 
-import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import de.klg71.keycloakmigration.changeControl.actions.Action
@@ -16,27 +15,15 @@ import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.*
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddAdLdapAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.DeleteUserFederationAction
-import org.apache.commons.text.StringSubstitutor
 
-class ActionFactory (private val objectMapper: ObjectMapper,
-                     parameters: Map<String, String>){
+class ActionFactory(private val objectMapper: ObjectMapper) {
 
-    private val systemEnvSubstitutor = StringSubstitutor(System.getenv())
-    private val parameterSubstitutor = StringSubstitutor(parameters)
+    internal fun createAction(actionName: String, actionJson: String): Action =
+            mapToAction(actionName, actionJson)
+                    .apply {
+                        yamlNodeValue = actionJson
+                    }
 
-    internal fun createAction(actionName:String, actionJson :String): Action =
-            substituteParameters(actionJson).let {
-                mapToAction(actionName, it)
-            }.apply {
-                yamlNodeValue = actionJson
-            }
-
-    private fun substituteParameters(value: String) =
-            value.let {
-                systemEnvSubstitutor.replace(it)
-            }.let {
-                parameterSubstitutor.replace(it)
-            }
 
     private fun mapToAction(actionName: String, actionJson: String): Action =
             when (actionName) {

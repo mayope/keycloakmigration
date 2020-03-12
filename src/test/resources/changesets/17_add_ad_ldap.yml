@@ -6,9 +6,9 @@ changes:
       name: testLdap
       config:
         connectionUrl: https://testldap
-        usersDN: usersTestDn
+        usersDn: usersTestDn
         bindCredential: testPassword
-        bindDN: testBindDn
+        bindDn: testBindDn
   - deleteUserFederation:
       realm: integ-test
       name: testLdap

@@ -1,6 +1,7 @@
 package de.klg71.keycloakmigration
 
 import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
 import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
@@ -32,10 +33,11 @@ fun myModule(adminUser: String,
              clientId: String,
              parameters: Map<String, String>) = module {
     single(named("default")) { initObjectMapper() }
-    single(named("yamlObjectMapper")) { initYamlObjectMapper(parameters) }
+    single(named("yamlObjectMapper")) { initYamlObjectMapper() }
+    single(named("parameters")) { parameters }
     single { initKeycloakLoginClient(get(named("default")), baseUrl) }
     single { TokenHolder(get(), adminUser, adminPassword, realm, clientId) }
-    single { initFeignClient(get(named("default")), get(), baseUrl) }
+    single { initKeycloakClient(get(named("default")), get(), baseUrl) }
     single(named("migrationUserId")) { loadCurrentUser(get(), adminUser, realm) }
 }
 
@@ -47,15 +49,14 @@ private fun kotlinObjectMapper() = ObjectMapper(YAMLFactory()).apply {
     propertyNamingStrategy = PropertyNamingStrategy.LOWER_CAMEL_CASE
 }
 
-private fun initYamlObjectMapper(parameters: Map<String, String>): ObjectMapper = ObjectMapper(YAMLFactory())
-        .registerModule(actionModule(initActionFactory(kotlinObjectMapper(), parameters)))
+private fun initYamlObjectMapper(): ObjectMapper = ObjectMapper(YAMLFactory())
+        .registerModule(actionModule(initActionFactory(kotlinObjectMapper())))
         .registerModule(KotlinModule())!!
 
 private fun actionModule(actionFactory: ActionFactory) = SimpleModule()
         .addDeserializer(Action::class.java, ActionDeserializer(actionFactory))!!
 
-private fun initActionFactory(objectMapper: ObjectMapper, parameters: Map<String, String>) = ActionFactory(objectMapper,
-        parameters)
+private fun initActionFactory(objectMapper: ObjectMapper) = ActionFactory(objectMapper)
 
 private fun initKeycloakLoginClient(objectMapper: ObjectMapper,
                                     baseUrl: String): KeycloakLoginClient = Feign.builder().run {
@@ -66,10 +67,12 @@ private fun initKeycloakLoginClient(objectMapper: ObjectMapper,
     target(KeycloakLoginClient::class.java, baseUrl)
 }
 
-private fun initFeignClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder,
-                            baseUrl: String) = Feign.builder().run {
+private fun initKeycloakClient(objectMapper: ObjectMapper, tokenHolder: TokenHolder,
+                               baseUrl: String) = Feign.builder().run {
     encoder(JacksonEncoder(objectMapper))
-    decoder(JacksonDecoder(objectMapper))
+    decoder(JacksonDecoder(objectMapper.apply {
+        configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
+    }))
     requestInterceptor {
         tokenHolder.token().run {
             it.header("Authorization", "Bearer $accessToken")
