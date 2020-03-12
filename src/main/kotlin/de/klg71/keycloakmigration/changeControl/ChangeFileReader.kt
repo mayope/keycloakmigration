@@ -3,7 +3,6 @@ package de.klg71.keycloakmigration.changeControl
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.ChangeLog
 import de.klg71.keycloakmigration.model.ChangeSet
 import org.apache.commons.codec.digest.DigestUtils.sha256Hex
@@ -12,18 +11,16 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.qualifier.named
 import java.io.File
-import java.nio.file.Files
 import java.nio.file.Files.readString
-import java.nio.file.Path
 import java.nio.file.Paths
 
 /**
  * Reads changelog yaml files
  */
-internal class ChangeFileReader() : KoinComponent {
+internal class ChangeFileReader : KoinComponent {
 
     private val yamlObjectMapper by inject<ObjectMapper>(named("yamlObjectMapper"))
-    private val parameters: Map<String, String> by inject<Map<String,String>>(named("parameters"))
+    private val parameters: Map<String, String> by inject(named("parameters"))
 
     /**
      * Read changelog file and return the list of desired ChangeSets
@@ -39,7 +36,8 @@ internal class ChangeFileReader() : KoinComponent {
                 }
                 readYamlFile<ChangeSet>(path.toString()).apply {
                     if (changes.any { change -> change == null }) {
-                        throw ParseException("Unable to parse: ${parentPath(fileName, it.path)}, check formatting or report a bug report!")
+                        throw ParseException("Unable to parse: ${parentPath(fileName,
+                                it.path)}, check formatting or report a bug report!")
                     }
                     changes.forEach { action ->
                         action.path = path.parent.toString()
@@ -50,7 +48,6 @@ internal class ChangeFileReader() : KoinComponent {
 
     private fun parentPath(fileName: String, path: String) =
             Paths.get(File(fileName).absoluteFile.parentFile.absolutePath, path)
-
 
 
     private val systemEnvSubstitutor = StringSubstitutor(System.getenv())
