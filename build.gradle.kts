@@ -87,9 +87,7 @@ tasks {
     }
 
     "afterReleaseBuild"{
-        dependsOn("artifactoryPublish")
-        dependsOn("publishMavenJavaPublicationToMavenRepository")
-        dependsOn("publishMavenJavaPublicationToGitHubPackagesRepository")
+        dependsOn("artifactoryPublish","publishMavenJavaPublicationToMavenRepository","publishMavenJavaPublicationToGitHubPackagesRepository")
     }
 
 
@@ -293,7 +291,6 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
 }
 
 signing {
-
     sign(publishing.publications["mavenJava"])
 }
 
