@@ -55,7 +55,8 @@ class UpdateClientAction(
             oldClient.access,
             baseUrl ?: oldClient.baseUrl,
             adminUrl ?: oldClient.adminUrl,
-            rootUrl ?: oldClient.rootUrl)
+            rootUrl ?: oldClient.rootUrl,
+            oldClient.secret)
 
     private val hash = calculateHash()
 

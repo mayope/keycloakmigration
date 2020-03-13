@@ -4,7 +4,6 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.AddSimpleClient
 import de.klg71.keycloakmigration.rest.clientById
 import de.klg71.keycloakmigration.rest.extractLocationUUID
-import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 class AddSimpleClientAction(
@@ -13,13 +12,15 @@ class AddSimpleClientAction(
         private val enabled: Boolean = true,
         private val attributes: Map<String, String> = mapOf(),
         private val protocol: String = "openid-connect",
+        private val secret: String? = null,
+        private val publicClient: Boolean = true,
         private val redirectUris: List<String> = emptyList()) : Action(realm) {
 
     private lateinit var clientUuid: UUID
 
     private val addClient = addClient()
 
-    private fun addClient() = AddSimpleClient(clientId, enabled, attributes, protocol, redirectUris)
+    private fun addClient() = AddSimpleClient(clientId, enabled, attributes, protocol, redirectUris, secret ,publicClient)
 
     override fun execute() {
         client.addSimpleClient(addClient, realm()).run {

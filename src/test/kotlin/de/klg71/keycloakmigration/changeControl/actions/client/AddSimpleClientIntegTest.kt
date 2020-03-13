@@ -20,4 +20,18 @@ class AddSimpleClientIntegTest : AbstractIntegrationTest() {
         assertThat(testClient.enabled).isEqualTo(true)
         assertThat(testClient.attributes).isEqualTo(mapOf("test" to "1", "test2" to "2"))
     }
+
+    @Test
+    fun testAddClient_withSecret() {
+        AddSimpleClientAction(testRealm, "simpleClient", true, mapOf("test" to "1", "test2" to "2"),secret="testSecret", publicClient = false).executeIt()
+
+        val testClient = client.clientById("simpleClient", testRealm)
+
+        assertThat(testClient.enabled).isEqualTo(true)
+        assertThat(testClient.attributes).isEqualTo(mapOf("test" to "1", "test2" to "2"))
+        assertThat(testClient.publicClient).isEqualTo(false)
+        val secret = client.clientSecret(testClient.id, testRealm)
+        assertThat(secret.type).isEqualTo("secret")
+        assertThat(secret.value).isEqualTo("testSecret")
+    }
 }

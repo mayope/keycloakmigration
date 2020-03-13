@@ -35,4 +35,5 @@ data class Client(
         val access: ClientAccess,
         val baseUrl: String?,
         val adminUrl:String?,
+        val secret:String?,
         val rootUrl: String?)

@@ -110,6 +110,9 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}")
     fun client(@Param("client-id") clientId: UUID, @Param("realm") realm: String): Client
 
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/client-secret")
+    fun clientSecret(@Param("client-id") clientId: UUID, @Param("realm") realm: String): ClientSecret
+
     @RequestLine("POST /admin/realms/{realm}/clients")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addSimpleClient(addSimpleClient: AddSimpleClient, @Param("realm") realm: String): Response
