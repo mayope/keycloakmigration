@@ -426,6 +426,8 @@ Simple command to add a client to keycloak, TODO: add more fields
 - enabled: Boolean, optional, default=true
 - attributes: Map<String, String>, optional, default = empty
 - protocol: String, optional, default="openid-connect"
+- secret: String, optional
+- publicClient: Boolean, optional, default=true
 - redirectUris: List<String>, optional, default=empty
 #### Example
     id: add-simple-client
