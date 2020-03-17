@@ -7,12 +7,17 @@ import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
 import java.net.ConnectException
 
 plugins {
-    kotlin("jvm") version "1.3.0"
+    kotlin("jvm") version "1.3.70"
     id("maven-publish")
     id("signing")
     id("com.jfrog.artifactory") version "4.8.1"
     id("de.undercouch.download") version ("3.4.3")
     id("net.researchgate.release") version ("2.8.0")
+
+    // Security check for dependencies by task
+    id("org.owasp.dependencycheck") version "5.3.0"
+    // static code analysis
+    id("io.gitlab.arturbosch.detekt") version "1.7.0-beta1"
 }
 
 tasks.withType<Wrapper> {
@@ -31,9 +36,9 @@ dependencies {
     compile("org.apache.logging.log4j:log4j-core:2.11.1")
     compile("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
 
-    compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.8")
-    compile("com.fasterxml.jackson.core:jackson-databind:2.9.8")
-    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8")
+    compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.3")
+    compile("com.fasterxml.jackson.core:jackson-databind:2.10.3")
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.3")
     compile("org.koin:koin-core:2.0.1")
     compile("commons-codec:commons-codec:1.11")
     compile("com.xenomachina:kotlin-argparser:2.0.7")
@@ -304,5 +309,12 @@ gradle.taskGraph.whenReady {
             extra["signing.password"] = project.findProperty("signing_key_ring_file_password")
         }
     }
+}
+
+dependencyCheck {
+    failOnError = true
+    // https://www.first.org/cvss/specification-document#Qualitative-Severity-Rating-Scale
+    failBuildOnCVSS = 0.0f
+    analyzers.assemblyEnabled = false
 }
 
