@@ -4,11 +4,14 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.AssignGroup
 import de.klg71.keycloakmigration.model.Group
-import de.klg71.keycloakmigration.rest.*
-import org.apache.commons.codec.digest.DigestUtils
+import de.klg71.keycloakmigration.rest.existsGroup
+import de.klg71.keycloakmigration.rest.existsUser
+import de.klg71.keycloakmigration.rest.groupByName
+import de.klg71.keycloakmigration.rest.groupUUID
+import de.klg71.keycloakmigration.rest.userUUID
 
 class AssignGroupAction(
-        realm:String?=null,
+        realm: String? = null,
         private val user: String,
         private val group: String) : Action(realm) {
 

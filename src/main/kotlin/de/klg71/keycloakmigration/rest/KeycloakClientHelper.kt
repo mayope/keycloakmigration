@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package de.klg71.keycloakmigration.rest
 
 import de.klg71.keycloakmigration.changeControl.KeycloakException
@@ -48,6 +50,7 @@ fun KeycloakClient.groupByName(name: String, realm: String) =
                     group(realm, id)
                 }
 
+@Suppress("ReturnCount")
 fun KeycloakClient.existsGroup(name: String, realm: String): Boolean =
         searchGroup(name, realm)
                 .run {
@@ -69,6 +72,7 @@ fun KeycloakClient.existsUser(name: String, realm: String): Boolean =
                     return true
                 }
 
+@Suppress("ReturnCount")
 fun KeycloakClient.existsClient(clientId: String, realm: String): Boolean =
         clients(realm)
                 .run {
@@ -120,8 +124,10 @@ fun KeycloakClient.groupUUID(group: String, realm: String) = groupByName(group, 
 
 fun KeycloakClient.clientUUID(clientId: String, realm: String) = clientById(clientId, realm).id
 
+const val SUCCESSFUL_RESPONSE_START = 200
+const val SUCCESSFUL_RESPONSE_END = 299
 fun Response.isSuccessful() = when (status()) {
-    in 200..299 -> true
+    in SUCCESSFUL_RESPONSE_START..SUCCESSFUL_RESPONSE_END -> true
     else -> false
 }
 

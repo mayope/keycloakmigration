@@ -11,6 +11,7 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.qualifier.named
 import java.io.File
+import java.io.FileNotFoundException
 import java.nio.file.Files.readString
 import java.nio.file.Paths
 
@@ -63,7 +64,7 @@ internal class ChangeFileReader : KoinComponent {
 
     private inline fun <reified T> readYamlFile(fileName: String): T {
         if (!File(fileName).exists()) {
-            throw RuntimeException("File $fileName not found.")
+            throw FileNotFoundException("File $fileName not found.")
         }
         try {
             substituteParameters(readString(Paths.get(fileName))).let {

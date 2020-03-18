@@ -7,10 +7,9 @@ import de.klg71.keycloakmigration.model.Role
 import de.klg71.keycloakmigration.rest.clientRoleByName
 import de.klg71.keycloakmigration.rest.clientUUID
 import de.klg71.keycloakmigration.rest.roleExistsByName
-import org.apache.commons.codec.digest.DigestUtils
 
 class AddRoleAction(
-        realm:String?=null,
+        realm: String? = null,
         private val name: String,
         private val clientId: String? = null,
         private val description: String = "",
@@ -29,7 +28,7 @@ class AddRoleAction(
     private fun attributes(): Map<String, List<String>> = attributes ?: emptyMap()
 
     override fun execute() {
-        if(client.roleExistsByName(name, realm())){
+        if (client.roleExistsByName(name, realm())) {
             throw MigrationException("Role with name: $name already exists in realm: ${realm()}!")
         }
         if (clientId == null) {

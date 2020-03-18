@@ -5,4 +5,5 @@ import java.util.*
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class UserListItem(val id: UUID, val createdTimestamp: Long, val username: String, val enabled: Boolean, val emailVerified: Boolean)
+data class UserListItem(val id: UUID, val createdTimestamp: Long, val username: String, val enabled: Boolean,
+                        val emailVerified: Boolean)

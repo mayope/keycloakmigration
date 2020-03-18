@@ -7,4 +7,4 @@ data class AddSimpleClient(val clientId: String,
                            val protocol: String,
                            val redirectUris: List<String>,
                            val secret: String? = null,
-                           val publicClient:Boolean )
+                           val publicClient: Boolean)

@@ -1,10 +1,7 @@
 package de.klg71.keycloakmigration.changeControl.actions.client
 
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.rest.extractLocationUUID
-import org.apache.commons.codec.digest.DigestUtils
 import java.io.FileInputStream
 import java.nio.file.Paths
 import java.util.*

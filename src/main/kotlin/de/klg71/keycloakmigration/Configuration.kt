@@ -26,6 +26,7 @@ import org.koin.dsl.module
 /**
  * Initialize dependency injection and create the beans according to the given parameters
  */
+@Suppress("LongParameterList")
 fun myModule(adminUser: String,
              adminPassword: String,
              baseUrl: String,

@@ -4,12 +4,15 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.AssignRole
 import de.klg71.keycloakmigration.model.Role
-import de.klg71.keycloakmigration.rest.*
-import org.apache.commons.codec.digest.DigestUtils
+import de.klg71.keycloakmigration.rest.clientRoleByName
+import de.klg71.keycloakmigration.rest.clientUUID
+import de.klg71.keycloakmigration.rest.existsGroup
+import de.klg71.keycloakmigration.rest.existsRole
+import de.klg71.keycloakmigration.rest.groupUUID
 import java.util.Objects.isNull
 
 class RevokeRoleFromGroupAction(
-        realm:String?=null,
+        realm: String? = null,
         private val role: String,
         private val group: String,
         private val clientId: String? = null) : Action(realm) {
@@ -32,7 +35,8 @@ class RevokeRoleFromGroupAction(
             assignRole()
         }.let {
             if (clientId != null) {
-                client.revokeClientRolesFromGroup(listOf(it), realm(), client.groupUUID(group, realm()), client.clientUUID(clientId, realm()))
+                client.revokeClientRolesFromGroup(listOf(it), realm(), client.groupUUID(group, realm()),
+                        client.clientUUID(clientId, realm()))
             } else {
                 client.revokeRealmRolesFromGroup(listOf(it), realm(), client.groupUUID(group, realm()))
             }
@@ -47,7 +51,8 @@ class RevokeRoleFromGroupAction(
             assignRole()
         }.let {
             if (clientId != null) {
-                client.assignClientRolesToGroup(listOf(it), realm(), client.groupUUID(group, realm()), client.clientUUID(clientId, realm()))
+                client.assignClientRolesToGroup(listOf(it), realm(), client.groupUUID(group, realm()),
+                        client.clientUUID(clientId, realm()))
             } else {
                 client.assignRealmRolesToGroup(listOf(it), realm(), client.groupUUID(group, realm()))
             }

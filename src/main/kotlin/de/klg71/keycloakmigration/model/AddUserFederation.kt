@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package de.klg71.keycloakmigration.model
 
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException

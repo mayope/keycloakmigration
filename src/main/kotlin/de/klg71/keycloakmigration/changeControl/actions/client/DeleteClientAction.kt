@@ -4,10 +4,9 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.AddClient
 import de.klg71.keycloakmigration.model.Client
 import de.klg71.keycloakmigration.rest.clientById
-import org.apache.commons.codec.digest.DigestUtils
 
 class DeleteClientAction(
-        realm:String?=null,
+        realm: String? = null,
         private val clientId: String) : Action(realm) {
 
     lateinit var clientRepresentation: Client

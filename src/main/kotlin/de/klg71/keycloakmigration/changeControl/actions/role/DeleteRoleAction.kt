@@ -7,10 +7,9 @@ import de.klg71.keycloakmigration.model.Role
 import de.klg71.keycloakmigration.rest.clientRoleByName
 import de.klg71.keycloakmigration.rest.clientUUID
 import de.klg71.keycloakmigration.rest.roleExistsByName
-import org.apache.commons.codec.digest.DigestUtils
 
 class DeleteRoleAction(
-        realm:String?=null,
+        realm: String? = null,
         private val name: String,
         private val clientId: String? = null) : Action(realm) {
 
@@ -29,7 +28,7 @@ class DeleteRoleAction(
             if (!client.roleExistsByName(name, realm(), clientId)) {
                 throw MigrationException("Role with name: $name does not exist in realm: ${realm()}!")
             }
-        }else {
+        } else {
             if (!client.roleExistsByName(name, realm())) {
                 throw MigrationException("Role with name: $name does not exist in realm: ${realm()}!")
             }

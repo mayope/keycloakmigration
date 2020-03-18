@@ -10,7 +10,7 @@ import org.koin.core.logger.MESSAGE
  */
 class KoinLogger(private val log: org.slf4j.Logger) : Logger() {
     override fun log(level: Level, msg: MESSAGE) {
-        when(level){
+        when (level) {
             Level.DEBUG -> log.debug(msg)
             Level.ERROR -> log.error(msg)
             Level.INFO -> log.info(msg)

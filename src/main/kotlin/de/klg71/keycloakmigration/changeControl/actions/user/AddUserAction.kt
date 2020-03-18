@@ -4,11 +4,10 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.model.AddUser
 import de.klg71.keycloakmigration.rest.extractLocationUUID
 import de.klg71.keycloakmigration.rest.userByName
-import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 class AddUserAction(
-        realm:String?=null,
+        realm: String? = null,
         private val name: String,
         private val enabled: Boolean = true,
         private val emailVerified: Boolean = true,
@@ -27,7 +26,7 @@ class AddUserAction(
     }
 
     override fun undo() {
-        client.userByName(name,realm()).run {
+        client.userByName(name, realm()).run {
             client.deleteUser(id, realm())
         }
     }

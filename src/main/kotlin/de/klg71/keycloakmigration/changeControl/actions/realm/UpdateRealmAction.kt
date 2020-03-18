@@ -85,6 +85,7 @@ class UpdateRealmAction(
 
     lateinit var oldRealm: Realm
 
+    @Suppress("LongMethod", "ComplexMethod")
     private fun updateRealm() = Realm(id, realmName ?: oldRealm.realm,
             displayName ?: oldRealm.displayName,
             displayNameHtml ?: oldRealm.displayNameHtml,

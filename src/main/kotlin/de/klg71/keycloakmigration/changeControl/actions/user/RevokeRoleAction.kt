@@ -4,8 +4,11 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.AssignRole
 import de.klg71.keycloakmigration.model.Role
-import de.klg71.keycloakmigration.rest.*
-import org.apache.commons.codec.digest.DigestUtils.sha256Hex
+import de.klg71.keycloakmigration.rest.clientRoleByName
+import de.klg71.keycloakmigration.rest.clientUUID
+import de.klg71.keycloakmigration.rest.existsRole
+import de.klg71.keycloakmigration.rest.existsUser
+import de.klg71.keycloakmigration.rest.userUUID
 import java.util.Objects.isNull
 
 class RevokeRoleAction(
@@ -30,7 +33,8 @@ class RevokeRoleAction(
             assignRole()
         }.let {
             if (clientId != null) {
-                client.revokeClientRoles(listOf(it), realm(), client.userUUID(user, realm()), client.clientUUID(clientId, realm()))
+                client.revokeClientRoles(listOf(it), realm(), client.userUUID(user, realm()),
+                        client.clientUUID(clientId, realm()))
             } else {
                 client.revokeRealmRoles(listOf(it), realm(), client.userUUID(user, realm()))
             }
@@ -45,7 +49,8 @@ class RevokeRoleAction(
             assignRole()
         }.let {
             if (clientId != null) {
-                client.assignClientRoles(listOf(it), realm(), client.userUUID(user, realm()), client.clientUUID(clientId, realm()))
+                client.assignClientRoles(listOf(it), realm(), client.userUUID(user, realm()),
+                        client.clientUUID(clientId, realm()))
             } else {
                 client.assignRealmRoles(listOf(it), realm(), client.userUUID(user, realm()))
             }

@@ -7,12 +7,24 @@ import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAc
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.UpdateClientAction
-import de.klg71.keycloakmigration.changeControl.actions.group.*
+import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.group.AssignRoleToGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.group.DeleteGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.group.RevokeRoleFromGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.group.UpdateGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
-import de.klg71.keycloakmigration.changeControl.actions.user.*
+import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAction
+import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAttributeAction
+import de.klg71.keycloakmigration.changeControl.actions.user.AssignGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.user.AssignRoleAction
+import de.klg71.keycloakmigration.changeControl.actions.user.DeleteUserAction
+import de.klg71.keycloakmigration.changeControl.actions.user.DeleteUserAttributeAction
+import de.klg71.keycloakmigration.changeControl.actions.user.RevokeGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.user.RevokeRoleAction
+import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddAdLdapAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.DeleteUserFederationAction
 
@@ -25,6 +37,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
                     }
 
 
+    @Suppress("ComplexMethod")
     private fun mapToAction(actionName: String, actionJson: String): Action =
             when (actionName) {
                 "addUser" -> objectMapper.readValue<AddUserAction>(actionJson)

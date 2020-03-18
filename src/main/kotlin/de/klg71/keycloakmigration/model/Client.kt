@@ -34,6 +34,6 @@ data class Client(
         val optionalClientScopes: List<String>,
         val access: ClientAccess,
         val baseUrl: String?,
-        val adminUrl:String?,
-        val secret:String?,
+        val adminUrl: String?,
+        val secret: String?,
         val rootUrl: String?)

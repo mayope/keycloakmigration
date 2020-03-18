@@ -13,5 +13,3 @@ data class UserCredential(val algorithm: String? = "pbkdf2-sha256",
                           val salt: String?,
                           val type: String? = "password",
                           val config: Map<String, String>? = emptyMap())
-
-

@@ -6,10 +6,9 @@ import de.klg71.keycloakmigration.model.Group
 import de.klg71.keycloakmigration.model.UpdateGroup
 import de.klg71.keycloakmigration.rest.existsGroup
 import de.klg71.keycloakmigration.rest.groupByName
-import org.apache.commons.codec.digest.DigestUtils
 
 class UpdateGroupAction(
-        realm:String?=null,
+        realm: String? = null,
         private val name: String,
         private val attributes: Map<String, List<String>>?,
         private val realmRoles: List<String>?,

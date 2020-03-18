@@ -99,6 +99,7 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
 
     private fun Attributes.migrations() = get(migrationAttributeName) ?: emptyList()
 
+    @Suppress("ReturnCount")
     private fun getMigrationsHashes(): List<String> =
             client.user(migrationUserId, realm).run {
                 if (isNull(attributes)) {

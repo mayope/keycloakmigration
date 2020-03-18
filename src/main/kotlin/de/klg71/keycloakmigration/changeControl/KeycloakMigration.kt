@@ -21,6 +21,7 @@ internal class KeycloakMigration(private val migrationFile: String, realm: Strin
         val LOG = LoggerFactory.getLogger(KeycloakMigration::class.java)!!
     }
 
+    @Suppress("TooGenericExceptionCaught")
     internal fun execute() {
         try {
             changeFileReader.changes(migrationFile).let {
@@ -36,6 +37,7 @@ internal class KeycloakMigration(private val migrationFile: String, realm: Strin
 
     }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun doChange(change: ChangeSet) {
         mutableListOf<Action>().run {
             try {

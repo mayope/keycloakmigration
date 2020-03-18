@@ -8,7 +8,7 @@ import de.klg71.keycloakmigration.rest.existsClient
 import org.apache.commons.codec.digest.DigestUtils
 
 class UpdateClientAction(
-        realm:String?=null,
+        realm: String? = null,
         private val clientId: String,
         private val name: String? = null,
         private val description: String? = null,

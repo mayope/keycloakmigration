@@ -33,6 +33,6 @@ data class ClientListItem(
         val defaultClientScopes: List<String>,
         val optionalClientScopes: List<String>,
         val access: ClientAccess,
-        val adminUrl:String?,
-        val rootUrl:String?)
+        val adminUrl: String?,
+        val rootUrl: String?)
 

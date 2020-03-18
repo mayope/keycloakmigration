@@ -4,10 +4,9 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.rest.userByName
-import org.apache.commons.codec.digest.DigestUtils
 
 class DeleteUserAttributeAction(
-        realm:String?=null,
+        realm: String? = null,
         private val name: String,
         private val attributeName: String,
         private val failOnMissing: Boolean = true) : Action(realm) {

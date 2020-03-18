@@ -4,7 +4,6 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.AddRealm
 import de.klg71.keycloakmigration.rest.realmExistsById
-import org.apache.commons.codec.digest.DigestUtils
 
 class AddRealmAction(
         private val name: String,

@@ -20,7 +20,8 @@ class AddSimpleClientAction(
 
     private val addClient = addClient()
 
-    private fun addClient() = AddSimpleClient(clientId, enabled, attributes, protocol, redirectUris, secret ,publicClient)
+    private fun addClient() = AddSimpleClient(clientId, enabled, attributes, protocol, redirectUris, secret,
+            publicClient)
 
     override fun execute() {
         client.addSimpleClient(addClient, realm()).run {

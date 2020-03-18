@@ -6,11 +6,10 @@ import de.klg71.keycloakmigration.model.AddGroup
 import de.klg71.keycloakmigration.rest.existsGroup
 import de.klg71.keycloakmigration.rest.extractLocationUUID
 import de.klg71.keycloakmigration.rest.groupByName
-import org.apache.commons.codec.digest.DigestUtils
 import java.util.*
 
 class AddGroupAction(
-        realm:String?=null,
+        realm: String? = null,
         private val name: String,
         private val parent: String? = null) : Action(realm) {
 
@@ -19,7 +18,7 @@ class AddGroupAction(
     private fun addGroup() = AddGroup(name)
 
     override fun execute() {
-        if(client.existsGroup(name,realm())){
+        if (client.existsGroup(name, realm())) {
             throw MigrationException("Group with name: $name already exists in realm: ${realm()}!")
         }
         when (parent.isNullOrBlank()) {

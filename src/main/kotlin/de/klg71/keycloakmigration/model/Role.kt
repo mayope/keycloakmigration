@@ -9,4 +9,4 @@ data class Role(val id: UUID,
                 val composite: Boolean,
                 val clientRole: Boolean,
                 val containerId: String,
-                val attributes: Map<String,List<String>>)
+                val attributes: Map<String, List<String>>)

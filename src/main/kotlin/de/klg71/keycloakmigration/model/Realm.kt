@@ -79,3 +79,4 @@ data class Realm(val id: String,
                  val attributes: Map<String, String>,
                  val userManagedAccessAllowed: Boolean
 )
+

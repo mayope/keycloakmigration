@@ -209,6 +209,11 @@ tasks {
         dependsOn("startLocalKeycloak")
         finalizedBy("stopLocalKeycloak")
     }
+
+    withType<io.gitlab.arturbosch.detekt.Detekt> {
+        // Target version of the generated JVM bytecode. It is used for type resolution.
+        this.jvmTarget = "1.8"
+    }
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
