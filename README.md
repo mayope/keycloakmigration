@@ -277,6 +277,7 @@ Updates an exiting user in keycloak. Fails if no user with given name exists.
 - email: String, default=no change
 - firstName: String, default=no change
 - lastName: String, default=no change
+- credentials: Map<String,String> (see example below)
 ##### Example
     id: test
     author: klg71
@@ -286,6 +287,16 @@ Updates an exiting user in keycloak. Fails if no user with given name exists.
         name: test
         enabled: false
         lastName: Lukas
+##### Example to update Password
+    id: update-password
+    author: klg71
+    changes:
+      - updateUser:
+          realm: integ-test
+          name: test
+          credentials:
+            - hashedSaltedValue: 1tWf95Drz6t8/9kKE3tiJXPywCzG/C0KDnmCIFXEDdFQMPB6iVWWxjLO9HJI3YwTfWZa78N+hcmYHcT1tkavcA==
+              salt: dGVzdB==
 
 #### addUserAttribute
 Adds an attribute to an existing user. Throws an error if the user does not exist.
@@ -835,7 +846,7 @@ Tested with OpenJdk 12 and Keycloak 8.0.2
 ### Use keycloakmigration through maven dependency
 #### Gradle dependency
      // https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigration
-     compile group: 'de.klg71.keycloakmigration', name: 'keycloakmigration', version: '0.1.0'
+     compile group: 'de.klg71.keycloakmigration', name: 'keycloakmigration', version: 'x.x.x'
  ### Usage
  Kotlin
  
