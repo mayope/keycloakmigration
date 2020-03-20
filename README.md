@@ -297,6 +297,43 @@ Updates an exiting user in keycloak. Fails if no user with given name exists.
           credentials:
             - hashedSaltedValue: 1tWf95Drz6t8/9kKE3tiJXPywCzG/C0KDnmCIFXEDdFQMPB6iVWWxjLO9HJI3YwTfWZa78N+hcmYHcT1tkavcA==
               salt: dGVzdB==
+              
+###### Script to generate salt and hash:
+```kotlin
+import org.apache.commons.codec.Charsets.UTF_8
+import java.util.*
+import javax.crypto.SecretKeyFactory
+import javax.crypto.spec.PBEKeySpec
+
+fun generatePassword(){
+        println("Keycloak password hash helper")
+        val scanner = Scanner(System.`in`, UTF_8)
+        println("Enter password:")
+        val password = scanner.nextLine()
+        println("Enter salt:")
+        val salt = scanner.nextLine()
+
+        val hashIterations = 27500
+        val keyByteLength = 64
+        val pass = getEncryptedPassword(password, salt.toByteArray(UTF_8), hashIterations, keyByteLength)
+        println("Password: $pass")
+        println("Salt: " + Base64.getEncoder().encodeToString(salt.toByteArray(UTF_8)))
+}
+fun getEncryptedPassword(password: String, salt: ByteArray,
+                         iterations: Int, derivedKeyLength: Int): String {
+    return SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256").run {
+        generateSecret(PBEKeySpec(password.toCharArray(), salt,
+                iterations, derivedKeyLength * 8)
+        )
+    }.run {
+        @Suppress("UsePropertyAccessSyntax")
+        getEncoded()
+    }.let {
+        Base64.getEncoder().encodeToString(it)
+    }
+
+}
+```
 
 #### addUserAttribute
 Adds an attribute to an existing user. Throws an error if the user does not exist.
