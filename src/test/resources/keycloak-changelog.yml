@@ -16,4 +16,5 @@ includes:
 - path: changesets/16_string_substitution.yml
 - path: changesets/17_add_ad_ldap.yml
 - path: changesets/18_add_client_with_secret.yml
+- path: changesets/19_update_user_password.yml
 

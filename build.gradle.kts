@@ -42,7 +42,9 @@ dependencies {
     compile("org.koin:koin-core:2.0.1")
     compile("commons-codec:commons-codec:1.11")
     compile("com.xenomachina:kotlin-argparser:2.0.7")
+
     compile("org.apache.commons:commons-text:1.8")
+    compile("org.apache.commons:commons-lang3:3.9")
 
     testCompile(kotlin("test"))
     testCompile(kotlin("test-junit"))

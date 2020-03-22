@@ -1,6 +1,7 @@
 package de.klg71.keycloakmigration.changeControl
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.fasterxml.jackson.module.kotlin.readValue
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
@@ -25,6 +26,7 @@ import de.klg71.keycloakmigration.changeControl.actions.user.DeleteUserAttribute
 import de.klg71.keycloakmigration.changeControl.actions.user.RevokeGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.user.RevokeRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserAction
+import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserPasswordAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddAdLdapAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.DeleteUserFederationAction
 
@@ -42,6 +44,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             when (actionName) {
                 "addUser" -> objectMapper.readValue<AddUserAction>(actionJson)
                 "updateUser" -> objectMapper.readValue<UpdateUserAction>(actionJson)
+                "updateUserPassword" -> objectMapper.readValue<UpdateUserPasswordAction>(actionJson)
                 "deleteUser" -> objectMapper.readValue<DeleteUserAction>(actionJson)
                 "addUserAttribute" -> objectMapper.readValue<AddUserAttributeAction>(actionJson)
                 "deleteUserAttribute" -> objectMapper.readValue<DeleteUserAttributeAction>(actionJson)

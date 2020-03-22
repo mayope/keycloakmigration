@@ -27,85 +27,88 @@ The goal is to provide a similar mechanism for Keycloak. There also exists a gra
       - [updateUser](#updateuser)
         * [Parameters](#parameters-4)
         * [Example](#example-5)
-      - [addUserAttribute](#adduserattribute)
+        * [Example to update Password](#example-to-update-password)
+          + [Script to generate salt and hash:](#script-to-generate-salt-and-hash-)
+      - [updateUserPassword](#updateuserpassword)
         * [Parameters](#parameters-5)
         * [Example](#example-6)
-      - [deleteUserAttribute](#deleteuserattribute)
+      - [addUserAttribute](#adduserattribute)
         * [Parameters](#parameters-6)
         * [Example](#example-7)
-      - [assignRole](#assignrole)
+      - [deleteUserAttribute](#deleteuserattribute)
         * [Parameters](#parameters-7)
         * [Example](#example-8)
-      - [revokeRole](#revokerole)
+      - [assignRole](#assignrole)
         * [Parameters](#parameters-8)
         * [Example](#example-9)
-      - [assignGroup](#assigngroup)
+      - [revokeRole](#revokerole)
         * [Parameters](#parameters-9)
         * [Example](#example-10)
-      - [revokeGroup](#revokegroup)
+      - [assignGroup](#assigngroup)
         * [Parameters](#parameters-10)
         * [Example](#example-11)
-    + [Group Migrations](#group-migrations)
-      - [addGroup](#addgroup)
+      - [revokeGroup](#revokegroup)
         * [Parameters](#parameters-11)
         * [Example](#example-12)
-      - [deleteGroup](#deletegroup)
+    + [Group Migrations](#group-migrations)
+      - [addGroup](#addgroup)
         * [Parameters](#parameters-12)
         * [Example](#example-13)
-      - [updateGroup](#updategroup)
+      - [deleteGroup](#deletegroup)
         * [Parameters](#parameters-13)
         * [Example](#example-14)
-      - [assignRoleToGroup](#assignroletogroup)
+      - [updateGroup](#updategroup)
         * [Parameters](#parameters-14)
         * [Example](#example-15)
-      - [revokeRoleFromGroup](#revokerolefromgroup)
+      - [assignRoleToGroup](#assignroletogroup)
         * [Parameters](#parameters-15)
         * [Example](#example-16)
+      - [revokeRoleFromGroup](#revokerolefromgroup)
+        * [Parameters](#parameters-16)
+        * [Example](#example-17)
     + [Role Migrations](#role-migrations)
       - [addRole](#addrole)
         * [Parameter](#parameter)
-        * [Example](#example-17)
+        * [Example](#example-18)
       - [deleteRole](#deleterole)
         * [Parameter](#parameter-1)
-        * [Example](#example-18)
+        * [Example](#example-19)
     + [Client Migrations](#client-migrations)
       - [addSimpleClient](#addsimpleclient)
         * [Parameter](#parameter-2)
-        * [Example](#example-19)
+        * [Example](#example-20)
       - [deleteClient](#deleteclient)
         * [Parameter](#parameter-3)
-        * [Example](#example-20)
-      - [importClient](#importclient)
-        * [Parameters](#parameters-16)
         * [Example](#example-21)
-      - [updateClient](#updateclient)
+      - [importClient](#importclient)
         * [Parameters](#parameters-17)
         * [Example](#example-22)
-    + [Realm Migrations](#realm-migrations)
-      - [addRealm](#addrealm)
+      - [updateClient](#updateclient)
         * [Parameters](#parameters-18)
         * [Example](#example-23)
-      - [deleteRealm](#deleterealm)
+    + [Realm Migrations](#realm-migrations)
+      - [addRealm](#addrealm)
         * [Parameters](#parameters-19)
         * [Example](#example-24)
-      - [updateRealm](#updaterealm)
+      - [deleteRealm](#deleterealm)
         * [Parameters](#parameters-20)
         * [Example](#example-25)
-    + [User Federation Migrations](#user-federation-migrations)
-      - [AddAdLdap](#addadldap)
+      - [updateRealm](#updaterealm)
         * [Parameters](#parameters-21)
         * [Example](#example-26)
-      - [DeleteUserFederation](#deleteuserfederation)
+    + [User Federation Migrations](#user-federation-migrations)
+      - [AddAdLdap](#addadldap)
         * [Parameters](#parameters-22)
         * [Example](#example-27)
+      - [DeleteUserFederation](#deleteuserfederation)
+        * [Parameters](#parameters-23)
+        * [Example](#example-28)
   * [Technical Hints](#technical-hints)
   * [Hacking](#hacking)
     + [Use keycloakmigration through maven dependency](#use-keycloakmigration-through-maven-dependency)
       - [Gradle dependency](#gradle-dependency)
     + [Usage](#usage-1)
   * [TODOS](#todos)
-
-
 
 ## Usage
 Then migration can simply be invoked through the jar.
@@ -227,6 +230,8 @@ It will only check for the number of hashes to skip or execute migrations!
 
 ## Supported migrations
 This are the currently implemented commands. I hope I can find the time to implement more of them.
+
+For more examples see `src/test/resources/changesets`.
 ### User Migrations
 #### addUser
 Adds a user to keycloak. Fails if a user with that name already exists.
@@ -278,6 +283,16 @@ Updates an exiting user in keycloak. Fails if no user with given name exists.
 - firstName: String, default=no change
 - lastName: String, default=no change
 - credentials: Map<String,String> (see example below)
+    - hashedSaltedValue: String, not optional
+    - salt: String, not optional
+    - algorithm: String, optional, default = "pbkdf2-sha256"
+    - counter: Int, optional, default = 0,
+    - createdDate: Long, optional, default = Date().time,
+    - digits: Int, optional, default = 0,
+    - hashIterations: Int, optional, default = 27500,
+    - period: Int, optional, default = 0,
+    - type: String, optional, default = "password",
+    - config: Map<String, String>, optional, default = emptyMap() (See keycloak documentation)
 ##### Example
     id: test
     author: klg71
@@ -287,7 +302,14 @@ Updates an exiting user in keycloak. Fails if no user with given name exists.
         name: test
         enabled: false
         lastName: Lukas
+        
 ##### Example to update Password
+> If you don't want to hash and generate the salt by youself you can use the [updateUserPassword](#updateuserpassword) method listed below.
+>
+> This method gives more control over the credential entry in keycloak including hashIterations, algorithms used, digits and additional configs.
+>
+> Updating the credential can not be rolled back!
+
     id: update-password
     author: klg71
     changes:
@@ -334,6 +356,30 @@ fun getEncryptedPassword(password: String, salt: ByteArray,
 
 }
 ```
+
+#### updateUserPassword
+Updates the passwords of a user
+> WARNING: This action can not be rolled back!
+
+The password is hashed with 27500 hash_iterations and a key_byte_length of 64 bytes.
+
+##### Parameters
+- realm: String, optional
+- name: String, not optional
+- password: String, not optional
+- salt: String, optional, default = Random 15 letter alphanumeric String
+
+##### Example
+    id: test
+    author: klg71
+    changes:
+    - addUserAttribute:
+        realm: master
+        name: test
+        attributeName: test1
+        attributeValues:
+        - value1
+        - value2
 
 #### addUserAttribute
 Adds an attribute to an existing user. Throws an error if the user does not exist.
