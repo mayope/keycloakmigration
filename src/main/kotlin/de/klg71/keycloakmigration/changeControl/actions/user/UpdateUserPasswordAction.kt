@@ -14,7 +14,8 @@ import kotlin.text.Charsets.UTF_8
 
 
 const val HASH_ITERATIONS = 27500
-const val KEY_BYTE_LENGTH = 64
+// 64 Bytes
+const val KEY_BIT_LENGTH = 64 * 8
 const val RANDOM_SALT_LENGTH = 15
 
 /**
@@ -60,7 +61,7 @@ class UpdateUserPasswordAction(
     private fun getEncryptedPassword(password: String, salt: ByteArray): String {
         return SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256").run {
             generateSecret(PBEKeySpec(password.toCharArray(), salt,
-                    HASH_ITERATIONS, KEY_BYTE_LENGTH * 8)
+                    HASH_ITERATIONS, KEY_BIT_LENGTH)
             )
         }.run {
             @Suppress("UsePropertyAccessSyntax")
