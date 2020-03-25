@@ -1,5 +1,6 @@
 package de.klg71.keycloakmigration.changeControl.actions
 
+import de.klg71.keycloakmigration.changeControl.RealmChecker
 import de.klg71.keycloakmigration.rest.KeycloakClient
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -13,22 +14,31 @@ abstract class Action(var realm: String? = null) : KoinComponent {
 
     companion object {
         val LOG = LoggerFactory.getLogger(Action::class.java)!!
+        private val realmsChecked = mutableListOf<String>()
     }
 
     lateinit var path: String
     lateinit var yamlNodeValue: String
 
-    @Suppress("unused")
     protected val client by inject<KeycloakClient>()
+    protected val realmChecker by inject<RealmChecker>()
 
     private var executed = false
 
     /**
      * Executes the Action
+     *
+     * We want to catch any exception to be able to undo the action if needed
      */
+    @Suppress("TooGenericExceptionCaught")
     fun executeIt() {
         LOG.info("Executing migration: ${name()}")
-        execute()
+        try {
+            execute()
+        } catch (e: Exception) {
+            undoIt()
+            throw e
+        }
         executed = true
     }
 
@@ -61,7 +71,16 @@ abstract class Action(var realm: String? = null) : KoinComponent {
      */
     abstract fun name(): String
 
-    protected fun realm(): String = realm
+    /**
+     * Marks the action as executed so it will be rolled back if an error occurs calling the method undo
+     */
+    protected fun setExecuted(){
+        executed=true
+    }
+
+    protected fun realm(): String = (realm
             ?: throw de.klg71.keycloakmigration.changeControl.ParseException(
-                    "Realm is null for ${name()}, either provide it in the change or the changeset!")
+                    "Realm is null for ${name()}, either provide it in the change or the changeset!")).also {
+        realmChecker.check(it)
+    }
 }

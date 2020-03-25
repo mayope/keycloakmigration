@@ -58,8 +58,6 @@ class UpdateClientAction(
             rootUrl ?: oldClient.rootUrl,
             oldClient.secret)
 
-    private val hash = calculateHash()
-
     private fun calculateHash() =
             StringBuilder().run {
                 append(realm)

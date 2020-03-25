@@ -10,6 +10,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import de.klg71.keycloakmigration.changeControl.ActionDeserializer
 import de.klg71.keycloakmigration.changeControl.ActionFactory
+import de.klg71.keycloakmigration.changeControl.RealmChecker
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.rest.KeycloakClient
 import de.klg71.keycloakmigration.rest.KeycloakLoginClient
@@ -40,6 +41,7 @@ fun myModule(adminUser: String,
     single { TokenHolder(get(), adminUser, adminPassword, realm, clientId) }
     single { initKeycloakClient(get(named("default")), get(), baseUrl) }
     single(named("migrationUserId")) { loadCurrentUser(get(), adminUser, realm) }
+    single { RealmChecker() }
 }
 
 

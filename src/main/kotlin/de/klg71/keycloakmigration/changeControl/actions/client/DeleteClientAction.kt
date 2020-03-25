@@ -9,7 +9,7 @@ class DeleteClientAction(
         realm: String? = null,
         private val clientId: String) : Action(realm) {
 
-    lateinit var clientRepresentation: Client
+    private lateinit var clientRepresentation: Client
 
     override fun execute() {
         client.clientById(clientId, realm()).let {

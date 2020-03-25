@@ -240,7 +240,14 @@ Adds a user to keycloak. Fails if a user with that name already exists.
 - name: String, not optional
 - enabled: Boolean,  default=true
 - emailVerified: Boolean,  default=true
-- attributes: Map with Layout Map<String, List<String>>, default=empty
+- attributes: Map with Layout Map<String, List< String >>, default=empty
+- groups: List of groupnames to attach, List< String >, optional, default=empty
+- realmRoles: List of realmroles to attach, List< String >, optional, default=empty
+- clientRoles: List of ClientRoles to attach, List< ClientRole >, optional, default=empty
+
+ClientRole Parameters:
+- client: ClientId, String, not optional
+- role: Rolename, String, not optional
 ##### Example
     id: test
     author: klg71
@@ -254,6 +261,13 @@ Adds a user to keycloak. Fails if a user with that name already exists.
           test:
           - test
           - test2
+          groups:
+            - testGroup
+          realmRoles:
+            - testRealmRole
+          clientRoles:
+            - client: testClient
+              role: testClientRole
 
 #### deleteUser
 Removes a user from keycloak. Fails if a user with that name does not exists.
@@ -277,8 +291,8 @@ Updates an exiting user in keycloak. Fails if no user with given name exists.
 - access: String, default=no change
 - notBefore: Long, default=no change
 - totp: Boolean, default=no change
-- disableableCredentialTypes: List<String>, default=no change
-- requiredActions: List<String>, default=no change
+- disableableCredentialTypes: List< String >, default=no change
+- requiredActions: List< String >, default=no change
 - email: String, default=no change
 - firstName: String, default=no change
 - lastName: String, default=no change
@@ -389,7 +403,7 @@ User attributes can't be set deterministic with the updateUser action.
 - realm: String, optional
 - name: String, not optional
 - attributeName: String, not optional
-- attributeValues: List<String>, not optional
+- attributeValues: List< String>, not optional
 - override: Boolean, default=false
 
 ##### Example
@@ -501,7 +515,7 @@ Adds a new group to keycloak. Fails if the group already exists.
     changes:
     - addGroup:
         realm: master
-        name: testUser
+        name: testGroup
 
 #### deleteGroup
 Removes a group from keycloak. Fails if the group does not exist.
@@ -524,9 +538,9 @@ Updates a group from keycloak. Fails if the group does not exist.
 ##### Parameters
 - realm: String, optional
 - name: String, not optional
-- attributes: Map<String,List<String>>, optional, default=existing attributes
-- realmRoles: List<String>, optional, default=existing realm roles
-- clientRoles: Map<String,List<String>>, optional, default=existing client roles
+- attributes: Map< String,List< String>>, optional, default=existing attributes
+- realmRoles: List< String>, optional, default=existing realm roles
+- clientRoles: Map< String,List< String>>, optional, default=existing client roles, Key of the map is the clientId and the value is a List of roleNames to attach
 
 ##### Example
     id: test
@@ -583,7 +597,7 @@ Add a role to keycloak, fails if the role already exists
 - name: String, not optional,
 - clientId: String, optional, default=realmRole,
 - description: String, optional, default=""
-- attributes: Map<String,List<String>>, optional, default=empty
+- attributes: Map< String,List< String>>, optional, default=empty
 - composite: Boolean, optional, default=false
 - clientRole: Boolean, optional, default=false,
 - containerId: String, optional, default=not set
@@ -621,11 +635,11 @@ Simple command to add a client to keycloak, TODO: add more fields
 - realm: String, optional
 - clientId: String, not optional,
 - enabled: Boolean, optional, default=true
-- attributes: Map<String, String>, optional, default = empty
+- attributes: Map< String, String>, optional, default = empty
 - protocol: String, optional, default="openid-connect"
 - secret: String, optional
 - publicClient: Boolean, optional, default=true
-- redirectUris: List<String>, optional, default=empty
+- redirectUris: List< String>, optional, default=empty
 ##### Example
     id: add-simple-client
     author: klg71
@@ -662,7 +676,7 @@ Imports a client using the json representation.
     - importClient:
           realm: master
           clientRepresentationJsonFilename: client.json
-          relativeTofile: true
+          relativeToFile: true
 
 #### updateClient
 Update a client
@@ -675,7 +689,7 @@ Update a client
 - enabled: Boolean, optional, default=no change
 - attributes: Map<String, String>, optional, default=no change
 - protocol: String, optional, default=no change
-- redirectUris: List<String>, optional, default=no change
+- redirectUris: List< String>, optional, default=no change
 - bearerOnly: Boolean, optional, default=no change
 - directAccessGrantEnabled: Boolean, optional, default=no change
 - implicitFlowEnabled: Boolean, optional, default=no change
@@ -768,17 +782,17 @@ updates a Realm, throws error if realm with that id does not exists
 - quickLoginCheckMilliSeconds:Int, optional
 - maxDeltaTimeSeconds:Int, optional
 - failureFactor:Int, optional
-- defaultRoles:List<String>, optional
-- requiredCredentials:List<String>, optional
+- defaultRoles:List< String>, optional
+- requiredCredentials:List< String>, optional
 - otpPolicyType:String, optional
 - otpPolicyAlgorithm:String, optional
 - otpPolicyInitialCounter:Int, optional
 - otpPolicyDigits:Int, optional
 - otpPolicyLookAheadWindow:Int, optional
 - otpPolicyPeriod:Int, optional
-- otpSupportedApplications:List<String>, optional
+- otpSupportedApplications:List< String>, optional
 - webAuthnPolicyRpEntityName:String, optional
-- webAuthnPolicySignatureAlgorithms:List<String>, optional
+- webAuthnPolicySignatureAlgorithms:List< String>, optional
 - webAuthnPolicyRpId:String, optional
 - webAuthnPolicyAttestationConveyancePreference:String, optional
 - webAuthnPolicyAuthenticatorAttachment:String, optional
@@ -786,16 +800,16 @@ updates a Realm, throws error if realm with that id does not exists
 - webAuthnPolicyUserVerificationRequirement:String, optional
 - webAuthnPolicyCreateTimeout:Int, optional
 - webAuthnPolicyAvoidSameAuthenticatorRegister:Boolean, optional
-- webAuthnPolicyAcceptableAaguids:List<String>,
+- webAuthnPolicyAcceptableAaguids:List< String>,
 - browserSecurityHeaders:Map<String,String>, optional
 - smtpServer:Map<String,String>, optional
 - eventsEnabled:Boolean, optional
-- eventsListeners:List<String>, optional
-- enabledEventTypes:List<String>, optional
+- eventsListeners:List< String>, optional
+- enabledEventTypes:List< String>, optional
 - adminEventsEnabled:Boolean, optional
 - adminEventsDetailsEnabled:Boolean, optional
 - internationalizationEnabled:Boolean, optional
-- supportedLocales:List<String>, optional
+- supportedLocales:List< String>, optional
 - browserFlow:String, optional
 - registrationFlow:String, optional
 - directGrantFlow:String, optional
@@ -939,7 +953,8 @@ Tested with OpenJdk 12 and Keycloak 8.0.2
                           private val baseUrl: String,
                           private val realm: String,
                           private val clientId: String,
-                          private val correctHashes: Boolean) : MigrationArgs {
+                          private val correctHashes: Boolean,
+                          private val parameters: Map<String, String>) : MigrationArgs {
         override fun adminUser() = adminUser
         override fun adminPassword() = adminPassword
         override fun baseUrl() = baseUrl
@@ -947,13 +962,14 @@ Tested with OpenJdk 12 and Keycloak 8.0.2
         override fun realm() = realm
         override fun clientId() = clientId
         override fun correctHashes() = correctHashes
+        override fun parameters() = parameters
     }
 
     class KeycloakMigrationExecution  {
         fun migrate() {
             MyMigrationArgs("admin", "adminPass", "keycloak-changelog.yml",
                             "https://myauthserver", "master",
-                            "admin-cli", false)
+                            "admin-cli", false, emptyMap())
                     .let {
                         de.klg71.keycloakmigration.migrate(it)
                     }

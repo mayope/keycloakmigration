@@ -79,6 +79,11 @@ interface KeycloakClient {
     fun assignClientRoles(roles: List<AssignRole>, @Param("realm") realm: String, @Param(
             "user-id") userId: UUID, @Param("client-id") clientId: UUID)
 
+    @RequestLine("GET /admin/realms/{realm}/users/{user-id}/role-mappings/clients/{client-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun userClientRoles(@Param("realm") realm: String, @Param(
+            "user-id") userId: UUID, @Param("client-id") clientId: UUID):List<RoleListItem>
+
     @RequestLine("POST /admin/realms/{realm}/groups/{group-id}/role-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun assignClientRolesToGroup(roles: List<AssignRole>, @Param("realm") realm: String, @Param(

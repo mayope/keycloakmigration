@@ -36,6 +36,8 @@ class AddRoleAction(
         } else {
             client.addClientRole(addRole(), client.clientUUID(clientId, realm()), realm())
         }
+        // If the action fails from here we have to role it back
+        setExecuted()
         findRole().run {
             client.updateRole(updateRole(this), id, realm())
         }
@@ -54,5 +56,4 @@ class AddRoleAction(
     }
 
     override fun name() = "AddRole $name"
-
 }

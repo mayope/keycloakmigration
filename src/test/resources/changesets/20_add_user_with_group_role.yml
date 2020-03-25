@@ -1,0 +1,22 @@
+id: add-user-convenient
+author: klg71
+realm: integ-test
+changes:
+  - addRole:
+      name: testRealmRole
+  - addSimpleClient:
+      clientId: testClientAddUser
+  - addRole:
+      name: testClientRole
+      clientId: testClientAddUser
+  - addGroup:
+      name: testGroupAddUser
+  - addUser:
+      name: testAddUser1
+      groups:
+        - testGroupAddUser
+      realmRoles:
+        - testRealmRole
+      clientRoles:
+        - client: testClientAddUser
+          role: testClientRole

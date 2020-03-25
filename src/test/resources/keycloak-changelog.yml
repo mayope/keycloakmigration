@@ -17,4 +17,5 @@ includes:
 - path: changesets/17_add_ad_ldap.yml
 - path: changesets/18_add_client_with_secret.yml
 - path: changesets/19_update_user_password.yml
+- path: changesets/20_add_user_with_group_role.yml
 
