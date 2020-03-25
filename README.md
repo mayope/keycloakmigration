@@ -697,6 +697,8 @@ Update a client
 - adminUrl: String, optional, default=no change
 - baseUrl: String, optional, default=no change
 - rootUrl: String, optional, default=no change
+- publicClient: Boolean, optional, default=no change
+- serviceAccountsEnabled: Boolean, optional, default=no change
 
 ##### Example
     id: update-client

@@ -20,12 +20,15 @@ class UpdateClientAction(
         private val directAccessGrantEnabled: Boolean? = null,
         private val implicitFlowEnabled: Boolean? = null,
         private val standardFlowEnabled: Boolean? = null,
+        private val serviceAccountsEnabled: Boolean? = null,
+        private val publicClient: Boolean? = null,
         private val adminUrl: String? = null,
         private val baseUrl: String? = null,
         private val rootUrl: String? = null) : Action(realm) {
 
-    lateinit var oldClient: Client
+    private lateinit var oldClient: Client
 
+    @Suppress("ComplexMethod")
     private fun updateClient() = Client(oldClient.id,
             clientId,
             name ?: oldClient.name,
@@ -42,48 +45,22 @@ class UpdateClientAction(
             standardFlowEnabled ?: oldClient.standardFlowEnabled,
             implicitFlowEnabled ?: oldClient.implicitFlowEnabled,
             directAccessGrantEnabled ?: oldClient.directAccessGrantsEnabled,
-            oldClient.serviceAccountsEnabled,
-            oldClient.publicClient,
+            serviceAccountsEnabled?: oldClient.serviceAccountsEnabled,
+            publicClient ?: oldClient.publicClient,
             oldClient.frontchannelLogout,
-            oldClient.protocol,
+            protocol?: oldClient.protocol,
             attributes ?: oldClient.attributes,
             oldClient.authenticationFlowBindingOverrides,
             oldClient.fullScopeAllowed,
             oldClient.nodeReRegistrationTimeout,
-            oldClient.protocolMappers, oldClient.defaultClientScopes,
+            oldClient.protocolMappers,
+            oldClient.defaultClientScopes,
             oldClient.optionalClientScopes,
             oldClient.access,
             baseUrl ?: oldClient.baseUrl,
             adminUrl ?: oldClient.adminUrl,
             rootUrl ?: oldClient.rootUrl,
             oldClient.secret)
-
-    private fun calculateHash() =
-            StringBuilder().run {
-                append(realm)
-                append(clientId)
-                append(enabled)
-                append(protocol)
-                append(redirectUris)
-                append(bearerOnly)
-                append(directAccessGrantEnabled)
-                append(implicitFlowEnabled)
-                append(standardFlowEnabled)
-                append(adminUrl)
-                append(baseUrl)
-                append(rootUrl)
-                attributes?.entries?.forEach {
-                    append(it.key)
-                    append(it.value)
-                }
-                redirectUris?.forEach {
-                    append(it)
-                }
-                toString()
-            }.let {
-                DigestUtils.sha256Hex(it)
-            }!!
-
 
     override fun execute() {
         if (!client.existsClient(clientId, realm())) {
