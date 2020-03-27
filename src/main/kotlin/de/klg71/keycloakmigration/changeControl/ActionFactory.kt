@@ -15,6 +15,7 @@ import de.klg71.keycloakmigration.changeControl.actions.group.RevokeRoleFromGrou
 import de.klg71.keycloakmigration.changeControl.actions.group.UpdateGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAction
@@ -64,6 +65,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
 
                 "addGroup" -> objectMapper.readValue<AddGroupAction>(actionJson)
                 "deleteGroup" -> objectMapper.readValue<DeleteGroupAction>(actionJson)
+                "updateGroup" -> objectMapper.readValue<UpdateGroupAction>(actionJson)
                 "assignRoleToGroup" -> objectMapper.readValue<AssignRoleToGroupAction>(actionJson)
                 "revokeRoleFromGroup" -> objectMapper.readValue<RevokeRoleFromGroupAction>(actionJson)
 
@@ -72,7 +74,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
 
                 "addRealm" -> objectMapper.readValue<AddRealmAction>(actionJson)
                 "deleteRealm" -> objectMapper.readValue<DeleteRealmAction>(actionJson)
-                "updateGroup" -> objectMapper.readValue<UpdateGroupAction>(actionJson)
+                "updateRealm" -> objectMapper.readValue<UpdateRealmAction>(actionJson)
 
                 else -> throw ParseException("Unknown Change type: $actionName")
             }

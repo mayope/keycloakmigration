@@ -1,0 +1,8 @@
+id: update-realm
+author: klg71
+realm: integ-test
+changes:
+  - updateRealm:
+      id: testAdd
+      rememberMe: true
+      ssoSessionIdleTimeout: 3600

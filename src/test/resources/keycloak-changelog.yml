@@ -18,4 +18,5 @@ includes:
 - path: changesets/18_add_client_with_secret.yml
 - path: changesets/19_update_user_password.yml
 - path: changesets/20_add_user_with_group_role.yml
+- path: changesets/21_update_realm_action.yml
 

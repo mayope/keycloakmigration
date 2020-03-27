@@ -80,7 +80,6 @@ artifactory {
 }
 
 tasks {
-
     val keycloakVersion = "8.0.1"
 
     register<Jar>("fatJar") {
