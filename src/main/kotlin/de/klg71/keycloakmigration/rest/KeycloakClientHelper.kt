@@ -8,7 +8,7 @@ import de.klg71.keycloakmigration.model.Client
 import de.klg71.keycloakmigration.model.GroupListItem
 import de.klg71.keycloakmigration.model.Role
 import feign.Response
-import java.util.*
+import java.util.UUID
 
 /**
  * File contains a lot of convenience functions when interacting with the keycloak clien
@@ -161,3 +161,6 @@ fun KeycloakClient.userFederationByName(name: String, realm: String) =
 
 fun KeycloakClient.userFederationExistsByName(name: String, realm: String) =
         userFederations(realm).any { it.name == name }
+
+fun KeycloakClient.mapperExistsByName(clientId: String,mapperName:String, realm: String) =
+        mappers(clientUUID(clientId, realm),realm).any { it.name == mapperName }

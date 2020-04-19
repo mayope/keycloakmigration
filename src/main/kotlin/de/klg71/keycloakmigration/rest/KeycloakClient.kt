@@ -14,6 +14,8 @@ import de.klg71.keycloakmigration.model.ClientListItem
 import de.klg71.keycloakmigration.model.ClientSecret
 import de.klg71.keycloakmigration.model.Group
 import de.klg71.keycloakmigration.model.GroupListItem
+import de.klg71.keycloakmigration.model.AddMapper
+import de.klg71.keycloakmigration.model.Mapper
 import de.klg71.keycloakmigration.model.Realm
 import de.klg71.keycloakmigration.model.Role
 import de.klg71.keycloakmigration.model.RoleListItem
@@ -82,7 +84,7 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/users/{user-id}/role-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun userClientRoles(@Param("realm") realm: String, @Param(
-            "user-id") userId: UUID, @Param("client-id") clientId: UUID):List<RoleListItem>
+            "user-id") userId: UUID, @Param("client-id") clientId: UUID): List<RoleListItem>
 
     @RequestLine("POST /admin/realms/{realm}/groups/{group-id}/role-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
@@ -170,6 +172,16 @@ interface KeycloakClient {
     @RequestLine("PUT /admin/realms/{realm}/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun updateClient(@Param("client-id") clientId: UUID, updateClient: Client, @Param("realm") realm: String): Response
+
+    @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addMapper(@Param("client-id") clientId: UUID, addMapper: AddMapper, @Param("realm") realm: String): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models/{mapper-id}")
+    fun deleteMapper(@Param("client-id") clientId:UUID,@Param("mapper-id") mapperId:UUID, @Param("realm") realm:String)
+
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/protocol-mappers/protocol/openid-connect")
+    fun mappers(@Param("client-id") clientId: UUID, @Param("realm") realm: String): List<Mapper>
 
     @RequestLine("GET /admin/realms/{realm}/components?parent={realm}&type=org.keycloak.storage.UserStorageProvider")
     fun userFederations(@Param("realm") realm: String): List<UserFederation>

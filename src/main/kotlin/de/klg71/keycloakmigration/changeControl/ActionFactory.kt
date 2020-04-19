@@ -1,13 +1,17 @@
 package de.klg71.keycloakmigration.changeControl
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.fasterxml.jackson.module.kotlin.readValue
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.UpdateClientAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddAudienceMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddGroupMembershipMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserAttributeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserRealmRoleMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AssignRoleToGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.DeleteGroupAction
@@ -68,6 +72,12 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
                 "updateGroup" -> objectMapper.readValue<UpdateGroupAction>(actionJson)
                 "assignRoleToGroup" -> objectMapper.readValue<AssignRoleToGroupAction>(actionJson)
                 "revokeRoleFromGroup" -> objectMapper.readValue<RevokeRoleFromGroupAction>(actionJson)
+
+                "addMapper" -> objectMapper.readValue<AddMapperAction>(actionJson)
+                "addAudienceMapper" -> objectMapper.readValue<AddAudienceMapperAction>(actionJson)
+                "addGroupMembershipMapper" -> objectMapper.readValue<AddGroupMembershipMapperAction>(actionJson)
+                "addUserAttributeMapper" -> objectMapper.readValue<AddUserAttributeMapperAction>(actionJson)
+                "addUserRealmRoleMapper" -> objectMapper.readValue<AddUserRealmRoleMapperAction>(actionJson)
 
                 "addAdLdap" -> objectMapper.readValue<AddAdLdapAction>(actionJson)
                 "deleteUserFederation" -> objectMapper.readValue<DeleteUserFederationAction>(actionJson)
