@@ -85,22 +85,37 @@ The goal is to provide a similar mechanism for Keycloak. There also exists a gra
     + [updateClient](#updateclient)
       - [Parameters](#parameters-18)
       - [Example](#example-23)
+    + [addMapper](#addmapper)
+      - [Parameters](#parameters-19)
+      - [Example:](#example-)
+    + [addAudienceMapper](#addaudiencemapper)
+      - [Parameters](#parameters-20)
+      - [Example:](#example--1)
+    + [addGroupMembershipMapper](#addgroupmembershipmapper)
+      - [Parameters](#parameters-21)
+      - [Example:](#example--2)
+    + [addUserAttributeMapper](#adduserattributemapper)
+      - [Parameters](#parameters-22)
+      - [Example:](#example--3)
+    + [addUserRealmRoleMapper](#adduserrealmrolemapper)
+      - [Parameters](#parameters-23)
+      - [Example:](#example--4)
   * [Realm Migrations](#realm-migrations)
     + [addRealm](#addrealm)
-      - [Parameters](#parameters-19)
+      - [Parameters](#parameters-24)
       - [Example](#example-24)
     + [deleteRealm](#deleterealm)
-      - [Parameters](#parameters-20)
+      - [Parameters](#parameters-25)
       - [Example](#example-25)
     + [updateRealm](#updaterealm)
-      - [Parameters](#parameters-21)
+      - [Parameters](#parameters-26)
       - [Example](#example-26)
   * [User Federation Migrations](#user-federation-migrations)
     + [AddAdLdap](#addadldap)
-      - [Parameters](#parameters-22)
+      - [Parameters](#parameters-27)
       - [Example](#example-27)
     + [DeleteUserFederation](#deleteuserfederation)
-      - [Parameters](#parameters-23)
+      - [Parameters](#parameters-28)
       - [Example](#example-28)
 - [Technical Hints](#technical-hints)
 - [Hacking](#hacking)
@@ -242,6 +257,9 @@ Adds a user to keycloak. Fails if a user with that name already exists.
 - groups: List of groupnames to attach, List< String >, optional, default=empty
 - realmRoles: List of realmroles to attach, List< String >, optional, default=empty
 - clientRoles: List of ClientRoles to attach, List< ClientRole >, optional, default=empty
+- email: String, optional, default=""
+- firstName: String, optional, default=""
+- lastName: String, optional, default=""
 
 ClientRole Parameters:
 - client: ClientId, String, not optional
@@ -254,6 +272,7 @@ ClientRole Parameters:
         realm: master
         name: test
         enabled: true
+        email: test@example.de
         emailVerified: true
         attributes:
           test:
@@ -774,7 +793,7 @@ adds a group-membership clientmapper, throws error if client or realm doesn't ex
 - addToAccessToken: Boolean, optional, default = true,
 - addToUserInfo: Boolean, optional, default = true,
 - fullGroupPath: Boolean, optional, default = true,
-- claimName: String?, optional, default = <<name parameter>>
+- claimName: String?, optional, default = << name parameter>>
 
 ##### Example:
     id: add-client-mappers
@@ -799,7 +818,7 @@ adds a user-attribute clientmapper, throws error if client or realm doesn't exis
 - addToIdToken: Boolean , optional, default = true,
 - addToAccessToken: Boolean, optional, default = true,
 - addToUserInfo: Boolean, optional, default = true,
-- claimName: String?, optional, default = <<name parameter>>
+- claimName: String?, optional, default = << name parameter>>
 
 ##### Example:
     id: add-client-mappers
@@ -823,7 +842,7 @@ adds a user-realm-role clientmapper, throws error if client or realm doesn't exi
 - addToIdToken: Boolean , optional, default = true,
 - addToAccessToken: Boolean, optional, default = true,
 - addToUserInfo: Boolean, optional, default = true,
-- claimName: String?, optional, default = <<name parameter>>
+- claimName: String?, optional, default = << name parameter>>
 - prefix: String, optional, default = ""
 
 ##### Example:

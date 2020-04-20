@@ -52,4 +52,13 @@ class AddUserIntegTest : AbstractIntegrationTest() {
         assertThat(client.userRoles(testRealm, user.id).map { it.name }).contains("testRealmRole")
         assertThat(client.userClientRoles(testRealm, user.id, client.clientUUID("testClient", testRealm)).map { it.name }).containsOnly("testClientRole")
     }
+
+    @Test
+    fun testAddUser_withEmail() {
+        val email = "test@example.com"
+        AddUserAction(testRealm, "test", email = email).executeIt()
+
+        val user = client.userByName(testRealm,"test")
+        assertThat(user.email).isEqualTo(email)
+    }
 }

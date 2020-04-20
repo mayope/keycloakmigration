@@ -5,12 +5,14 @@ import de.klg71.keycloakmigration.model.AddUser
 import de.klg71.keycloakmigration.model.AssignGroup
 import de.klg71.keycloakmigration.model.AssignRole
 import de.klg71.keycloakmigration.model.Role
+import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.rest.clientRoleByName
 import de.klg71.keycloakmigration.rest.clientUUID
 import de.klg71.keycloakmigration.rest.extractLocationUUID
 import de.klg71.keycloakmigration.rest.groupUUID
 import de.klg71.keycloakmigration.rest.userByName
-import java.util.*
+import java.util.Objects
+import java.util.UUID
 
 
 data class ClientRole(val role: String, val client: String)
@@ -23,7 +25,10 @@ class AddUserAction(
         private val attributes: Map<String, List<String>> = mapOf(),
         private val realmRoles: List<String> = listOf(),
         private val clientRoles: List<ClientRole> = listOf(),
-        private val groups: List<String> = listOf()) : Action(realm) {
+        private val groups: List<String> = listOf(),
+        private val email: String? = null,
+        private val firstName: String? = null,
+        private val lastName: String? = null) : Action(realm) {
 
     private lateinit var userUuid: UUID
 
@@ -40,6 +45,7 @@ class AddUserAction(
         assignGroups()
         assignRealmRoles()
         assignClientRoles()
+        updateUser()
     }
 
     private fun assignRealmRoles() {
@@ -58,9 +64,26 @@ class AddUserAction(
         }.map {
             it.first to it.second.assignRole()
         }.map {
-            client.assignClientRoles(listOf(it.second), realm(), userUuid, client.clientUUID(it.first,realm()))
+            client.assignClientRoles(listOf(it.second), realm(), userUuid, client.clientUUID(it.first, realm()))
         }
     }
+
+    private fun updateUser() {
+        if (email == null && firstName == null && lastName == null) {
+            return
+        }
+        val user = client.userByName(name, realm())
+        val updatedUser = User(user.id, user.createdTimestamp, user.username, enabled,
+                emailVerified, userAttributes(user), user.notBefore, user.totp,
+                user.access, user.disableableCredentialTypes, user.requiredActions,
+                email ?: user.email,
+                firstName ?: user.firstName,
+                lastName ?: user.lastName,
+                user.credentials)
+        client.updateUser(user.id, updatedUser, realm())
+    }
+
+    private fun userAttributes(user: User): Map<String, List<String>> = user.attributes ?: emptyMap()
 
     private fun Role.assignRole() = AssignRole(Objects.isNull(client), composite, containerId, id, name)
 
