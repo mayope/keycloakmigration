@@ -1187,6 +1187,43 @@ or if a mapper with this name already exists in this ad.
           adName: testLdap
           userModelAttribute: userModelAttribute
           ldapAttribute: ldapAttribute
+          
+#### AddAdLdapMapperMapper
+Adds a custom mapper to an active directory ldap, throws an error if the ad doesn't exists
+or if a mapper with this name already exists in this ad. 
+
+> Only use this action if you can't find a convenient method to add the mapper above.
+> You can find the correct parameters by using the network debugging tool in chrome/firefox to inspect the requests in the keycloak gui.
+
+
+##### Parameters
+- realm: String, optional
+- name: String, not optional
+- adName: String, not optional
+- providerId: String, not optional
+- config: Map<String,String>, not optional
+                
+##### Example
+    id: add-ad-ldap-user-attribute-mapper
+    author: klg71
+    realm: integ-test
+    changes:
+      - addAdLdapMapper:
+          name: testRoleMapper
+          adName: testLdap
+          providerId: role-ldap-mapper
+          config:
+              memberof.ldap.attribute: "memberOf"
+              membership.attribute.type: "DN"
+              membership.ldap.attribute: "member"
+              membership.user.ldap.attribute: "cn"
+              mode: "READ_ONLY"
+              role.name.ldap.attribute: "cn"
+              role.object.classes: "group"
+              roles.dn: "rolesDn"
+              use.realm.roles.mapping: "true"
+              user.roles.retrieve.strategy: "LOAD_ROLES_BY_MEMBERSHIP_ATTRIBUTE"
+          
                 
 #### DeleteUserFederation
 Deletes an userFederation from the realm, throws an exception if it doesn't exist.
