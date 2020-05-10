@@ -16,7 +16,7 @@ class AddAdLdapAction(
         if (client.userFederationExistsByName(name, realm())) {
             throw MigrationException("UserFederation with name: $name already exists in realm: ${realm()}!")
         }
-        client.addLdap(addLdap(), realm())
+        client.addUserFederation(addLdap(), realm())
     }
 
     private fun addLdap(): AddUserFederation = AddUserFederation(name, realm(), constructAdLdapConfig(config))

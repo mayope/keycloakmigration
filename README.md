@@ -1053,6 +1053,126 @@ Adds an active directory to the realm
                 bindCredential: testPassword
                 bindDN: testBindDn
                 
+#### AddAdLdapFullNameMapper
+Adds a full name mapper to an active directory ldap, throws an error if the ad doesn't exists
+or if a mapper with this name already exists in this ad
+
+##### Parameters
+- realm: String, optional
+- name: String, not optional
+- adName: String, not optional
+- ldapFullNameAttribute: String, not optional
+- readOnly: Boolean, optional, default = true 
+- writeOnly: Boolean, optional, default = false
+                
+##### Example
+    id: add-ad-ldap-full-name-mapper
+    author: klg71
+    realm: integ-test
+    changes:
+      - addAdLdapFullNameMapper:
+          name: testFullNamemapper
+          adName: testLdap
+          ldapFullNameAttribute: fullName
+          
+#### AddAdLdapGroupMapper
+Adds a group mapper to an active directory ldap, throws an error if the ad doesn't exists
+or if a mapper with this name already exists in this ad
+
+##### Parameters
+- realm: String, optional
+- name: String, not optional
+- adName: String, not optional
+- groupsDn: String, not optional
+- groupObjectClasses: List< String >, optional, default = emptyList()
+- groupNameLdapAttribute: String, optional, default = "cn"
+- preserveGroupInheritance: Boolean, optional, default = true,
+- membershipLdapAttribute: String, optional, default = "member",
+- membershipAttributeType: String, optional, default = "DN",
+- membershipUserLdapAttribute: String, optional, default = "cn",
+- filter: String, optional, default = "",
+- mode: String, optional, default = "READ_ONLY",
+- ignoreMissingGroups: Boolean, optional, default = false,
+- userRolesRetrieveStrategy: String, optional, default = "LOAD_GROUPS_BY_MEMBER_ATTRIBUTE",
+- mappedGroupAttributes: List< String >, optional, default = emptyList(),
+- memberofLdapAttribute: String, optional, default = "memberOf",
+- dropNonExistingGroupsDuringSync: Boolean, optional, default = false
+                
+##### Example
+    id: add-ad-ldap-group-mapper
+    author: klg71
+    realm: integ-test
+    changes:
+      - addAdLdapGroupMapper:
+          name: testGroupMapper
+          adName: testLdap
+          groupsDn: groupsDn
+          
+#### AddAdLdapHardcodedRoleMapper
+Adds a hardcoded role mapper to an active directory ldap, throws an error if the ad doesn't exists
+or if a mapper with this name already exists in this ad. If the given role doesn't exists this command throws an exception.
+
+##### Parameters
+- realm: String, optional
+- name: String, not optional
+- adName: String, not optional
+- role: String, not optional
+                
+##### Example
+    id: add-ad-ldap-hardcoded-role-mapper
+    author: klg71
+    realm: integ-test
+    changes:
+      - addRole:
+          name: testMapperRole
+      - addAdLdapHardcodedRoleMapper:
+          name: testHardcodedRoleMapper
+          adName: testLdap
+          role: testMapperRole
+          
+#### AddAdLdapUserControlMapperMapper
+Adds a user account control mapper to an active directory ldap, throws an error if the ad doesn't exists
+or if a mapper with this name already exists in this ad. 
+
+##### Parameters
+- realm: String, optional
+- name: String, not optional
+- adName: String, not optional
+                
+##### Example
+    id: add-ad-ldap-user-account-control-mapper
+    author: klg71
+    realm: integ-test
+    changes:
+      - addAdLdapUserAccountControlMapper:
+          name: testUserAccountControl
+          adName: testLdap
+          
+#### AddAdLdapUserAttributeMapperMapper
+Adds a user account attribute mapper to an active directory ldap, throws an error if the ad doesn't exists
+or if a mapper with this name already exists in this ad. 
+
+##### Parameters
+- realm: String, optional
+- name: String, not optional
+- adName: String, not optional
+- userModelAttribute: String, not optional
+- ldapAttribute: String, not optional
+- readOnly: Boolean, optional, default = false,
+- alwaysReadFromLdap: Boolean, optional, default = false,
+- isMandatoryInLdap: Boolean, optional, default = false
+                
+##### Example
+    id: add-ad-ldap-user-attribute-mapper
+    author: klg71
+    realm: integ-test
+    changes:
+      - addAdLdapUserAttributeMapper:
+          name: testUserAttributeMapper
+          adName: testLdap
+          userModelAttribute: userModelAttribute
+          ldapAttribute: ldapAttribute
+                
 #### DeleteUserFederation
 Deletes an userFederation from the realm, throws an exception if it doesn't exist.
 
@@ -1061,6 +1181,9 @@ Deletes an userFederation from the realm, throws an exception if it doesn't exis
 - name: String, not optional
                 
 ##### Example
+    id: delete-ad-ldap
+    author: klg71
+    changes:
       - deleteUserFederation:
           realm: integ-test
           name: testLdap

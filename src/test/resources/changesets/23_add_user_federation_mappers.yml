@@ -1,0 +1,49 @@
+id: add-client-mappers
+author: klg71
+realm: integ-test
+changes:
+  - addAdLdap:
+      realm: integ-test
+      name: testLdap
+      config:
+        connectionUrl: https://testldap
+        usersDn: usersTestDn
+        bindCredential: testPassword
+        bindDn: testBindDn
+  - addAdLdapFullNameMapper:
+      name: testFullNamemapper
+      adName: testLdap
+      ldapFullNameAttribute: ldapFullNameAttribute
+  - addAdLdapGroupMapper:
+      name: testGroupMapper
+      adName: testLdap
+      groupsDn: groupsDn
+  - addRole:
+      name: testMapperRole
+  - addAdLdapHardcodedRoleMapper:
+      name: testHardcodedRoleMapper
+      adName: testLdap
+      role: testMapperRole
+  - addAdLdapMapper:
+      name: testRoleMapper
+      adName: testLdap
+      providerId: role-ldap-mapper
+      config:
+          memberof.ldap.attribute: "memberOf"
+          membership.attribute.type: "DN"
+          membership.ldap.attribute: "member"
+          membership.user.ldap.attribute: "cn"
+          mode: "READ_ONLY"
+          role.name.ldap.attribute: "cn"
+          role.object.classes: "group"
+          roles.dn: "rolesDn"
+          use.realm.roles.mapping: "true"
+          user.roles.retrieve.strategy: "LOAD_ROLES_BY_MEMBERSHIP_ATTRIBUTE"
+  - addAdLdapUserAccountControlMapper:
+      name: testUserAccountControl
+      adName: testLdap
+  - addAdLdapUserAttributeMapper:
+      name: testUserAttributeMapper
+      adName: testLdap
+      userModelAttribute: userModelAttribute
+      ldapAttribute: ldapAttribute

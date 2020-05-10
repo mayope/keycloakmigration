@@ -2,11 +2,13 @@ package de.klg71.keycloakmigration.rest
 
 import de.klg71.keycloakmigration.model.AddClient
 import de.klg71.keycloakmigration.model.AddGroup
+import de.klg71.keycloakmigration.model.AddMapper
 import de.klg71.keycloakmigration.model.AddRealm
 import de.klg71.keycloakmigration.model.AddRole
 import de.klg71.keycloakmigration.model.AddSimpleClient
 import de.klg71.keycloakmigration.model.AddUser
 import de.klg71.keycloakmigration.model.AddUserFederation
+import de.klg71.keycloakmigration.model.AddUserFederationMapper
 import de.klg71.keycloakmigration.model.AssignGroup
 import de.klg71.keycloakmigration.model.AssignRole
 import de.klg71.keycloakmigration.model.Client
@@ -14,7 +16,6 @@ import de.klg71.keycloakmigration.model.ClientListItem
 import de.klg71.keycloakmigration.model.ClientSecret
 import de.klg71.keycloakmigration.model.Group
 import de.klg71.keycloakmigration.model.GroupListItem
-import de.klg71.keycloakmigration.model.AddMapper
 import de.klg71.keycloakmigration.model.Mapper
 import de.klg71.keycloakmigration.model.Realm
 import de.klg71.keycloakmigration.model.Role
@@ -22,6 +23,7 @@ import de.klg71.keycloakmigration.model.RoleListItem
 import de.klg71.keycloakmigration.model.UpdateGroup
 import de.klg71.keycloakmigration.model.User
 import de.klg71.keycloakmigration.model.UserFederation
+import de.klg71.keycloakmigration.model.UserFederationMapper
 import de.klg71.keycloakmigration.model.UserGroupListItem
 import de.klg71.keycloakmigration.model.UserListItem
 import feign.Body
@@ -29,7 +31,7 @@ import feign.Headers
 import feign.Param
 import feign.RequestLine
 import feign.Response
-import java.util.*
+import java.util.UUID
 
 @Suppress("TooManyFunctions")
 interface KeycloakClient {
@@ -178,7 +180,8 @@ interface KeycloakClient {
     fun addMapper(@Param("client-id") clientId: UUID, addMapper: AddMapper, @Param("realm") realm: String): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models/{mapper-id}")
-    fun deleteMapper(@Param("client-id") clientId:UUID,@Param("mapper-id") mapperId:UUID, @Param("realm") realm:String)
+    fun deleteMapper(@Param("client-id") clientId: UUID, @Param("mapper-id") mapperId: UUID, @Param(
+            "realm") realm: String)
 
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/protocol-mappers/protocol/openid-connect")
     fun mappers(@Param("client-id") clientId: UUID, @Param("realm") realm: String): List<Mapper>
@@ -209,10 +212,24 @@ interface KeycloakClient {
 
     @RequestLine("POST /admin/realms/{realm}/components")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addLdap(addUserFederation: AddUserFederation, @Param("realm") realm: String)
+    fun addUserFederation(addUserFederation: AddUserFederation, @Param("realm") realm: String)
 
     @RequestLine("DELETE /admin/realms/{realm}/components/{user-federation-id}")
     fun deleteUserFederation(@Param("realm") realm: String, @Param("user-federation-id") userFederationId: UUID)
+
+    @RequestLine("POST /admin/realms/{realm}/components")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addUserFederationMapper(addUserFederationMapper: AddUserFederationMapper, @Param(
+            "realm") realm: String): Response
+
+    @RequestLine("GET /admin/realms/{realm}/components" +
+            "?parent={ldap-id}&type=org.keycloak.storage.ldap.mappers.LDAPStorageMapper")
+    fun ldapMappers(@Param("realm") realm: String, @Param("ldap-id") ldapId: UUID)
+            : List<UserFederationMapper>
+
+    @RequestLine("DELETE /admin/realms/{realm}/components/{mapperId}")
+    fun deleteUserFederationMapper(@Param("realm") realm: String, @Param("mapperId") mapperId: UUID)
+            : Response
 
     @RequestLine("POST /admin/realms/")
     @Headers("Content-Type: application/json; charset=utf-8")

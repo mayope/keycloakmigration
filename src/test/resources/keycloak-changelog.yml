@@ -20,4 +20,5 @@ includes:
 - path: changesets/20_add_user_with_group_role.yml
 - path: changesets/21_update_realm_action.yml
 - path: changesets/22_add_client_mappers.yml
+- path: changesets/23_add_user_federation_mappers.yml
 

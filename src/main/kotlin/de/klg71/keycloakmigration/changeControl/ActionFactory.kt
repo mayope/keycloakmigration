@@ -34,6 +34,12 @@ import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserAction
 import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserPasswordAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddAdLdapAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.DeleteUserFederationAction
+import de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper.AddAdLdapFullNameMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper.AddAdLdapGroupMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper.AddAdLdapHardcodedRoleMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper.AddAdLdapMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper.AddAdLdapUserAccountControlMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper.AddAdLdapUserAttributeMapperAction
 
 class ActionFactory(private val objectMapper: ObjectMapper) {
 
@@ -42,7 +48,6 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
                     .apply {
                         yamlNodeValue = actionJson
                     }
-
 
     @Suppress("ComplexMethod")
     private fun mapToAction(actionName: String, actionJson: String): Action =
@@ -81,6 +86,13 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
 
                 "addAdLdap" -> objectMapper.readValue<AddAdLdapAction>(actionJson)
                 "deleteUserFederation" -> objectMapper.readValue<DeleteUserFederationAction>(actionJson)
+                "addAdLdapFullNameMapper" -> objectMapper.readValue<AddAdLdapFullNameMapperAction>(actionJson)
+                "addAdLdapGroupMapper" -> objectMapper.readValue<AddAdLdapGroupMapperAction>(actionJson)
+                "addAdLdapHardcodedRoleMapper" -> objectMapper.readValue<AddAdLdapHardcodedRoleMapperAction>(actionJson)
+                "addAdLdapMapper" -> objectMapper.readValue<AddAdLdapMapperAction>(actionJson)
+                "addAdLdapUserAccountControlMapper" -> objectMapper.readValue<AddAdLdapUserAccountControlMapperAction>(
+                        actionJson)
+                "addAdLdapUserAttributeMapper" -> objectMapper.readValue<AddAdLdapUserAttributeMapperAction>(actionJson)
 
                 "addRealm" -> objectMapper.readValue<AddRealmAction>(actionJson)
                 "deleteRealm" -> objectMapper.readValue<DeleteRealmAction>(actionJson)

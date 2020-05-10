@@ -85,7 +85,6 @@ fun KeycloakClient.existsClient(clientId: String, realm: String): Boolean =
                     return false
                 }
 
-
 fun KeycloakClient.existsRole(name: String, realm: String): Boolean =
         roleByNameResponse(name, realm)
                 .run {
@@ -162,5 +161,15 @@ fun KeycloakClient.userFederationByName(name: String, realm: String) =
 fun KeycloakClient.userFederationExistsByName(name: String, realm: String) =
         userFederations(realm).any { it.name == name }
 
-fun KeycloakClient.mapperExistsByName(clientId: String,mapperName:String, realm: String) =
-        mappers(clientUUID(clientId, realm),realm).any { it.name == mapperName }
+fun KeycloakClient.mapperExistsByName(clientId: String, mapperName: String, realm: String) =
+        mappers(clientUUID(clientId, realm), realm).any { it.name == mapperName }
+
+fun KeycloakClient.ldapMapperByName(ldapName: String, name: String, realm: String) =
+        ldapMappers(realm, userFederationByName(ldapName, realm).id).firstOrNull { it.name == name }
+                .let {
+                    it ?: throw MigrationException(
+                            "UserFederationMapper with name: $name does not exist in $ldapName in $realm!")
+                }
+
+fun KeycloakClient.ldapMapperExistsByName(ldapName: String, name: String, realm: String) =
+        ldapMappers(realm, userFederationByName(ldapName, realm).id).any { it.name == name }

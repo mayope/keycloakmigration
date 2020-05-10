@@ -25,7 +25,7 @@ class DeleteUserFederationAction(
 
     override fun undo() {
         (oldUserFederation ?: return).apply {
-            client.addLdap(AddUserFederation(name, parentId, config,
+            client.addUserFederation(AddUserFederation(name, parentId, config,
                     providerId, providerType), realm())
         }
     }
