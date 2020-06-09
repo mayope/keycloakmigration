@@ -29,18 +29,20 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
     internal fun changesTodo(changes: List<ChangeSet>, correctHashes: Boolean = false): List<ChangeSet> {
         val changeHashes = getMigrationsHashes()
 
-        return changes.apply {
-            changeHashes.forEachIndexed { i, it ->
-                if (get(i).hash() != it) {
-                    if (!correctHashes) {
-                        throw MigrationException(
-                                "Invalid hash expected: $it (remote) got ${get(i).hash()} (local) in migration: ${get(
-                                        i).id}")
+        return changes
+            .filter { it.enabled == null || it.enabled.toBoolean() }
+            .apply {
+                changeHashes.forEachIndexed { i, it ->
+                    if (get(i).hash() != it) {
+                        if (!correctHashes) {
+                            throw MigrationException(
+                                    "Invalid hash expected: $it (remote) got ${get(i).hash()} (local) in migration: ${get(
+                                            i).id}")
+                        }
+                        replaceHash(it, get(i).hash)
+                        LOG.warn("Replaced hash: $it with ${get(i).hash} for migration ${get(i).id}")
                     }
-                    replaceHash(it, get(i).hash)
-                    LOG.warn("Replaced hash: $it with ${get(i).hash} for migration ${get(i).id}")
-                }
-                LOG.info("Skipping migration: ${get(i).id}")
+                    LOG.info("Skipping migration: ${get(i).id}")
             }
         }.run {
             subList(changeHashes.size, size)

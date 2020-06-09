@@ -39,7 +39,7 @@ class MigrationChangelogTest : KoinTest {
 
     @After
     fun tearDown() {
-        validateMockitoUsage();
+        validateMockitoUsage()
         stopKoin()
     }
 
@@ -164,6 +164,62 @@ class MigrationChangelogTest : KoinTest {
         val result = changelog.changesTodo(listOf(changeSet))
 
         assertThat(result).isEmpty()
+    }
+
+    @Test
+    fun testChangesTodo_filterChangeSetBasedOnEnabledFlag() {
+        val migrationUserId = randomUUID()
+        val realm = "test"
+        val changelog = MigrationChangelog(migrationUserId, realm)
+        val user = mock<User> {
+            on { attributes } doReturn mapOf(migrationAttributeName to listOf())
+        }
+
+
+        val changeSetBefore = mock<ChangeSet> {
+            on { hash() } doReturn "hashBefore"
+        }
+        val disabledChangeSet = mock<ChangeSet> {
+            on { enabled } doReturn "false"
+        }
+        val changeSetAfter = mock<ChangeSet> {
+            on { hash() } doReturn "hashAfter"
+            on { enabled } doReturn "true"
+        }
+
+        whenever(client.user(migrationUserId, realm)).thenReturn(user)
+        val result = changelog.changesTodo(listOf(changeSetBefore, disabledChangeSet, changeSetAfter))
+
+        assertThat(result).containsExactly(changeSetBefore, changeSetAfter)
+    }
+
+    @Test
+    fun testChangesTodo_filterChangeSetBasedOnEnabledFlagWithNewChangeSet() {
+        val migrationUserId = randomUUID()
+        val realm = "test"
+        val changelog = MigrationChangelog(migrationUserId, realm)
+        val user = mock<User> {
+            on { attributes } doReturn mapOf(migrationAttributeName to listOf("hashBefore", "hashAfter"))
+        }
+
+        val changeSetBefore = mock<ChangeSet> {
+            on { hash() } doReturn "hashBefore"
+        }
+        val disabledChangeSet = mock<ChangeSet> {
+            on { enabled } doReturn "false"
+        }
+        val changeSetAfter = mock<ChangeSet> {
+            on { hash() } doReturn "hashAfter"
+            on { enabled } doReturn "true"
+        }
+        val newChangeSet = mock<ChangeSet> {
+            on { hash() } doReturn "hashNew"
+        }
+
+        whenever(client.user(migrationUserId, realm)).thenReturn(user)
+        val result = changelog.changesTodo(listOf(changeSetBefore, disabledChangeSet, changeSetAfter, newChangeSet))
+
+        assertThat(result).containsExactly(newChangeSet)
     }
 
     @Test
