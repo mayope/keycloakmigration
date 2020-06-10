@@ -40,8 +40,8 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
                     if (get(i).hash() != it) {
                         if (!correctHashes) {
                             throw MigrationException(
-                                    "Invalid hash expected: $it (remote) got ${get(i).hash()} (local) in migration: ${get(
-                                            i).id}")
+                                    "Invalid hash expected: $it (remote) " +
+                                        "got ${get(i).hash()} (local) in migration: ${get(i).id}")
                         }
                         replaceHash(it, get(i).hash)
                         LOG.warn("Replaced hash: $it with ${get(i).hash} for migration ${get(i).id}")
