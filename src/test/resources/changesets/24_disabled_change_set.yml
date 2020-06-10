@@ -1,0 +1,7 @@
+id: diabled_change_set
+author: sideisra
+realm: integ-test
+enabled: ${IS_TEST_ENV}
+changes:
+  - addRole:
+      name: disabledTest
