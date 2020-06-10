@@ -30,7 +30,11 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
         val changeHashes = getMigrationsHashes()
 
         return changes
-            .filter { it.enabled == null || it.enabled.toBoolean() }
+            .filter {
+                val enabled = it.enabled.toBoolean()
+                if (!enabled) LOG.info("Skipping disabled migration: ${it.id}")
+                enabled
+            }
             .apply {
                 changeHashes.forEachIndexed { i, it ->
                     if (get(i).hash() != it) {
