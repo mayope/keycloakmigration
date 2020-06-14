@@ -2,15 +2,12 @@ import de.undercouch.gradle.tasks.download.Download
 import groovy.lang.GroovyObject
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.jetbrains.kotlin.org.jline.utils.Log
-import org.jfrog.gradle.plugin.artifactory.dsl.PublisherConfig
-import org.jfrog.gradle.plugin.artifactory.dsl.ResolverConfig
 import java.net.ConnectException
 
 plugins {
     kotlin("jvm") version "1.3.70"
     id("maven-publish")
     id("signing")
-    id("com.jfrog.artifactory") version "4.8.1"
     id("de.undercouch.download") version ("3.4.3")
     id("net.researchgate.release") version ("2.8.0")
 
@@ -60,25 +57,6 @@ repositories {
     jcenter()
 }
 
-artifactory {
-    setContextUrl("https://artifactory.klg71.de/artifactory")
-    publish(delegateClosureOf<PublisherConfig> {
-        repository(delegateClosureOf<GroovyObject> {
-            setProperty("repoKey", "keycloakmigration")
-            setProperty("username", project.findProperty("artifactory_user"))
-            setProperty("password", project.findProperty("artifactory_password"))
-            setProperty("maven", true)
-
-        })
-        defaults(delegateClosureOf<GroovyObject> {
-            invokeMethod("publications", "mavenJava")
-        })
-    })
-    resolve(delegateClosureOf<ResolverConfig> {
-        setProperty("repoKey", "libs-release")
-    })
-}
-
 tasks {
     val keycloakVersion = "10.0.0"
 
@@ -93,7 +71,7 @@ tasks {
     }
 
     "afterReleaseBuild"{
-        dependsOn("artifactoryPublish","publishMavenJavaPublicationToMavenRepository","publishMavenJavaPublicationToGitHubPackagesRepository")
+        dependsOn("publishMavenJavaPublicationToMavenRepository","publishMavenJavaPublicationToGitHubPackagesRepository")
     }
 
 
