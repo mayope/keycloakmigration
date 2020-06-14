@@ -80,7 +80,7 @@ artifactory {
 }
 
 tasks {
-    val keycloakVersion = "8.0.1"
+    val keycloakVersion = "10.0.0"
 
     register<Jar>("fatJar") {
         from(sourceSets["main"].output)

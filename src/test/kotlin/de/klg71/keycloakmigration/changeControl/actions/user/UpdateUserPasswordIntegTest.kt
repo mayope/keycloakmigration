@@ -13,7 +13,7 @@ import org.koin.core.inject
 class UpdateUserPasswordIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
-    val loginClient by inject<KeycloakLoginClient>()
+    private val loginClient by inject<KeycloakLoginClient>()
 
     @Test
     fun testUpdateUserPassword() {
@@ -37,12 +37,10 @@ class UpdateUserPasswordIntegTest : AbstractIntegrationTest() {
     }
 
     @Test
-    fun testUpdateUser_userDoesNotExist() {
+    fun testUpdateUserPassword_userDoesNotExist() {
         assertThatThrownBy {
             UpdateUserPasswordAction(testRealm, "testIntegration", password = "testPassword").executeIt()
         }.isInstanceOf(MigrationException::class.java)
                 .hasMessage("User with name: testIntegration does not exist in realm: ${testRealm}!")
-
-
     }
 }

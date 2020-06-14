@@ -418,6 +418,7 @@ The password is hashed with 27500 hash_iterations and a key_byte_length of 64 by
 ##### Example
     id: test
     author: klg71
+    realm: integ-test
     changes:
       - addUser:
           name: testPasswordUser
