@@ -21,4 +21,4 @@ includes:
 - path: changesets/21_update_realm_action.yml
 - path: changesets/22_add_client_mappers.yml
 - path: changesets/23_add_user_federation_mappers.yml
-
+- path: changesets/24_disabled_change_set.yml
