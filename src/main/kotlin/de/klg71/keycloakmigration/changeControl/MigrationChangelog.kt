@@ -8,12 +8,13 @@ import de.klg71.keycloakmigration.rest.KeycloakClient
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.slf4j.LoggerFactory
-import java.util.*
 import java.util.Objects.isNull
+import java.util.UUID
 
 /**
  * Service keeping track of the already executed migrations and which new migrations should be executed
  */
+@Suppress("TooManyFunctions")
 internal class MigrationChangelog(private val migrationUserId: UUID, private val realm: String) : KoinComponent {
 
     private val client by inject<KeycloakClient>()
@@ -30,27 +31,39 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
         val changeHashes = getMigrationsHashes()
 
         return changes
-            .filter {
-                val enabled = it.enabled.toBoolean()
-                if (!enabled) LOG.info("Skipping disabled migration: ${it.id}")
-                enabled
+                .filterDisabled()
+                .apply {
+                    checkExistingHashes(changeHashes, correctHashes)
+                }.run {
+                    subList(changeHashes.size, size)
+                }
+    }
+
+    private fun List<ChangeSet>.checkExistingHashes(changeHashes: List<String>, correctHashes: Boolean) {
+        changeHashes.forEachIndexed { i, it ->
+            if (get(i).hash() != it) {
+                doHashMigration(correctHashes, it, i)
             }
-            .apply {
-                changeHashes.forEachIndexed { i, it ->
-                    if (get(i).hash() != it) {
-                        if (!correctHashes) {
-                            throw MigrationException(
-                                    "Invalid hash expected: $it (remote) " +
-                                        "got ${get(i).hash()} (local) in migration: ${get(i).id}")
-                        }
-                        replaceHash(it, get(i).hash)
-                        LOG.warn("Replaced hash: $it with ${get(i).hash} for migration ${get(i).id}")
-                    }
-                    LOG.info("Skipping migration: ${get(i).id}")
-            }
-        }.run {
-            subList(changeHashes.size, size)
+            LOG.info("Skipping migration: ${get(i).id}")
         }
+    }
+
+    private fun List<ChangeSet>.filterDisabled(): List<ChangeSet> {
+        return filter {
+            if (!it.enabled) LOG.info("Skipping disabled migration: ${it.id}")
+            it.enabled
+        }
+    }
+
+    private fun List<ChangeSet>.doHashMigration(
+            correctHashes: Boolean, remoteHash: String, migrationIndex: Int) {
+        if (!correctHashes) {
+            throw MigrationException(
+                    "Invalid hash expected: $remoteHash (remote) " +
+                            "got ${get(migrationIndex).hash()} (local) in migration: ${get(migrationIndex).id}")
+        }
+        replaceHash(remoteHash, get(migrationIndex).hash)
+        LOG.warn("Replaced hash: $remoteHash with ${get(migrationIndex).hash} for migration ${get(migrationIndex).id}")
     }
 
     /**
@@ -116,7 +129,6 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
                 }
                 return attributes[migrationAttributeName]!!
             }
-
 
 }
 

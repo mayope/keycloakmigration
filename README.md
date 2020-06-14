@@ -204,6 +204,7 @@ The changeSet contains the actual changes as a list of migrations (see [Supporte
 - author: String, not optional, author of the changeset
 - realm: String, optional, preset realm for actions
 > Please note that you must either provide a realm in the ChangeSet or in each action! Even though both parameters are optional one must be set!
+- enabled: Boolean, optional, default=true, can be set through environment variable substitution to enable dynamic changesets see: https://github.com/klg71/keycloakmigration/issues/9
 
 - changes: List of Migrations
 

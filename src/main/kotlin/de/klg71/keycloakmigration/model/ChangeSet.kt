@@ -9,7 +9,7 @@ data class ChangeSet(val id: String,
                      val realm: String? = null,
                      @JsonIgnore
                      var path: String = "",
-                     val enabled: String = "true") {
+                     val enabled: Boolean = true) {
 
     lateinit var hash: String
 

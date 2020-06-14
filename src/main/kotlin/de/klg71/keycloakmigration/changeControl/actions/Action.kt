@@ -14,14 +14,13 @@ abstract class Action(var realm: String? = null) : KoinComponent {
 
     companion object {
         val LOG = LoggerFactory.getLogger(Action::class.java)!!
-        private val realmsChecked = mutableListOf<String>()
     }
 
     lateinit var path: String
     lateinit var yamlNodeValue: String
 
     protected val client by inject<KeycloakClient>()
-    protected val realmChecker by inject<RealmChecker>()
+    private val realmChecker by inject<RealmChecker>()
 
     private var executed = false
 

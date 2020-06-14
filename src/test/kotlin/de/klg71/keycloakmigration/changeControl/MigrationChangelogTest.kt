@@ -250,7 +250,7 @@ class MigrationChangelogTest : KoinTest {
 
     private fun mockChangeSet(testHash: String = "", isEnabled: Boolean = true, testId: String = ""): ChangeSet =
         mock {
-            on { enabled } doReturn isEnabled.toString()
+            on { enabled } doReturn isEnabled
             on { hash() } doReturn testHash
             on { id } doReturn testId
         }
