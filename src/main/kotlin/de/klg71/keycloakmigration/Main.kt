@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.changeControl.KeycloakMigration
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.slf4j.LoggerFactory
+import java.net.URL
 
 val KOIN_LOGGER = LoggerFactory.getLogger("de.klg71.keycloakmigration.koinlogger")!!
 const val DEFAULT_CHANGELOGFILE = "keycloak-changelog.yml"
@@ -17,6 +18,9 @@ const val DEFAULT_KEYCLOAK_SERVER = "http://localhost:18080/auth"
 const val DEFAULT_REALM = "master"
 const val DEFAULT_CLIENTID = "admin-cli"
 const val DEFAULT_CORRECT_HASHES = false
+const val DEFAULT_WAIT_FOR_KEYCLOAK = false
+
+const val DEFAULT_WAIT_FOR_KEYCLOAK_PAUSE_TIME = 1000L
 
 interface MigrationArgs {
     fun adminUser(): String
@@ -27,6 +31,7 @@ interface MigrationArgs {
     fun clientId(): String
     fun correctHashes(): Boolean
     fun parameters(): Map<String, String>
+    fun waitForKeycloak(): Boolean
 }
 
 @Suppress("SpreadOperator")
@@ -68,6 +73,9 @@ internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
                     " syntax is: -k param1=value1 will replace \${param1} with value1 in changelog")
             .default(emptyList<String>())
 
+    private val waitForKeycloak by parser.flagging(names = *arrayOf("--wait-for-keycloak"),
+        help = "Wait for Keycloak to become ready.").default(DEFAULT_WAIT_FOR_KEYCLOAK)
+
     override fun adminUser() = adminUser
 
     override fun adminPassword() = adminPassword
@@ -93,10 +101,30 @@ internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
         toMap()
     }
 
+    override fun waitForKeycloak() = waitForKeycloak
 }
 
 fun main(args: Array<String>) = mainBody {
-    migrate(ArgParser(args).parseInto(::CommandLineMigrationArgs))
+    val migrationArgs = ArgParser(args).parseInto(::CommandLineMigrationArgs)
+    if (migrationArgs.waitForKeycloak()) {
+        waitForKeycloak(migrationArgs.baseUrl())
+    }
+    migrate(migrationArgs)
+}
+
+fun waitForKeycloak(baseUrl: String) {
+    while (true) {
+        try {
+            if (URL(baseUrl).readBytes().isNotEmpty())
+                return
+        } catch (e: java.net.ConnectException) {
+            // nothing to do
+        } catch (e: java.net.SocketException) {
+            // nothing to do
+        }
+        println("Waiting for Keycloak to become ready")
+        Thread.sleep(DEFAULT_WAIT_FOR_KEYCLOAK_PAUSE_TIME)
+    }
 }
 
 fun migrate(migrationArgs: MigrationArgs) {

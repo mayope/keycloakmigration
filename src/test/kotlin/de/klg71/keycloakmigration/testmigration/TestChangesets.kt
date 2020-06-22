@@ -27,6 +27,7 @@ object TestMigrationArgs : MigrationArgs {
     override fun parameters(): Map<String, String> {
         return mapOf("IS_TEST_ENV" to "true")
     }
+    override fun waitForKeycloak() = false
 
 }
 
