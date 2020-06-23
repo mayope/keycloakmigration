@@ -143,36 +143,47 @@ Then migration can simply be invoked through the jar.
 
     java -jar keycloakmigration.jar --help
     usage: [-h] [-u USER] [-p PASSWORD] [-b BASEURL] [MIGRATION-FILE] [-r REALM]
-           [-c CLIENT] [--correct-hashes]
+           [-c CLIENT] [--correct-hashes] [-k PARAMETER]... [--wait-for-keycloak]
+           [--wait-for-keycloak-timeout WAIT_FOR_KEYCLOAK_TIMEOUT]
 
     optional arguments:
-      -h, --help            show this help message and exit
+      -h, --help                                              show this help message and exit
 
-      -u USER, --user USER  Username for the migration user, defaulting to admin.
+      -u USER, --user USER                                    Username for the migration user, defaulting to admin.
 
-      -p PASSWORD,          Password for the migration user, defaulting to admin.
-      --password PASSWORD
+      -p PASSWORD, --password PASSWORD                        Password for the migration user, defaulting to admin.
 
-      -b BASEURL,           Base url of keycloak server, defaulting to
-      --baseurl BASEURL     http://localhost:18080/auth.
+      -b BASEURL, --baseurl BASEURL                           Base url of keycloak server, defaulting to
+                                                              http://localhost:18080/auth.
+                                                              
+      -r REALM, --realm REALM                                 Realm to use for migration, defaulting to master
 
-      -r REALM,             Realm to use for migration, defaulting to master
-      --realm REALM
+      -c CLIENT, --client CLIENT                              Client to use for
+                                                              migration,
+                                                              defaulting to master
 
-      -c CLIENT,            Client to use for migration, defaulting to master
-      --client CLIENT
+      --correct-hashes                                        Correct hashes to most recent version, defaulting to false
 
-      --correct-hashes      Correct hashes to most recent version, defaulting to
-                            false!
-                            Just choose this option if you didn't change
-                            anything in the changelog since the last migration!
-                            This will replace all old hashes with the new hash
-                            version and can be omitted next time the migration is
-                            run. See README.md for further explanation!
+                                                              Just choose this option if you didn't change anything in
+                                                              the changelog since the last migration!
+                                                              This will replace all old hashes with the new hash version
+                                                              and can be omitted next time the migration is run.
+                                                              See README.md for further explanation!
+
+      -k PARAMETER, --parameter PARAMETER                     Parameters to substitute in changelog, syntax is:
+                                                              -k param1=value1
+                                                              will replace
+                                                              ${param1} with
+                                                              value1 in changelog
+
+      --wait-for-keycloak                                     Wait for Keycloak to become ready.
+
+      --wait-for-keycloak-timeout WAIT_FOR_KEYCLOAK_TIMEOUT   Wait for Keycloak to become ready timeout in seconds
+                                                              (defaulting to 0=infinit).
 
 
     positional arguments:
-      MIGRATION-FILE        File to migrate, defaulting to keycloak-changelog.yml
+      MIGRATION-FILE                                          File to migrate, defaulting to keycloak-changelog.yml
 
 ## Migration Files
 There are two types of files to control migrations in keycloak. ChangeLog and ChangeSet (may sound similar in liquibase).

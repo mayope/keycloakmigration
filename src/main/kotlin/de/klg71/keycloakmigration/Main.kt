@@ -1,6 +1,7 @@
 package de.klg71.keycloakmigration
 
 import com.xenomachina.argparser.ArgParser
+import com.xenomachina.argparser.DefaultHelpFormatter
 import com.xenomachina.argparser.InvalidArgumentException
 import com.xenomachina.argparser.default
 import com.xenomachina.argparser.mainBody
@@ -8,7 +9,11 @@ import de.klg71.keycloakmigration.changeControl.KeycloakMigration
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.slf4j.LoggerFactory
+import java.net.ConnectException
+import java.net.SocketException
 import java.net.URL
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 val KOIN_LOGGER = LoggerFactory.getLogger("de.klg71.keycloakmigration.koinlogger")!!
 const val DEFAULT_CHANGELOGFILE = "keycloak-changelog.yml"
@@ -19,6 +24,7 @@ const val DEFAULT_REALM = "master"
 const val DEFAULT_CLIENTID = "admin-cli"
 const val DEFAULT_CORRECT_HASHES = false
 const val DEFAULT_WAIT_FOR_KEYCLOAK = false
+const val DEFAULT_WAIT_FOR_KEYCLOAK_TIMEOUT = "0"
 
 const val DEFAULT_WAIT_FOR_KEYCLOAK_PAUSE_TIME = 1000L
 
@@ -32,6 +38,7 @@ interface MigrationArgs {
     fun correctHashes(): Boolean
     fun parameters(): Map<String, String>
     fun waitForKeycloak(): Boolean
+    fun waitForKeycloakTimeout(): Long
 }
 
 @Suppress("SpreadOperator")
@@ -74,7 +81,11 @@ internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
             .default(emptyList<String>())
 
     private val waitForKeycloak by parser.flagging(names = *arrayOf("--wait-for-keycloak"),
-        help = "Wait for Keycloak to become ready.").default(DEFAULT_WAIT_FOR_KEYCLOAK)
+            help = "Wait for Keycloak to become ready.").default(DEFAULT_WAIT_FOR_KEYCLOAK)
+
+    private val waitForKeycloakTimout by parser.storing(names = *arrayOf("--wait-for-keycloak-timeout"),
+            help = "Wait for Keycloak to become ready timeout in seconds (defaulting to 0=infinit).")
+            .default(DEFAULT_WAIT_FOR_KEYCLOAK_TIMEOUT)
 
     override fun adminUser() = adminUser
 
@@ -102,33 +113,44 @@ internal class CommandLineMigrationArgs(parser: ArgParser) : MigrationArgs {
     }
 
     override fun waitForKeycloak() = waitForKeycloak
+
+    override fun waitForKeycloakTimeout() = waitForKeycloakTimout.toLong()
 }
 
 fun main(args: Array<String>) = mainBody {
     val migrationArgs = ArgParser(args).parseInto(::CommandLineMigrationArgs)
-    if (migrationArgs.waitForKeycloak()) {
-        waitForKeycloak(migrationArgs.baseUrl())
-    }
     migrate(migrationArgs)
 }
 
-fun waitForKeycloak(baseUrl: String) {
+fun waitForKeycloak(baseUrl: String, timeout: Long) {
+    val waitTill = Instant.now().plus(timeout, ChronoUnit.SECONDS)
     while (true) {
-        try {
-            if (URL(baseUrl).readBytes().isNotEmpty())
-                return
-        } catch (e: java.net.ConnectException) {
-            // nothing to do
-        } catch (e: java.net.SocketException) {
-            // nothing to do
+        if (isKeycloakReady(baseUrl)) return
+        if (timeout > 0 && waitTill.isAfter(Instant.now())) {
+            throw KeycloakNotReadyException()
         }
         println("Waiting for Keycloak to become ready")
         Thread.sleep(DEFAULT_WAIT_FOR_KEYCLOAK_PAUSE_TIME)
     }
 }
 
+private fun isKeycloakReady(baseUrl: String): Boolean {
+    try {
+        if (URL(baseUrl).readBytes().isNotEmpty())
+            return true
+    } catch (e: ConnectException) {
+        // nothing to do
+    } catch (e: SocketException) {
+        // nothing to do
+    }
+    return false
+}
+
 fun migrate(migrationArgs: MigrationArgs) {
     migrationArgs.run {
+        if (waitForKeycloak()) {
+            waitForKeycloak(migrationArgs.baseUrl(), migrationArgs.waitForKeycloakTimeout())
+        }
         try {
             startKoin {
                 logger(KoinLogger(KOIN_LOGGER))
