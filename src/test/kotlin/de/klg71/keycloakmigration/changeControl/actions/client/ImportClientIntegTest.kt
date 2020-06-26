@@ -23,4 +23,16 @@ class ImportClientIntegTest : AbstractIntegrationTest() {
         assertThat(testClient.directAccessGrantsEnabled).isEqualTo(true)
         assertThat(testClient.protocolMappers).hasSize(7)
     }
+
+
+    @Test
+    fun testImportClientWebOrigins() {
+        ImportClientAction(testRealm, "integ-test-client-weborigins.json").apply {
+            path="src/test/resources/changesets"
+        }.executeIt()
+
+        val testClient = client.clientById("integ-test-client", testRealm)
+
+        assertThat(testClient.webOrigins).containsExactly("+")
+    }
 }

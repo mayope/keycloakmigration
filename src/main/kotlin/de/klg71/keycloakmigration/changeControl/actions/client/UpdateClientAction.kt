@@ -5,7 +5,6 @@ import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.model.Client
 import de.klg71.keycloakmigration.rest.clientById
 import de.klg71.keycloakmigration.rest.existsClient
-import org.apache.commons.codec.digest.DigestUtils
 
 class UpdateClientAction(
         realm: String? = null,
@@ -24,7 +23,8 @@ class UpdateClientAction(
         private val publicClient: Boolean? = null,
         private val adminUrl: String? = null,
         private val baseUrl: String? = null,
-        private val rootUrl: String? = null) : Action(realm) {
+        private val rootUrl: String? = null,
+        private val webOrigins: List<String>? = null) : Action(realm) {
 
     private lateinit var oldClient: Client
 
@@ -38,17 +38,17 @@ class UpdateClientAction(
             oldClient.clientAuthenticatorType,
             oldClient.defaultRoles,
             redirectUris ?: oldClient.redirectUris,
-            oldClient.webOrigins,
+            webOrigins ?: oldClient.webOrigins,
             oldClient.notBefore,
             bearerOnly ?: oldClient.bearerOnly,
             oldClient.consentRequired,
             standardFlowEnabled ?: oldClient.standardFlowEnabled,
             implicitFlowEnabled ?: oldClient.implicitFlowEnabled,
             directAccessGrantEnabled ?: oldClient.directAccessGrantsEnabled,
-            serviceAccountsEnabled?: oldClient.serviceAccountsEnabled,
+            serviceAccountsEnabled ?: oldClient.serviceAccountsEnabled,
             publicClient ?: oldClient.publicClient,
             oldClient.frontchannelLogout,
-            protocol?: oldClient.protocol,
+            protocol ?: oldClient.protocol,
             attributes ?: oldClient.attributes,
             oldClient.authenticationFlowBindingOverrides,
             oldClient.fullScopeAllowed,

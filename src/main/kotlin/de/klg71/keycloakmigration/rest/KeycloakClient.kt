@@ -1,5 +1,6 @@
 package de.klg71.keycloakmigration.rest
 
+import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientRepresentation
 import de.klg71.keycloakmigration.model.AddClient
 import de.klg71.keycloakmigration.model.AddGroup
 import de.klg71.keycloakmigration.model.AddMapper
@@ -26,7 +27,6 @@ import de.klg71.keycloakmigration.model.UserFederation
 import de.klg71.keycloakmigration.model.UserFederationMapper
 import de.klg71.keycloakmigration.model.UserGroupListItem
 import de.klg71.keycloakmigration.model.UserListItem
-import feign.Body
 import feign.Headers
 import feign.Param
 import feign.RequestLine
@@ -161,8 +161,7 @@ interface KeycloakClient {
 
     @RequestLine("POST /admin/realms/{realm}/clients")
     @Headers("Content-Type: application/json; charset=utf-8")
-    @Body("{content}")
-    fun importClient(@Param("content") importClientRepresentation: String, @Param("realm") realm: String): Response
+    fun importClient(importClientRepresentation: ImportClientRepresentation, @Param("realm") realm: String): Response
 
     @RequestLine("POST /admin/realms/{realm}/clients")
     @Headers("Content-Type: application/json; charset=utf-8")

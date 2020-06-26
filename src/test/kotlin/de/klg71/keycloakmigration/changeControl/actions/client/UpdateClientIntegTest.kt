@@ -45,4 +45,14 @@ class UpdateClientIntegTest : AbstractIntegrationTest() {
         assertThat(testClient.serviceAccountsEnabled).isEqualTo(true)
         assertThat(testClient.publicClient).isEqualTo(true)
     }
+
+    @Test
+    fun testUpdateClient_PublicClientWebOrigin() {
+        AddSimpleClientAction(testRealm, "simpleClient").executeIt()
+        val webOrigins = listOf("+")
+        UpdateClientAction(testRealm, "simpleClient",webOrigins = webOrigins).executeIt()
+
+        val testClient = client.clientById("simpleClient", testRealm)
+        assertThat(testClient.webOrigins).isEqualTo(webOrigins)
+    }
 }

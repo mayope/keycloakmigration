@@ -28,6 +28,7 @@ dependencies {
     compile("io.github.openfeign:feign-core:10.1.0")
     compile("io.github.openfeign:feign-jackson:10.1.0")
     compile("io.github.openfeign:feign-slf4j:10.1.0")
+    compile("io.github.openfeign:feign-httpclient:10.1.0")
     compile("io.github.openfeign.form:feign-form:3.4.1")
 
     compile("org.apache.logging.log4j:log4j-core:2.11.1")

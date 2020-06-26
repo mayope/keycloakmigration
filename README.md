@@ -742,6 +742,7 @@ Update a client
 - rootUrl: String, optional, default=no change
 - publicClient: Boolean, optional, default=no change
 - serviceAccountsEnabled: Boolean, optional, default=no change
+- webOrigins: List< String>, optional, default=no change
 
 ##### Example
     id: update-client
