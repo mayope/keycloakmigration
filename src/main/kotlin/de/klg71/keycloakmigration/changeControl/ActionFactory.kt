@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
+import de.klg71.keycloakmigration.changeControl.actions.client.AssignRoleToClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.UpdateClientAction
@@ -71,6 +72,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
                 "importClient" -> objectMapper.readValue<ImportClientAction>(actionJson)
                 "updateClient" -> objectMapper.readValue<UpdateClientAction>(actionJson)
                 "deleteClient" -> objectMapper.readValue<DeleteClientAction>(actionJson)
+                "assignRoleToClient" -> objectMapper.readValue<AssignRoleToClientAction>(actionJson)
 
                 "addGroup" -> objectMapper.readValue<AddGroupAction>(actionJson)
                 "deleteGroup" -> objectMapper.readValue<DeleteGroupAction>(actionJson)

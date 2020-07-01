@@ -1,0 +1,14 @@
+id: add-client-roles
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testClientRoles
+  - updateClient:
+      clientId: testClientRoles
+      serviceAccountsEnabled: true
+      publicClient: false
+  - assignRoleToClient:
+      clientId: testClientRoles
+      role: query-users
+      roleClientId: realm-management

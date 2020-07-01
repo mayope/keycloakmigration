@@ -160,6 +160,9 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/client-secret")
     fun clientSecret(@Param("client-id") clientId: UUID, @Param("realm") realm: String): ClientSecret
 
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/service-account-user")
+    fun clientServiceAccount(@Param("client-id") clientId: UUID, @Param("realm") realm:String): User
+
     @RequestLine("POST /admin/realms/{realm}/clients")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addSimpleClient(addSimpleClient: AddSimpleClient, @Param("realm") realm: String): Response
@@ -254,4 +257,5 @@ interface KeycloakClient {
 
     @RequestLine("GET /admin/realms/{realm}/groups/{group-id}/role-mappings/realm/composite")
     fun groupRoles(@Param("realm") realm: String, @Param("group-id") id: UUID): List<RoleListItem>
+
 }

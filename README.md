@@ -85,53 +85,59 @@ The goal is to provide a similar mechanism for Keycloak. There also exists a gra
     + [updateClient](#updateclient)
       - [Parameters](#parameters-18)
       - [Example](#example-23)
-    + [addMapper](#addmapper)
+    + [assignRoleToClient](#assignroletoclient)
       - [Parameters](#parameters-19)
+      - [Example](#example-24)
+    + [addMapper](#addmapper)
+      - [Parameters](#parameters-20)
       - [Example:](#example-)
     + [addAudienceMapper](#addaudiencemapper)
-      - [Parameters](#parameters-20)
+      - [Parameters](#parameters-21)
       - [Example:](#example--1)
     + [addGroupMembershipMapper](#addgroupmembershipmapper)
-      - [Parameters](#parameters-21)
+      - [Parameters](#parameters-22)
       - [Example:](#example--2)
     + [addUserAttributeMapper](#adduserattributemapper)
-      - [Parameters](#parameters-22)
+      - [Parameters](#parameters-23)
       - [Example:](#example--3)
     + [addUserRealmRoleMapper](#adduserrealmrolemapper)
-      - [Parameters](#parameters-23)
+      - [Parameters](#parameters-24)
       - [Example:](#example--4)
   * [Realm Migrations](#realm-migrations)
     + [addRealm](#addrealm)
-      - [Parameters](#parameters-24)
-      - [Example](#example-24)
-    + [deleteRealm](#deleterealm)
       - [Parameters](#parameters-25)
       - [Example](#example-25)
-    + [updateRealm](#updaterealm)
+    + [deleteRealm](#deleterealm)
       - [Parameters](#parameters-26)
       - [Example](#example-26)
-  * [User Federation Migrations](#user-federation-migrations)
-    + [AddAdLdap](#addadldap)
+    + [updateRealm](#updaterealm)
       - [Parameters](#parameters-27)
       - [Example](#example-27)
-    + [AddAdLdapFullNameMapper](#addadldapfullnamemapper)
+  * [User Federation Migrations](#user-federation-migrations)
+    + [AddAdLdap](#addadldap)
       - [Parameters](#parameters-28)
       - [Example](#example-28)
-    + [AddAdLdapGroupMapper](#addadldapgroupmapper)
+    + [AddAdLdapFullNameMapper](#addadldapfullnamemapper)
       - [Parameters](#parameters-29)
       - [Example](#example-29)
-    + [AddAdLdapHardcodedRoleMapper](#addadldaphardcodedrolemapper)
+    + [AddAdLdapGroupMapper](#addadldapgroupmapper)
       - [Parameters](#parameters-30)
       - [Example](#example-30)
-    + [AddAdLdapUserControlMapperMapper](#addadldapusercontrolmappermapper)
+    + [AddAdLdapHardcodedRoleMapper](#addadldaphardcodedrolemapper)
       - [Parameters](#parameters-31)
       - [Example](#example-31)
-    + [AddAdLdapUserAttributeMapperMapper](#addadldapuserattributemappermapper)
+    + [AddAdLdapUserControlMapperMapper](#addadldapusercontrolmappermapper)
       - [Parameters](#parameters-32)
       - [Example](#example-32)
-    + [DeleteUserFederation](#deleteuserfederation)
+    + [AddAdLdapUserAttributeMapperMapper](#addadldapuserattributemappermapper)
       - [Parameters](#parameters-33)
       - [Example](#example-33)
+    + [AddAdLdapMapperMapper](#addadldapmappermapper)
+      - [Parameters](#parameters-34)
+      - [Example](#example-34)
+    + [DeleteUserFederation](#deleteuserfederation)
+      - [Parameters](#parameters-35)
+      - [Example](#example-35)
 - [Technical Hints](#technical-hints)
 - [Hacking](#hacking)
   * [Use keycloakmigration through maven dependency](#use-keycloakmigration-through-maven-dependency)
@@ -754,6 +760,31 @@ Update a client
         redirectUris: 
             - http://localhost:8080
             - https://www.example.com
+            
+#### assignRoleToClient
+Assigns a realm- or client-role(if roleClientId is set) to a service account of a client.
+
+##### Parameters
+- realm: String, optional
+- clientId: String, not optional
+- role: String, not optional
+- roleClientId: String, optional, default = realmRole
+
+##### Example
+    id: add-client-roles
+    author: klg71
+    realm: integ-test
+    changes:
+      - addSimpleClient:
+          clientId: testClientRoles
+      - updateClient:
+          clientId: testClientRoles
+          serviceAccountsEnabled: true
+          publicClient: false
+      - assignRoleToClient:
+          clientId: testClientRoles
+          role: query-users
+          roleClientId: realm-management
 
 #### addMapper
 adds a full configurable clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists

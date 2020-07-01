@@ -22,3 +22,4 @@ includes:
 - path: changesets/22_add_client_mappers.yml
 - path: changesets/23_add_user_federation_mappers.yml
 - path: changesets/24_disabled_change_set.yml
+- path: changesets/25_client_role.yml
