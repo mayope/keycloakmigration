@@ -33,10 +33,15 @@ import feign.RequestLine
 import feign.Response
 import java.util.UUID
 
+data class RealmName(val realm:String)
+
 @Suppress("TooManyFunctions")
 interface KeycloakClient {
     @RequestLine("GET /admin/realms")
     fun realms(): List<Realm>
+
+    @RequestLine("GET /admin/realms")
+    fun realmNames(): List<RealmName>
 
     @RequestLine("GET /admin/realms/{realm}/users")
     fun users(@Param("realm") realm: String): List<UserListItem>
