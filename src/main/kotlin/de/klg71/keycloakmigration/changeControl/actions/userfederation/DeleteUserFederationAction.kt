@@ -2,8 +2,8 @@ package de.klg71.keycloakmigration.changeControl.actions.userfederation
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.AddUserFederation
-import de.klg71.keycloakmigration.model.UserFederation
+import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederation
+import de.klg71.keycloakmigration.keycloakapi.model.UserFederation
 
 class DeleteUserFederationAction(
         realm: String? = null,

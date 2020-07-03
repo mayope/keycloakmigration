@@ -2,8 +2,8 @@ package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.User
-import de.klg71.keycloakmigration.rest.userByName
+import de.klg71.keycloakmigration.keycloakapi.model.User
+import de.klg71.keycloakmigration.keycloakapi.userByName
 
 class AddUserAttributeAction(
         realm: String? = null,

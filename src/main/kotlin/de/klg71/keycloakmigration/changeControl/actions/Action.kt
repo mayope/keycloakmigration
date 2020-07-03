@@ -1,7 +1,7 @@
 package de.klg71.keycloakmigration.changeControl.actions
 
 import de.klg71.keycloakmigration.changeControl.RealmChecker
-import de.klg71.keycloakmigration.rest.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.slf4j.LoggerFactory

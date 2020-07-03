@@ -2,9 +2,9 @@ package de.klg71.keycloakmigration.changeControl.actions.client
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.Client
-import de.klg71.keycloakmigration.rest.clientById
-import de.klg71.keycloakmigration.rest.existsClient
+import de.klg71.keycloakmigration.keycloakapi.model.Client
+import de.klg71.keycloakmigration.keycloakapi.clientById
+import de.klg71.keycloakmigration.keycloakapi.existsClient
 
 class UpdateClientAction(
         realm: String? = null,

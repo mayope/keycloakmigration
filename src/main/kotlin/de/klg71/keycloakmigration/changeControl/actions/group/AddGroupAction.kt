@@ -2,10 +2,10 @@ package de.klg71.keycloakmigration.changeControl.actions.group
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.AddGroup
-import de.klg71.keycloakmigration.rest.existsGroup
-import de.klg71.keycloakmigration.rest.extractLocationUUID
-import de.klg71.keycloakmigration.rest.groupByName
+import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
+import de.klg71.keycloakmigration.keycloakapi.existsGroup
+import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
+import de.klg71.keycloakmigration.keycloakapi.groupByName
 import java.util.*
 
 class AddGroupAction(

@@ -2,10 +2,10 @@ package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.User
-import de.klg71.keycloakmigration.model.UserCredential
-import de.klg71.keycloakmigration.rest.existsUser
-import de.klg71.keycloakmigration.rest.userByName
+import de.klg71.keycloakmigration.keycloakapi.model.User
+import de.klg71.keycloakmigration.keycloakapi.model.UserCredential
+import de.klg71.keycloakmigration.keycloakapi.existsUser
+import de.klg71.keycloakmigration.keycloakapi.userByName
 import org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric
 import java.util.*
 import javax.crypto.SecretKeyFactory

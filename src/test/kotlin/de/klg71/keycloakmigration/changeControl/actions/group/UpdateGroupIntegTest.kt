@@ -1,8 +1,8 @@
 package de.klg71.keycloakmigration.changeControl.actions.group
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
-import de.klg71.keycloakmigration.rest.KeycloakClient
-import de.klg71.keycloakmigration.rest.groupByName
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.groupByName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before

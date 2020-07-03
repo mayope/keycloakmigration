@@ -1,9 +1,9 @@
 package de.klg71.keycloakmigration.changeControl.actions.group
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.model.AddGroup
-import de.klg71.keycloakmigration.model.Group
-import de.klg71.keycloakmigration.rest.groupByName
+import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
+import de.klg71.keycloakmigration.keycloakapi.model.Group
+import de.klg71.keycloakmigration.keycloakapi.groupByName
 import java.util.*
 
 class DeleteGroupAction(

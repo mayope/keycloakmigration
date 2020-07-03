@@ -24,6 +24,7 @@ tasks.withType<Wrapper> {
 dependencies {
     compile(kotlin("stdlib"))
     compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
+    api(project("keycloakapi"))
 
     compile("io.github.openfeign:feign-core:10.1.0")
     compile("io.github.openfeign:feign-jackson:10.1.0")
@@ -68,11 +69,16 @@ tasks {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
         }
 
-        from(configurations["runtimeClasspath"].map { if (it.isDirectory) it else zipTree(it) })
+        from(configurations["compile"].map { if (it.isDirectory) it else zipTree(it) })
     }
 
     "afterReleaseBuild"{
-        dependsOn("publishMavenJavaPublicationToMavenRepository","publishMavenJavaPublicationToGitHubPackagesRepository")
+        dependsOn("publishMavenJavaPublicationToMavenRepository",
+                "publishMavenJavaPublicationToGitHubPackagesRepository",
+                "plugin:publishPlugins",
+                "keycloakapi:publishMavenJavaPublicationToMavenRepository",
+                "keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository"
+        )
     }
 
 

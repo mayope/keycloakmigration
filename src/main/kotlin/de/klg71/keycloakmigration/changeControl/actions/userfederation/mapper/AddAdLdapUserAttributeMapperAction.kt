@@ -1,9 +1,9 @@
 package de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.model.userAttributeMapper
-import de.klg71.keycloakmigration.rest.extractLocationUUID
-import de.klg71.keycloakmigration.rest.userFederationByName
+import de.klg71.keycloakmigration.keycloakapi.model.userAttributeMapper
+import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
+import de.klg71.keycloakmigration.keycloakapi.userFederationByName
 import java.util.UUID
 
 class AddAdLdapUserAttributeMapperAction(

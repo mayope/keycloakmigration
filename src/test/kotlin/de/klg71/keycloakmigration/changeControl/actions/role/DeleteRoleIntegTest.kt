@@ -2,9 +2,9 @@ package de.klg71.keycloakmigration.changeControl.actions.role
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.RoleListItem
-import de.klg71.keycloakmigration.rest.KeycloakClient
-import de.klg71.keycloakmigration.rest.roleExistsByName
+import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.roleExistsByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test

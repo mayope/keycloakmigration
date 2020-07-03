@@ -1,10 +1,10 @@
 package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.model.AddUser
-import de.klg71.keycloakmigration.model.User
-import de.klg71.keycloakmigration.rest.extractLocationUUID
-import de.klg71.keycloakmigration.rest.userByName
+import de.klg71.keycloakmigration.keycloakapi.model.AddUser
+import de.klg71.keycloakmigration.keycloakapi.model.User
+import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
+import de.klg71.keycloakmigration.keycloakapi.userByName
 import java.util.*
 
 class DeleteUserAction(

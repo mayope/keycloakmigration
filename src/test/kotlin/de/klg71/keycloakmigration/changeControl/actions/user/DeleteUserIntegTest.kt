@@ -1,8 +1,8 @@
 package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
-import de.klg71.keycloakmigration.model.UserListItem
-import de.klg71.keycloakmigration.rest.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.model.UserListItem
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.koin.core.inject

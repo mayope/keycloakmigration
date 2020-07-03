@@ -11,7 +11,7 @@ import org.koin.core.context.stopKoin
 
 private val adminUser = "admin"
 private val adminPass = "admin"
-private val baseUrl = "http://localhost:18080/auth"
+const val TEST_BASE_URL= "http://localhost:18080/auth"
 private val realm = "master"
 private val clientId = "admin-cli"
 
@@ -21,7 +21,7 @@ abstract class AbstractIntegrationTest : KoinComponent {
 
     init {
         startKoin {
-            modules(myModule(adminUser, adminPass, baseUrl, realm, clientId, emptyMap()))
+            modules(myModule(adminUser, adminPass, TEST_BASE_URL, realm, clientId, emptyMap()))
         }
     }
 

@@ -1,9 +1,11 @@
 package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
+import de.klg71.keycloakmigration.TEST_BASE_URL
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.rest.KeycloakClient
-import de.klg71.keycloakmigration.rest.KeycloakLoginClient
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.KeycloakLoginClient
+import de.klg71.keycloakmigration.keycloakapi.initKeycloakLoginClient
 import org.apache.commons.lang3.RandomStringUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
@@ -13,7 +15,7 @@ import org.koin.core.inject
 class UpdateUserPasswordIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
-    private val loginClient by inject<KeycloakLoginClient>()
+    val loginClient = initKeycloakLoginClient(TEST_BASE_URL)
 
     @Test
     fun testUpdateUserPassword() {

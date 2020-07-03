@@ -3,9 +3,9 @@ package de.klg71.keycloakmigration.changeControl.actions.user
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
-import de.klg71.keycloakmigration.model.UserGroupListItem
-import de.klg71.keycloakmigration.rest.KeycloakClient
-import de.klg71.keycloakmigration.rest.userByName
+import de.klg71.keycloakmigration.keycloakapi.model.UserGroupListItem
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.userByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test

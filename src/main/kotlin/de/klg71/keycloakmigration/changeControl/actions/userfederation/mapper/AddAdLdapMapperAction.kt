@@ -2,12 +2,12 @@ package de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.ldapMapper
-import de.klg71.keycloakmigration.rest.KeycloakClient
-import de.klg71.keycloakmigration.rest.extractLocationUUID
-import de.klg71.keycloakmigration.rest.ldapMapperExistsByName
-import de.klg71.keycloakmigration.rest.userFederationByName
-import de.klg71.keycloakmigration.rest.userFederationExistsByName
+import de.klg71.keycloakmigration.keycloakapi.model.ldapMapper
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
+import de.klg71.keycloakmigration.keycloakapi.ldapMapperExistsByName
+import de.klg71.keycloakmigration.keycloakapi.userFederationByName
+import de.klg71.keycloakmigration.keycloakapi.userFederationExistsByName
 import java.util.UUID
 
 internal fun assertMapperIsCreatable(client:KeycloakClient, name:String, adName:String, realm:String) {

@@ -2,10 +2,10 @@ package de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.hardcodedRoleMapper
-import de.klg71.keycloakmigration.rest.extractLocationUUID
-import de.klg71.keycloakmigration.rest.roleExistsByName
-import de.klg71.keycloakmigration.rest.userFederationByName
+import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
+import de.klg71.keycloakmigration.keycloakapi.model.hardcodedRoleMapper
+import de.klg71.keycloakmigration.keycloakapi.roleExistsByName
+import de.klg71.keycloakmigration.keycloakapi.userFederationByName
 import java.util.UUID
 
 class AddAdLdapHardcodedRoleMapperAction(

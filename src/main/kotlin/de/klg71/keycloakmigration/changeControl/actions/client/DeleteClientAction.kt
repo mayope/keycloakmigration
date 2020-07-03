@@ -1,9 +1,9 @@
 package de.klg71.keycloakmigration.changeControl.actions.client
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.model.AddClient
-import de.klg71.keycloakmigration.model.Client
-import de.klg71.keycloakmigration.rest.clientById
+import de.klg71.keycloakmigration.keycloakapi.model.AddClient
+import de.klg71.keycloakmigration.keycloakapi.model.Client
+import de.klg71.keycloakmigration.keycloakapi.clientById
 
 class DeleteClientAction(
         realm: String? = null,

@@ -3,9 +3,9 @@ package de.klg71.keycloakmigration.changeControl.actions.realm
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.model.AddRealm
-import de.klg71.keycloakmigration.model.Realm
-import de.klg71.keycloakmigration.rest.realmById
+import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
+import de.klg71.keycloakmigration.keycloakapi.model.Realm
+import de.klg71.keycloakmigration.keycloakapi.realmById
 
 /**
  * Migration action for deleting realms

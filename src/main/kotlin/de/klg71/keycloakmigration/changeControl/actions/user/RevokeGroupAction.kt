@@ -2,13 +2,13 @@ package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.AssignGroup
-import de.klg71.keycloakmigration.model.Group
-import de.klg71.keycloakmigration.rest.existsGroup
-import de.klg71.keycloakmigration.rest.existsUser
-import de.klg71.keycloakmigration.rest.groupByName
-import de.klg71.keycloakmigration.rest.groupUUID
-import de.klg71.keycloakmigration.rest.userUUID
+import de.klg71.keycloakmigration.keycloakapi.model.AssignGroup
+import de.klg71.keycloakmigration.keycloakapi.model.Group
+import de.klg71.keycloakmigration.keycloakapi.existsGroup
+import de.klg71.keycloakmigration.keycloakapi.existsUser
+import de.klg71.keycloakmigration.keycloakapi.groupByName
+import de.klg71.keycloakmigration.keycloakapi.groupUUID
+import de.klg71.keycloakmigration.keycloakapi.userUUID
 
 class RevokeGroupAction(
         realm: String? = null,

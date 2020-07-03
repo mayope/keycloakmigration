@@ -184,12 +184,57 @@ Then migration can simply be invoked through the jar.
 
       --wait-for-keycloak                                     Wait for Keycloak to become ready.
 
-      --wait-for-keycloak-timeout WAIT_FOR_KEYCLOAK_TIMEOUT   Wait for Keycloak to become ready timeout in seconds
-                                                              (defaulting to 0=infinit).
-
+      --wait-for-keycloak-timeout WAIT_FOR_KEYCLOAK_TIMEOUT   Wait for Keycloak to become ready timeout in seconds (defaulting to 0=infinit).
+      
+      --fail-on-undefined-variables                           Fail if variables could not be replaced, defaulting to false.
+  
+      --warn-on-undefined-variables                           Fail if variables could not bereplaced, to true.                                                
+      
 
     positional arguments:
       MIGRATION-FILE                                          File to migrate, defaulting to keycloak-changelog.yml
+      
+
+### Gradle
+#### Groovy
+    task keycloakMigrateLocal(type: KeycloakMigrationTask) {
+      group = "keycloak"
+      description = "Migrate the keycloak instance"
+
+      migrationFile = "migration/keycloak-changelog.yml"
+      adminUser = "admin"
+      adminPassword = "admin"
+      baseUrl = "http://localhost:8080"
+      realm = "master"
+      parameters = [USERNAME: "testUser", PASSWORD: "testPassword"]
+      waitForKeycloak = false
+      waitForKeycloakTimeout = 0L // infinit wait time
+      failOnUndefinedVariables = false
+      warnOnUndefinedVariables = true
+    }
+    
+### Kotlin
+    register<KeycloakMigrationTask>("keycloakMigrateLocal") {
+        group = "keycloak"
+        description = "Migrate the keycloak instance"
+
+        migrationFile = "migration/keycloak-changelog.yml"
+        adminUser = "admin"
+        adminPassword = "admin"
+        baseUrl = "http://localhost:8080/auth"
+        realm = "master"
+        parameters = mapOf(
+                "USER_NAME" to "testUser",
+                "PASSWORD" to "password"
+        )
+        waitForKeycloak = false
+        waitForKeycloakTimeout = 0L // infinit wait time
+        failOnUndefinedVariables = false
+        warnOnUndefinedVariables = true
+    }
+    
+   To correct existing hashes please use the `KeycloakMigrationCorrectHashesTask`.
+    
 
 ## Migration Files
 There are two types of files to control migrations in keycloak. ChangeLog and ChangeSet (may sound similar in liquibase).

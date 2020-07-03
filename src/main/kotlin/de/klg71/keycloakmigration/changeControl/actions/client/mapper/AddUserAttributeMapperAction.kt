@@ -1,8 +1,8 @@
 package de.klg71.keycloakmigration.changeControl.actions.client.mapper
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.model.userAttributeMapper
-import de.klg71.keycloakmigration.rest.clientUUID
+import de.klg71.keycloakmigration.keycloakapi.model.userAttributeMapper
+import de.klg71.keycloakmigration.keycloakapi.clientUUID
 import java.util.UUID
 
 class AddUserAttributeMapperAction(

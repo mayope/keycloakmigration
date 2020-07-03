@@ -1,9 +1,9 @@
 package de.klg71.keycloakmigration.changeControl.actions.client
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.model.AddSimpleClient
-import de.klg71.keycloakmigration.rest.clientById
-import de.klg71.keycloakmigration.rest.extractLocationUUID
+import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
+import de.klg71.keycloakmigration.keycloakapi.clientById
+import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
 import java.util.*
 
 class AddSimpleClientAction(

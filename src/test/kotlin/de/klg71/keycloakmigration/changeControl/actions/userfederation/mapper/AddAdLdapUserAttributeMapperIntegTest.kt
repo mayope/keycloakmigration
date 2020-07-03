@@ -2,11 +2,11 @@ package de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddAdLdapAction
-import de.klg71.keycloakmigration.model.USER_ATTRIBUTE_MAPPER
-import de.klg71.keycloakmigration.rest.KeycloakClient
-import de.klg71.keycloakmigration.rest.ldapMapperByName
-import de.klg71.keycloakmigration.rest.ldapMapperExistsByName
-import de.klg71.keycloakmigration.rest.userFederationByName
+import de.klg71.keycloakmigration.keycloakapi.model.USER_ATTRIBUTE_MAPPER
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.ldapMapperByName
+import de.klg71.keycloakmigration.keycloakapi.ldapMapperExistsByName
+import de.klg71.keycloakmigration.keycloakapi.userFederationByName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.koin.core.inject

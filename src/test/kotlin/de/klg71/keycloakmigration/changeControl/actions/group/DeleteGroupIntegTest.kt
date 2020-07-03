@@ -2,8 +2,9 @@ package de.klg71.keycloakmigration.changeControl.actions.group
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.rest.KeycloakClient
-import de.klg71.keycloakmigration.rest.existsGroup
+import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.existsGroup
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
@@ -25,7 +26,7 @@ class DeleteGroupIntegTest : AbstractIntegrationTest() {
     fun testDeleteGroupNotExisting() {
         assertThatThrownBy {
             DeleteGroupAction(testRealm, "integrationTest").executeIt()
-        }.isInstanceOf(MigrationException::class.java)
+        }.isInstanceOf(KeycloakApiException::class.java)
                 .hasMessage("Group with name: integrationTest does not exist in realm: ${testRealm}!")
     }
 }

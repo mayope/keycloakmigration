@@ -1,20 +1,23 @@
 package de.klg71.keycloakmigration.changeControl
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.model.ChangeSet
+import de.klg71.keycloakmigration.changeControl.model.ChangeSet
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.koin.core.qualifier.named
 import org.slf4j.LoggerFactory
-import java.util.*
+import java.util.UUID
 
 /**
  * Execute the keycloakmigration
  */
 internal class KeycloakMigration(private val migrationFile: String, realm: String,
-                                 private val correctHashes: Boolean) : KoinComponent {
+                                 private val correctHashes: Boolean,
+                                 failOnUndefinedVariables: Boolean,
+                                 warnOnUndefinedVariables: Boolean) : KoinComponent {
     private val migrationUserId by inject<UUID>(named("migrationUserId"))
-    private val changeFileReader = ChangeFileReader()
+    private val changeFileReader = ChangeFileReader(failOnUndefinedVariables = failOnUndefinedVariables,
+            warnOnUndefinedVariables = warnOnUndefinedVariables)
     private val changelog = MigrationChangelog(migrationUserId, realm)
 
     companion object {

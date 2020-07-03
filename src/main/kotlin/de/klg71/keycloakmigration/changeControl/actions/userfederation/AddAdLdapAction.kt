@@ -2,9 +2,9 @@ package de.klg71.keycloakmigration.changeControl.actions.userfederation
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.AddUserFederation
-import de.klg71.keycloakmigration.model.constructAdLdapConfig
-import de.klg71.keycloakmigration.rest.userFederationExistsByName
+import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederation
+import de.klg71.keycloakmigration.keycloakapi.model.constructAdLdapConfig
+import de.klg71.keycloakmigration.keycloakapi.userFederationExistsByName
 
 class AddAdLdapAction(
         realm: String? = null,

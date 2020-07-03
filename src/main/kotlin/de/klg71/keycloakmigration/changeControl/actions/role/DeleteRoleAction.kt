@@ -2,11 +2,11 @@ package de.klg71.keycloakmigration.changeControl.actions.role
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.AddRole
-import de.klg71.keycloakmigration.model.Role
-import de.klg71.keycloakmigration.rest.clientRoleByName
-import de.klg71.keycloakmigration.rest.clientUUID
-import de.klg71.keycloakmigration.rest.roleExistsByName
+import de.klg71.keycloakmigration.keycloakapi.model.AddRole
+import de.klg71.keycloakmigration.keycloakapi.model.Role
+import de.klg71.keycloakmigration.keycloakapi.clientRoleByName
+import de.klg71.keycloakmigration.keycloakapi.clientUUID
+import de.klg71.keycloakmigration.keycloakapi.roleExistsByName
 
 class DeleteRoleAction(
         realm: String? = null,

@@ -2,14 +2,14 @@ package de.klg71.keycloakmigration.changeControl.actions.client
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.AssignRole
-import de.klg71.keycloakmigration.model.Role
-import de.klg71.keycloakmigration.rest.clientById
-import de.klg71.keycloakmigration.rest.clientRoleByName
-import de.klg71.keycloakmigration.rest.clientUUID
-import de.klg71.keycloakmigration.rest.existsClient
-import de.klg71.keycloakmigration.rest.existsClientRole
-import de.klg71.keycloakmigration.rest.existsRole
+import de.klg71.keycloakmigration.keycloakapi.model.AssignRole
+import de.klg71.keycloakmigration.keycloakapi.model.Role
+import de.klg71.keycloakmigration.keycloakapi.clientById
+import de.klg71.keycloakmigration.keycloakapi.clientRoleByName
+import de.klg71.keycloakmigration.keycloakapi.clientUUID
+import de.klg71.keycloakmigration.keycloakapi.existsClient
+import de.klg71.keycloakmigration.keycloakapi.existsClientRole
+import de.klg71.keycloakmigration.keycloakapi.existsRole
 import java.util.Objects.isNull
 
 class AssignRoleToClientAction(

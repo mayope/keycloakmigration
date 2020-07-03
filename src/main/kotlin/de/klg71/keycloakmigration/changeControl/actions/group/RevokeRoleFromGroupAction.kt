@@ -2,13 +2,13 @@ package de.klg71.keycloakmigration.changeControl.actions.group
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.AssignRole
-import de.klg71.keycloakmigration.model.Role
-import de.klg71.keycloakmigration.rest.clientRoleByName
-import de.klg71.keycloakmigration.rest.clientUUID
-import de.klg71.keycloakmigration.rest.existsGroup
-import de.klg71.keycloakmigration.rest.existsRole
-import de.klg71.keycloakmigration.rest.groupUUID
+import de.klg71.keycloakmigration.keycloakapi.model.AssignRole
+import de.klg71.keycloakmigration.keycloakapi.model.Role
+import de.klg71.keycloakmigration.keycloakapi.clientRoleByName
+import de.klg71.keycloakmigration.keycloakapi.clientUUID
+import de.klg71.keycloakmigration.keycloakapi.existsGroup
+import de.klg71.keycloakmigration.keycloakapi.existsRole
+import de.klg71.keycloakmigration.keycloakapi.groupUUID
 import java.util.Objects.isNull
 
 class RevokeRoleFromGroupAction(

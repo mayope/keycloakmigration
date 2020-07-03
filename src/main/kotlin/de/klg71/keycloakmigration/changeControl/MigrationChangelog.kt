@@ -1,10 +1,10 @@
 package de.klg71.keycloakmigration.changeControl
 
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.model.Attributes
-import de.klg71.keycloakmigration.model.ChangeSet
-import de.klg71.keycloakmigration.model.User
-import de.klg71.keycloakmigration.rest.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.model.Attributes
+import de.klg71.keycloakmigration.changeControl.model.ChangeSet
+import de.klg71.keycloakmigration.keycloakapi.model.User
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.slf4j.LoggerFactory
@@ -127,7 +127,7 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
                 if (migrationAttributeName !in attributes!!) {
                     return emptyList()
                 }
-                return attributes[migrationAttributeName]!!
+                return attributes!![migrationAttributeName]!!
             }
 
 }
