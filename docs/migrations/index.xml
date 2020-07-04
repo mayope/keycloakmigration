@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Available Actions on Keycloakmigration</title>
+    <link>https://klg71.github.io/keycloakmigration/migrations/</link>
+    <description>Recent content in Available Actions on Keycloakmigration</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 03 Jul 2020 12:22:20 +0200</lastBuildDate>
+    
+	<atom:link href="https://klg71.github.io/keycloakmigration/migrations/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Client Migrations</title>
+      <link>https://klg71.github.io/keycloakmigration/migrations/client/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/migrations/client/</guid>
+      <description>Client Migrations#All migrations referring to the client resource.
+addSimpleClient#Simple command to add a client to keycloak, TODO: add more fields
+Parameter# realm: String, optional clientId: String, not optional, enabled: Boolean, optional, default=true attributes: Map&amp;lt; String, String&amp;gt;, optional, default = empty protocol: String, optional, default=&amp;quot;openid-connect&amp;rdquo; secret: String, optional publicClient: Boolean, optional, default=true redirectUris: List&amp;lt; String&amp;gt;, optional, default=empty  Example#id: add-simple-clientauthor: klg71changes:- addSimpleClient:realm: masterclientId: test deleteClient#Delete a client in keycloak</description>
+    </item>
+    
+    <item>
+      <title>Group Migrations</title>
+      <link>https://klg71.github.io/keycloakmigration/migrations/group/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/migrations/group/</guid>
+      <description>Group Migrations#All migrations referring to the group resource.
+addGroup#Adds a new group to keycloak. Fails if the group already exists.
+Parameters# realm: String, optional name: String, not optional parent: String, default=empty  Example#id: testauthor: klg71changes:- addGroup:realm: mastername: testGroup deleteGroup#Removes a group from keycloak. Fails if the group does not exist.</description>
+    </item>
+    
+    <item>
+      <title>Realm Migrations</title>
+      <link>https://klg71.github.io/keycloakmigration/migrations/realm/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/migrations/realm/</guid>
+      <description>Realm Migrations#All migrations referring to the realm resource.
+addRealm#adds a Realm, throws error if realm with that id already exists
+Parameters# name: String, not optional enabled: Boolean, optional, default=true id: String, optional, default=name  Example#id: add-realmauthor: klg71changes:- addRealm:name: integ-test deleteRealm#deletes a Realm, throws error if realm with that id does not exists</description>
+    </item>
+    
+    <item>
+      <title>Role Migrations</title>
+      <link>https://klg71.github.io/keycloakmigration/migrations/role/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/migrations/role/</guid>
+      <description>Role Migrations#All migrations referring to the role resource.
+addRole#Add a role to keycloak, fails if the role already exists
+Parameter# realm: String, optional name: String, not optional, clientId: String, optional, default=realmRole, description: String, optional, default=&amp;rdquo;&amp;rdquo; attributes: Map&amp;lt; String,List&amp;lt; String&amp;raquo;, optional, default=empty composite: Boolean, optional, default=false clientRole: Boolean, optional, default=false, containerId: String, optional, default=not set  Example#id: add-roleauthor: klg71changes:- addRole:realm: mastername: test3attributes:role:- value1- value2 deleteRole#Delete a role from keycloak, fails if the role does not exist</description>
+    </item>
+    
+    <item>
+      <title>User Federation Migrations</title>
+      <link>https://klg71.github.io/keycloakmigration/migrations/userfederation/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/migrations/userfederation/</guid>
+      <description>UserFederation Migrations#All migrations referring to the userfederation resource.
+AddAdLdap#Adds an active directory to the realm
+Parameters# realm: String, optional name: String, not optional config: Map&amp;lt;String, String&amp;gt; values:  connectionUrl, not optional usersDn, not optional bindCredential, not optional bindDn, not optional changedSyncPeriod, optional, default:&amp;ldquo;86400&amp;rdquo; fullSyncPeriod, optional, default:&amp;ldquo;604800&amp;rdquo; useKerberosAuthentication, optional, default: &amp;ldquo;false&amp;rdquo; allowKerberosAuthentication, optional, default: &amp;ldquo;false&amp;rdquo; pagination, optional, default: &amp;ldquo;true&amp;rdquo; readTimeout, optional, default: &amp;quot;&amp;rdquo; connectionTimeout, optional, default: &amp;quot;&amp;rdquo; connectionPooling, optional, default: &amp;ldquo;true&amp;rdquo; useTruststoreSPI, optional, default: &amp;ldquo;ldapsOnly&amp;rdquo; validatePasswordPolicy, optional, default: &amp;ldquo;false&amp;rdquo; searchScope, optional, default: &amp;ldquo;1&amp;rdquo; ldapFilter, optional, default: &amp;quot;&amp;rdquo; authenticationType, optional, default: &amp;ldquo;simple&amp;rdquo; userObjectClasses, optional, default: &amp;ldquo;person, organizationalPerson, user&amp;rdquo; uuidLdapAttribute, optional, default: &amp;ldquo;cn&amp;rdquo; rdnLdapAttribute, optional, default: &amp;ldquo;cn&amp;rdquo; usernameLdapAttribute, optional, default: &amp;ldquo;cn&amp;rdquo; importUsers, optional, default: &amp;ldquo;true&amp;rdquo; editMode, optional, default: &amp;ldquo;READ_ONLY&amp;rdquo; batchSize, optional, default: &amp;ldquo;1000&amp;rdquo; cachePolicy, optional, default: &amp;ldquo;DEFAULT&amp;rdquo; periodicChangedUsersSync, optional, default: &amp;ldquo;false&amp;rdquo; priority, optional, default: &amp;ldquo;0&amp;rdquo;    Example#id:add-ad-ldapauthor:klg71changes:- addAdLdap:realm:mastername:testLdapconfig:connectionUrl:https://testldapusersDN:usersTestDnbindCredential:testPasswordbindDN:testBindDnAddAdLdapFullNameMapper#Adds a full name mapper to an active directory ldap, throws an error if the ad doesn&amp;rsquo;t exists or if a mapper with this name already exists in this ad</description>
+    </item>
+    
+    <item>
+      <title>User Migrations</title>
+      <link>https://klg71.github.io/keycloakmigration/migrations/user/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/migrations/user/</guid>
+      <description>User Migrations#All migrations referring to the user resource.
+addUser#Adds a user to keycloak. Fails if a user with that name already exists.
+Parameters# realm: String, optional name: String, not optional enabled: Boolean, default=true emailVerified: Boolean, default=true attributes: Map with Layout Map&amp;lt;String, List&amp;lt; String &amp;raquo;, default=empty groups: List of groupnames to attach, List&amp;lt; String &amp;gt;, optional, default=empty realmRoles: List of realmroles to attach, List&amp;lt; String &amp;gt;, optional, default=empty clientRoles: List of ClientRoles to attach, List&amp;lt; ClientRole &amp;gt;, optional, default=empty email: String, optional, default=&amp;rdquo;&amp;rdquo; firstName: String, optional, default=&amp;rdquo;&amp;rdquo; lastName: String, optional, default=&amp;rdquo;&amp;rdquo;  ClientRole Parameters:</description>
+    </item>
+    
+  </channel>
+</rss>

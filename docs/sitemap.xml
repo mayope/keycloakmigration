@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/client/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/group/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/realm/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/role/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/userfederation/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/user/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/about/</loc>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/quickstart/groovy/</loc>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/quickstart/kotlin/</loc>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migration_files/</loc>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/quickstart/</loc>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/hashmigration/</loc>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/quickstart/jar/</loc>
+  </url>
+  
+</urlset>

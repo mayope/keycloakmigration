@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Quickstart on Keycloakmigration</title>
+    <link>https://klg71.github.io/keycloakmigration/quickstart/</link>
+    <description>Recent content in Quickstart on Keycloakmigration</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="https://klg71.github.io/keycloakmigration/quickstart/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Gradle Groovy DSL</title>
+      <link>https://klg71.github.io/keycloakmigration/quickstart/groovy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/quickstart/groovy/</guid>
+      <description>Gradle Groovy DSL#Filetree:# build.gradle settings.gradle keycloak-changelog.yml 01_create_realm.yml  build.gradle
+plugins { id &amp;#34;de.klg71.keycloakmigrationplugin&amp;#34; version &amp;#34;x.x.x&amp;#34; } repositories { jcenter() } task keycloakMigrateLocal(type: KeycloakMigrationTask) { group = &amp;#34;keycloak&amp;#34; description = &amp;#34;Migrate the keycloak instance&amp;#34; migrationFile = &amp;#34;migration/keycloak-changelog.yml&amp;#34; adminUser = &amp;#34;admin&amp;#34; adminPassword = &amp;#34;admin&amp;#34; baseUrl = &amp;#34;http://localhost:8080&amp;#34; realm = &amp;#34;master&amp;#34; waitForKeycloak = false waitForKeycloakTimeout = 0L // infinit wait time  parameters = [USERNAME: &amp;#34;testUser&amp;#34;, PASSWORD: &amp;#34;testPassword&amp;#34;] } settings.</description>
+    </item>
+    
+    <item>
+      <title>Gradle Kotlin DSL</title>
+      <link>https://klg71.github.io/keycloakmigration/quickstart/kotlin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/quickstart/kotlin/</guid>
+      <description>Gradle Kotlin DSL#Filetree:# build.gradle.kts settings.gradle.kts keycloak-changelog.yml 01_create_realm.yml  build.gradle.kts
+plugins { id(&amp;#34;de.klg71.keycloakmigrationplugin&amp;#34;) version &amp;#34;x.x.x&amp;#34; } repositories { jcenter() } tasks { register&amp;lt;KeycloakMigrationTask&amp;gt;(&amp;#34;keycloakMigrateLocal&amp;#34;) { migrationFile = &amp;#34;keycloak-changelog.yml&amp;#34; adminUser = &amp;#34;admin&amp;#34; adminPassword = &amp;#34;adminPassword&amp;#34; baseUrl = &amp;#34;http://localhost:8080&amp;#34; realm = &amp;#34;master&amp;#34; waitForKeycloak(keycloakBaseUrl) parameters = mapOf( &amp;#34;USER_NAME&amp;#34; to &amp;#34;testUser&amp;#34;, &amp;#34;PASSWORD&amp;#34; to &amp;#34;password&amp;#34; ) waitForKeycloak = false waitForKeycloakTimeout = 0L // infinit wait time  } } settings.gradle.kts
+rootProject.name = &amp;#34;keycloak-migration&amp;#34; keycloak-changelog.</description>
+    </item>
+    
+    <item>
+      <title>Usage trough fatjar</title>
+      <link>https://klg71.github.io/keycloakmigration/quickstart/jar/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/quickstart/jar/</guid>
+      <description>Usage through fatjar#Filetree:# keycloakmigration-x.x.x-fat.jar (download on github releases) keycloak-changelog.yml 01_create_realm.yml  Execute#java -jar keycloakmigration-x.x.x-fat.jar Arguments#java -jar keycloakmigration.jar --helpusage: [-h] [-u USER] [-p PASSWORD] [-b BASEURL] [MIGRATION-FILE] [-r REALM][-c CLIENT] [--correct-hashes] [-k PARAMETER]... [--wait-for-keycloak][--wait-for-keycloak-timeout WAIT_FOR_KEYCLOAK_TIMEOUT]optional arguments:-h, --help show this help message and exit-u USER, --user USER Username for the migration user, defaulting to admin.</description>
+    </item>
+    
+  </channel>
+</rss>

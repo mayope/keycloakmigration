@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Role Migrations#All migrations referring to the role resource.
+addRole#Add a role to keycloak, fails if the role already exists
+Parameter# realm: String, optional name: String, not optional, clientId: String, optional, default=realmRole, description: String, optional, default=&rdquo;&rdquo; attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty composite: Boolean, optional, default=false clientRole: Boolean, optional, default=false, containerId: String, optional, default=not set  Example#id: add-roleauthor: klg71changes:- addRole:realm: mastername: test3attributes:role:- value1- value2 deleteRole#Delete a role from keycloak, fails if the role does not exist">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Role Migrations" />
+<meta property="og:description" content="Role Migrations#All migrations referring to the role resource.
+addRole#Add a role to keycloak, fails if the role already exists
+Parameter# realm: String, optional name: String, not optional, clientId: String, optional, default=realmRole, description: String, optional, default=&rdquo;&rdquo; attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty composite: Boolean, optional, default=false clientRole: Boolean, optional, default=false, containerId: String, optional, default=not set  Example#id: add-roleauthor: klg71changes:- addRole:realm: mastername: test3attributes:role:- value1- value2 deleteRole#Delete a role from keycloak, fails if the role does not exist" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://klg71.github.io/keycloakmigration/migrations/role/" />
+<meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
+<meta property="article:modified_time" content="2020-07-03T12:22:20+02:00" />
+<title>Role Migrations | Keycloakmigration</title>
+<link rel="manifest" href="/keycloakmigration/manifest.json">
+<link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
+<script defer src="/keycloakmigration/en.search.min.249968e4578949600204b7e02d4a103885bbc066d649fa88852768b1b957600c.js" integrity="sha256-JJlo5FeJSWACBLfgLUoQOIW7wGbWSfqIhSdosblXYAw="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/keycloakmigration"><span>Keycloakmigration</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><a href="/keycloakmigration/">Overview</a></li>
+<li><a href="/keycloakmigration/quickstart/">Quick Start</a>
+<ul>
+<li><a href="/keycloakmigration/quickstart/kotlin/">Gradle Kotlin DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/groovy/">Gradle Groovy DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/jar/">Jar</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/migration_files/">Migration Files</a></li>
+<li><a href="/keycloakmigration/migrations/">Migrations</a>
+<ul>
+<li><a href="/keycloakmigration/migrations/user/">User Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/hashmigration/">Hash Troubleshooting</a></li>
+</ul>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/keycloakmigration/about/" target="_blank" rel="noopener">
+        About
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Role Migrations</strong>
+
+  <label for="toc-control">
+    
+    <img src="/keycloakmigration/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#addrole">addRole</a>
+      <ul>
+        <li><a href="#parameter">Parameter</a></li>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleterole">deleteRole</a>
+      <ul>
+        <li><a href="#parameter-1">Parameter</a></li>
+        <li><a href="#example-1">Example</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="role-migrations">
+  Role Migrations
+  <a class="anchor" href="#role-migrations">#</a>
+</h1>
+<p>All migrations referring to the role resource.</p>
+<h2 id="addrole">
+  addRole
+  <a class="anchor" href="#addrole">#</a>
+</h2>
+<p>Add a role to keycloak, fails if the role already exists</p>
+<h3 id="parameter">
+  Parameter
+  <a class="anchor" href="#parameter">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional,</li>
+<li>clientId: String, optional, default=realmRole,</li>
+<li>description: String, optional, default=&rdquo;&rdquo;</li>
+<li>attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty</li>
+<li>composite: Boolean, optional, default=false</li>
+<li>clientRole: Boolean, optional, default=false,</li>
+<li>containerId: String, optional, default=not set</li>
+</ul>
+<h3 id="example">
+  Example
+  <a class="anchor" href="#example">#</a>
+</h3>
+<pre><code>id: add-role
+author: klg71
+changes:
+- addRole:
+    realm: master
+    name: test3
+    attributes:
+      role:
+      - value1
+      - value2
+</code></pre>
+<h2 id="deleterole">
+  deleteRole
+  <a class="anchor" href="#deleterole">#</a>
+</h2>
+<p>Delete a role from keycloak, fails if the role does not exist</p>
+<h3 id="parameter-1">
+  Parameter
+  <a class="anchor" href="#parameter-1">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional,</li>
+<li>clientId: String, optional, default=realmRole</li>
+</ul>
+<h3 id="example-1">
+  Example
+  <a class="anchor" href="#example-1">#</a>
+</h3>
+<pre><code>id: delete-role
+author: klg71
+changes:
+- deleteRole:
+    realm: master
+    name: test4
+    clientId: test
+</code></pre>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#addrole">addRole</a>
+      <ul>
+        <li><a href="#parameter">Parameter</a></li>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleterole">deleteRole</a>
+      <ul>
+        <li><a href="#parameter-1">Parameter</a></li>
+        <li><a href="#example-1">Example</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
