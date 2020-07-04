@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="addUser#Adds a user to keycloak. Fails if a user with that name already exists.
+Parameters# realm: String, optional name: String, not optional enabled: Boolean, default=true emailVerified: Boolean, default=true attributes: Map with Layout Map&lt;String, List&lt; String &raquo;, default=empty groups: List of groupnames to attach, List&lt; String &gt;, optional, default=empty realmRoles: List of realmroles to attach, List&lt; String &gt;, optional, default=empty clientRoles: List of ClientRoles to attach, List&lt; ClientRole &gt;, optional, default=empty email: String, optional, default=&rdquo;&rdquo; firstName: String, optional, default=&rdquo;&rdquo; lastName: String, optional, default=&rdquo;&rdquo;  ClientRole Parameters:">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="User Migrations" />
+<meta property="og:description" content="addUser#Adds a user to keycloak. Fails if a user with that name already exists.
+Parameters# realm: String, optional name: String, not optional enabled: Boolean, default=true emailVerified: Boolean, default=true attributes: Map with Layout Map&lt;String, List&lt; String &raquo;, default=empty groups: List of groupnames to attach, List&lt; String &gt;, optional, default=empty realmRoles: List of realmroles to attach, List&lt; String &gt;, optional, default=empty clientRoles: List of ClientRoles to attach, List&lt; ClientRole &gt;, optional, default=empty email: String, optional, default=&rdquo;&rdquo; firstName: String, optional, default=&rdquo;&rdquo; lastName: String, optional, default=&rdquo;&rdquo;  ClientRole Parameters:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://klg71.github.io/keycloakmigration/migrations/usermigrations/" />
+<meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
+<meta property="article:modified_time" content="2020-07-03T12:22:20+02:00" />
+<title>User Migrations | Keycloakmigration</title>
+<link rel="manifest" href="/keycloakmigration/manifest.json">
+<link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
+<script defer src="/keycloakmigration/en.search.min.610d459fe8145374f2190a388982ac3fe950d9c08c3f1126cf186e153a58695a.js" integrity="sha256-YQ1Fn&#43;gUU3TyGQo4iYKsP&#43;lQ2cCMPxEmzxhuFTpYaVo="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/keycloakmigration"><span>Keycloakmigration</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>User Migrations</strong>
+
+  <label for="toc-control">
+    
+    <img src="/keycloakmigration/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#adduser">addUser</a>
+      <ul>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleteuser">deleteUser</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#updateuser">updateUser</a>
+      <ul>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example</a></li>
+        <li><a href="#example-to-update-password">Example to update Password</a></li>
+      </ul>
+    </li>
+    <li><a href="#updateuserpassword">updateUserPassword</a>
+      <ul>
+        <li><a href="#parameters-3">Parameters</a></li>
+        <li><a href="#example-3">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#adduserattribute">addUserAttribute</a>
+      <ul>
+        <li><a href="#parameters-4">Parameters</a></li>
+        <li><a href="#example-4">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleteuserattribute">deleteUserAttribute</a>
+      <ul>
+        <li><a href="#parameters-5">Parameters</a></li>
+        <li><a href="#example-5">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#assignrole">assignRole</a>
+      <ul>
+        <li><a href="#parameters-6">Parameters</a></li>
+        <li><a href="#example-6">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#revokerole">revokeRole</a>
+      <ul>
+        <li><a href="#parameters-7">Parameters</a></li>
+        <li><a href="#example-7">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#assigngroup">assignGroup</a>
+      <ul>
+        <li><a href="#parameters-8">Parameters</a></li>
+        <li><a href="#example-8">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#revokegroup">revokeGroup</a>
+      <ul>
+        <li><a href="#parameters-9">Parameters</a></li>
+        <li><a href="#example-9">Example</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h2 id="adduser">
+  addUser
+  <a class="anchor" href="#adduser">#</a>
+</h2>
+<p>Adds a user to keycloak. Fails if a user with that name already exists.</p>
+<h3 id="parameters">
+  Parameters
+  <a class="anchor" href="#parameters">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>enabled: Boolean,  default=true</li>
+<li>emailVerified: Boolean,  default=true</li>
+<li>attributes: Map with Layout Map&lt;String, List&lt; String &raquo;, default=empty</li>
+<li>groups: List of groupnames to attach, List&lt; String &gt;, optional, default=empty</li>
+<li>realmRoles: List of realmroles to attach, List&lt; String &gt;, optional, default=empty</li>
+<li>clientRoles: List of ClientRoles to attach, List&lt; ClientRole &gt;, optional, default=empty</li>
+<li>email: String, optional, default=&rdquo;&rdquo;</li>
+<li>firstName: String, optional, default=&rdquo;&rdquo;</li>
+<li>lastName: String, optional, default=&rdquo;&rdquo;</li>
+</ul>
+<p>ClientRole Parameters:</p>
+<ul>
+<li>client: ClientId, String, not optional</li>
+<li>role: Rolename, String, not optional</li>
+</ul>
+<h3 id="example">
+  Example
+  <a class="anchor" href="#example">#</a>
+</h3>
+<pre><code>id: test
+author: klg71
+changes:
+- addUser:
+    realm: master
+    name: test
+    enabled: true
+    email: test@example.de
+    emailVerified: true
+    attributes:
+      test:
+      - test
+      - test2
+      groups:
+        - testGroup
+      realmRoles:
+        - testRealmRole
+      clientRoles:
+        - client: testClient
+          role: testClientRole
+</code></pre>
+<h2 id="deleteuser">
+  deleteUser
+  <a class="anchor" href="#deleteuser">#</a>
+</h2>
+<p>Removes a user from keycloak. Fails if a user with that name does not exists.</p>
+<h3 id="parameters-1">
+  Parameters
+  <a class="anchor" href="#parameters-1">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+</ul>
+<h3 id="example-1">
+  Example
+  <a class="anchor" href="#example-1">#</a>
+</h3>
+<pre><code>id: test
+author: klg71
+changes:
+- deleteUser:
+    realm: master
+    name: test
+</code></pre>
+<h2 id="updateuser">
+  updateUser
+  <a class="anchor" href="#updateuser">#</a>
+</h2>
+<p>Updates an exiting user in keycloak. Fails if no user with given name exists.</p>
+<h3 id="parameters-2">
+  Parameters
+  <a class="anchor" href="#parameters-2">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>enabled: Boolean, default=no change</li>
+<li>emailVerified: Boolean, default=no change</li>
+<li>access: String, default=no change</li>
+<li>notBefore: Long, default=no change</li>
+<li>totp: Boolean, default=no change</li>
+<li>disableableCredentialTypes: List&lt; String &gt;, default=no change</li>
+<li>requiredActions: List&lt; String &gt;, default=no change</li>
+<li>email: String, default=no change</li>
+<li>firstName: String, default=no change</li>
+<li>lastName: String, default=no change</li>
+<li>credentials: Map&lt;String,String&gt; (see example below)
+<ul>
+<li>hashedSaltedValue: String, not optional</li>
+<li>salt: String, not optional</li>
+<li>algorithm: String, optional, default = &ldquo;pbkdf2-sha256&rdquo;</li>
+<li>counter: Int, optional, default = 0,</li>
+<li>createdDate: Long, optional, default = Date().time,</li>
+<li>digits: Int, optional, default = 0,</li>
+<li>hashIterations: Int, optional, default = 27500,</li>
+<li>period: Int, optional, default = 0,</li>
+<li>type: String, optional, default = &ldquo;password&rdquo;,</li>
+<li>config1: Map&lt;String, String&gt;, optional, default = emptyMap() (See keycloak documentation)</li>
+</ul>
+</li>
+</ul>
+<h3 id="example-2">
+  Example
+  <a class="anchor" href="#example-2">#</a>
+</h3>
+<pre><code>id: test
+author: klg71
+changes:
+- updateUser:
+    realm: master
+    name: test
+    enabled: false
+    lastName: Lukas
+</code></pre>
+<h3 id="example-to-update-password">
+  Example to update Password
+  <a class="anchor" href="#example-to-update-password">#</a>
+</h3>
+<blockquote>
+<p>If you don&rsquo;t want to hash and generate the salt by youself you can use the <a href="#updateuserpassword">updateUserPassword</a> method listed below.</p>
+<p>This method gives more control over the credential entry in keycloak including hashIterations, algorithms used, digits and additional configs.</p>
+<p>Updating the credential can not be rolled back!</p>
+</blockquote>
+<pre><code>id: update-password
+author: klg71
+changes:
+  - updateUser:
+      realm: integ-test
+      name: test
+      credentials:
+        - hashedSaltedValue: 1tWf95Drz6t8/9kKE3tiJXPywCzG/C0KDnmCIFXEDdFQMPB6iVWWxjLO9HJI3YwTfWZa78N+hcmYHcT1tkavcA==
+          salt: dGVzdB==
+</code></pre>
+<h4 id="script-to-generate-salt-and-hash">
+  Script to generate salt and hash:
+  <a class="anchor" href="#script-to-generate-salt-and-hash">#</a>
+</h4>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin"><span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">org.apache.commons.codec.Charsets.UTF_8</span>
+<span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">java.util.*</span>
+<span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">javax.crypto.SecretKeyFactory</span>
+<span style="color:#a2f;font-weight:bold">import</span> <span style="color:#00f;font-weight:bold">javax.crypto.spec.PBEKeySpec</span>
+
+<span style="color:#a2f;font-weight:bold">fun</span> <span style="color:#00a000">generatePassword</span>(){
+        println(<span style="color:#b44">&#34;Keycloak password hash helper&#34;</span>)
+        <span style="color:#a2f;font-weight:bold">val</span> scanner = Scanner(System.`in`, UTF_8)
+        println(<span style="color:#b44">&#34;Enter password:&#34;</span>)
+        <span style="color:#a2f;font-weight:bold">val</span> password = scanner.nextLine()
+        println(<span style="color:#b44">&#34;Enter salt:&#34;</span>)
+        <span style="color:#a2f;font-weight:bold">val</span> salt = scanner.nextLine()
+
+        <span style="color:#a2f;font-weight:bold">val</span> hashIterations = <span style="color:#666">27500</span>
+        <span style="color:#a2f;font-weight:bold">val</span> keyByteLength = <span style="color:#666">64</span>
+        <span style="color:#a2f;font-weight:bold">val</span> pass = getEncryptedPassword(password, salt.toByteArray(UTF_8), hashIterations, keyByteLength)
+        println(<span style="color:#b44">&#34;Password: $pass&#34;</span>)
+        println(<span style="color:#b44">&#34;Salt: &#34;</span> + Base64.getEncoder().encodeToString(salt.toByteArray(UTF_8)))
+}
+<span style="color:#a2f;font-weight:bold">fun</span> <span style="color:#00a000">getEncryptedPassword</span>(password: String, salt: ByteArray,
+                         iterations: Int, derivedKeyLength: Int): String {
+    <span style="color:#a2f;font-weight:bold">return</span> SecretKeyFactory.getInstance(<span style="color:#b44">&#34;PBKDF2WithHmacSHA256&#34;</span>).run {
+        generateSecret(PBEKeySpec(password.toCharArray(), salt,
+                iterations, derivedKeyLength * <span style="color:#666">8</span>)
+        )
+    }.run {
+        @Suppress(<span style="color:#b44">&#34;UsePropertyAccessSyntax&#34;</span>)
+        getEncoded()
+    }.let {
+        Base64.getEncoder().encodeToString(it)
+    }
+
+}
+</code></pre></div><h2 id="updateuserpassword">
+  updateUserPassword
+  <a class="anchor" href="#updateuserpassword">#</a>
+</h2>
+<p>Updates the passwords of a user</p>
+<blockquote>
+<p>WARNING: This action can not be rolled back!</p>
+</blockquote>
+<p>The password is hashed with 27500 hash_iterations and a key_byte_length of 64 bytes.</p>
+<h3 id="parameters-3">
+  Parameters
+  <a class="anchor" href="#parameters-3">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>password: String, not optional</li>
+<li>salt: String, optional, default = Random 15 letter alphanumeric String</li>
+</ul>
+<h3 id="example-3">
+  Example
+  <a class="anchor" href="#example-3">#</a>
+</h3>
+<pre><code>id: test
+author: klg71
+realm: integ-test
+changes:
+  - addUser:
+      name: testPasswordUser
+  - updateUserPassword:
+      name: testPasswordUser
+      password: &quot;testPassword&quot;
+</code></pre>
+<h2 id="adduserattribute">
+  addUserAttribute
+  <a class="anchor" href="#adduserattribute">#</a>
+</h2>
+<p>Adds an attribute to an existing user. Throws an error if the user does not exist.</p>
+<p>User attributes can&rsquo;t be set deterministic with the updateUser action.</p>
+<h3 id="parameters-4">
+  Parameters
+  <a class="anchor" href="#parameters-4">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>attributeName: String, not optional</li>
+<li>attributeValues: List&lt; String&gt;, not optional</li>
+<li>override: Boolean, default=false</li>
+</ul>
+<h3 id="example-4">
+  Example
+  <a class="anchor" href="#example-4">#</a>
+</h3>
+<pre><code>id: test
+author: klg71
+changes:
+- addUserAttribute:
+    realm: master
+    name: test
+    attributeName: test1
+    attributeValues:
+    - value1
+    - value2
+</code></pre>
+<h2 id="deleteuserattribute">
+  deleteUserAttribute
+  <a class="anchor" href="#deleteuserattribute">#</a>
+</h2>
+<p>Deletes an attribute to an existing user. Throws an error if the user does not exist.</p>
+<h3 id="parameters-5">
+  Parameters
+  <a class="anchor" href="#parameters-5">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>attributeName: String, not optional</li>
+<li>failOnMissing: Boolean, default=true</li>
+</ul>
+<h3 id="example-5">
+  Example
+  <a class="anchor" href="#example-5">#</a>
+</h3>
+<pre><code>id: test
+author: klg71
+changes:
+- deleteUserAttribute:
+    realm: master
+    name: test
+    attributeName: test1
+</code></pre>
+<h2 id="assignrole">
+  assignRole
+  <a class="anchor" href="#assignrole">#</a>
+</h2>
+<p>Assigns a role to the given user. Fails if the user or the role doesn&rsquo;t exist.</p>
+<h3 id="parameters-6">
+  Parameters
+  <a class="anchor" href="#parameters-6">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>user: String, not optional</li>
+<li>role: String, not optional</li>
+</ul>
+<h3 id="example-6">
+  Example
+  <a class="anchor" href="#example-6">#</a>
+</h3>
+<pre><code>id: test
+author: klg71
+changes:
+- assignRole:
+    realm: master
+    user: testUser
+    role: testRole
+</code></pre>
+<h2 id="revokerole">
+  revokeRole
+  <a class="anchor" href="#revokerole">#</a>
+</h2>
+<p>Revokes a role from the given user. Fails if the user or the role doesn&rsquo;t exist or the user does not have the role assigned.</p>
+<h3 id="parameters-7">
+  Parameters
+  <a class="anchor" href="#parameters-7">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>user: String, not optional</li>
+<li>role: String, not optional</li>
+</ul>
+<h3 id="example-7">
+  Example
+  <a class="anchor" href="#example-7">#</a>
+</h3>
+<pre><code>id: test
+author: klg71
+changes:
+- revokeRole:
+    realm: master
+    user: testUser
+    role: testRole
+</code></pre>
+<h2 id="assigngroup">
+  assignGroup
+  <a class="anchor" href="#assigngroup">#</a>
+</h2>
+<p>Assigns a group to the given user. Fails if the user or the group doesn&rsquo;t exist.</p>
+<h3 id="parameters-8">
+  Parameters
+  <a class="anchor" href="#parameters-8">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>user: String, not optional</li>
+<li>group: String, not optional</li>
+</ul>
+<h3 id="example-8">
+  Example
+  <a class="anchor" href="#example-8">#</a>
+</h3>
+<pre><code>id: test
+author: klg71
+changes:
+- assignGroup:
+    realm: master
+    user: testUser
+    group: testGroup
+</code></pre>
+<h2 id="revokegroup">
+  revokeGroup
+  <a class="anchor" href="#revokegroup">#</a>
+</h2>
+<p>Revokes a group from the given user. Fails if the user or the group doesn&rsquo;t exist or the user doesnt have the group assigned .</p>
+<h3 id="parameters-9">
+  Parameters
+  <a class="anchor" href="#parameters-9">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>user: String, not optional</li>
+<li>group: String, not optional</li>
+</ul>
+<h3 id="example-9">
+  Example
+  <a class="anchor" href="#example-9">#</a>
+</h3>
+<pre><code>id: test
+author: klg71
+changes:
+- revokeGroup:
+    realm: master
+    user: testUser
+    group: testGroup
+</code></pre>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#adduser">addUser</a>
+      <ul>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleteuser">deleteUser</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#updateuser">updateUser</a>
+      <ul>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example</a></li>
+        <li><a href="#example-to-update-password">Example to update Password</a></li>
+      </ul>
+    </li>
+    <li><a href="#updateuserpassword">updateUserPassword</a>
+      <ul>
+        <li><a href="#parameters-3">Parameters</a></li>
+        <li><a href="#example-3">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#adduserattribute">addUserAttribute</a>
+      <ul>
+        <li><a href="#parameters-4">Parameters</a></li>
+        <li><a href="#example-4">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleteuserattribute">deleteUserAttribute</a>
+      <ul>
+        <li><a href="#parameters-5">Parameters</a></li>
+        <li><a href="#example-5">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#assignrole">assignRole</a>
+      <ul>
+        <li><a href="#parameters-6">Parameters</a></li>
+        <li><a href="#example-6">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#revokerole">revokeRole</a>
+      <ul>
+        <li><a href="#parameters-7">Parameters</a></li>
+        <li><a href="#example-7">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#assigngroup">assignGroup</a>
+      <ul>
+        <li><a href="#parameters-8">Parameters</a></li>
+        <li><a href="#example-8">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#revokegroup">revokeGroup</a>
+      <ul>
+        <li><a href="#parameters-9">Parameters</a></li>
+        <li><a href="#example-9">Example</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

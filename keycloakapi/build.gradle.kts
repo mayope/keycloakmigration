@@ -95,7 +95,7 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
     with(it.pom) {
         withXml {
             val root = asNode()
-            root.appendNode("name", "keycloakmigration")
+            root.appendNode("name", "keycloakapi")
             root.appendNode("description", "Keycloak configuration as migration files")
             root.appendNode("url", "https://github.com/klg71/keycloakmigration")
         }

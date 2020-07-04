@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="addRealm#adds a Realm, throws error if realm with that id already exists
+Parameters# name: String, not optional enabled: Boolean, optional, default=true id: String, optional, default=name  Example#id: add-realmauthor: klg71changes:- addRealm:name: integ-test deleteRealm#deletes a Realm, throws error if realm with that id does not exists
+Parameters# id: String, not optional  Example#id: add-realmauthor: klg71changes:- deleteRealm:id: integ-test updateRealm#updates a Realm, throws error if realm with that id does not exists">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Realm Migrations" />
+<meta property="og:description" content="addRealm#adds a Realm, throws error if realm with that id already exists
+Parameters# name: String, not optional enabled: Boolean, optional, default=true id: String, optional, default=name  Example#id: add-realmauthor: klg71changes:- addRealm:name: integ-test deleteRealm#deletes a Realm, throws error if realm with that id does not exists
+Parameters# id: String, not optional  Example#id: add-realmauthor: klg71changes:- deleteRealm:id: integ-test updateRealm#updates a Realm, throws error if realm with that id does not exists" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://klg71.github.io/keycloakmigration/migrations/realmmigrations/" />
+<meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
+<meta property="article:modified_time" content="2020-07-03T12:22:20+02:00" />
+<title>Realm Migrations | Keycloakmigration</title>
+<link rel="manifest" href="/keycloakmigration/manifest.json">
+<link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
+<script defer src="/keycloakmigration/en.search.min.610d459fe8145374f2190a388982ac3fe950d9c08c3f1126cf186e153a58695a.js" integrity="sha256-YQ1Fn&#43;gUU3TyGQo4iYKsP&#43;lQ2cCMPxEmzxhuFTpYaVo="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/keycloakmigration"><span>Keycloakmigration</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Realm Migrations</strong>
+
+  <label for="toc-control">
+    
+    <img src="/keycloakmigration/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#addrealm">addRealm</a>
+      <ul>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleterealm">deleteRealm</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#updaterealm">updateRealm</a>
+      <ul>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h2 id="addrealm">
+  addRealm
+  <a class="anchor" href="#addrealm">#</a>
+</h2>
+<p>adds a Realm, throws error if realm with that id already exists</p>
+<h3 id="parameters">
+  Parameters
+  <a class="anchor" href="#parameters">#</a>
+</h3>
+<ul>
+<li>name: String, not optional</li>
+<li>enabled: Boolean, optional, default=true</li>
+<li>id: String, optional, default=name</li>
+</ul>
+<h3 id="example">
+  Example
+  <a class="anchor" href="#example">#</a>
+</h3>
+<pre><code>id: add-realm
+author: klg71
+changes:
+  - addRealm:
+      name: integ-test
+</code></pre>
+<h2 id="deleterealm">
+  deleteRealm
+  <a class="anchor" href="#deleterealm">#</a>
+</h2>
+<p>deletes a Realm, throws error if realm with that id does not exists</p>
+<h3 id="parameters-1">
+  Parameters
+  <a class="anchor" href="#parameters-1">#</a>
+</h3>
+<ul>
+<li>id: String, not optional</li>
+</ul>
+<h3 id="example-1">
+  Example
+  <a class="anchor" href="#example-1">#</a>
+</h3>
+<pre><code>id: add-realm
+author: klg71
+changes:
+  - deleteRealm:
+      id: integ-test
+</code></pre>
+<h2 id="updaterealm">
+  updateRealm
+  <a class="anchor" href="#updaterealm">#</a>
+</h2>
+<p>updates a Realm, throws error if realm with that id does not exists</p>
+<h3 id="parameters-2">
+  Parameters
+  <a class="anchor" href="#parameters-2">#</a>
+</h3>
+<ul>
+<li>id: String, not optional</li>
+<li>realmName: String, optional</li>
+<li>displayName:String, optional</li>
+<li>displayNameHtml:String, optional</li>
+<li>revokeRefreshToken:Boolean, optional</li>
+<li>refreshTokenMaxReuse:Int, optional</li>
+<li>accessTokenLifespan:Int, optional</li>
+<li>accessTokenLifespanForImplicitFlow:Int, optional</li>
+<li>ssoSessionIdleTimeout:Int, optional</li>
+<li>ssoSessionMaxLifespan:Int, optional</li>
+<li>ssoSessionIdleTimeoutRememberMe:Int, optional</li>
+<li>ssoSessionMaxLifespanRememberMe:Int, optional</li>
+<li>offlineSessionIdleTimeout:Int, optional</li>
+<li>offlineSessionMaxLifespanEnabled:Boolean, optional</li>
+<li>offlineSessionMaxLifespan:Int, optional</li>
+<li>accessCodeLifespan:Int, optional</li>
+<li>accessCodeLifespanUserAction:Int, optional</li>
+<li>accessCodeLifespanLogin:Int, optional</li>
+<li>actionTokenGeneratedByAdminLifespan:Int, optional</li>
+<li>actionTokenGeneratedByUserLifespan:Int, optional</li>
+<li>enabled:Boolean, optional</li>
+<li>sslRequired:String, optional</li>
+<li>registrationAllowed:Boolean, optional</li>
+<li>registrationEmailAsUsername:Boolean, optional</li>
+<li>rememberMe:Boolean, optional</li>
+<li>verifyEmail:Boolean, optional</li>
+<li>loginWithEmailAllowed:Boolean, optional</li>
+<li>duplicateEmailsAllowed:Boolean, optional</li>
+<li>resetPasswordAllowed:Boolean, optional</li>
+<li>editUsernameAllowed:Boolean, optional</li>
+<li>bruteForceProtected:Boolean, optional</li>
+<li>permanentLockout:Boolean, optional</li>
+<li>maxFailureWaitSeconds:Int, optional</li>
+<li>minimumQuickLoginWaitSeconds:Int, optional</li>
+<li>waitIncrementSeconds:Int, optional</li>
+<li>quickLoginCheckMilliSeconds:Int, optional</li>
+<li>maxDeltaTimeSeconds:Int, optional</li>
+<li>failureFactor:Int, optional</li>
+<li>defaultRoles:List&lt; String&gt;, optional</li>
+<li>requiredCredentials:List&lt; String&gt;, optional</li>
+<li>otpPolicyType:String, optional</li>
+<li>otpPolicyAlgorithm:String, optional</li>
+<li>otpPolicyInitialCounter:Int, optional</li>
+<li>otpPolicyDigits:Int, optional</li>
+<li>otpPolicyLookAheadWindow:Int, optional</li>
+<li>otpPolicyPeriod:Int, optional</li>
+<li>otpSupportedApplications:List&lt; String&gt;, optional</li>
+<li>webAuthnPolicyRpEntityName:String, optional</li>
+<li>webAuthnPolicySignatureAlgorithms:List&lt; String&gt;, optional</li>
+<li>webAuthnPolicyRpId:String, optional</li>
+<li>webAuthnPolicyAttestationConveyancePreference:String, optional</li>
+<li>webAuthnPolicyAuthenticatorAttachment:String, optional</li>
+<li>webAuthnPolicyRequireResidentKey:String, optional</li>
+<li>webAuthnPolicyUserVerificationRequirement:String, optional</li>
+<li>webAuthnPolicyCreateTimeout:Int, optional</li>
+<li>webAuthnPolicyAvoidSameAuthenticatorRegister:Boolean, optional</li>
+<li>webAuthnPolicyAcceptableAaguids:List&lt; String&gt;,</li>
+<li>browserSecurityHeaders:Map&lt;String,String&gt;, optional</li>
+<li>smtpServer:Map&lt;String,String&gt;, optional</li>
+<li>eventsEnabled:Boolean, optional</li>
+<li>eventsListeners:List&lt; String&gt;, optional</li>
+<li>enabledEventTypes:List&lt; String&gt;, optional</li>
+<li>adminEventsEnabled:Boolean, optional</li>
+<li>adminEventsDetailsEnabled:Boolean, optional</li>
+<li>internationalizationEnabled:Boolean, optional</li>
+<li>supportedLocales:List&lt; String&gt;, optional</li>
+<li>browserFlow:String, optional</li>
+<li>registrationFlow:String, optional</li>
+<li>directGrantFlow:String, optional</li>
+<li>resetCredentialsFlow:String, optional</li>
+<li>clientAuthenticationFlow:String, optional</li>
+<li>dockerAuthenticationFlow:String, optional</li>
+<li>attributes:Map&lt;String,String&gt;, optional (Map gets merged if attributes are not present in yaml). Following keys are supported in keycloak 8.0.1:
+<ul>
+<li>webAuthnPolicyAuthenticatorAttachment</li>
+<li>_browser_header.xRobotsTag</li>
+<li>webAuthnPolicyRpEntityName</li>
+<li>failureFactor</li>
+<li>actionTokenGeneratedByUserLifespan</li>
+<li>maxDeltaTimeSeconds</li>
+<li>webAuthnPolicySignatureAlgorithms</li>
+<li>frontendUrl</li>
+<li>offlineSessionMaxLifespan</li>
+<li>_browser_header.contentSecurityPolicyReportOnly</li>
+<li>bruteForceProtected</li>
+<li>_browser_header.contentSecurityPolicy</li>
+<li>_browser_header.xXSSProtection</li>
+<li>_browser_header.xFrameOptions</li>
+<li>_browser_header.strictTransportSecurity</li>
+<li>webAuthnPolicyUserVerificationRequirement</li>
+<li>permanentLockout</li>
+<li>quickLoginCheckMilliSeconds</li>
+<li>webAuthnPolicyCreateTimeout</li>
+<li>webAuthnPolicyRequireResidentKey</li>
+<li>webAuthnPolicyRpId</li>
+<li>webAuthnPolicyAttestationConveyancePreference</li>
+<li>maxFailureWaitSeconds</li>
+<li>minimumQuickLoginWaitSeconds</li>
+<li>webAuthnPolicyAvoidSameAuthenticatorRegister</li>
+<li>_browser_header.xContentTypeOptions</li>
+<li>actionTokenGeneratedByAdminLifespan</li>
+<li>waitIncrementSeconds</li>
+<li>offlineSessionMaxLifespanEnabled</li>
+</ul>
+</li>
+<li>userManagedAccessAllowed:Boolean, optional</li>
+</ul>
+<h3 id="example-2">
+  Example
+  <a class="anchor" href="#example-2">#</a>
+</h3>
+<pre><code>id: update-realm
+author: klg71
+changes:
+  - updateRealm:
+      id: integ-test
+      displayName: UpdatedRealm
+</code></pre>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#addrealm">addRealm</a>
+      <ul>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleterealm">deleteRealm</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#updaterealm">updateRealm</a>
+      <ul>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

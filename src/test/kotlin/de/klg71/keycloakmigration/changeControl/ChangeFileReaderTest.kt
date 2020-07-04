@@ -7,7 +7,9 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.reset
+import com.nhaarman.mockitokotlin2.times
 import com.nhaarman.mockitokotlin2.validateMockitoUsage
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import de.klg71.keycloakmigration.KoinLogger
 import de.klg71.keycloakmigration.changeControl.model.ChangeLog
@@ -33,20 +35,21 @@ class ChangeFileReaderTest : KoinTest {
     private val LOG = LoggerFactory.getLogger(ChangeFileReaderTest::class.java)!!
     private val parameters = mutableMapOf<String,String>()
 
-    private val yamlObjectMapper = mock<ObjectMapper> {
-    }
+    private val yamlObjectMapper = mock<ObjectMapper> {}
+    private val stringEnvSubstitutor = mock<StringEnvSubstitutor> {}
 
     @Before
     fun setup() {
         reset(yamlObjectMapper)
+        whenever(stringEnvSubstitutor.substituteParameters(any())).thenAnswer { it.getArgument(0) as String}
         startKoin {
             logger(KoinLogger(LOG))
             modules(module {
                 single(named("yamlObjectMapper")) {
                     yamlObjectMapper
                 }
-                single(named("parameters")) {
-                    parameters
+                single {
+                    stringEnvSubstitutor
                 }
             })
         }
@@ -109,6 +112,7 @@ class ChangeFileReaderTest : KoinTest {
         val result = reader.changes(tempChangeLog.absolutePath)
 
         assertThat(result).isEqualTo(listOf(changeSet))
+        verify(stringEnvSubstitutor, times(2)).substituteParameters(any())
     }
 
     @Test
@@ -143,143 +147,6 @@ class ChangeFileReaderTest : KoinTest {
         val result = reader.changes(tempChangeLog.absolutePath)
 
         assertThat(result).isEqualTo(listOf(changeSet))
-    }
-
-    @Test
-    fun testChangesTodo_ParameterSubstitution() {
-        val dir = Files.createTempDirectory("ChangeFileReader")
-        val tempChangeLog = File.createTempFile("changeLog", "ChangeFileReader", dir.toFile())
-        Files.writeString(tempChangeLog.toPath(),"changelog")
-        val tempChangeSet = File.createTempFile("changeSet", "ChangeFileReader", dir.toFile())
-        Files.writeString(tempChangeSet.toPath(),"\${TEST_PARAM}")
-        parameters["TEST_PARAM"] = "TEST_VALUE"
-
-        val reader = ChangeFileReader()
-
-        val changeSetEntry = mock<ChangeSetEntry> {
-            on { path } doReturn tempChangeSet.name
-            on { relativeToFile } doReturn true
-        }
-        val changeLog = mock<ChangeLog> {
-            on { includes } doReturn listOf(changeSetEntry)
-        }
-
-        val changeSet = mock<ChangeSet> {
-            on { changes } doReturn emptyList()
-        }
-
-        whenever(yamlObjectMapper.readValue<ChangeLog>(eq("changelog"),
-                any<TypeReference<ChangeLog>>()))
-                .thenReturn(changeLog)
-        whenever(yamlObjectMapper.readValue<ChangeSet>(eq(parameters["TEST_PARAM"]),
-                any<TypeReference<ChangeSet>>()))
-                .thenReturn(changeSet)
-
-        val result = reader.changes(tempChangeLog.absolutePath)
-
-        assertThat(result).isEqualTo(listOf(changeSet))
-    }
-
-    @Test
-    fun testChangesTodo_ParameterSubstitutionMissingShouldFail() {
-        val dir = Files.createTempDirectory("ChangeFileReader")
-        val tempChangeLog = File.createTempFile("changeLog", "ChangeFileReader", dir.toFile())
-        Files.writeString(tempChangeLog.toPath(),"changelog")
-        val tempChangeSet = File.createTempFile("changeSet", "ChangeFileReader", dir.toFile())
-        Files.writeString(tempChangeSet.toPath(),"\${TEST_PARAM_MISSING}")
-        parameters["TEST_PARAM"] = "TEST_VALUE"
-
-        val reader = ChangeFileReader(failOnUndefinedVariables = true)
-
-        val changeSetEntry = mock<ChangeSetEntry> {
-            on { path } doReturn tempChangeSet.name
-            on { relativeToFile } doReturn true
-        }
-        val changeLog = mock<ChangeLog> {
-            on { includes } doReturn listOf(changeSetEntry)
-        }
-
-        val changeSet = mock<ChangeSet> {
-            on { changes } doReturn emptyList()
-        }
-
-        whenever(yamlObjectMapper.readValue<ChangeLog>(eq("changelog"),
-                any<TypeReference<ChangeLog>>()))
-                .thenReturn(changeLog)
-        whenever(yamlObjectMapper.readValue<ChangeSet>(eq(parameters["TEST_PARAM"]),
-                any<TypeReference<ChangeSet>>()))
-                .thenReturn(changeSet)
-
-        assertThatThrownBy {
-            reader.changes(tempChangeLog.absolutePath)
-        }.isInstanceOf(IllegalArgumentException::class.java).hasMessage("Cannot resolve variable 'TEST_PARAM_MISSING' (enableSubstitutionInVariables=false).")
-    }
-
-    @Test
-    fun testChangesTodo_ParameterSubstitutionMissingShouldSucceed() {
-        val dir = Files.createTempDirectory("ChangeFileReader")
-        val tempChangeLog = File.createTempFile("changeLog", "ChangeFileReader", dir.toFile())
-        Files.writeString(tempChangeLog.toPath(),"changelog")
-        val tempChangeSet = File.createTempFile("changeSet", "ChangeFileReader", dir.toFile())
-        Files.writeString(tempChangeSet.toPath(),"\${TEST_PARAM_MISSING}")
-        parameters["TEST_PARAM"] = "TEST_VALUE"
-
-        val reader = ChangeFileReader(failOnUndefinedVariables = false)
-
-        val changeSetEntry = mock<ChangeSetEntry> {
-            on { path } doReturn tempChangeSet.name
-            on { relativeToFile } doReturn true
-        }
-        val changeLog = mock<ChangeLog> {
-            on { includes } doReturn listOf(changeSetEntry)
-        }
-
-        val changeSet = mock<ChangeSet> {
-            on { changes } doReturn emptyList()
-        }
-
-        whenever(yamlObjectMapper.readValue<ChangeLog>(eq("changelog"),
-                any<TypeReference<ChangeLog>>()))
-                .thenReturn(changeLog)
-        whenever(yamlObjectMapper.readValue<ChangeSet>(eq("\${TEST_PARAM_MISSING}"),
-                any<TypeReference<ChangeSet>>()))
-                .thenReturn(changeSet)
-
-        reader.changes(tempChangeLog.absolutePath)
-    }
-
-    // This test has to verified manually by looking in the log sry
-    @Test
-    fun testChangesTodo_ParameterSubstitutionMissingShouldWarn() {
-        val dir = Files.createTempDirectory("ChangeFileReader")
-        val tempChangeLog = File.createTempFile("changeLog", "ChangeFileReader", dir.toFile())
-        Files.writeString(tempChangeLog.toPath(),"changelog")
-        val tempChangeSet = File.createTempFile("changeSet", "ChangeFileReader", dir.toFile())
-        Files.writeString(tempChangeSet.toPath(),"\${TEST_PARAM_MISSING}")
-        parameters["TEST_PARAM"] = "TEST_VALUE"
-
-        val reader = ChangeFileReader(failOnUndefinedVariables = false,warnOnUndefinedVariables = true)
-
-        val changeSetEntry = mock<ChangeSetEntry> {
-            on { path } doReturn tempChangeSet.name
-            on { relativeToFile } doReturn true
-        }
-        val changeLog = mock<ChangeLog> {
-            on { includes } doReturn listOf(changeSetEntry)
-        }
-
-        val changeSet = mock<ChangeSet> {
-            on { changes } doReturn emptyList()
-        }
-
-        whenever(yamlObjectMapper.readValue<ChangeLog>(eq("changelog"),
-                any<TypeReference<ChangeLog>>()))
-                .thenReturn(changeLog)
-        whenever(yamlObjectMapper.readValue<ChangeSet>(eq("\${TEST_PARAM_MISSING}"),
-                any<TypeReference<ChangeSet>>()))
-                .thenReturn(changeSet)
-
-        reader.changes(tempChangeLog.absolutePath)
     }
 
     @Test

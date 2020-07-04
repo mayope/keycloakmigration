@@ -1,0 +1,15 @@
+{
+  "name": "Keycloakmigration",
+  "short_name": "Keycloakmigration",
+  "start_url": "/keycloakmigration/",
+  "scope": "/keycloakmigration/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/keycloakmigration/favicon.svg",
+      "sizes": "512x512"
+    }
+  ]
+}

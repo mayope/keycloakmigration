@@ -78,7 +78,7 @@ abstract class Action(var realm: String? = null) : KoinComponent {
     }
 
     protected fun realm(): String = (realm
-            ?: throw de.klg71.keycloakmigration.changeControl.ParseException(
+            ?: throw ParseException(
                     "Realm is null for ${name()}, either provide it in the change or the changeset!")).also {
         realmChecker.check(it)
     }

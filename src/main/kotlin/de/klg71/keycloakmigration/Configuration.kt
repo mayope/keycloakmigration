@@ -7,9 +7,10 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import de.klg71.keycloakmigration.changeControl.ActionDeserializer
-import de.klg71.keycloakmigration.changeControl.ActionFactory
+import de.klg71.keycloakmigration.changeControl.actions.ActionDeserializer
+import de.klg71.keycloakmigration.changeControl.actions.ActionFactory
 import de.klg71.keycloakmigration.changeControl.RealmChecker
+import de.klg71.keycloakmigration.changeControl.StringEnvSubstitutor
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.initKeycloakClient
@@ -26,7 +27,10 @@ fun myModule(adminUser: String,
              baseUrl: String,
              realm: String,
              clientId: String,
-             parameters: Map<String, String>) = module {
+             parameters: Map<String, String>,
+             failOnUndefinedVariabled: Boolean,
+             warnOnUndefinedVariables: Boolean) = module {
+    single { StringEnvSubstitutor(failOnUndefinedVariabled, warnOnUndefinedVariables) }
     single(named("yamlObjectMapper")) { initYamlObjectMapper() }
     single(named("parameters")) { parameters }
     single { initKeycloakClient(baseUrl, adminUser, adminPassword, realm, clientId) }
@@ -46,9 +50,11 @@ private fun initYamlObjectMapper(): ObjectMapper = ObjectMapper(YAMLFactory())
         .registerModule(KotlinModule())!!
 
 private fun actionModule(actionFactory: ActionFactory) = SimpleModule()
-        .addDeserializer(Action::class.java, ActionDeserializer(actionFactory))!!
+        .addDeserializer(Action::class.java,
+                ActionDeserializer(actionFactory))!!
 
-private fun initActionFactory(objectMapper: ObjectMapper) = ActionFactory(objectMapper)
+private fun initActionFactory(objectMapper: ObjectMapper) = ActionFactory(
+        objectMapper)
 
 private fun loadCurrentUser(client: KeycloakClient, userName: String, realm: String) = client.userByName(userName,
         realm).id

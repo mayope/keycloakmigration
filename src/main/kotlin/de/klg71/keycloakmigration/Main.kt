@@ -52,9 +52,9 @@ fun migrate(migrationArgs: MigrationArgs) {
         try {
             startKoin {
                 logger(KoinLogger(KOIN_LOGGER))
-                modules(myModule(adminUser(), adminPassword(), baseUrl(), realm(), clientId(), parameters()))
-                KeycloakMigration(migrationFile(), realm(), correctHashes(), failOnUndefinedVariables(),
-                        warnOnUndefinedVariables()).execute()
+                modules(myModule(adminUser(), adminPassword(), baseUrl(), realm(), clientId(), parameters(),
+                        failOnUndefinedVariables(), warnOnUndefinedVariables()))
+                KeycloakMigration(migrationFile(), realm(), correctHashes()).execute()
             }
         } finally {
             stopKoin()

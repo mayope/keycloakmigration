@@ -12,12 +12,9 @@ import java.util.UUID
  * Execute the keycloakmigration
  */
 internal class KeycloakMigration(private val migrationFile: String, realm: String,
-                                 private val correctHashes: Boolean,
-                                 failOnUndefinedVariables: Boolean,
-                                 warnOnUndefinedVariables: Boolean) : KoinComponent {
+                                 private val correctHashes: Boolean) : KoinComponent {
     private val migrationUserId by inject<UUID>(named("migrationUserId"))
-    private val changeFileReader = ChangeFileReader(failOnUndefinedVariables = failOnUndefinedVariables,
-            warnOnUndefinedVariables = warnOnUndefinedVariables)
+    private val changeFileReader = ChangeFileReader()
     private val changelog = MigrationChangelog(migrationUserId, realm)
 
     companion object {

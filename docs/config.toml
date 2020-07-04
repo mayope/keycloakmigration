@@ -1,0 +1,29 @@
+baseUrl = "https://klg71.github.io/keycloakmigration/"
+languageCode = "en-us"
+title = "Keycloakmigration"
+theme = "book"
+pygmentsStyle= "emacs"
+enableGitInfo = true
+
+[params]
+  showShareIcons = false
+  BookMenuBundle = "/menu"
+
+[params.author]
+  avatar = "/avatar.png"
+  name = "Lukas Meisegeier"
+  email = "MeisegeierLukas@gmx.de"
+  github = "klg71"
+  twitter = "klg71"
+  xing = "Lukas_Meisegeier"
+  linkedin = "lukas-meisegeier-680943102"
+
+
+[menu]
+# [[menu.before]]
+
+[[menu.after]]
+  name = "About"
+  weight = 1
+  identifier = "about"
+  url = "/about/"

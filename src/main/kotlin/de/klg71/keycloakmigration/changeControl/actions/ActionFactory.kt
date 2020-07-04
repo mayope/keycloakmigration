@@ -1,8 +1,7 @@
-package de.klg71.keycloakmigration.changeControl
+package de.klg71.keycloakmigration.changeControl.actions
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AssignRoleToClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
@@ -100,6 +99,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
                 "deleteRealm" -> objectMapper.readValue<DeleteRealmAction>(actionJson)
                 "updateRealm" -> objectMapper.readValue<UpdateRealmAction>(actionJson)
 
-                else -> throw ParseException("Unknown Change type: $actionName")
+                else -> throw ParseException(
+                        "Unknown Change type: $actionName")
             }
 }

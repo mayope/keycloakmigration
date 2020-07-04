@@ -8,10 +8,9 @@ import org.koin.core.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 
-
 private val adminUser = "admin"
 private val adminPass = "admin"
-const val TEST_BASE_URL= "http://localhost:18080/auth"
+const val TEST_BASE_URL = "http://localhost:18080/auth"
 private val realm = "master"
 private val clientId = "admin-cli"
 
@@ -21,7 +20,15 @@ abstract class AbstractIntegrationTest : KoinComponent {
 
     init {
         startKoin {
-            modules(myModule(adminUser, adminPass, TEST_BASE_URL, realm, clientId, emptyMap()))
+            modules(myModule(adminUser, adminPass, TEST_BASE_URL, realm, clientId, emptyMap(),
+                    failOnUndefinedVariabled = true, warnOnUndefinedVariables = true))
+        }
+    }
+
+    fun startKoinWithParameters(parameters: Map<String, String>) {
+        startKoin {
+            modules(myModule(adminUser, adminPass, TEST_BASE_URL, realm, clientId, parameters,
+                    failOnUndefinedVariabled = true, warnOnUndefinedVariables = true))
         }
     }
 

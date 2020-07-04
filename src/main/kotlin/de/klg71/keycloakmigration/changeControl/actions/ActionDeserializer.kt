@@ -1,11 +1,10 @@
-package de.klg71.keycloakmigration.changeControl
+package de.klg71.keycloakmigration.changeControl.actions
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationContext
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.node.ObjectNode
-import de.klg71.keycloakmigration.changeControl.actions.Action
 import java.util.Objects.isNull
 
 class ParseException(message: String, cause: Exception?) : RuntimeException(message, cause) {
@@ -21,7 +20,8 @@ class ActionDeserializer(private val actionFactory: ActionFactory) : StdDeserial
 
     override fun deserialize(p: JsonParser?, ctxt: DeserializationContext?): Action {
         if (isNull(p)) {
-            throw ParseException("JsonParser is null")
+            throw ParseException(
+                    "JsonParser is null")
         }
         return p!!.readObjectNode().run {
             firstField()

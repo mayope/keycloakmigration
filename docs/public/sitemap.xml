@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/migrations/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/clientmigrations/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/groupmigrations/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/realmmigrations/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/rolemigrations/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/userfederationmigrations/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/usermigrations/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/about/</loc>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/tags/</loc>
+  </url>
+  
+</urlset>
