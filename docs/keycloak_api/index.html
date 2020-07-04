@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Using the Keycloak Api#For the migrations to work I had to implement a keycloak administration api.
+This api provides a KeycloakClient which connects to the keycloak instance. This client has methods to manage user, group, role, client, realms and userfederation resources.
+To use it you can simply the maven dependency or download the keycloakapi-jar from the releases page.
+Gradle Groovy DSL#// https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigration compile group: &#39;de.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Using the Keycloak Api" />
+<meta property="og:description" content="Using the Keycloak Api#For the migrations to work I had to implement a keycloak administration api.
+This api provides a KeycloakClient which connects to the keycloak instance. This client has methods to manage user, group, role, client, realms and userfederation resources.
+To use it you can simply the maven dependency or download the keycloakapi-jar from the releases page.
+Gradle Groovy DSL#// https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigration compile group: &#39;de." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://klg71.github.io/keycloakmigration/keycloak_api/" />
+<meta property="article:modified_time" content="2020-07-04T15:41:55+02:00" />
+<title>Using the Keycloak Api | Keycloakmigration</title>
+<link rel="manifest" href="/keycloakmigration/manifest.json">
+<link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
+<script defer src="/keycloakmigration/en.search.min.199751766417917ea9b59e29b5806124a46d0987ea95d96f285544371f874b5f.js" integrity="sha256-GZdRdmQXkX6ptZ4ptYBhJKRtCYfqldlvKFVENx&#43;HS18="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/keycloakmigration"><span>Keycloakmigration</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><a href="/keycloakmigration/">Overview</a></li>
+<li><a href="/keycloakmigration/quickstart/">Quick Start</a>
+<ul>
+<li><a href="/keycloakmigration/quickstart/kotlin/">Gradle Kotlin DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/groovy/">Gradle Groovy DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/jar/">Jar</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/migration_files/">Migration Files</a></li>
+<li><a href="/keycloakmigration/migrations/">Migrations</a>
+<ul>
+<li><a href="/keycloakmigration/migrations/user/">User Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/keycloak_api/"class=active>Using the Keycloakapi</a></li>
+<li><a href="/keycloakmigration/hashmigration/">Hash Troubleshooting</a></li>
+<li><a href="/keycloakmigration/implementation_details/">Implementation Details</a></li>
+<li><a href="/keycloakmigration/contributing/">Contributing</a></li>
+</ul>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/keycloakmigration/about/" target="_blank" rel="noopener">
+        About
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Using the Keycloak Api</strong>
+
+  <label for="toc-control">
+    
+    <img src="/keycloakmigration/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#gradle-groovy-dsl">Gradle Groovy DSL</a></li>
+    <li><a href="#gradle-kotlin-dsl">Gradle Kotlin DSL</a></li>
+    <li><a href="#maven">Maven</a></li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="using-the-keycloak-api">
+  Using the Keycloak Api
+  <a class="anchor" href="#using-the-keycloak-api">#</a>
+</h1>
+<p>For the migrations to work I had to implement a keycloak administration api.</p>
+<p>This api provides a KeycloakClient which connects to the keycloak instance.
+This client has methods to manage user, group, role, client, realms and userfederation resources.</p>
+<p>To use it you can simply the maven dependency or download the keycloakapi-jar from the releases page.</p>
+<h2 id="gradle-groovy-dsl">
+  Gradle Groovy DSL
+  <a class="anchor" href="#gradle-groovy-dsl">#</a>
+</h2>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy"><span style="color:#080;font-style:italic">// https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigration
+</span><span style="color:#080;font-style:italic"></span>compile <span style="color:#a0a000">group:</span> <span style="color:#b44">&#39;de.klg71.keycloakmigration&#39;</span><span style="color:#666">,</span> <span style="color:#a0a000">name:</span> <span style="color:#b44">&#39;keycloakmapi&#39;</span><span style="color:#666">,</span> <span style="color:#a0a000">version:</span> <span style="color:#b44">&#39;x.x.x&#39;</span>
+</code></pre></div><h2 id="gradle-kotlin-dsl">
+  Gradle Kotlin DSL
+  <a class="anchor" href="#gradle-kotlin-dsl">#</a>
+</h2>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy"><span style="color:#080;font-style:italic">// https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigration
+</span><span style="color:#080;font-style:italic"></span>compile<span style="color:#666">(</span><span style="color:#b44">&#34;de.klg71.keycloakmigration:keycloakapi:x.x.x&#34;</span><span style="color:#666">)</span>
+</code></pre></div><h2 id="maven">
+  Maven
+  <a class="anchor" href="#maven">#</a>
+</h2>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#080;font-style:italic">&lt;!-- https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigration --&gt;</span>
+<span style="color:#008000;font-weight:bold">&lt;dependency&gt;</span>
+    <span style="color:#008000;font-weight:bold">&lt;groupId&gt;</span>de.klg71.keycloakmigration<span style="color:#008000;font-weight:bold">&lt;/groupId&gt;</span>
+    <span style="color:#008000;font-weight:bold">&lt;artifactId&gt;</span>keycloakapi<span style="color:#008000;font-weight:bold">&lt;/artifactId&gt;</span>
+    <span style="color:#008000;font-weight:bold">&lt;version&gt;</span>x.x.x<span style="color:#008000;font-weight:bold">&lt;/version&gt;</span>
+<span style="color:#008000;font-weight:bold">&lt;/dependency&gt;</span>
+</code></pre></div><p>The keycloakapi uses <a href="https://github.com/OpenFeign/feign">OpenFeign</a> to connect to the keycloak instance.</p>
+<p>Full documentation is available here: <a href="/keycloakmigration/documentation/keycloakapi">Documentation</a></p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#gradle-groovy-dsl">Gradle Groovy DSL</a></li>
+    <li><a href="#gradle-kotlin-dsl">Gradle Kotlin DSL</a></li>
+    <li><a href="#maven">Maven</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

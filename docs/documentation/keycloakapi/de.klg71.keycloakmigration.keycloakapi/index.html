@@ -16,6 +16,7 @@
 <h4><a href="-keycloak-client/index.html">KeycloakClient</a></h4>
 </td>
 <td>
+<p>Interface access resources on keycloak. Build with <a href="init-keycloak-client.html">initKeycloakClient</a></p>
 <code><span class="keyword">interface </span><span class="identifier">KeycloakClient</span></code></td>
 </tr>
 <tr>
@@ -23,6 +24,7 @@
 <h4><a href="-keycloak-login-client/index.html">KeycloakLoginClient</a></h4>
 </td>
 <td>
+<p>Interface to get acquire tokens from keycloak. Build with <a href="init-keycloak-login-client.html">initKeycloakLoginClient</a></p>
 <code><span class="keyword">interface </span><span class="identifier">KeycloakLoginClient</span></code></td>
 </tr>
 <tr>
@@ -55,25 +57,6 @@
 </td>
 <td>
 </td>
-</tr>
-</tbody>
-</table>
-<h3>Properties</h3>
-<table>
-<tbody>
-<tr>
-<td>
-<h4><a href="-s-u-c-c-e-s-s-f-u-l_-r-e-s-p-o-n-s-e_-e-n-d.html">SUCCESSFUL_RESPONSE_END</a></h4>
-</td>
-<td>
-<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">SUCCESSFUL_RESPONSE_END</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
-</tr>
-<tr>
-<td>
-<h4><a href="-s-u-c-c-e-s-s-f-u-l_-r-e-s-p-o-n-s-e_-s-t-a-r-t.html">SUCCESSFUL_RESPONSE_START</a></h4>
-</td>
-<td>
-<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">SUCCESSFUL_RESPONSE_START</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
 </tr>
 </tbody>
 </table>
@@ -155,6 +138,7 @@
 <h4><a href="init-keycloak-client.html">initKeycloakClient</a></h4>
 </td>
 <td>
+<p>Builds the <a href="-keycloak-client/index.html">KeycloakClient</a></p>
 <code><span class="keyword">fun </span><span class="identifier">initKeycloakClient</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String)/baseUrl">baseUrl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String)/adminUser">adminUser</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String)/adminPassword">adminPassword</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-keycloak-client/index.html"><span class="identifier">KeycloakClient</span></a></code></td>
 </tr>
 <tr>
@@ -162,6 +146,9 @@
 <h4><a href="init-keycloak-login-client.html">initKeycloakLoginClient</a></h4>
 </td>
 <td>
+<p>Builds the <a href="-keycloak-login-client/index.html">KeycloakLoginClient</a>
+Only build this if you just need a token and don't need any other keycloak resources.
+<a href="init-keycloak-client.html">initKeycloakClient</a> automatically acquires tokens.</p>
 <code><span class="keyword">fun </span><span class="identifier">initKeycloakLoginClient</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakLoginClient(kotlin.String)/baseUrl">baseUrl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="-keycloak-login-client/index.html"><span class="identifier">KeycloakLoginClient</span></a></code></td>
 </tr>
 <tr>

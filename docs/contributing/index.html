@@ -4,21 +4,25 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Supported migrations#Currently we implemented migration actions for the following resources:
- User Group Role Realm Client UserFederation  For more examples see src/test/resources/changesets.
-Technical Hints#The migration hashes are stored in the attribute named &lsquo;migration&rsquo; in the migration user.
-There are no transactions in keycloak though if the rollback fails there might be a non deterministic state! If it fails I would like to receive a bug report for this.">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Available Actions" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://klg71.github.io/keycloakmigration/migrations/" />
-<meta property="og:updated_time" content="2020-07-04T10:17:11+02:00" />
-<title>Available Actions | Keycloakmigration</title>
+<meta name="description" content="Contributing#To start developing on this project you can use the gradle tasks.
+To start the local development keycloak you can just use the task startLocalKeycloak
+Tested with OpenJdk 12 and Keycloak 10.0.2
+If you want to contribute to this project please visit the issues page and maybe you can find something interesting :)
+Use keycloakmigration through maven dependency#Gradle dependency# // https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigrationcompile group: &#39;de.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Contributing" />
+<meta property="og:description" content="Contributing#To start developing on this project you can use the gradle tasks.
+To start the local development keycloak you can just use the task startLocalKeycloak
+Tested with OpenJdk 12 and Keycloak 10.0.2
+If you want to contribute to this project please visit the issues page and maybe you can find something interesting :)
+Use keycloakmigration through maven dependency#Gradle dependency# // https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigrationcompile group: &#39;de." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://klg71.github.io/keycloakmigration/contributing/" />
+<meta property="article:modified_time" content="2020-07-04T15:41:55+02:00" />
+<title>Contributing | Keycloakmigration</title>
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
 <script defer src="/keycloakmigration/en.search.min.199751766417917ea9b59e29b5806124a46d0987ea95d96f285544371f874b5f.js" integrity="sha256-GZdRdmQXkX6ptZ4ptYBhJKRtCYfqldlvKFVENx&#43;HS18="></script>
-<link rel="alternate" type="application/rss+xml" href="https://klg71.github.io/keycloakmigration/migrations/index.xml" title="Keycloakmigration" />
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -65,7 +69,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 <li><a href="/keycloakmigration/migration_files/">Migration Files</a></li>
-<li><a href="/keycloakmigration/migrations/"class=active>Migrations</a>
+<li><a href="/keycloakmigration/migrations/">Migrations</a>
 <ul>
 <li><a href="/keycloakmigration/migrations/user/">User Migrations</a></li>
 <li><a href="https://klg71.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
@@ -78,7 +82,7 @@ https://github.com/alex-shpak/hugo-book
 <li><a href="/keycloakmigration/keycloak_api/">Using the Keycloakapi</a></li>
 <li><a href="/keycloakmigration/hashmigration/">Hash Troubleshooting</a></li>
 <li><a href="/keycloakmigration/implementation_details/">Implementation Details</a></li>
-<li><a href="/keycloakmigration/contributing/">Contributing</a></li>
+<li><a href="/keycloakmigration/contributing/"class=active>Contributing</a></li>
 </ul>
 
 
@@ -121,7 +125,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <strong>Available Actions</strong>
+  <strong>Contributing</strong>
 
   <label for="toc-control">
     
@@ -137,15 +141,12 @@ https://github.com/alex-shpak/hugo-book
       
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#supported-migrations">Supported migrations</a></li>
-    <li><a href="#technical-hints">Technical Hints</a></li>
-    <li><a href="#hacking">Hacking</a>
+    <li><a href="#contributing">Contributing</a>
       <ul>
         <li><a href="#use-keycloakmigration-through-maven-dependency">Use keycloakmigration through maven dependency</a></li>
         <li><a href="#usage">Usage</a></li>
       </ul>
     </li>
-    <li><a href="#todos">TODOS</a></li>
   </ul>
 </nav>
 
@@ -157,39 +158,14 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  <article class="markdown"><h2 id="supported-migrations">
-  Supported migrations
-  <a class="anchor" href="#supported-migrations">#</a>
-</h2>
-<p>Currently we implemented migration actions for the following resources:</p>
-<ul>
-<li><a href="usermigrations.markdown">User</a></li>
-<li><a href="groupmigrations.markdown">Group</a></li>
-<li><a href="rolemigrations.markdown">Role</a></li>
-<li><a href="realmmigrations.markdown">Realm</a></li>
-<li><a href="clientmigrations.markdown">Client</a></li>
-<li><a href="userfederationmigrations.markdown">UserFederation</a></li>
-</ul>
-<p>For more examples see <code>src/test/resources/changesets</code>.</p>
-<h2 id="technical-hints">
-  Technical Hints
-  <a class="anchor" href="#technical-hints">#</a>
-</h2>
-<p>The migration hashes are stored in the attribute named &lsquo;migration&rsquo; in the migration user.</p>
-<p>There are no transactions in keycloak though if the rollback fails there might be a non deterministic state!
-If it fails I would like to receive a bug report for this.</p>
-<p>If you struggle with invalid hashes on a linux-windows setup check the line endings of the json-import files as git might check them out as LF where on windows its CRLF and thus producing the error in hashing.</p>
-<p>If you are using git you can place the following file into the dir with the json-import-files to reassure that the line ending is always LF.</p>
-<p><code>.gitattributes</code>:</p>
-<pre><code>** text eol=lf
-</code></pre>
-<h2 id="hacking">
-  Hacking
-  <a class="anchor" href="#hacking">#</a>
+  <article class="markdown"><h2 id="contributing">
+  Contributing
+  <a class="anchor" href="#contributing">#</a>
 </h2>
 <p>To start developing on this project you can use the gradle tasks.</p>
 <p>To start the local development keycloak you can just use the task <code>startLocalKeycloak</code></p>
-<p>Tested with OpenJdk 12 and Keycloak 8.0.2</p>
+<p>Tested with OpenJdk 12 and Keycloak 10.0.2</p>
+<p>If you want to contribute to this project please visit the <a href="https://github.com/klg71/keycloakmigration/issues">issues</a> page and maybe you can find something interesting :)</p>
 <h3 id="use-keycloakmigration-through-maven-dependency">
   Use keycloakmigration through maven dependency
   <a class="anchor" href="#use-keycloakmigration-through-maven-dependency">#</a>
@@ -236,15 +212,6 @@ class KeycloakMigrationExecution  {
 
 }
 </code></pre>
-<h2 id="todos">
-  TODOS
-  <a class="anchor" href="#todos">#</a>
-</h2>
-<ul>
-<li>Add more commands</li>
-<li>Add sophisticated unit and integration Tests</li>
-<li>batch updates for users</li>
-</ul>
 </article>
  
       
@@ -279,15 +246,12 @@ class KeycloakMigrationExecution  {
       
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#supported-migrations">Supported migrations</a></li>
-    <li><a href="#technical-hints">Technical Hints</a></li>
-    <li><a href="#hacking">Hacking</a>
+    <li><a href="#contributing">Contributing</a>
       <ul>
         <li><a href="#use-keycloakmigration-through-maven-dependency">Use keycloakmigration through maven dependency</a></li>
         <li><a href="#usage">Usage</a></li>
       </ul>
     </li>
-    <li><a href="#todos">TODOS</a></li>
   </ul>
 </nav>
 

@@ -4,46 +4,42 @@
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/migrations/</loc>
-    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/migrations/client/</loc>
-    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/migrations/group/</loc>
-    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://klg71.github.io/keycloakmigration/</loc>
-    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/migrations/realm/</loc>
-    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/migrations/role/</loc>
-    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/migrations/userfederation/</loc>
-    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/migrations/user/</loc>
-    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/about/</loc>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
@@ -51,19 +47,38 @@
   </url>
   
   <url>
+    <loc>https://klg71.github.io/keycloakmigration/contributing/</loc>
+    <lastmod>2020-07-04T15:41:55+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://klg71.github.io/keycloakmigration/quickstart/groovy/</loc>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/quickstart/kotlin/</loc>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/implementation_details/</loc>
+    <lastmod>2020-07-04T15:41:55+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/</loc>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/migration_files/</loc>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/quickstart/</loc>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
@@ -72,10 +87,17 @@
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/hashmigration/</loc>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://klg71.github.io/keycloakmigration/quickstart/jar/</loc>
+    <lastmod>2020-07-04T10:17:11+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://klg71.github.io/keycloakmigration/keycloak_api/</loc>
+    <lastmod>2020-07-04T15:41:55+02:00</lastmod>
   </url>
   
 </urlset>

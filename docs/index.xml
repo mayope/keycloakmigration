@@ -6,7 +6,6 @@
     <description>Recent content on Keycloakmigration</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2020 12:22:20 +0200</lastBuildDate>
     
 	<atom:link href="https://klg71.github.io/keycloakmigration/index.xml" rel="self" type="application/rss+xml" />
     
@@ -78,6 +77,19 @@ Parameters# realm: String, optional name: String, not optional enabled: Boole
     </item>
     
     <item>
+      <title>Contributing</title>
+      <link>https://klg71.github.io/keycloakmigration/contributing/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/contributing/</guid>
+      <description>Contributing#To start developing on this project you can use the gradle tasks.
+To start the local development keycloak you can just use the task startLocalKeycloak
+Tested with OpenJdk 12 and Keycloak 10.0.2
+If you want to contribute to this project please visit the issues page and maybe you can find something interesting :)
+Use keycloakmigration through maven dependency#Gradle dependency# // https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigrationcompile group: &#39;de.</description>
+    </item>
+    
+    <item>
       <title>Gradle Groovy DSL</title>
       <link>https://klg71.github.io/keycloakmigration/quickstart/groovy/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -96,6 +108,17 @@ plugins { id &amp;#34;de.klg71.keycloakmigrationplugin&amp;#34; version &amp;#34
       <description>Gradle Kotlin DSL#Filetree:# build.gradle.kts settings.gradle.kts keycloak-changelog.yml 01_create_realm.yml  build.gradle.kts
 plugins { id(&amp;#34;de.klg71.keycloakmigrationplugin&amp;#34;) version &amp;#34;x.x.x&amp;#34; } repositories { jcenter() } tasks { register&amp;lt;KeycloakMigrationTask&amp;gt;(&amp;#34;keycloakMigrateLocal&amp;#34;) { migrationFile = &amp;#34;keycloak-changelog.yml&amp;#34; adminUser = &amp;#34;admin&amp;#34; adminPassword = &amp;#34;adminPassword&amp;#34; baseUrl = &amp;#34;http://localhost:8080&amp;#34; realm = &amp;#34;master&amp;#34; waitForKeycloak(keycloakBaseUrl) parameters = mapOf( &amp;#34;USER_NAME&amp;#34; to &amp;#34;testUser&amp;#34;, &amp;#34;PASSWORD&amp;#34; to &amp;#34;password&amp;#34; ) waitForKeycloak = false waitForKeycloakTimeout = 0L // infinit wait time  } } settings.gradle.kts
 rootProject.name = &amp;#34;keycloak-migration&amp;#34; keycloak-changelog.</description>
+    </item>
+    
+    <item>
+      <title>Implementation Substitution</title>
+      <link>https://klg71.github.io/keycloakmigration/implementation_details/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/implementation_details/</guid>
+      <description>Implementation Details#The migration hashes are stored in the attribute named &amp;lsquo;migration&amp;rsquo; in the migration user.
+There are no transactions in keycloak though if the rollback fails there might be a non deterministic state! If it fails I would like to receive a bug report for this.
+If you struggle with invalid hashes on a linux-windows setup check the line endings of the json-import files as git might check them out as LF where on windows its CRLF and thus producing the error in hashing.</description>
     </item>
     
     <item>
@@ -128,6 +151,18 @@ This will skip any control mechanism and you must to make sure that you have the
       
       <guid>https://klg71.github.io/keycloakmigration/quickstart/jar/</guid>
       <description>Usage through fatjar#Filetree:# keycloakmigration-x.x.x-fat.jar (download on github releases) keycloak-changelog.yml 01_create_realm.yml  Execute#java -jar keycloakmigration-x.x.x-fat.jar Arguments#java -jar keycloakmigration.jar --helpusage: [-h] [-u USER] [-p PASSWORD] [-b BASEURL] [MIGRATION-FILE] [-r REALM][-c CLIENT] [--correct-hashes] [-k PARAMETER]... [--wait-for-keycloak][--wait-for-keycloak-timeout WAIT_FOR_KEYCLOAK_TIMEOUT]optional arguments:-h, --help show this help message and exit-u USER, --user USER Username for the migration user, defaulting to admin.</description>
+    </item>
+    
+    <item>
+      <title>Using the Keycloak Api</title>
+      <link>https://klg71.github.io/keycloakmigration/keycloak_api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/keycloak_api/</guid>
+      <description>Using the Keycloak Api#For the migrations to work I had to implement a keycloak administration api.
+This api provides a KeycloakClient which connects to the keycloak instance. This client has methods to manage user, group, role, client, realms and userfederation resources.
+To use it you can simply the maven dependency or download the keycloakapi-jar from the releases page.
+Gradle Groovy DSL#// https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigration compile group: &amp;#39;de.</description>
     </item>
     
   </channel>
