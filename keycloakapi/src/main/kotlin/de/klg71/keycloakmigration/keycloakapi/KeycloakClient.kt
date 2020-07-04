@@ -35,6 +35,9 @@ import java.util.UUID
 
 data class RealmName(val realm:String)
 
+/**
+ * Interface access resources on keycloak. Build with [initKeycloakClient]
+ */
 @Suppress("TooManyFunctions")
 interface KeycloakClient {
     @RequestLine("GET /admin/realms")

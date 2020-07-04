@@ -121,8 +121,9 @@ fun KeycloakClient.groupUUID(group: String, realm: String) = groupByName(group, 
 
 fun KeycloakClient.clientUUID(clientId: String, realm: String) = clientById(clientId, realm).id
 
-const val SUCCESSFUL_RESPONSE_START = 200
-const val SUCCESSFUL_RESPONSE_END = 299
+internal const val SUCCESSFUL_RESPONSE_START = 200
+internal const val SUCCESSFUL_RESPONSE_END = 299
+
 fun Response.isSuccessful() = when (status()) {
     in SUCCESSFUL_RESPONSE_START..SUCCESSFUL_RESPONSE_END -> true
     else -> false

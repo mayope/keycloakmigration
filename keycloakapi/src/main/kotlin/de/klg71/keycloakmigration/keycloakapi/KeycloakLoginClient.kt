@@ -5,6 +5,9 @@ import feign.Headers
 import feign.Param
 import feign.RequestLine
 
+/**
+ * Interface to get acquire tokens from keycloak. Build with [initKeycloakLoginClient]
+ */
 interface KeycloakLoginClient {
     @RequestLine("POST /realms/{realm}/protocol/openid-connect/token")
     @Headers("Content-Type: application/x-www-form-urlencoded; charset=UTF-8")

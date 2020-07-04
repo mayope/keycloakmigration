@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit.SECONDS
 /**
  * Manages the keycloak access tokens and refreshes if needed
  */
-class TokenHolder(private val client: KeycloakLoginClient,
+internal class TokenHolder(private val client: KeycloakLoginClient,
                   private val adminUser: String, private val adminPassword: String,
                   private val realm: String, private val clientId: String) {
 

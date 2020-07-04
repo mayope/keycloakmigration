@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm")
     id("maven-publish")
     id("signing")
+    id("org.jetbrains.dokka") version "0.10.1"
 }
 
 repositories {
@@ -133,6 +134,20 @@ gradle.taskGraph.whenReady {
             extra["signing.keyId"] = "5357AC31"
             extra["signing.secretKeyRingFile"] = project.findProperty("signing_key_ring_file")
             extra["signing.password"] = project.findProperty("signing_key_ring_file_password")
+        }
+    }
+}
+
+tasks {
+
+    register<org.jetbrains.dokka.gradle.DokkaTask>("documentation") {
+        doFirst {
+            System.setProperty("idea.io.use.fallback", "true")
+        }
+        outputFormat = "html"
+        outputDirectory = "${rootProject.projectDir}/docsbuild/static/documentation"
+        configuration {
+            includes = listOf("keycloakapi.md")
         }
     }
 }

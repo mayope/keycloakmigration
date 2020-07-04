@@ -15,4 +15,7 @@ headless = true
   - [Client Migrations]({{< ref "/migrations/client.md" >}})
   - [Realm Migrations]({{< ref "/migrations/realm.md" >}})
   - [UserFederation Migrations]({{< ref  "/migrations/userfederation.md" >}})
+- [Using the Keycloakapi]({{< relref "/keycloak_api.md" >}})
 - [Hash Troubleshooting]({{< relref "/hashmigration.md" >}})
+- [Implementation Details]({{< relref "/implementation_details.md" >}})
+- [Contributing]({{< relref "/contributing.md" >}})

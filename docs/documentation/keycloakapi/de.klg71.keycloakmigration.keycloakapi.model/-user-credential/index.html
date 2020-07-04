@@ -1,0 +1,100 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>UserCredential - keycloakapi</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">keycloakapi</a>&nbsp;/&nbsp;<a href="../index.html">de.klg71.keycloakmigration.keycloakapi.model</a>&nbsp;/&nbsp;<a href="./index.html">UserCredential</a><br/>
+<br/>
+<h1>UserCredential</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">UserCredential</span></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="-init-.html">&lt;init&gt;</a></h4>
+</td>
+<td>
+<code><span class="identifier">UserCredential</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.model.UserCredential$<init>(kotlin.String, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/algorithm">algorithm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;"pbkdf2-sha256"<span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.model.UserCredential$<init>(kotlin.String, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/counter">counter</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.model.UserCredential$<init>(kotlin.String, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/createdDate">createdDate</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;Date().time<span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.model.UserCredential$<init>(kotlin.String, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/digits">digits</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.model.UserCredential$<init>(kotlin.String, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/hashIterations">hashIterations</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;27500<span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.model.UserCredential$<init>(kotlin.String, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/hashedSaltedValue">hashedSaltedValue</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.model.UserCredential$<init>(kotlin.String, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/period">period</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.model.UserCredential$<init>(kotlin.String, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/salt">salt</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.model.UserCredential$<init>(kotlin.String, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/type">type</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;"password"<span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.model.UserCredential$<init>(kotlin.String, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.String, kotlin.Int, kotlin.String, kotlin.String, kotlin.collections.Map((kotlin.String, )))/config">config</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;emptyMap()<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<h4><a href="algorithm.html">algorithm</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">algorithm</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="config.html">config</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">config</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="counter.html">counter</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">counter</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="created-date.html">createdDate</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">createdDate</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="digits.html">digits</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">digits</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="hashed-salted-value.html">hashedSaltedValue</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">hashedSaltedValue</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="hash-iterations.html">hashIterations</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">hashIterations</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="period.html">period</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">period</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="salt.html">salt</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">salt</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="type.html">type</a></h4>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">type</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
