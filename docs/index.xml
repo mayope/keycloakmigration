@@ -22,6 +22,17 @@ Parameter# realm: String, optional clientId: String, not optional, enabled: B
     </item>
     
     <item>
+      <title>ClientScope Migrations</title>
+      <link>https://klg71.github.io/keycloakmigration/migrations/scopes/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/migrations/scopes/</guid>
+      <description>ClientScope Migrations#All migrations referring to the ClientScope resource.
+addClientScope#Adds a clientScope to keycloak, fails if a clientScope with that name already exists
+Parameter# realm: String, optional name: String, not optional description: String, optional, default = null protocol: String, optional, default = &amp;ldquo;openid-connect&amp;rdquo; consentScreenText: String, optional, default = null displayOnConsentScreen: Boolean, optional, default = false guiOrder: Int, optional, default = null includeInTokenScope: Boolean, optional, default = true  Example#id:add-client-scopesauthor:klg71realm:integ-testchanges:- addClientScope:name:apiassignDefaultClientScope#Assigns a default clientScope to a client, fails if the client or scope doesn&amp;rsquo;t exist.</description>
+    </item>
+    
+    <item>
       <title>Group Migrations</title>
       <link>https://klg71.github.io/keycloakmigration/migrations/group/</link>
       <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>

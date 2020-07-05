@@ -13,6 +13,7 @@ headless = true
   - [Group Migrations]({{< ref "/migrations/group.md" >}})
   - [Role Migrations]({{< ref "/migrations/role.md" >}})
   - [Client Migrations]({{< ref "/migrations/client.md" >}})
+  - [ClientScope Migrations]({{< ref "/migrations/scopes.md" >}})
   - [Realm Migrations]({{< ref "/migrations/realm.md" >}})
   - [UserFederation Migrations]({{< ref  "/migrations/userfederation.md" >}})
 - [Using the Keycloakapi]({{< relref "/keycloak_api.md" >}})

@@ -3,6 +3,7 @@
 package de.klg71.keycloakmigration.keycloakapi
 
 import de.klg71.keycloakmigration.keycloakapi.model.Client
+import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import feign.Response
@@ -35,6 +36,30 @@ fun KeycloakClient.clientById(clientId: String, realm: String): Client =
                     }
                 }.let {
                     client(it.id, realm)
+                }
+
+fun KeycloakClient.clientScopeByName(name: String, realm: String): ClientScope =
+        clientScopes(realm)
+                .run {
+                    if (isEmpty()) {
+                        throw KeycloakApiException("ClientScope with name: $name does not exist in $realm!")
+                    }
+                    find { it.name == name }?.let {
+                        return it
+                    }
+                    throw KeycloakApiException("ClientScope with name: $name does not exist in realm: $realm!")
+                }
+
+fun KeycloakClient.existsClientScope(name: String, realm: String): Boolean =
+        clientScopes(realm)
+                .run {
+                    if (isEmpty()) {
+                        return false
+                    }
+                    find { it.name == name }?.let {
+                        return true
+                    }
+                    return false
                 }
 
 fun KeycloakClient.groupByName(name: String, realm: String) =
@@ -120,6 +145,9 @@ fun KeycloakClient.userUUID(user: String, realm: String) = userByName(user, real
 fun KeycloakClient.groupUUID(group: String, realm: String) = groupByName(group, realm).id
 
 fun KeycloakClient.clientUUID(clientId: String, realm: String) = clientById(clientId, realm).id
+
+fun KeycloakClient.clientScopeUUID(clientScopeName: String, realm: String) = clientScopeByName(clientScopeName,
+        realm).id
 
 internal const val SUCCESSFUL_RESPONSE_START = 200
 internal const val SUCCESSFUL_RESPONSE_END = 299

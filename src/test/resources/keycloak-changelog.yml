@@ -23,3 +23,4 @@ includes:
 - path: changesets/23_add_user_federation_mappers.yml
 - path: changesets/24_disabled_change_set.yml
 - path: changesets/25_client_role.yml
+- path: changesets/26_client_scope.yml

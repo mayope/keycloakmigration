@@ -12,6 +12,8 @@ import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddGroupMe
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserRealmRoleMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.AddClientScopeAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignDefaultClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AssignRoleToGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.DeleteGroupAction
@@ -72,6 +74,9 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
                 "updateClient" -> objectMapper.readValue<UpdateClientAction>(actionJson)
                 "deleteClient" -> objectMapper.readValue<DeleteClientAction>(actionJson)
                 "assignRoleToClient" -> objectMapper.readValue<AssignRoleToClientAction>(actionJson)
+
+                "addClientScope" -> objectMapper.readValue<AddClientScopeAction>(actionJson)
+                "assignDefaultClientScope" -> objectMapper.readValue<AssignDefaultClientScopeAction>(actionJson)
 
                 "addGroup" -> objectMapper.readValue<AddGroupAction>(actionJson)
                 "deleteGroup" -> objectMapper.readValue<DeleteGroupAction>(actionJson)

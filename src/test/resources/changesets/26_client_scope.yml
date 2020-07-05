@@ -1,0 +1,11 @@
+id: add-client-scopes
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testClientScope
+  - addClientScope:
+      name: api
+  - assignDefaultClientScope:
+      clientId: testClientScope
+      clientScopeName: api

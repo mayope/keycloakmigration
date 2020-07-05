@@ -1,6 +1,7 @@
 package de.klg71.keycloakmigration.keycloakapi
 
 import de.klg71.keycloakmigration.keycloakapi.model.AddClient
+import de.klg71.keycloakmigration.keycloakapi.model.AddClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
 import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
@@ -9,10 +10,13 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
 import de.klg71.keycloakmigration.keycloakapi.model.AddUser
 import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederation
 import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederationMapper
+import de.klg71.keycloakmigration.keycloakapi.model.AssignClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.AssignGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AssignRole
 import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientListItem
+import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
+import de.klg71.keycloakmigration.keycloakapi.model.ClientScopeItem
 import de.klg71.keycloakmigration.keycloakapi.model.ClientSecret
 import de.klg71.keycloakmigration.keycloakapi.model.Group
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
@@ -33,7 +37,7 @@ import feign.RequestLine
 import feign.Response
 import java.util.UUID
 
-data class RealmName(val realm:String)
+data class RealmName(val realm: String)
 
 /**
  * Interface access resources on keycloak. Build with [initKeycloakClient]
@@ -164,7 +168,7 @@ interface KeycloakClient {
     fun clientSecret(@Param("client-id") clientId: UUID, @Param("realm") realm: String): ClientSecret
 
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/service-account-user")
-    fun clientServiceAccount(@Param("client-id") clientId: UUID, @Param("realm") realm:String): User
+    fun clientServiceAccount(@Param("client-id") clientId: UUID, @Param("realm") realm: String): User
 
     @RequestLine("POST /admin/realms/{realm}/clients")
     @Headers("Content-Type: application/json; charset=utf-8")
@@ -195,6 +199,29 @@ interface KeycloakClient {
 
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/protocol-mappers/protocol/openid-connect")
     fun mappers(@Param("client-id") clientId: UUID, @Param("realm") realm: String): List<Mapper>
+
+    @RequestLine("GET /admin/realms/{realm}/client-scopes")
+    fun clientScopes(@Param("realm") realm: String): List<ClientScope>
+
+    @RequestLine("POST /admin/realms/{realm}/client-scopes")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addClientScope(@Param("realm") realm: String, addClientScope: AddClientScope): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}")
+    fun deleteClientScope(@Param("realm") realm: String, @Param("client-scope-id") clientScopeId: UUID): Response
+
+    @RequestLine("PUT /admin/realms/{realm}/clients/{client-id}/default-client-scopes/{client-scope-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun assignDefaultClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
+                                 @Param("client-scope-id") clientScopeId: UUID,
+                                 assignClientScope: AssignClientScope): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/default-client-scopes/{client-scope-id}")
+    fun withdrawDefaultClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
+                                   @Param("client-scope-id") clientScopeId: UUID): Response
+
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/default-client-scopes")
+    fun defaultClientScopes(@Param("realm") realm: String, @Param("client-id") clientId: UUID): List<ClientScopeItem>
 
     @RequestLine("GET /admin/realms/{realm}/components?parent={realm}&type=org.keycloak.storage.UserStorageProvider")
     fun userFederations(@Param("realm") realm: String): List<UserFederation>
