@@ -148,7 +148,7 @@ gradle.taskGraph.whenReady {
 
 tasks {
     named<ShadowJar>("shadowJar") {
-        classifier = "fat"
+        classifier = "all"
     }
 
     register<org.jetbrains.dokka.gradle.DokkaTask>("documentation") {
