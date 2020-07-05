@@ -57,12 +57,14 @@ val javadocJar by tasks.creating(Jar::class) {
     from(tasks.javadoc)
 }
 
+val fatJar by tasks.named("shadowJar")
 publishing {
     publications {
         register("mavenJava", MavenPublication::class) {
             groupId = "de.klg71.keycloakmigration"
             artifact(sourcesJar)
             artifact(javadocJar)
+            artifact(fatJar)
             from(components["java"])
         }
     }
