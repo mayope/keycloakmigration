@@ -2,14 +2,13 @@ package de.klg71.keycloakmigration.testmigration
 
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_PASSWORD
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_USER
-import de.klg71.keycloakmigration.DEFAULT_CHANGELOGFILE
 import de.klg71.keycloakmigration.DEFAULT_CLIENTID
 import de.klg71.keycloakmigration.DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
 import de.klg71.keycloakmigration.DEFAULT_KEYCLOAK_SERVER
 import de.klg71.keycloakmigration.DEFAULT_REALM
 import de.klg71.keycloakmigration.DEFAULT_WAIT_FOR_KEYCLOAK
 import de.klg71.keycloakmigration.DEFAULT_WAIT_FOR_KEYCLOAK_TIMEOUT
-import de.klg71.keycloakmigration.DEFAULT_WARN_ON_UNDEFINED_VARIABLES
+import de.klg71.keycloakmigration.DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
 import de.klg71.keycloakmigration.MigrationArgs
 import de.klg71.keycloakmigration.migrate
 import org.apache.logging.log4j.core.config.Configurator
@@ -34,7 +33,7 @@ object TestMigrationArgs : MigrationArgs {
     override fun waitForKeycloak() = DEFAULT_WAIT_FOR_KEYCLOAK
     override fun waitForKeycloakTimeout() = DEFAULT_WAIT_FOR_KEYCLOAK_TIMEOUT.toLong()
     override fun failOnUndefinedVariables() = DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
-    override fun warnOnUndefinedVariables() = DEFAULT_WARN_ON_UNDEFINED_VARIABLES
+    override fun warnOnUndefinedVariables() = DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
 }
 
 fun main() {

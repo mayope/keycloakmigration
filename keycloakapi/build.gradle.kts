@@ -1,8 +1,12 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm")
     id("maven-publish")
     id("signing")
     id("org.jetbrains.dokka") version "0.10.1"
+
+    id("com.github.johnrengelman.shadow")
 }
 
 repositories {
@@ -72,7 +76,8 @@ publishing {
                 val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
                 password = ossrhPassword
                 if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
-                    org.jetbrains.kotlin.org.jline.utils.Log.warn("Sonatype user and password are not set you won't be able to publish to maven central!")
+                    org.jetbrains.kotlin.org.jline.utils.Log.warn(
+                            "Sonatype user and password are not set you won't be able to publish to maven central!")
                 }
             }
         }
@@ -85,7 +90,8 @@ publishing {
                 val githubAccessToken = project.findProperty("githubPublishKey") as String? ?: ""
                 password = githubAccessToken
                 if (githubUser.isBlank() || githubAccessToken.isBlank()) {
-                    org.jetbrains.kotlin.org.jline.utils.Log.warn("Github user and password are not set you won't be able to publish to github!")
+                    org.jetbrains.kotlin.org.jline.utils.Log.warn(
+                            "Github user and password are not set you won't be able to publish to github!")
                 }
             }
         }
@@ -139,6 +145,9 @@ gradle.taskGraph.whenReady {
 }
 
 tasks {
+    named<ShadowJar>("shadowJar") {
+        classifier = "fat"
+    }
 
     register<org.jetbrains.dokka.gradle.DokkaTask>("documentation") {
         doFirst {

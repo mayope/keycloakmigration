@@ -7,6 +7,7 @@ headless = true
   - [Gradle Kotlin DSL]({{< relref "/quickstart/kotlin.md" >}})
   - [Gradle Groovy DSL]({{< relref "/quickstart/groovy.md" >}})
   - [Jar]({{< relref "/quickstart/jar.md" >}})
+  - [Usage with Docker]({{< relref "/quickstart/docker.md" >}})
 - [Migration Files]({{< relref "/migration_files.md" >}})
 - [Migrations]({{< relref "/migrations/" >}})
   - [User Migrations]({{< relref "/migrations/user.md" >}})

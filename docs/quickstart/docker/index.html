@@ -4,18 +4,27 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Role Migrations#All migrations referring to the role resource.
-addRole#Add a role to keycloak, fails if the role already exists
-Parameter# realm: String, optional name: String, not optional, clientId: String, optional, default=realmRole, description: String, optional, default=&rdquo;&rdquo; attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty composite: Boolean, optional, default=false clientRole: Boolean, optional, default=false, containerId: String, optional, default=not set  Example#id: add-roleauthor: klg71changes:- addRole:realm: mastername: test3attributes:role:- value1- value2 deleteRole#Delete a role from keycloak, fails if the role does not exist">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Role Migrations" />
-<meta property="og:description" content="Role Migrations#All migrations referring to the role resource.
-addRole#Add a role to keycloak, fails if the role already exists
-Parameter# realm: String, optional name: String, not optional, clientId: String, optional, default=realmRole, description: String, optional, default=&rdquo;&rdquo; attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty composite: Boolean, optional, default=false clientRole: Boolean, optional, default=false, containerId: String, optional, default=not set  Example#id: add-roleauthor: klg71changes:- addRole:realm: mastername: test3attributes:role:- value1- value2 deleteRole#Delete a role from keycloak, fails if the role does not exist" />
+<meta name="description" content="Usage with docker#you can also use keycloakmigraiton with docker. The migrations are then controlled trough environment variables and mounted volumes.
+Usage#docker run --env BASEURL=http://localhost:8080 klg71/keycloakmigration Environment variables#  KEYCLOAK_CHANGELOG migration changelog, should be mounted
+default: /migration/keycloak-changelog.yml
+  ADMIN_USER user to execute migration
+default: admin
+  ADMIN_PASSWORD password of user to execute migration
+default: admin
+  ADMIN_CLIENT client to use for admin login">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Usage with Docker" />
+<meta property="og:description" content="Usage with docker#you can also use keycloakmigraiton with docker. The migrations are then controlled trough environment variables and mounted volumes.
+Usage#docker run --env BASEURL=http://localhost:8080 klg71/keycloakmigration Environment variables#  KEYCLOAK_CHANGELOG migration changelog, should be mounted
+default: /migration/keycloak-changelog.yml
+  ADMIN_USER user to execute migration
+default: admin
+  ADMIN_PASSWORD password of user to execute migration
+default: admin
+  ADMIN_CLIENT client to use for admin login" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://klg71.github.io/keycloakmigration/migrations/role/" />
-<meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
-<meta property="article:modified_time" content="2020-07-04T10:17:11+02:00" />
-<title>Role Migrations | Keycloakmigration</title>
+<meta property="og:url" content="https://klg71.github.io/keycloakmigration/quickstart/docker/" />
+
+<title>Usage with Docker | Keycloakmigration</title>
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
@@ -63,7 +72,7 @@ https://github.com/alex-shpak/hugo-book
 <li><a href="/keycloakmigration/quickstart/kotlin/">Gradle Kotlin DSL</a></li>
 <li><a href="/keycloakmigration/quickstart/groovy/">Gradle Groovy DSL</a></li>
 <li><a href="/keycloakmigration/quickstart/jar/">Jar</a></li>
-<li><a href="/keycloakmigration/quickstart/docker/">Usage with Docker</a></li>
+<li><a href="/keycloakmigration/quickstart/docker/"class=active>Usage with Docker</a></li>
 </ul>
 </li>
 <li><a href="/keycloakmigration/migration_files/">Migration Files</a></li>
@@ -124,7 +133,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <strong>Role Migrations</strong>
+  <strong>Usage with Docker</strong>
 
   <label for="toc-control">
     
@@ -140,18 +149,8 @@ https://github.com/alex-shpak/hugo-book
       
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#addrole">addRole</a>
-      <ul>
-        <li><a href="#parameter">Parameter</a></li>
-        <li><a href="#example">Example</a></li>
-      </ul>
-    </li>
-    <li><a href="#deleterole">deleteRole</a>
-      <ul>
-        <li><a href="#parameter-1">Parameter</a></li>
-        <li><a href="#example-1">Example</a></li>
-      </ul>
-    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#environment-variables">Environment variables</a></li>
   </ul>
 </nav>
 
@@ -163,71 +162,70 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  <article class="markdown"><h1 id="role-migrations">
-  Role Migrations
-  <a class="anchor" href="#role-migrations">#</a>
+  <article class="markdown"><h1 id="usage-with-docker">
+  Usage with docker
+  <a class="anchor" href="#usage-with-docker">#</a>
 </h1>
-<p>All migrations referring to the role resource.</p>
-<h2 id="addrole">
-  addRole
-  <a class="anchor" href="#addrole">#</a>
+<p>you can also use keycloakmigraiton with docker. The migrations are then controlled trough environment variables and mounted volumes.</p>
+<h2 id="usage">
+  Usage
+  <a class="anchor" href="#usage">#</a>
 </h2>
-<p>Add a role to keycloak, fails if the role already exists</p>
-<h3 id="parameter">
-  Parameter
-  <a class="anchor" href="#parameter">#</a>
-</h3>
-<ul>
-<li>realm: String, optional</li>
-<li>name: String, not optional,</li>
-<li>clientId: String, optional, default=realmRole,</li>
-<li>description: String, optional, default=&rdquo;&rdquo;</li>
-<li>attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty</li>
-<li>composite: Boolean, optional, default=false</li>
-<li>clientRole: Boolean, optional, default=false,</li>
-<li>containerId: String, optional, default=not set</li>
-</ul>
-<h3 id="example">
-  Example
-  <a class="anchor" href="#example">#</a>
-</h3>
-<pre><code>id: add-role
-author: klg71
-changes:
-- addRole:
-    realm: master
-    name: test3
-    attributes:
-      role:
-      - value1
-      - value2
-</code></pre>
-<h2 id="deleterole">
-  deleteRole
-  <a class="anchor" href="#deleterole">#</a>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">docker run --env <span style="color:#b8860b">BASEURL</span><span style="color:#666">=</span>http://localhost:8080 klg71/keycloakmigration 
+</code></pre></div><h2 id="environment-variables">
+  Environment variables
+  <a class="anchor" href="#environment-variables">#</a>
 </h2>
-<p>Delete a role from keycloak, fails if the role does not exist</p>
-<h3 id="parameter-1">
-  Parameter
-  <a class="anchor" href="#parameter-1">#</a>
-</h3>
 <ul>
-<li>realm: String, optional</li>
-<li>name: String, not optional,</li>
-<li>clientId: String, optional, default=realmRole</li>
+<li>
+<p><code>KEYCLOAK_CHANGELOG</code> migration changelog, should be mounted</p>
+<p>default: /migration/keycloak-changelog.yml</p>
+</li>
+<li>
+<p><code>ADMIN_USER</code> user to execute migration</p>
+<p>default: admin</p>
+</li>
+<li>
+<p><code>ADMIN_PASSWORD</code> password of user to execute migration</p>
+<p>default: admin</p>
+</li>
+<li>
+<p><code>ADMIN_CLIENT</code> client to use for admin login</p>
+<p>default: admin-cli</p>
+</li>
+<li>
+<p><code>LOGIN_REALM</code> realm to use for admin login</p>
+<p>default: master</p>
+</li>
+<li>
+<p><code>BASEURL</code> Baseurl for the keycloak instance</p>
+<p>default: http://localhost:8080/auth</p>
+</li>
+<li>
+<p><code>WAIT_FOR_KEYCLOAK</code>(flag) If keycloakmigration should wait for the keycloak instance</p>
+<p>default: unset</p>
+</li>
+<li>
+<p><code>WAIT_FOR_KEYCLOAK_TIMEOUT</code> Wait time till keycloak migration fails if keycloak is not ready (only if <code>WAIT_FOR_KEYCLOAK</code> is set)</p>
+<p>default:   0(infinit)</p>
+</li>
+<li>
+<p><code>FAIL_ON_UNDEFINED_VARIABLES</code>(flag) If keycloakmigration should fail if undefined template variables occur</p>
+<p>default:   unset=false</p>
+</li>
+<li>
+<p><code>DISABLE_WARN_ON_UNDEFINED_VARIABLES</code>(flag) If keycloakmigration should not warn if undefined template variables occur</p>
+<p>default:   unset=false</p>
+</li>
+<li>
+<p><code>CORRECT_HASHES</code>(flag) If keycloakmigration should migrate not matching hashes (see <a href="/keycloakmigration/hashmigration/">Hash Troubleshooting</a> )</p>
+<p>default:   unset=false</p>
+</li>
+<li>
+<p><code>STAY_IDLE</code>(flag) Don&rsquo;t kill container when migration is finished (useful for k8s deployment)</p>
+<p>default:   unset=false</p>
+</li>
 </ul>
-<h3 id="example-1">
-  Example
-  <a class="anchor" href="#example-1">#</a>
-</h3>
-<pre><code>id: delete-role
-author: klg71
-changes:
-- deleteRole:
-    realm: master
-    name: test4
-    clientId: test
-</code></pre>
 </article>
  
       
@@ -262,18 +260,8 @@ changes:
       
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#addrole">addRole</a>
-      <ul>
-        <li><a href="#parameter">Parameter</a></li>
-        <li><a href="#example">Example</a></li>
-      </ul>
-    </li>
-    <li><a href="#deleterole">deleteRole</a>
-      <ul>
-        <li><a href="#parameter-1">Parameter</a></li>
-        <li><a href="#example-1">Example</a></li>
-      </ul>
-    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#environment-variables">Environment variables</a></li>
   </ul>
 </nav>
 

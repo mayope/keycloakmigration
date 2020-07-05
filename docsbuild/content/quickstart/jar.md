@@ -57,7 +57,7 @@ java -jar keycloakmigration-x.x.x-fat.jar
       
       --fail-on-undefined-variables                           Fail if variables could not be replaced, defaulting to false.
   
-      --warn-on-undefined-variables                           Fail if variables could not bereplaced, to true.                                                
+      --warn-on-undefined-variables                           warn if variables could not bereplaced, defaulting to true.                                                
       
 
     positional arguments:

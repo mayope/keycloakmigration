@@ -165,6 +165,22 @@ This will skip any control mechanism and you must to make sure that you have the
     </item>
     
     <item>
+      <title>Usage with Docker</title>
+      <link>https://klg71.github.io/keycloakmigration/quickstart/docker/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/quickstart/docker/</guid>
+      <description>Usage with docker#you can also use keycloakmigraiton with docker. The migrations are then controlled trough environment variables and mounted volumes.
+Usage#docker run --env BASEURL=http://localhost:8080 klg71/keycloakmigration Environment variables#  KEYCLOAK_CHANGELOG migration changelog, should be mounted
+default: /migration/keycloak-changelog.yml
+  ADMIN_USER user to execute migration
+default: admin
+  ADMIN_PASSWORD password of user to execute migration
+default: admin
+  ADMIN_CLIENT client to use for admin login</description>
+    </item>
+    
+    <item>
       <title>Using the Keycloak Api</title>
       <link>https://klg71.github.io/keycloakmigration/keycloak_api/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

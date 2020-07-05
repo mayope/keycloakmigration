@@ -1,8 +1,8 @@
 import de.undercouch.gradle.tasks.download.Download
-import groovy.lang.GroovyObject
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.jetbrains.kotlin.org.jline.utils.Log
 import java.net.ConnectException
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "1.3.70"
@@ -15,10 +15,8 @@ plugins {
     id("org.owasp.dependencycheck") version "5.3.0"
     // static code analysis
     id("io.gitlab.arturbosch.detekt") version "1.7.0-beta1"
-}
 
-tasks.withType<Wrapper> {
-    gradleVersion = "5.1"
+    id("com.github.johnrengelman.shadow") version "6.0.0"
 }
 
 dependencies {
@@ -62,22 +60,21 @@ repositories {
 tasks {
     val keycloakVersion = "10.0.0"
 
-    register<Jar>("fatJar") {
-        from(sourceSets["main"].output)
+    named<ShadowJar>("shadowJar") {
         classifier = "fat"
         manifest {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
         }
-
-        from(configurations["compile"].map { if (it.isDirectory) it else zipTree(it) })
     }
+
 
     "afterReleaseBuild"{
         dependsOn("publishMavenJavaPublicationToMavenRepository",
                 "publishMavenJavaPublicationToGitHubPackagesRepository",
                 "plugin:publishPlugins",
                 "keycloakapi:publishMavenJavaPublicationToMavenRepository",
-                "keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository"
+                "keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository",
+                "pushDocker"
         )
     }
 
@@ -200,6 +197,48 @@ tasks {
         // Target version of the generated JVM bytecode. It is used for type resolution.
         this.jvmTarget = "1.8"
     }
+    val dockerBuildWorkingDirectory = "${project.buildDir}/buildDocker"
+    val fatJar by named("shadowJar")
+    register<Copy>("prepareDocker") {
+        dependsOn("shadowJar")
+
+        from(fatJar.outputs.files) {
+            include("*.*")
+        }
+        from("src/docker") {
+            include("*")
+        }
+        into(dockerBuildWorkingDirectory)
+    }
+
+    val tagName = "klg71/keycloakmigration"
+    val version = project.version
+    val tag = "$tagName:$version"
+    val tagLatest = "$tagName:latest"
+    register("buildDocker") {
+        dependsOn("prepareDocker")
+        doLast {
+            exec {
+                workingDir(dockerBuildWorkingDirectory)
+                commandLine("docker", "build", ".", "-t", tag,"--build-arg","jar_file=${fatJar.outputs.files.first().name}")
+            }
+            exec {
+                commandLine("docker", "tag", tag, tagLatest)
+            }
+        }
+    }
+    register("pushDocker") {
+        dependsOn("buildDocker")
+        doLast {
+            exec {
+                commandLine("docker", "push", tag)
+            }
+            exec {
+                commandLine("docker", "push", tagLatest)
+
+            }
+        }
+    }
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
@@ -214,7 +253,7 @@ val javadocJar by tasks.creating(Jar::class) {
     from(tasks.javadoc)
 }
 
-val fatJar by tasks.named("fatJar")
+val fatJar by tasks.named("shadowJar")
 
 publishing {
     publications {

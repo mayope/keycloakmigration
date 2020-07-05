@@ -7,14 +7,14 @@ import com.xenomachina.argparser.default
 const val DEFAULT_CHANGELOGFILE = "keycloak-changelog.yml"
 const val DEFAULT_ADMIN_USER = "admin"
 const val DEFAULT_ADMIN_PASSWORD = "admin"
-const val DEFAULT_KEYCLOAK_SERVER = "http://localhost:18080/auth"
+const val DEFAULT_KEYCLOAK_SERVER = "http://localhost:8080/auth"
 const val DEFAULT_REALM = "master"
 const val DEFAULT_CLIENTID = "admin-cli"
 const val DEFAULT_CORRECT_HASHES = false
 const val DEFAULT_WAIT_FOR_KEYCLOAK = false
 const val DEFAULT_WAIT_FOR_KEYCLOAK_TIMEOUT = "0"
 const val DEFAULT_FAIL_ON_UNDEFINED_VARIABLES = false
-const val DEFAULT_WARN_ON_UNDEFINED_VARIABLES = true
+const val DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES = false
 
 @Suppress("SpreadOperator", "TooManyFunctions")
 internal class CommandLineMigrationArgs(parser: ArgParser) :
@@ -39,7 +39,7 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
             .default(DEFAULT_REALM)
 
     private val clientId by parser.storing(names = *arrayOf("-c", "--client"),
-            help = "Client to use for migration, defaulting to $DEFAULT_REALM")
+            help = "Client to use for migration, defaulting to $DEFAULT_CLIENTID")
             .default(DEFAULT_CLIENTID)
 
     private val correctHashes by parser.flagging(names = *arrayOf("--correct-hashes"),
@@ -69,10 +69,11 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
             .default(
                     DEFAULT_FAIL_ON_UNDEFINED_VARIABLES)
 
-    private val warnOnUndefinedVariables by parser.flagging(names = *arrayOf("--warn-on-undefined-variables"),
-            help = "Fail if variables could not be replaced, defaulting to $DEFAULT_WARN_ON_UNDEFINED_VARIABLES.")
-            .default(
-                    DEFAULT_WARN_ON_UNDEFINED_VARIABLES)
+    private val disableWarnOnUndefinedVariables
+            by parser.flagging(names = *arrayOf("--disable-warn-on-undefined-variables"),
+            help = "Disables warning if variables could not be replaced," +
+                    " defaulting to $DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES.")
+            .default(DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES)
 
     override fun adminUser() = adminUser
 
@@ -106,5 +107,5 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
 
     override fun failOnUndefinedVariables() = failOnUndefinedVariables
 
-    override fun warnOnUndefinedVariables() = warnOnUndefinedVariables
+    override fun warnOnUndefinedVariables() = !disableWarnOnUndefinedVariables
 }

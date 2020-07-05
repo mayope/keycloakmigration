@@ -40,5 +40,21 @@ rootProject.name = &amp;#34;keycloak-migration&amp;#34; keycloak-changelog.</des
       <description>Usage through fatjar#Filetree:# keycloakmigration-x.x.x-fat.jar (download on github releases) keycloak-changelog.yml 01_create_realm.yml  Execute#java -jar keycloakmigration-x.x.x-fat.jar Arguments#java -jar keycloakmigration.jar --helpusage: [-h] [-u USER] [-p PASSWORD] [-b BASEURL] [MIGRATION-FILE] [-r REALM][-c CLIENT] [--correct-hashes] [-k PARAMETER]... [--wait-for-keycloak][--wait-for-keycloak-timeout WAIT_FOR_KEYCLOAK_TIMEOUT]optional arguments:-h, --help show this help message and exit-u USER, --user USER Username for the migration user, defaulting to admin.</description>
     </item>
     
+    <item>
+      <title>Usage with Docker</title>
+      <link>https://klg71.github.io/keycloakmigration/quickstart/docker/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://klg71.github.io/keycloakmigration/quickstart/docker/</guid>
+      <description>Usage with docker#you can also use keycloakmigraiton with docker. The migrations are then controlled trough environment variables and mounted volumes.
+Usage#docker run --env BASEURL=http://localhost:8080 klg71/keycloakmigration Environment variables#  KEYCLOAK_CHANGELOG migration changelog, should be mounted
+default: /migration/keycloak-changelog.yml
+  ADMIN_USER user to execute migration
+default: admin
+  ADMIN_PASSWORD password of user to execute migration
+default: admin
+  ADMIN_CLIENT client to use for admin login</description>
+    </item>
+    
   </channel>
 </rss>
