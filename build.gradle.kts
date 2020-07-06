@@ -74,7 +74,7 @@ tasks {
                 "plugin:publishPlugins",
                 "keycloakapi:publishMavenJavaPublicationToMavenRepository",
                 "keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository",
-                "pushDocker","shadowJar",":keycloakapi:shadowjar"
+                "pushDocker","shadowJar",":keycloakapi:shadowJar"
         )
     }
 
