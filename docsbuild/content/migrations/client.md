@@ -115,6 +115,28 @@ Assigns a realm- or client-role(if roleClientId is set) to a service account of 
           role: query-users
           roleClientId: realm-management
 
+## addRoleScopeMapping
+Adds a realm- or client-role(if roleClientId is set) to the cope mappings of a client.
+
+See https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings
+
+### Parameters
+- realm: String, optional
+- clientId: String, not optional
+- role: String, not optional
+- roleClientId: String, optional, default = realmRole
+
+### Example
+    id: add-client-role-mapping
+    author: klg71
+    realm: integ-test
+    changes:
+      - addSimpleClient:
+          clientId: testClientRoleMappings
+      - addRoleScopeMapping:
+          clientId: testClientRoleMappings
+          role: offline_access
+
 ## addMapper
 adds a full configurable clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
 
