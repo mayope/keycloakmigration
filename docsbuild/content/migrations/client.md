@@ -133,9 +133,18 @@ See https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings
     changes:
       - addSimpleClient:
           clientId: testClientRoleScopeMappings
+      - addRole:
+          name: scope-mapping-role
+      - updateClient:
+          clientId: testClientRoleScopeMappings
+          fullScopeAllowed: false
       - addRoleScopeMapping:
           clientId: testClientRoleScopeMappings
-          role: offline_access
+          role: scope-mapping-role
+      - addRoleScopeMapping:
+          clientId: testClientRoleScopeMappings
+          role: query-users
+          roleClientId: realm-management
 
 ## addMapper
 adds a full configurable clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists

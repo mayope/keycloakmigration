@@ -7,8 +7,12 @@ changes:
   - addRole:
       name: scope-mapping-role
   - updateClient:
-      clientId: testClientRoles
+      clientId: testClientRoleScopeMappings
       fullScopeAllowed: false
   - addRoleScopeMapping:
       clientId: testClientRoleScopeMappings
       role: scope-mapping-role
+  - addRoleScopeMapping:
+      clientId: testClientRoleScopeMappings
+      role: query-users
+      roleClientId: realm-management
