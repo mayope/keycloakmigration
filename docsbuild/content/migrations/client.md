@@ -132,9 +132,9 @@ See https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings
     realm: integ-test
     changes:
       - addSimpleClient:
-          clientId: testClientRoleMappings
+          clientId: testClientRoleScopeMappings
       - addRoleScopeMapping:
-          clientId: testClientRoleMappings
+          clientId: testClientRoleScopeMappings
           role: offline_access
 
 ## addMapper

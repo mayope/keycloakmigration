@@ -24,7 +24,8 @@ class UpdateClientAction(
         private val adminUrl: String? = null,
         private val baseUrl: String? = null,
         private val rootUrl: String? = null,
-        private val webOrigins: List<String>? = null) : Action(realm) {
+        private val webOrigins: List<String>? = null,
+        private val fullScopeAllowed: Boolean? = null) : Action(realm) {
 
     private lateinit var oldClient: Client
 
@@ -51,7 +52,7 @@ class UpdateClientAction(
             protocol ?: oldClient.protocol,
             attributes ?: oldClient.attributes,
             oldClient.authenticationFlowBindingOverrides,
-            oldClient.fullScopeAllowed,
+            fullScopeAllowed ?:oldClient.fullScopeAllowed,
             oldClient.nodeReRegistrationTimeout,
             oldClient.protocolMappers,
             oldClient.defaultClientScopes,
