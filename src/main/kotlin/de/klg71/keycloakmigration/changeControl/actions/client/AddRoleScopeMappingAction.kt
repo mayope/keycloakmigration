@@ -32,10 +32,6 @@ class AddRoleScopeMappingAction(
                         "Role with name: $role in client: $roleClientId does not exist in realm: ${realm()}!")
             }
         }
-        val serviceClient = client.clientById(clientId, realm())
-        if (!serviceClient.serviceAccountsEnabled) {
-            throw MigrationException("Service account not enabled for client: $clientId!")
-        }
 
         findRole().run {
             roleScopeMapping()
