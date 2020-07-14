@@ -13,45 +13,42 @@ import org.junit.Test
 import org.koin.core.inject
 import java.util.UUID
 
-class AddRoleScopeMappingIntegTest : AbstractIntegrationTest() {
+class DeleteRoleScopeMappingIntegTest : AbstractIntegrationTest() {
 
     private val client by inject<KeycloakClient>()
     private val clientId = "testIntegration"
     private val role = "testRole"
 
     @Test
-    fun testAddRealmRoleScopeMapping() {
+    fun testDeleteRealmRoleScopeMapping() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
         AddRoleAction(testRealm, role).executeIt()
-
         AddRoleScopeMappingAction(testRealm, role, clientId).executeIt()
 
-        val testRoleScopeMapping = RoleScopeMapping(UUID.randomUUID(), role, null, false, false, testRealm)
+        DeleteRoleScopeMappingAction(testRealm, role, clientId).executeIt()
 
         client.realmRoleScopeMappings(testRealm, client.clientUUID(clientId, testRealm)).let {
-            assertThat(it).usingElementComparatorOnFields("name", "containerId").contains(testRoleScopeMapping)
+            assertThat(it).isEmpty()
         }
     }
 
     @Test
-    fun testAddClientRoleScopeMapping() {
+    fun testDeleteClientRoleScopeMapping() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
         val roleClientId = "testRoleClient"
         AddSimpleClientAction(testRealm, roleClientId).executeIt()
         AddRoleAction(testRealm, role,clientId= roleClientId).executeIt()
-
         AddRoleScopeMappingAction(testRealm, role, clientId, roleClientId).executeIt()
 
-        val testRoleScopeMapping = RoleScopeMapping(UUID.randomUUID(), role, null, false, true,
-                client.clientUUID(roleClientId,testRealm).toString())
+        DeleteRoleScopeMappingAction(testRealm, role, clientId, roleClientId).executeIt()
 
         client.clientRoleScopeMappings(testRealm, client.clientUUID(clientId, testRealm), client.clientUUID(roleClientId,testRealm)).let {
-            assertThat(it).usingElementComparatorOnFields("name", "containerId").contains(testRoleScopeMapping)
+            assertThat(it).isEmpty()
         }
     }
 
     @Test
-    fun testAddRoleScopeMapping_clientNotExisting() {
+    fun testDeleteRoleScopeMapping_clientNotExisting() {
         AddRoleAction(testRealm, role).executeIt()
         assertThatThrownBy {
             AssignRoleToClientAction(testRealm, role, clientId).executeIt()
@@ -60,7 +57,7 @@ class AddRoleScopeMappingIntegTest : AbstractIntegrationTest() {
     }
 
     @Test
-    fun testAddRoleScopeMapping_roleNotExisting() {
+    fun testDeleteRoleScopeMapping_roleNotExisting() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
         assertThatThrownBy {
             AssignRoleToClientAction(testRealm, role, clientId).executeIt()
@@ -69,7 +66,7 @@ class AddRoleScopeMappingIntegTest : AbstractIntegrationTest() {
     }
 
     @Test
-    fun testAddRoleScopeMapping_clientRoleNotExisting() {
+    fun testDeleteRoleScopeMapping_clientRoleNotExisting() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
         AddSimpleClientAction(testRealm, "testRoleClient").executeIt()
         assertThatThrownBy {

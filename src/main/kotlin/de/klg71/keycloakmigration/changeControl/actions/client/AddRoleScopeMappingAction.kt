@@ -45,7 +45,8 @@ class AddRoleScopeMappingAction(
         }
     }
 
-    private fun Role.roleScopeMapping() = RoleScopeMapping(id, name, description, composite, isNull(client), containerId)
+    private fun Role.roleScopeMapping() =
+        RoleScopeMapping(id, name, description, composite, isNull(client), containerId)
 
     override fun undo() {
         findRole().run {

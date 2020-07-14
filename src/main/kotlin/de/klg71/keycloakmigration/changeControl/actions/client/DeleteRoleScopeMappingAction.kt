@@ -32,10 +32,6 @@ class DeleteRoleScopeMappingAction(
                         "Role with name: $role in client: $roleClientId does not exist in realm: ${realm()}!")
             }
         }
-        val serviceClient = client.clientById(clientId, realm())
-        if (!serviceClient.serviceAccountsEnabled) {
-            throw MigrationException("Service account not enabled for client: $clientId!")
-        }
 
         findRole().run {
             roleScopeMapping()
@@ -49,7 +45,8 @@ class DeleteRoleScopeMappingAction(
         }
     }
 
-    private fun Role.roleScopeMapping() = RoleScopeMapping(id, name, description, composite, isNull(client), containerId)
+    private fun Role.roleScopeMapping() =
+        RoleScopeMapping(id, name, description, composite, isNull(client), containerId)
 
     override fun undo() {
         findRole().run {
