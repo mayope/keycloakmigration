@@ -289,6 +289,9 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/groups/{group-id}/role-mappings/realm/composite")
     fun groupRoles(@Param("realm") realm: String, @Param("group-id") id: UUID): List<RoleListItem>
 
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
+    fun realmRoleScopeMappings(@Param("realm") realm: String, @Param("client-id") id: UUID): List<RoleScopeMapping>
+
     @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addRealmRoleScopeMapping(roleScopeMapping: List<RoleScopeMapping>, @Param("realm") realm: String, @Param("client-id") id: UUID): Response
@@ -296,6 +299,9 @@ interface KeycloakClient {
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun deleteRealmRoleScopeMapping(roleScopeMapping: List<RoleScopeMapping>, @Param("realm") realm: String, @Param("client-id") id: UUID): Response
+
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/scope-mappings/clients/{role-client-id}")
+    fun clientRoleScopeMappings(@Param("realm") realm: String, @Param("client-id") id: UUID, @Param("role-client-id") roleClientId: UUID): List<RoleScopeMapping>
 
     @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/scope-mappings/clients/{role-client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
