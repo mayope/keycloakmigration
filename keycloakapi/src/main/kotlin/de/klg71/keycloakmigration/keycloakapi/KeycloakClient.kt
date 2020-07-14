@@ -25,6 +25,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
+import de.klg71.keycloakmigration.keycloakapi.model.RoleScopeMapping
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
 import de.klg71.keycloakmigration.keycloakapi.model.User
 import de.klg71.keycloakmigration.keycloakapi.model.UserFederation
@@ -288,4 +289,7 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/groups/{group-id}/role-mappings/realm/composite")
     fun groupRoles(@Param("realm") realm: String, @Param("group-id") id: UUID): List<RoleListItem>
 
+    @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addRoleScopeMapping(roleScopeMapping: RoleScopeMapping, @Param("realm") realm: String, @Param("client-id") id: UUID): Response
 }
