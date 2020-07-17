@@ -24,3 +24,4 @@ includes:
 - path: changesets/24_disabled_change_set.yml
 - path: changesets/25_client_role.yml
 - path: changesets/26_client_scope.yml
+- path: changesets/27_role_scope_mapping.yml

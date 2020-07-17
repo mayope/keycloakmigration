@@ -2,9 +2,11 @@ package de.klg71.keycloakmigration.changeControl.actions
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import de.klg71.keycloakmigration.changeControl.actions.client.AddRoleScopeMappingAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.AssignRoleToClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
+import de.klg71.keycloakmigration.changeControl.actions.client.DeleteRoleScopeMappingAction
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.UpdateClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddAudienceMapperAction
@@ -74,6 +76,8 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
                 "updateClient" -> objectMapper.readValue<UpdateClientAction>(actionJson)
                 "deleteClient" -> objectMapper.readValue<DeleteClientAction>(actionJson)
                 "assignRoleToClient" -> objectMapper.readValue<AssignRoleToClientAction>(actionJson)
+                "addRoleScopeMapping" -> objectMapper.readValue<AddRoleScopeMappingAction>(actionJson)
+                "deleteRoleScopeMapping" -> objectMapper.readValue<DeleteRoleScopeMappingAction>(actionJson)
 
                 "addClientScope" -> objectMapper.readValue<AddClientScopeAction>(actionJson)
                 "assignDefaultClientScope" -> objectMapper.readValue<AssignDefaultClientScopeAction>(actionJson)

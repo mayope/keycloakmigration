@@ -78,6 +78,7 @@ Update a client
 - publicClient: Boolean, optional, default=no change
 - serviceAccountsEnabled: Boolean, optional, default=no change
 - webOrigins: List< String>, optional, default=no change
+- fullScopeAllowed: Boolean, optional, default=no change
 
 ### Example
     id: update-client
@@ -112,6 +113,37 @@ Assigns a realm- or client-role(if roleClientId is set) to a service account of 
           publicClient: false
       - assignRoleToClient:
           clientId: testClientRoles
+          role: query-users
+          roleClientId: realm-management
+
+## addRoleScopeMapping
+Adds a realm- or client-role(if roleClientId is set) to the cope mappings of a client.
+
+See https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings
+
+### Parameters
+- realm: String, optional
+- clientId: String, not optional
+- role: String, not optional
+- roleClientId: String, optional, default = realmRole
+
+### Example
+    id: add-client-role-mapping
+    author: klg71
+    realm: integ-test
+    changes:
+      - addSimpleClient:
+          clientId: testClientRoleScopeMappings
+      - addRole:
+          name: scope-mapping-role
+      - updateClient:
+          clientId: testClientRoleScopeMappings
+          fullScopeAllowed: false
+      - addRoleScopeMapping:
+          clientId: testClientRoleScopeMappings
+          role: scope-mapping-role
+      - addRoleScopeMapping:
+          clientId: testClientRoleScopeMappings
           role: query-users
           roleClientId: realm-management
 

@@ -1,0 +1,18 @@
+id: add-client-role-mapping
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testClientRoleScopeMappings
+  - addRole:
+      name: scope-mapping-role
+  - updateClient:
+      clientId: testClientRoleScopeMappings
+      fullScopeAllowed: false
+  - addRoleScopeMapping:
+      clientId: testClientRoleScopeMappings
+      role: scope-mapping-role
+  - addRoleScopeMapping:
+      clientId: testClientRoleScopeMappings
+      role: query-users
+      roleClientId: realm-management

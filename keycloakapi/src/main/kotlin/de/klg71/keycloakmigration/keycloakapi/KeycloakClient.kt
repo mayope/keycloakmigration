@@ -288,4 +288,25 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/groups/{group-id}/role-mappings/realm/composite")
     fun groupRoles(@Param("realm") realm: String, @Param("group-id") id: UUID): List<RoleListItem>
 
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
+    fun realmRoleScopeMappingsOfClient(@Param("realm") realm: String, @Param("client-id") id: UUID): List<RoleListItem>
+
+    @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addRealmRoleScopeMappingToClient(roleScopeMapping: List<RoleListItem>, @Param("realm") realm: String, @Param("client-id") id: UUID): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun deleteRealmRoleScopeMappingOfClient(roleScopeMapping: List<RoleListItem>, @Param("realm") realm: String, @Param("client-id") id: UUID): Response
+
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/scope-mappings/clients/{role-client-id}")
+    fun clientRoleScopeMappingsOfClient(@Param("realm") realm: String, @Param("client-id") id: UUID, @Param("role-client-id") roleClientId: UUID): List<RoleListItem>
+
+    @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/scope-mappings/clients/{role-client-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addClientRoleScopeMappingToClient(roleScopeMapping: List<RoleListItem>, @Param("realm") realm: String, @Param("client-id") id: UUID, @Param("role-client-id") roleClientId: UUID): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/scope-mappings/clients/{role-client-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun deleteClientRoleScopeMappingOfClient(roleScopeMapping: List<RoleListItem>, @Param("realm") realm: String, @Param("client-id") id: UUID, @Param("role-client-id") roleClientId: UUID): Response
 }
