@@ -3,15 +3,12 @@ package de.klg71.keycloakmigration.changeControl.actions.client
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
-import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
-import de.klg71.keycloakmigration.keycloakapi.model.RoleScopeMapping
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.inject
-import java.util.UUID
 
 class DeleteRoleScopeMappingIntegTest : AbstractIntegrationTest() {
 
@@ -27,7 +24,7 @@ class DeleteRoleScopeMappingIntegTest : AbstractIntegrationTest() {
 
         DeleteRoleScopeMappingAction(testRealm, role, clientId).executeIt()
 
-        client.realmRoleScopeMappings(testRealm, client.clientUUID(clientId, testRealm)).let {
+        client.realmRoleScopeMappingsOfClient(testRealm, client.clientUUID(clientId, testRealm)).let {
             assertThat(it).isEmpty()
         }
     }
@@ -42,7 +39,7 @@ class DeleteRoleScopeMappingIntegTest : AbstractIntegrationTest() {
 
         DeleteRoleScopeMappingAction(testRealm, role, clientId, roleClientId).executeIt()
 
-        client.clientRoleScopeMappings(testRealm, client.clientUUID(clientId, testRealm), client.clientUUID(roleClientId,testRealm)).let {
+        client.clientRoleScopeMappingsOfClient(testRealm, client.clientUUID(clientId, testRealm), client.clientUUID(roleClientId,testRealm)).let {
             assertThat(it).isEmpty()
         }
     }

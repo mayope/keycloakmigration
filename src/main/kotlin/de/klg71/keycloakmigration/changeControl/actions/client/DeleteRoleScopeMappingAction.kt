@@ -2,14 +2,13 @@ package de.klg71.keycloakmigration.changeControl.actions.client
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.keycloakapi.clientById
 import de.klg71.keycloakmigration.keycloakapi.clientRoleByName
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
 import de.klg71.keycloakmigration.keycloakapi.existsClient
 import de.klg71.keycloakmigration.keycloakapi.existsClientRole
 import de.klg71.keycloakmigration.keycloakapi.existsRole
 import de.klg71.keycloakmigration.keycloakapi.model.Role
-import de.klg71.keycloakmigration.keycloakapi.model.RoleScopeMapping
+import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import java.util.Objects.isNull
 
 class DeleteRoleScopeMappingAction(
@@ -37,26 +36,26 @@ class DeleteRoleScopeMappingAction(
             roleScopeMapping()
         }.let {
             if (roleClientId != null) {
-                client.deleteClientRoleScopeMapping(listOf(it), realm(), client.clientUUID(clientId, realm()),
+                client.deleteClientRoleScopeMappingOfClient(listOf(it), realm(), client.clientUUID(clientId, realm()),
                         client.clientUUID(roleClientId, realm()))
             } else {
-                client.deleteRealmRoleScopeMapping(listOf(it), realm(), client.clientUUID(clientId, realm()))
+                client.deleteRealmRoleScopeMappingOfClient(listOf(it), realm(), client.clientUUID(clientId, realm()))
             }
         }
     }
 
     private fun Role.roleScopeMapping() =
-        RoleScopeMapping(id, name, description, composite, isNull(client), containerId)
+        RoleListItem(id, name, description, composite, isNull(client), containerId)
 
     override fun undo() {
         findRole().run {
             roleScopeMapping()
         }.let {
             if (roleClientId != null) {
-                client.addClientRoleScopeMapping(listOf(it), realm(), client.clientUUID(clientId, realm()),
+                client.addClientRoleScopeMappingToClient(listOf(it), realm(), client.clientUUID(clientId, realm()),
                     client.clientUUID(roleClientId, realm()))
             } else {
-                client.addRealmRoleScopeMapping(listOf(it), realm(), client.clientUUID(clientId, realm()))
+                client.addRealmRoleScopeMappingToClient(listOf(it), realm(), client.clientUUID(clientId, realm()))
             }
         }
     }

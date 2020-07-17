@@ -25,7 +25,6 @@ import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
-import de.klg71.keycloakmigration.keycloakapi.model.RoleScopeMapping
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
 import de.klg71.keycloakmigration.keycloakapi.model.User
 import de.klg71.keycloakmigration.keycloakapi.model.UserFederation
@@ -290,24 +289,24 @@ interface KeycloakClient {
     fun groupRoles(@Param("realm") realm: String, @Param("group-id") id: UUID): List<RoleListItem>
 
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
-    fun realmRoleScopeMappings(@Param("realm") realm: String, @Param("client-id") id: UUID): List<RoleScopeMapping>
+    fun realmRoleScopeMappingsOfClient(@Param("realm") realm: String, @Param("client-id") id: UUID): List<RoleListItem>
 
     @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addRealmRoleScopeMapping(roleScopeMapping: List<RoleScopeMapping>, @Param("realm") realm: String, @Param("client-id") id: UUID): Response
+    fun addRealmRoleScopeMappingToClient(roleScopeMapping: List<RoleListItem>, @Param("realm") realm: String, @Param("client-id") id: UUID): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun deleteRealmRoleScopeMapping(roleScopeMapping: List<RoleScopeMapping>, @Param("realm") realm: String, @Param("client-id") id: UUID): Response
+    fun deleteRealmRoleScopeMappingOfClient(roleScopeMapping: List<RoleListItem>, @Param("realm") realm: String, @Param("client-id") id: UUID): Response
 
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/scope-mappings/clients/{role-client-id}")
-    fun clientRoleScopeMappings(@Param("realm") realm: String, @Param("client-id") id: UUID, @Param("role-client-id") roleClientId: UUID): List<RoleScopeMapping>
+    fun clientRoleScopeMappingsOfClient(@Param("realm") realm: String, @Param("client-id") id: UUID, @Param("role-client-id") roleClientId: UUID): List<RoleListItem>
 
     @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/scope-mappings/clients/{role-client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addClientRoleScopeMapping(roleScopeMapping: List<RoleScopeMapping>, @Param("realm") realm: String, @Param("client-id") id: UUID, @Param("role-client-id") roleClientId: UUID): Response
+    fun addClientRoleScopeMappingToClient(roleScopeMapping: List<RoleListItem>, @Param("realm") realm: String, @Param("client-id") id: UUID, @Param("role-client-id") roleClientId: UUID): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/scope-mappings/clients/{role-client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun deleteClientRoleScopeMapping(roleScopeMapping: List<RoleScopeMapping>, @Param("realm") realm: String, @Param("client-id") id: UUID, @Param("role-client-id") roleClientId: UUID): Response
+    fun deleteClientRoleScopeMappingOfClient(roleScopeMapping: List<RoleListItem>, @Param("realm") realm: String, @Param("client-id") id: UUID, @Param("role-client-id") roleClientId: UUID): Response
 }

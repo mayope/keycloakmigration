@@ -3,10 +3,9 @@ package de.klg71.keycloakmigration.changeControl.actions.client
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
-import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
-import de.klg71.keycloakmigration.keycloakapi.model.RoleScopeMapping
+import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
@@ -26,9 +25,9 @@ class AddRoleScopeMappingIntegTest : AbstractIntegrationTest() {
 
         AddRoleScopeMappingAction(testRealm, role, clientId).executeIt()
 
-        val testRoleScopeMapping = RoleScopeMapping(UUID.randomUUID(), role, null, false, false, testRealm)
+        val testRoleScopeMapping = RoleListItem(UUID.randomUUID(), role, null, false, false, testRealm)
 
-        client.realmRoleScopeMappings(testRealm, client.clientUUID(clientId, testRealm)).let {
+        client.realmRoleScopeMappingsOfClient(testRealm, client.clientUUID(clientId, testRealm)).let {
             assertThat(it).usingElementComparatorOnFields("name", "containerId").contains(testRoleScopeMapping)
         }
     }
@@ -42,10 +41,10 @@ class AddRoleScopeMappingIntegTest : AbstractIntegrationTest() {
 
         AddRoleScopeMappingAction(testRealm, role, clientId, roleClientId).executeIt()
 
-        val testRoleScopeMapping = RoleScopeMapping(UUID.randomUUID(), role, null, false, true,
+        val testRoleScopeMapping = RoleListItem(UUID.randomUUID(), role, null, false, true,
                 client.clientUUID(roleClientId,testRealm).toString())
 
-        client.clientRoleScopeMappings(testRealm, client.clientUUID(clientId, testRealm), client.clientUUID(roleClientId,testRealm)).let {
+        client.clientRoleScopeMappingsOfClient(testRealm, client.clientUUID(clientId, testRealm), client.clientUUID(roleClientId,testRealm)).let {
             assertThat(it).usingElementComparatorOnFields("name", "containerId").contains(testRoleScopeMapping)
         }
     }
