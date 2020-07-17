@@ -5,10 +5,12 @@ import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
+import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.inject
+import java.util.UUID
 
 class DeleteRoleScopeMappingIntegTest : AbstractIntegrationTest() {
 
@@ -41,6 +43,46 @@ class DeleteRoleScopeMappingIntegTest : AbstractIntegrationTest() {
 
         client.clientRoleScopeMappingsOfClient(testRealm, client.clientUUID(clientId, testRealm), client.clientUUID(roleClientId,testRealm)).let {
             assertThat(it).isEmpty()
+        }
+    }
+
+    @Test
+    fun testUndoDeleteRealmRoleScopeMapping() {
+        AddSimpleClientAction(testRealm, clientId).executeIt()
+        AddRoleAction(testRealm, role).executeIt()
+
+        AddRoleScopeMappingAction(testRealm, role, clientId).executeIt()
+        val deleteRoleScopeMappingAction = DeleteRoleScopeMappingAction(testRealm, role, clientId)
+        deleteRoleScopeMappingAction.executeIt()
+
+        deleteRoleScopeMappingAction.undoIt()
+
+        val testRoleScopeMapping = RoleListItem(UUID.randomUUID(), role, null, false, false, testRealm)
+
+        client.realmRoleScopeMappingsOfClient(testRealm, client.clientUUID(clientId, testRealm)).let {
+            assertThat(it).usingElementComparatorOnFields("name", "containerId").contains(testRoleScopeMapping)
+        }
+    }
+
+    @Test
+    fun testUndoDeleteClientRoleScopeMapping() {
+        AddSimpleClientAction(testRealm, clientId).executeIt()
+        val roleClientId = "testRoleClient"
+        AddSimpleClientAction(testRealm, roleClientId).executeIt()
+        AddRoleAction(testRealm, role,clientId= roleClientId).executeIt()
+
+        AddRoleScopeMappingAction(testRealm, role, clientId, roleClientId).executeIt()
+        val deleteRoleScopeMappingAction = DeleteRoleScopeMappingAction(testRealm, role, clientId, roleClientId)
+        deleteRoleScopeMappingAction.executeIt()
+
+        deleteRoleScopeMappingAction.undoIt()
+
+        val testRoleScopeMapping = RoleListItem(
+            UUID.randomUUID(), role, null, false, true,
+            client.clientUUID(roleClientId,testRealm).toString())
+
+        client.clientRoleScopeMappingsOfClient(testRealm, client.clientUUID(clientId, testRealm), client.clientUUID(roleClientId,testRealm)).let {
+            assertThat(it).usingElementComparatorOnFields("name", "containerId").contains(testRoleScopeMapping)
         }
     }
 

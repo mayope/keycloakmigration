@@ -50,6 +50,37 @@ class AddRoleScopeMappingIntegTest : AbstractIntegrationTest() {
     }
 
     @Test
+    fun testUndoAddRealmRoleScopeMapping() {
+        AddSimpleClientAction(testRealm, clientId).executeIt()
+        AddRoleAction(testRealm, role).executeIt()
+        val addRoleScopeMappingAction = AddRoleScopeMappingAction(testRealm, role, clientId)
+        addRoleScopeMappingAction.executeIt()
+
+        addRoleScopeMappingAction.undoIt()
+
+        client.realmRoleScopeMappingsOfClient(testRealm, client.clientUUID(clientId, testRealm)).let {
+            assertThat(it).isEmpty()
+        }
+    }
+
+    @Test
+    fun testUndoAddClientRoleScopeMapping() {
+        AddSimpleClientAction(testRealm, clientId).executeIt()
+        val roleClientId = "testRoleClient"
+        AddSimpleClientAction(testRealm, roleClientId).executeIt()
+        AddRoleAction(testRealm, role,clientId= roleClientId).executeIt()
+        val addRoleScopeMappingAction = AddRoleScopeMappingAction(testRealm, role, clientId, roleClientId)
+        addRoleScopeMappingAction.executeIt()
+
+        addRoleScopeMappingAction.undoIt()
+
+        client.clientRoleScopeMappingsOfClient(testRealm, client.clientUUID(clientId, testRealm), client.clientUUID(roleClientId,testRealm)).let {
+            assertThat(it).isEmpty()
+        }
+    }
+
+
+    @Test
     fun testAddRoleScopeMapping_clientNotExisting() {
         AddRoleAction(testRealm, role).executeIt()
         assertThatThrownBy {
