@@ -66,6 +66,6 @@ class DeleteRoleScopeMappingAction(
         client.clientRoleByName(role, roleClientId, realm())
     }
 
-    override fun name() = "AssignRole $role in client: $roleClientId to Client ServiceAccount: $clientId"
+    override fun name() = "Remove $role in client: $roleClientId from scope mapping of Client: $clientId"
 
 }

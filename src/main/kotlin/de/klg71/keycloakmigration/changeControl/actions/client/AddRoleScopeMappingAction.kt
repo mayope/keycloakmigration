@@ -66,6 +66,6 @@ class AddRoleScopeMappingAction(
         client.clientRoleByName(role, roleClientId, realm())
     }
 
-    override fun name() = "AssignRole $role in client: $roleClientId to Client ServiceAccount: $clientId"
+    override fun name() = "Add $role in client: $roleClientId to scope mapping of Client: $clientId"
 
 }
