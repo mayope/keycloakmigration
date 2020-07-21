@@ -56,6 +56,9 @@ val javadocJar by tasks.creating(Jar::class) {
     archiveClassifier.set("javadoc")
     from(tasks.javadoc)
 }
+val jarMaven by tasks.creating(Jar::class){
+
+}
 
 publishing {
     publications {
@@ -63,7 +66,7 @@ publishing {
             groupId = "de.klg71.keycloakmigration"
             artifact(sourcesJar)
             artifact(javadocJar)
-            from(components["java"])
+            artifact(jarMaven)
         }
     }
     repositories {
