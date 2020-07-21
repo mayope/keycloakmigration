@@ -255,7 +255,9 @@ val javadocJar by tasks.creating(Jar::class) {
     from(tasks.javadoc)
 }
 
-val jar by tasks.creating(Jar::class)
+val jarMaven by tasks.creating(Jar::class){
+
+}
 
 
 publishing {
@@ -264,7 +266,7 @@ publishing {
             groupId = "de.klg71.keycloakmigration"
             artifact(sourcesJar)
             artifact(javadocJar)
-            artifact(jar)
+            artifact(jarMaven)
         }
     }
     repositories {
