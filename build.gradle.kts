@@ -61,6 +61,7 @@ tasks {
     val keycloakVersion = "10.0.0"
 
     named<ShadowJar>("shadowJar") {
+        archiveClassifier.set("fat")
         classifier = "fat"
         manifest {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
