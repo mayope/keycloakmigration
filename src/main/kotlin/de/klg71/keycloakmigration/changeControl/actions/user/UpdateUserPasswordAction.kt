@@ -13,16 +13,16 @@ import javax.crypto.spec.PBEKeySpec
 import kotlin.text.Charsets.UTF_8
 
 
-const val HASH_ITERATIONS = 27500
+internal const val HASH_ITERATIONS = 27500
 // 64 Bytes
-const val KEY_BIT_LENGTH = 64 * 8
-const val RANDOM_SALT_LENGTH = 15
+internal const val KEY_BIT_LENGTH = 64 * 8
+internal const val RANDOM_SALT_LENGTH = 15
 
 /**
  * Updates the users password to the given one,
  * WARNING: This action can't be undone
  */
-class UpdateUserPasswordAction(
+internal class UpdateUserPasswordAction(
         realm: String? = null,
         private val name: String,
         private val password: String,

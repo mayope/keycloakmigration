@@ -20,7 +20,7 @@ internal fun assertMapperIsCreatable(client:KeycloakClient, name:String, adName:
     }
 }
 
-class AddAdLdapMapperAction(
+internal class AddAdLdapMapperAction(
         realm: String? = null,
         private val name: String,
         private val adName:String,

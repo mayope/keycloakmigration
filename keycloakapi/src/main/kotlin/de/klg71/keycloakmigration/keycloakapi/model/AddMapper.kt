@@ -1,12 +1,13 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
 data class AddMapper(val name: String, val config: Map<String, String>,
-                     val protocol: String, val protocolMapper: String)
+                              val protocol: String, val protocolMapper: String)
 
 @Suppress("LongParameterList")
-fun groupMembershipMapper(name: String, addToAccessToken: Boolean, addToIdToken: Boolean, fullGroupPath: Boolean,
-                          addToUserInfo: Boolean,
-                          claimName: String) =
+fun groupMembershipMapper(name: String, addToAccessToken: Boolean, addToIdToken: Boolean,
+                                   fullGroupPath: Boolean,
+                                   addToUserInfo: Boolean,
+                                   claimName: String) =
         AddMapper(name, mapOf(
                 "access.token.claim" to addToAccessToken.toString(),
                 "id.token.claim" to addToIdToken.toString(),
@@ -17,9 +18,9 @@ fun groupMembershipMapper(name: String, addToAccessToken: Boolean, addToIdToken:
 
 @Suppress("LongParameterList")
 fun userRealmRoleMapper(name: String, addToAccessToken: Boolean, addToIdToken: Boolean,
-                        addToUserInfo: Boolean,
-                        claimName: String,
-                        prefix: String) =
+                                 addToUserInfo: Boolean,
+                                 claimName: String,
+                                 prefix: String) =
         AddMapper(name, mapOf(
                 "access.token.claim" to addToAccessToken.toString(),
                 "id.token.claim" to addToIdToken.toString(),
@@ -32,7 +33,7 @@ fun userRealmRoleMapper(name: String, addToAccessToken: Boolean, addToIdToken: B
 
 @Suppress("LongParameterList")
 fun audienceMapper(name: String, addToAccessToken: Boolean, addToIdToken: Boolean,
-                   clientAudience: String, customAudience: String) =
+                            clientAudience: String, customAudience: String) =
         AddMapper(name, mapOf(
                 "access.token.claim" to addToAccessToken.toString(),
                 "id.token.claim" to addToIdToken.toString(),
@@ -42,10 +43,10 @@ fun audienceMapper(name: String, addToAccessToken: Boolean, addToIdToken: Boolea
 
 @Suppress("LongParameterList")
 fun userAttributeMapper(name: String, addToAccessToken: Boolean, addToIdToken: Boolean,
-                        addToUserInfo: Boolean,
-                        claimName: String,
-                        aggregateAttributeValues: Boolean,
-                        userAttribute: String) =
+                                 addToUserInfo: Boolean,
+                                 claimName: String,
+                                 aggregateAttributeValues: Boolean,
+                                 userAttribute: String) =
         AddMapper(name, mapOf(
                 "access.token.claim" to addToAccessToken.toString(),
                 "id.token.claim" to addToIdToken.toString(),

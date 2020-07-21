@@ -10,7 +10,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
 import java.util.UUID
 
 
-fun addMapper(client: KeycloakClient, mapper: AddMapper, clientId: String, name: String, realm: String): UUID {
+internal fun addMapper(client: KeycloakClient, mapper: AddMapper, clientId: String, name: String, realm: String): UUID {
     if (client.mapperExistsByName(clientId, name, realm)) {
         throw MigrationException(
                 "Mapper with name: $name already exists in client: $clientId on realm: ${realm}!")
@@ -22,7 +22,7 @@ fun addMapper(client: KeycloakClient, mapper: AddMapper, clientId: String, name:
     }
 }
 
-class AddMapperAction(
+internal class AddMapperAction(
         realm: String?,
         private val clientId: String,
         private val name: String,
@@ -44,5 +44,4 @@ class AddMapperAction(
     }
 
     override fun name() = "AddMapper $clientId"
-
 }

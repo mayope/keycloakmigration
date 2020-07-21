@@ -15,12 +15,12 @@ import java.time.temporal.ChronoUnit
 val KOIN_LOGGER = LoggerFactory.getLogger("de.klg71.keycloakmigration.koinlogger")!!
 const val DEFAULT_WAIT_FOR_KEYCLOAK_PAUSE_TIME = 1000L
 
-fun main(args: Array<String>) = mainBody {
+internal fun main(args: Array<String>) = mainBody {
     val migrationArgs = ArgParser(args).parseInto(::CommandLineMigrationArgs)
     migrate(migrationArgs)
 }
 
-fun waitForKeycloak(baseUrl: String, timeout: Long) {
+internal fun waitForKeycloak(baseUrl: String, timeout: Long) {
     val waitTill = Instant.now().plus(timeout, ChronoUnit.SECONDS)
     while (true) {
         if (isKeycloakReady(baseUrl)) return

@@ -62,6 +62,7 @@ tasks {
 
     named<ShadowJar>("shadowJar") {
         archiveClassifier.set("fat")
+        archiveAppendix.set("fat")
         classifier = "fat"
         manifest {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
@@ -254,13 +255,16 @@ val javadocJar by tasks.creating(Jar::class) {
     from(tasks.javadoc)
 }
 
+val jar by tasks.creating(Jar::class)
+
+
 publishing {
     publications {
         register("mavenJava", MavenPublication::class) {
             groupId = "de.klg71.keycloakmigration"
             artifact(sourcesJar)
             artifact(javadocJar)
-            from(components["java"])
+            artifact(jar)
         }
     }
     repositories {
@@ -268,7 +272,6 @@ publishing {
             setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2")
             credentials {
                 val ossrhUser = project.findProperty("ossrhUser") as String? ?: ""
-
                 username = ossrhUser
                 val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
                 password = ossrhPassword
