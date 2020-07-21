@@ -56,7 +56,7 @@ val javadocJar by tasks.creating(Jar::class) {
     archiveClassifier.set("javadoc")
     from(tasks.javadoc)
 }
-val jarMaven by tasks.creating(Jar::class){
+val jarMaven by tasks.named<Jar>("jar"){
 
 }
 

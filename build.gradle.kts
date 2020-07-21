@@ -255,7 +255,7 @@ val javadocJar by tasks.creating(Jar::class) {
     from(tasks.javadoc)
 }
 
-val jarMaven by tasks.creating(Jar::class){
+val jarMaven by tasks.named<Jar>("jar"){
 
 }
 
