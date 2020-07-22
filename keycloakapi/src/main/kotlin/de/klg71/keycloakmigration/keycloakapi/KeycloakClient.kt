@@ -30,7 +30,6 @@ import de.klg71.keycloakmigration.keycloakapi.model.User
 import de.klg71.keycloakmigration.keycloakapi.model.UserFederation
 import de.klg71.keycloakmigration.keycloakapi.model.UserFederationMapper
 import de.klg71.keycloakmigration.keycloakapi.model.UserGroupListItem
-import de.klg71.keycloakmigration.keycloakapi.model.UserListItem
 import feign.Headers
 import feign.Param
 import feign.RequestLine
@@ -51,13 +50,13 @@ interface KeycloakClient {
     fun realmNames(): List<RealmName>
 
     @RequestLine("GET /admin/realms/{realm}/users")
-    fun users(@Param("realm") realm: String): List<UserListItem>
+    fun users(@Param("realm") realm: String): List<User>
 
     @RequestLine("GET /admin/realms/{realm}/users?username={username}")
-    fun searchByUsername(@Param("username") username: String, @Param("realm") realm: String): List<UserListItem>
+    fun searchByUsername(@Param("username") username: String, @Param("realm") realm: String): List<User>
 
     @RequestLine("GET /admin/realms/{realm}/users?search={search}")
-    fun searchUser(@Param("search") search: String, @Param("realm") realm: String): List<UserListItem>
+    fun searchUser(@Param("search") search: String, @Param("realm") realm: String): List<User>
 
     @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}")
     fun deleteUser(@Param("user-id") userId: UUID, @Param("realm") realm: String)
