@@ -60,7 +60,7 @@ repositories {
 tasks {
     val keycloakVersion = "10.0.0"
 
-    named<ShadowJar>("shadowJar") {
+    register<ShadowJar>("shadowJar") {
         archiveClassifier.set("fat")
         archiveAppendix.set("fat")
         classifier = "fat"
@@ -241,8 +241,6 @@ tasks {
 
             }
         }
-    }
-    register<ShadowJar>("shadowJar") {
     }
 }
 
