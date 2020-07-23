@@ -5,8 +5,6 @@ plugins {
     id("maven-publish")
     id("signing")
     id("org.jetbrains.dokka") version "0.10.1"
-
-    id("com.github.johnrengelman.shadow")
 }
 
 repositories {
@@ -56,9 +54,6 @@ val javadocJar by tasks.creating(Jar::class) {
     archiveClassifier.set("javadoc")
     from(tasks.javadoc)
 }
-val jarMaven by tasks.named<Jar>("jar"){
-
-}
 
 publishing {
     publications {
@@ -66,7 +61,7 @@ publishing {
             groupId = "de.klg71.keycloakmigration"
             artifact(sourcesJar)
             artifact(javadocJar)
-            artifact(jarMaven)
+            from(components["java"])
         }
     }
     repositories {
@@ -148,10 +143,6 @@ gradle.taskGraph.whenReady {
 }
 
 tasks {
-    named<ShadowJar>("shadowJar") {
-        classifier = "all"
-    }
-
     register<org.jetbrains.dokka.gradle.DokkaTask>("documentation") {
         doFirst {
             System.setProperty("idea.io.use.fallback", "true")
