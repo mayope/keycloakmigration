@@ -243,8 +243,7 @@ tasks {
         }
     }
     named("uploadShadow") {
-        onlyIf { falst ae }
-
+        onlyIf { false }
     }
 }
 
