@@ -1,8 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.jetbrains.kotlin.org.jline.utils.Log
 import java.net.ConnectException
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "1.3.70"
@@ -76,7 +76,7 @@ tasks {
                 "plugin:publishPlugins",
                 "keycloakapi:publishMavenJavaPublicationToMavenRepository",
                 "keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository",
-                "pushDocker","shadowJar",":keycloakapi:shadowJar"
+                "pushDocker", "shadowJar", ":keycloakapi:shadowJar"
         )
     }
 
@@ -222,7 +222,8 @@ tasks {
         doLast {
             exec {
                 workingDir(dockerBuildWorkingDirectory)
-                commandLine("docker", "build", ".", "-t", tag,"--build-arg","jar_file=${fatJar.outputs.files.first().name}")
+                commandLine("docker", "build", ".", "-t", tag, "--build-arg",
+                        "jar_file=${fatJar.outputs.files.first().name}")
             }
             exec {
                 commandLine("docker", "tag", tag, tagLatest)
@@ -241,6 +242,10 @@ tasks {
             }
         }
     }
+    named("uploadShadow") {
+        onlyIf { falst ae }
+
+    }
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
@@ -255,10 +260,6 @@ val javadocJar by tasks.creating(Jar::class) {
     from(tasks.javadoc)
 }
 
-val jarMaven by tasks.named<Jar>("jar"){
-
-}
-
 
 publishing {
     publications {
@@ -266,7 +267,7 @@ publishing {
             groupId = "de.klg71.keycloakmigration"
             artifact(sourcesJar)
             artifact(javadocJar)
-            artifact(jarMaven)
+            from(components["java"])
         }
     }
     repositories {
