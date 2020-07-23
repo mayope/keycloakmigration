@@ -16,7 +16,7 @@ plugins {
     // static code analysis
     id("io.gitlab.arturbosch.detekt") version "1.7.0-beta1"
 
-    id("com.github.johnrengelman.shadow") version "6.0.0"
+    id("com.github.johnrengelman.shadow") version "6.0.0" apply(false)
 }
 
 dependencies {
@@ -242,8 +242,7 @@ tasks {
             }
         }
     }
-    named("uploadShadow") {
-        onlyIf { false }
+    register<ShadowJar>("shadowJar") {
     }
 }
 
