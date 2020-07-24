@@ -4,7 +4,6 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import de.klg71.keycloakmigration.*
 import org.apache.logging.log4j.core.config.Configurator
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import java.io.FileNotFoundException
@@ -13,15 +12,10 @@ import java.nio.file.Paths
 
 class WaitForKeycloakTest {
 
-    /**
-     * executes the changesets from test/resources
-     *
-     * INFO: This file must has its run configuration working dir set to src/test/resources
-     */
     object TestMigrationArgs : MigrationArgs {
         override fun adminUser() = DEFAULT_ADMIN_USER
         override fun adminPassword() = DEFAULT_ADMIN_PASSWORD
-        override fun baseUrl() = "http://localhost:8888/auth"
+        override fun baseUrl() = "http://localhost:8888/auth" // wiremock server
         override fun migrationFile() = "src/test/resources/keycloak-changelog.yml"
         override fun realm() = DEFAULT_REALM
         override fun clientId() = DEFAULT_CLIENTID
@@ -31,7 +25,7 @@ class WaitForKeycloakTest {
         }
 
         override fun waitForKeycloak() = true
-        override fun waitForKeycloakTimeout() = 10L
+        override fun waitForKeycloakTimeout() = 10L // seconds
         override fun failOnUndefinedVariables() = DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
         override fun warnOnUndefinedVariables() = DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
     }
