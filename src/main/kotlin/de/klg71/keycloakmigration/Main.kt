@@ -24,7 +24,7 @@ internal fun waitForKeycloak(baseUrl: String, timeout: Long) {
     val waitTill = Instant.now().plus(timeout, ChronoUnit.SECONDS)
     while (true) {
         if (isKeycloakReady(baseUrl)) return
-        if (timeout > 0 && waitTill.isAfter(Instant.now())) {
+        if (timeout > 0 && Instant.now().isAfter(waitTill)) {
             throw KeycloakNotReadyException()
         }
         println("Waiting for Keycloak to become ready")

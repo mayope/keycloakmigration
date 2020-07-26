@@ -50,6 +50,7 @@ dependencies {
     testCompile("org.koin:koin-test:2.0.1")
     testCompile("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     testCompile("org.assertj:assertj-core:3.11.1")
+    testCompile("com.github.tomakehurst:wiremock-jre8:2.27.0")
 }
 
 
