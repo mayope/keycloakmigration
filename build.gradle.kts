@@ -61,6 +61,10 @@ repositories {
 tasks {
     val keycloakVersion = "11.0.0"
 
+    named("build"){
+        dependsOn("buildDocker", ":docsbuild:buildDocs")
+    }
+
     register<ShadowJar>("shadowJar") {
         archiveClassifier.set("fat")
         manifest {
