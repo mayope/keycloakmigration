@@ -48,7 +48,8 @@ fun groupMapper(name: String, parentId: UUID, groupNameLdapAttribute: String,
                          filter: String, mode: String, ignoreMissingGroups: Boolean,
                          userRolesRetrieveStrategy: String, mappedGroupAttributes: List<String>,
                          memberofLdapAttribute: String,
-                         dropNonExistingGroupsDuringSync: Boolean): AddUserFederationMapper {
+                         dropNonExistingGroupsDuringSync: Boolean,
+groupsPath:String): AddUserFederationMapper {
     return AddUserFederationMapper(name, translateConfig(mapOf(
             "group.name.ldap.attribute" to groupNameLdapAttribute,
             "group.object.classes" to groupObjectClasses.joinToString(separator = ","),
@@ -63,7 +64,8 @@ fun groupMapper(name: String, parentId: UUID, groupNameLdapAttribute: String,
             "user.roles.retrieve.strategy" to userRolesRetrieveStrategy,
             "mapped.group.attributes" to mappedGroupAttributes.joinToString(separator = ","),
             "memberof.ldap.attribute" to memberofLdapAttribute,
-            "drop.non.existing.groups.during.sync" to dropNonExistingGroupsDuringSync.toString()
+            "drop.non.existing.groups.during.sync" to dropNonExistingGroupsDuringSync.toString(),
+            "groups.path" to groupsPath
     )), parentId, GROUP_MAPPER, LDAP_STORAGE_MAPPER)
 }
 

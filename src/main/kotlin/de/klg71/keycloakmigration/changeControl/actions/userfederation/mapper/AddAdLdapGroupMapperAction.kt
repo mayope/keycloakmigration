@@ -23,7 +23,8 @@ class AddAdLdapGroupMapperAction(
         private val userRolesRetrieveStrategy: String = "LOAD_GROUPS_BY_MEMBER_ATTRIBUTE",
         private val mappedGroupAttributes: List<String> = emptyList(),
         private val memberofLdapAttribute: String = "memberOf",
-        private val dropNonExistingGroupsDuringSync: Boolean = false
+        private val dropNonExistingGroupsDuringSync: Boolean = false,
+        private val groupsPath: String = "/"
 
 ) : Action(realm) {
 
@@ -39,7 +40,7 @@ class AddAdLdapGroupMapperAction(
                         preserveGroupInheritance, membershipLdapAttribute, membershipAttributeType,
                         membershipUserLdapAttribute, filter, mode, ignoreMissingGroups,
                         userRolesRetrieveStrategy, mappedGroupAttributes, memberofLdapAttribute,
-                        dropNonExistingGroupsDuringSync), realm()).extractLocationUUID()
+                        dropNonExistingGroupsDuringSync, groupsPath), realm()).extractLocationUUID()
     }
 
     override fun undo() {

@@ -59,15 +59,16 @@ repositories {
 }
 
 tasks {
-    val keycloakVersion = "10.0.0"
+    val keycloakVersion = "11.0.0"
 
     register<ShadowJar>("shadowJar") {
         archiveClassifier.set("fat")
-        archiveAppendix.set("fat")
-        classifier = "fat"
         manifest {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
         }
+        from(sourceSets.main.get().output)
+        from(project(":keycloakapi").sourceSets.main.get().output)
+        configurations = mutableListOf(project.configurations.compile.get())
     }
 
 

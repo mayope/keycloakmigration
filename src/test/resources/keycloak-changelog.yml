@@ -25,3 +25,4 @@ includes:
 - path: changesets/25_client_role.yml
 - path: changesets/26_client_scope.yml
 - path: changesets/27_role_scope_mapping.yml
+- path: changesets/28_admin_user.yml

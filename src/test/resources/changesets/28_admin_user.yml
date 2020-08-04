@@ -1,0 +1,9 @@
+id: admin-user
+author: klg71
+realm: master
+changes:
+  - addUser:
+      name: testAdmin
+  - assignRole:
+      role: admin
+      user: testAdmin

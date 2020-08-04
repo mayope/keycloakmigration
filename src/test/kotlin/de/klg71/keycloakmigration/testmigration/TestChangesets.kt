@@ -22,7 +22,7 @@ import java.nio.file.Paths
 object TestMigrationArgs : MigrationArgs {
     override fun adminUser() = DEFAULT_ADMIN_USER
     override fun adminPassword() = DEFAULT_ADMIN_PASSWORD
-    override fun baseUrl() = DEFAULT_KEYCLOAK_SERVER
+    override fun baseUrl() = "http://localhost:18080/auth"
     override fun migrationFile() = "src/test/resources/keycloak-changelog.yml"
     override fun realm() = DEFAULT_REALM
     override fun clientId() = DEFAULT_CLIENTID

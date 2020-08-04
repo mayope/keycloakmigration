@@ -8,4 +8,4 @@
  */
 
 rootProject.name = "keycloakmigration"
-include("plugin","keycloakapi")
+include("plugin","keycloakapi","docsbuild")
