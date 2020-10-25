@@ -1,15 +1,16 @@
 package de.klg71.keycloakmigration.changeControl
 
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.keycloakapi.model.Attributes
 import de.klg71.keycloakmigration.changeControl.model.ChangeSet
-import de.klg71.keycloakmigration.keycloakapi.model.User
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.model.Attributes
+import de.klg71.keycloakmigration.keycloakapi.model.User
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 import org.slf4j.LoggerFactory
-import java.util.Objects.isNull
 import java.util.UUID
+
+private const val CURRENT_CHANGELOG_VERSION = "v2"
 
 /**
  * Service keeping track of the already executed migrations and which new migrations should be executed
@@ -28,21 +29,22 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
      * Calculate which Changeset should be executed and which are already done depending on information in keycloak
      */
     internal fun changesTodo(changes: List<ChangeSet>, correctHashes: Boolean = false): List<ChangeSet> {
+        val relevantChanges = changes.filterDisabled()
+
+        migrateChangeLogToV2(relevantChanges.map { it.hash() })
         val changeHashes = getMigrationsHashes()
 
-        return changes
-                .filterDisabled()
-                .apply {
-                    checkExistingHashes(changeHashes, correctHashes)
-                }.run {
-                    subList(changeHashes.size, size)
-                }
+        return relevantChanges.apply {
+            checkExistingHashes(changeHashes, correctHashes)
+        }.run {
+            subList(changeHashes.size, size)
+        }
     }
 
     private fun List<ChangeSet>.checkExistingHashes(changeHashes: List<String>, correctHashes: Boolean) {
         changeHashes.forEachIndexed { i, it ->
             if (get(i).hash() != it) {
-                doHashMigration(correctHashes, it, i)
+                handleHashError(correctHashes, it, i)
             }
             LOG.info("Skipping migration: ${get(i).id}")
         }
@@ -55,15 +57,17 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
         }
     }
 
-    private fun List<ChangeSet>.doHashMigration(
+    private fun List<ChangeSet>.handleHashError(
             correctHashes: Boolean, remoteHash: String, migrationIndex: Int) {
         if (!correctHashes) {
             throw MigrationException(
                     "Invalid hash expected: $remoteHash (remote) " +
                             "got ${get(migrationIndex).hash()} (local) in migration: ${get(migrationIndex).id}")
         }
-        replaceHash(remoteHash, get(migrationIndex).hash)
-        LOG.warn("Replaced hash: $remoteHash with ${get(migrationIndex).hash} for migration ${get(migrationIndex).id}")
+        formatHashV2(migrationIndex, get(migrationIndex).hash).let {
+            replaceHash(remoteHash, it)
+            LOG.warn("Replaced hash: $remoteHash with $it for migration ${get(migrationIndex).id}")
+        }
     }
 
     /**
@@ -118,17 +122,62 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
 
     private fun Attributes.migrations() = get(migrationAttributeName) ?: emptyList()
 
+    /**
+     * old format were just the migration hashes, but keycloak doesn't reliably save the hash order.
+     * So we need to implement a new format: v2/#order/#hash
+     *
+     * We need the currently relevant hashes to fix any wrong ordering
+     */
     @Suppress("ReturnCount")
-    private fun getMigrationsHashes(): List<String> =
-            client.user(migrationUserId, realm).run {
-                if (isNull(attributes)) {
-                    return emptyList()
-                }
-                if (migrationAttributeName !in attributes!!) {
-                    return emptyList()
-                }
-                return attributes!![migrationAttributeName]!!
+    private fun getMigrationsHashes(): List<String> {
+
+        return migrationHashAttributes().map {
+            val (version, order, hash) = it.split("/")
+            if (version != CURRENT_CHANGELOG_VERSION) {
+                throw MigrationException(
+                        "Unknown changelog version: $version detected, expected version: $CURRENT_CHANGELOG_VERSION.")
             }
+            order.toInt() to hash
+        }.sortedBy { it.first }.map { it.second }
+    }
+
+    private fun migrateChangeLogToV2(existingHashes: List<String>) {
+        migrationHashAttributes().let {
+            if (it.isEmpty()) {
+                return
+            }
+            if (it.first().contains("v2/")) {
+                return
+            }
+            if (!existingHashes.containsAll(it)) {
+                throw MigrationException("Wrong changelog encountered, while trying to migrate hashes to v2.")
+            }
+
+            LOG.info("Reordering hashes in keycloak by existing hashes")
+            migrateToV2(it.sortedBy { existingHashes.indexOf(it) })
+        }
+    }
+
+    private fun migrateToV2(v1Hashes: List<String>) {
+        LOG.info("Migrating your changelog to v2 format")
+        v1Hashes.forEachIndexed { index, hash ->
+            replaceHash(hash, formatHashV2(index, hash))
+        }
+        LOG.info("Migrated your changelog to v2 format")
+    }
+
+    private fun formatHashV2(index: Int, hash: String) = "v2/$index/$hash"
+
+    private fun migrationHashAttributes(): List<String> {
+        client.user(migrationUserId, realm).run {
+            if (attributesNullOrEmpty()) {
+                return emptyList()
+            }
+            return attributes!![migrationAttributeName]!!
+        }
+    }
+
+    private fun User.attributesNullOrEmpty() = attributes == null || migrationAttributeName !in attributes!!
 
 }
 
