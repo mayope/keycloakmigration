@@ -1,5 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
     kotlin("jvm")
     id("maven-publish")
@@ -12,35 +10,30 @@ repositories {
 }
 
 dependencies {
-    compile(kotlin("stdlib"))
-    compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0")
+    implementation(kotlin("stdlib"))
 
-    compile("io.github.openfeign:feign-core:10.1.0")
-    compile("io.github.openfeign:feign-jackson:10.1.0")
-    compile("io.github.openfeign:feign-slf4j:10.1.0")
-    compile("io.github.openfeign:feign-httpclient:10.1.0")
-    compile("io.github.openfeign.form:feign-form:3.4.1")
+    implementation("io.github.openfeign:feign-core:10.1.0")
+    implementation("io.github.openfeign:feign-jackson:10.1.0")
+    implementation("io.github.openfeign:feign-httpclient:10.1.0")
+    implementation("io.github.openfeign.form:feign-form:3.4.1")
 
-    compile("org.apache.logging.log4j:log4j-core:2.11.1")
-    compile("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.3")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.10.3")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.3")
+    implementation("org.koin:koin-core:2.0.1")
+    implementation("commons-codec:commons-codec:1.11")
+    implementation("com.xenomachina:kotlin-argparser:2.0.7")
 
-    compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.3")
-    compile("com.fasterxml.jackson.core:jackson-databind:2.10.3")
-    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.3")
-    compile("org.koin:koin-core:2.0.1")
-    compile("commons-codec:commons-codec:1.11")
-    compile("com.xenomachina:kotlin-argparser:2.0.7")
+    implementation("org.apache.commons:commons-text:1.8")
+    implementation("org.apache.commons:commons-lang3:3.9")
 
-    compile("org.apache.commons:commons-text:1.8")
-    compile("org.apache.commons:commons-lang3:3.9")
-
-    testCompile(kotlin("test"))
-    testCompile(kotlin("test-junit"))
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
     testImplementation("io.mockk:mockk:1.9")
-    testCompile("org.assertj:assertj-core:3.11.1")
-    testCompile("org.koin:koin-test:2.0.1")
-    testCompile("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
-    testCompile("org.assertj:assertj-core:3.11.1")
+    testImplementation("org.assertj:assertj-core:3.11.1")
+    testImplementation("org.koin:koin-test:2.0.1")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
+    testImplementation("org.assertj:assertj-core:3.11.1")
 }
 
 val sourcesJar by tasks.creating(Jar::class) {

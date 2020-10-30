@@ -8,7 +8,6 @@ import feign.Logger
 import feign.form.FormEncoder
 import feign.jackson.JacksonDecoder
 import feign.jackson.JacksonEncoder
-import feign.slf4j.Slf4jLogger
 
 /**
  * Builds the [KeycloakClient]
@@ -19,9 +18,10 @@ import feign.slf4j.Slf4jLogger
  * @param clientId id of the client to use for the login of the user
  */
 fun initKeycloakClient(baseUrl: String, adminUser: String, adminPassword: String, realm: String,
-                       clientId: String) = Feign.builder().run {
+                       clientId: String, logger: Logger? = null) = Feign.builder().run {
     val objectMapper = initObjectMapper()
-    val tokenHolder = TokenHolder(initKeycloakLoginClient(objectMapper, baseUrl), adminUser, adminPassword, realm,
+    val tokenHolder = TokenHolder(initKeycloakLoginClient(objectMapper, baseUrl, logger), adminUser, adminPassword,
+            realm,
             clientId)
     encoder(JacksonEncoder(objectMapper))
     decoder(JacksonDecoder(objectMapper.apply {
@@ -32,7 +32,9 @@ fun initKeycloakClient(baseUrl: String, adminUser: String, adminPassword: String
             it.header("Authorization", "Bearer $accessToken")
         }
     }
-    logger(Slf4jLogger())
+    logger?.let {
+        logger(it)
+    }
     logLevel(Logger.Level.FULL)
     target(KeycloakClient::class.java, baseUrl)
 }!!
@@ -43,16 +45,18 @@ fun initKeycloakClient(baseUrl: String, adminUser: String, adminPassword: String
  * [initKeycloakClient] automatically acquires tokens.
  * @param baseUrl base url of the keycloak instance e.g. http://localhost:8080/auth
  */
-fun initKeycloakLoginClient(baseUrl: String): KeycloakLoginClient =
+fun initKeycloakLoginClient(baseUrl: String, logger: Logger? = null): KeycloakLoginClient =
         initObjectMapper().let {
-            initKeycloakLoginClient(it, baseUrl)
+            initKeycloakLoginClient(it, baseUrl, logger)
         }
 
 internal fun initKeycloakLoginClient(objectMapper: ObjectMapper,
-                                     baseUrl: String): KeycloakLoginClient = Feign.builder().run {
+                                     baseUrl: String, logger: Logger?): KeycloakLoginClient = Feign.builder().run {
     encoder(FormEncoder(JacksonEncoder(objectMapper)))
     decoder(JacksonDecoder(objectMapper))
-    logger(Slf4jLogger())
+    logger?.let {
+        logger(it)
+    }
     logLevel(Logger.Level.FULL)
     target(KeycloakLoginClient::class.java, baseUrl)
 }
