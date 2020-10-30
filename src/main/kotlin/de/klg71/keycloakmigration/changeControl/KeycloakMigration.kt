@@ -26,7 +26,7 @@ internal class KeycloakMigration(private val migrationFile: String, realm: Strin
         try {
             changeFileReader.changes(migrationFile).let {
                 changelog.changesTodo(it, correctHashes)
-            }.forEach { change ->
+            }.forEach{ change ->
                 LOG.info("Executing change: ${change.id}:${change.author}")
                 doChange(change)
             }

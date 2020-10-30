@@ -110,12 +110,16 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
     }
 
     private fun Attributes.addMigration(change: ChangeSet): Attributes = toMutableMap().apply {
-        put(migrationAttributeName, migrations().addChangeHash(change))
+        put(migrationAttributeName, migrations().addChangeHash(change, nextIndex()))
     }
 
-    private fun List<String>.addChangeHash(change: ChangeSet) =
+    private fun nextIndex() = parse(migrationHashAttributes()).maxBy { it.order }?.let {
+        it.order + 1
+    } ?: 0
+
+    private fun List<String>.addChangeHash(change: ChangeSet, index: Int) =
             toMutableList().apply {
-                add(change.hash())
+                add(formatHashV2(index, change.hash()))
             }
 
     private fun User.userAttributes() = attributes ?: emptyMap()
@@ -130,16 +134,21 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
      */
     @Suppress("ReturnCount")
     private fun getMigrationsHashes(): List<String> {
+        return parse(migrationHashAttributes()).sortedBy { it.order }.map { it.hash }
+    }
 
-        return migrationHashAttributes().map {
+    private fun parse(hashAttributes: List<String>): List<MigrationEntity> {
+        return hashAttributes.map {
             val (version, order, hash) = it.split("/")
             if (version != CURRENT_CHANGELOG_VERSION) {
                 throw MigrationException(
                         "Unknown changelog version: $version detected, expected version: $CURRENT_CHANGELOG_VERSION.")
             }
-            order.toInt() to hash
-        }.sortedBy { it.first }.map { it.second }
+            MigrationEntity(version, order.toInt(), hash)
+        }
     }
+
+    private data class MigrationEntity(val version: String, val order: Int, val hash: String)
 
     private fun migrateChangeLogToV2(existingHashes: List<String>) {
         migrationHashAttributes().let {

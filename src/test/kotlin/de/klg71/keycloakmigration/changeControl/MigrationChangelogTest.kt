@@ -15,6 +15,7 @@ import de.klg71.keycloakmigration.changeControl.model.ChangeSet
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.model.User
 import de.klg71.keycloakmigration.keycloakapi.model.UserAccess
+import org.apache.commons.codec.digest.DigestUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.After
@@ -25,6 +26,8 @@ import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.slf4j.LoggerFactory
+import java.nio.file.Files
+import java.nio.file.Path
 import java.util.UUID.randomUUID
 
 internal class MigrationChangelogTest : KoinTest {
@@ -185,7 +188,6 @@ internal class MigrationChangelogTest : KoinTest {
         assertThat(result).isEmpty()
     }
 
-
     @Test
     fun testChangesTodo_onPresentSkip() {
         val migrationUserId = randomUUID()
@@ -248,7 +250,6 @@ internal class MigrationChangelogTest : KoinTest {
         assertThat(result).containsExactly(newChangeSet)
     }
 
-
     @Test
     fun testChangesTodo_WrongOrder() {
         val migrationUserId = randomUUID()
@@ -278,7 +279,7 @@ internal class MigrationChangelogTest : KoinTest {
                 UserAccess(false, false, false, false, false), emptyList(), emptyList(), null, "test", null, null)
 
         val changeSet = mockChangeSet(testHash = "hash")
-        val userAfter = User(migrationUserId, 0L, "test", true, true, mapOf(migrationAttributeName to listOf("hash")),
+        val userAfter = User(migrationUserId, 0L, "test", true, true, mapOf(migrationAttributeName to listOf("v2/0/hash")),
                 0L, false, UserAccess(false, false, false, false, false), emptyList(), emptyList(), null, "test", null,
                 null)
 
@@ -297,7 +298,7 @@ internal class MigrationChangelogTest : KoinTest {
                 null)
 
         val changeSet = mockChangeSet(testHash = "hash")
-        val userAfter = User(migrationUserId, 0L, "test", true, true, mapOf(migrationAttributeName to listOf("hash")),
+        val userAfter = User(migrationUserId, 0L, "test", true, true, mapOf(migrationAttributeName to listOf("v2/0/hash")),
                 0L, false, UserAccess(false, false, false, false, false), emptyList(), emptyList(), null, "test", null,
                 null)
 
@@ -312,12 +313,12 @@ internal class MigrationChangelogTest : KoinTest {
         val realm = "test"
         val changelog = MigrationChangelog(migrationUserId, realm)
         val userBefore = User(migrationUserId, 0L, "test", true, true,
-                mapOf(migrationAttributeName to listOf("hashBefore")), 0L, false,
+                mapOf(migrationAttributeName to listOf("v2/0/hashBefore")), 0L, false,
                 UserAccess(false, false, false, false, false), emptyList(), emptyList(), null, "test", null, null)
 
         val changeSet = mockChangeSet(testHash = "hash")
         val userAfter = User(migrationUserId, 0L, "test", true, true,
-                mapOf(migrationAttributeName to listOf("hashBefore", "hash")), 0L, false,
+                mapOf(migrationAttributeName to listOf("v2/0/hashBefore", "v2/1/hash")), 0L, false,
                 UserAccess(false, false, false, false, false), emptyList(), emptyList(), null, "test", null, null)
 
         whenever(client.user(migrationUserId, realm)).thenReturn(userBefore)
