@@ -12,7 +12,8 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
-    implementation("io.github.openfeign:feign-core:10.1.0")
+    implementation("org.slf4j:slf4j-api:1.7.30")
+    api("io.github.openfeign:feign-core:10.1.0")
     implementation("io.github.openfeign:feign-jackson:10.1.0")
     implementation("io.github.openfeign:feign-httpclient:10.1.0")
     implementation("io.github.openfeign.form:feign-form:3.4.1")

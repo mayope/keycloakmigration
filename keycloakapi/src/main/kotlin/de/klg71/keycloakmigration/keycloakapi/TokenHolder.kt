@@ -1,7 +1,6 @@
 package de.klg71.keycloakmigration.keycloakapi
 
 import de.klg71.keycloakmigration.keycloakapi.model.AccessToken
-import de.klg71.keycloakmigration.keycloakapi.KeycloakLoginClient
 import org.slf4j.LoggerFactory
 import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.SECONDS
