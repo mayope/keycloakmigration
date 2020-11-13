@@ -37,13 +37,13 @@ dependencies {
 
     // Logging
     implementation("org.slf4j:slf4j-api:1.7.30")
+    implementation("org.apache.logging.log4j:log4j-core:2.11.1")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
     testImplementation("io.mockk:mockk:1.9")
 
-    testImplementation("org.apache.logging.log4j:log4j-core:2.11.1")
-    testImplementation("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("org.koin:koin-test:2.0.1")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
