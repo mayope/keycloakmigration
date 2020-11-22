@@ -36,9 +36,9 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.9")
 
     // Logging
-    implementation("org.slf4j:slf4j-api:1.7.30")
-    implementation("org.apache.logging.log4j:log4j-core:2.11.1")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
+    testImplementation("org.slf4j:slf4j-api:1.7.30")
+    testImplementation("org.apache.logging.log4j:log4j-core:2.11.1")
+    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
@@ -70,7 +70,10 @@ tasks {
         }
         from(sourceSets.main.get().output)
         from(project(":keycloakapi").sourceSets.main.get().output)
-        configurations = mutableListOf(project.configurations.compile.get())
+        configurations = mutableListOf(project.configurations.compileClasspath.get(),project.configurations.runtimeClasspath.get())
+        project.configurations.compileClasspath.allDependencies.forEach {
+            println(it)
+        }
     }
 
 

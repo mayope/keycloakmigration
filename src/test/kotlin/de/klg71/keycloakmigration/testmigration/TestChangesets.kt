@@ -11,8 +11,8 @@ import de.klg71.keycloakmigration.DEFAULT_WAIT_FOR_KEYCLOAK_TIMEOUT
 import de.klg71.keycloakmigration.DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
 import de.klg71.keycloakmigration.MigrationArgs
 import de.klg71.keycloakmigration.migrate
-import org.apache.logging.log4j.core.config.Configurator
 import java.nio.file.Paths
+import org.apache.logging.log4j.core.config.Configurator
 
 /**
  * executes the changesets from test/resources
