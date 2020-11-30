@@ -2,9 +2,8 @@ package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.TEST_BASE_URL
-import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
-import de.klg71.keycloakmigration.keycloakapi.KeycloakLoginClient
 import de.klg71.keycloakmigration.keycloakapi.initKeycloakLoginClient
 import org.apache.commons.lang3.RandomStringUtils
 import org.assertj.core.api.Assertions.assertThat
@@ -42,7 +41,7 @@ class UpdateUserPasswordIntegTest : AbstractIntegrationTest() {
     fun testUpdateUserPassword_userDoesNotExist() {
         assertThatThrownBy {
             UpdateUserPasswordAction(testRealm, "testIntegration", password = "testPassword").executeIt()
-        }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("User with name: testIntegration does not exist in realm: ${testRealm}!")
+        }.isInstanceOf(KeycloakApiException::class.java)
+            .hasMessage("User with name: testIntegration does not exist in realm: ${testRealm}!")
     }
 }
