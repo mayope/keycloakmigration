@@ -1,8 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
-import org.apache.tools.ant.taskdefs.condition.Os
-import org.jetbrains.kotlin.org.jline.utils.Log
 import java.net.ConnectException
+import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     kotlin("jvm") version "1.3.70"
@@ -16,7 +15,7 @@ plugins {
     // static code analysis
     id("io.gitlab.arturbosch.detekt") version "1.7.0-beta1"
 
-    id("com.github.johnrengelman.shadow") version "6.0.0" apply(false)
+    id("com.github.johnrengelman.shadow") version "6.0.0" apply (false)
 }
 
 dependencies {
@@ -35,9 +34,9 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.9")
 
     // Logging
-    testImplementation("org.slf4j:slf4j-api:1.7.30")
-    testImplementation("org.apache.logging.log4j:log4j-core:2.11.1")
-    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
+    implementation("org.slf4j:slf4j-api:1.7.30")
+    implementation("org.apache.logging.log4j:log4j-core:2.11.1")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
@@ -58,7 +57,7 @@ repositories {
 tasks {
     val keycloakVersion = "11.0.0"
 
-    named("build"){
+    named("build") {
         dependsOn("buildDocker", ":docsbuild:buildDocs")
     }
 
@@ -69,7 +68,8 @@ tasks {
         }
         from(sourceSets.main.get().output)
         from(project(":keycloakapi").sourceSets.main.get().output)
-        configurations = mutableListOf(project.configurations.compileClasspath.get(),project.configurations.runtimeClasspath.get())
+        configurations = mutableListOf(project.configurations.compileClasspath.get(),
+            project.configurations.runtimeClasspath.get())
         project.configurations.compileClasspath.allDependencies.forEach {
             println(it)
         }
@@ -78,11 +78,11 @@ tasks {
 
     "afterReleaseBuild"{
         dependsOn("publishMavenJavaPublicationToMavenRepository",
-                "publishMavenJavaPublicationToGitHubPackagesRepository",
-                "plugin:publishPlugins",
-                "keycloakapi:publishMavenJavaPublicationToMavenRepository",
-                "keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository",
-                "pushDocker", "shadowJar"
+            "publishMavenJavaPublicationToGitHubPackagesRepository",
+            "plugin:publishPlugins",
+            "keycloakapi:publishMavenJavaPublicationToMavenRepository",
+            "keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository",
+            "pushDocker", "shadowJar"
         )
     }
 
@@ -154,7 +154,7 @@ tasks {
     register("execWindowsKeycloak") {
         doLast {
             ProcessBuilder("cmd", "/c", "standalone.bat", "-Djboss.socket.binding.port-offset=10000", ">",
-                    "output.txt").run {
+                "output.txt").run {
                 directory(File("keycloak/keycloak-$keycloakVersion/bin"))
                 println("Starting local Keycloak on windows")
                 environment()["NOPAUSE"] = "true"
@@ -166,7 +166,7 @@ tasks {
     register("execLinuxKeycloak") {
         doLast {
             ProcessBuilder("keycloak/keycloak-$keycloakVersion/bin/standalone.sh",
-                    "-Djboss.socket.binding.port-offset=10000").run {
+                "-Djboss.socket.binding.port-offset=10000").run {
                 println("Starting local Keycloak on linux")
                 start()
                 waitForKeycloak()
@@ -229,7 +229,7 @@ tasks {
             exec {
                 workingDir(dockerBuildWorkingDirectory)
                 commandLine("docker", "build", ".", "-t", tag, "--build-arg",
-                        "jar_file=${fatJar.outputs.files.first().name}")
+                    "jar_file=${fatJar.outputs.files.first().name}")
             }
             exec {
                 commandLine("docker", "tag", tag, tagLatest)
@@ -280,7 +280,7 @@ publishing {
                 val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
                 password = ossrhPassword
                 if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
-                    Log.warn("Sonatype user and password are not set you won't be able to publish to maven central!")
+                   logger.warn("Sonatype user and password are not set you won't be able to publish to maven central!")
                 }
             }
         }
@@ -293,7 +293,7 @@ publishing {
                 val githubAccessToken = project.findProperty("githubPublishKey") as String? ?: ""
                 password = githubAccessToken
                 if (githubUser.isBlank() || githubAccessToken.isBlank()) {
-                    Log.warn("Github user and password are not set you won't be able to publish to github!")
+                    logger.warn("Github user and password are not set you won't be able to publish to github!")
                 }
             }
         }

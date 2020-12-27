@@ -4,6 +4,7 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
 import de.klg71.keycloakmigration.keycloakapi.clientById
 import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
+import de.klg71.keycloakmigration.keycloakapi.model.OPENID_CONNECT_PROTOCOL
 import java.util.*
 
 class AddSimpleClientAction(
@@ -11,7 +12,7 @@ class AddSimpleClientAction(
         private val clientId: String,
         private val enabled: Boolean = true,
         private val attributes: Map<String, String> = mapOf(),
-        private val protocol: String = "openid-connect",
+        private val protocol: String = OPENID_CONNECT_PROTOCOL,
         private val secret: String? = null,
         private val publicClient: Boolean = true,
         private val redirectUris: List<String> = emptyList()) : Action(realm) {

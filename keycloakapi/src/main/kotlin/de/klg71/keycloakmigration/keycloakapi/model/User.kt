@@ -29,7 +29,7 @@ data class User(
     val federationLink: String? = null
 )
 
-class UpdateUserBuilder(private val existingUser: User) {
+class UpdateUserBuilder(existingUser: User) {
     var id: UUID = existingUser.id
     var createdTimestamp: Long = existingUser.createdTimestamp
     var username: String = existingUser.username
