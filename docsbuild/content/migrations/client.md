@@ -271,6 +271,8 @@ adds a user-attribute clientmapper, throws error if client or realm doesn't exis
 - addToAccessToken: Boolean, optional, default = true,
 - addToUserInfo: Boolean, optional, default = true,
 - claimName: String?, optional, default = << name parameter>>
+- multivalued: Boolean, optional, default = false,
+- aggregateAttributeValues: Boolean, optional, default = true
 
 ### Example:
     id: add-client-mappers

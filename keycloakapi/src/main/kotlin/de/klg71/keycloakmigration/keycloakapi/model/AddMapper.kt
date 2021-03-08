@@ -46,12 +46,13 @@ fun userAttributeMapper(name: String, addToAccessToken: Boolean, addToIdToken: B
                                  addToUserInfo: Boolean,
                                  claimName: String,
                                  aggregateAttributeValues: Boolean,
+                                 multivalued: Boolean,
                                  userAttribute: String) =
         AddMapper(name, mapOf(
                 "access.token.claim" to addToAccessToken.toString(),
                 "id.token.claim" to addToIdToken.toString(),
                 "userinfo.token.claim" to addToUserInfo.toString(),
-                "multivalued" to "true",
+                "multivalued" to multivalued.toString(),
                 "jsonType.label" to "String",
                 "claim.name" to claimName,
                 "aggregate.attrs" to aggregateAttributeValues.toString(),
