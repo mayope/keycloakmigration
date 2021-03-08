@@ -19,7 +19,7 @@ Parameter# realm: String, optional clientId: String, not optional, enabled: B
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
-<script defer src="/keycloakmigration/en.search.min.adebf1dcd500d2e25e4b4c4a3266224d2f29f2d6cb0fab2e4b9ef28c4a9953cf.js" integrity="sha256-revx3NUA0uJeS0xKMmYiTS8p8tbLD6suS57yjEqZU88="></script>
+<script defer src="/keycloakmigration/en.search.min.13ae2751ca21059e6b288a9153180f1c93f8aee9a2eaa9834895a765d3f1373d.js" integrity="sha256-E64nUcohBZ5rKIqRUxgPHJP4rumi6qmDSJWnZdPxNz0="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -182,28 +182,34 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#example-6">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addaudiencemapper">addAudienceMapper</a>
+    <li><a href="#deletemapper">deleteMapper</a>
       <ul>
         <li><a href="#parameters-5">Parameters</a></li>
         <li><a href="#example-7">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addgroupmembershipmapper">addGroupMembershipMapper</a>
+    <li><a href="#addaudiencemapper">addAudienceMapper</a>
       <ul>
         <li><a href="#parameters-6">Parameters</a></li>
         <li><a href="#example-8">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#adduserattributemapper">addUserAttributeMapper</a>
+    <li><a href="#addgroupmembershipmapper">addGroupMembershipMapper</a>
       <ul>
         <li><a href="#parameters-7">Parameters</a></li>
         <li><a href="#example-9">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#adduserrealmrolemapper">addUserRealmRoleMapper</a>
+    <li><a href="#adduserattributemapper">addUserAttributeMapper</a>
       <ul>
         <li><a href="#parameters-8">Parameters</a></li>
         <li><a href="#example-10">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#adduserrealmrolemapper">addUserRealmRoleMapper</a>
+      <ul>
+        <li><a href="#parameters-9">Parameters</a></li>
+        <li><a href="#example-11">Example:</a></li>
       </ul>
     </li>
   </ul>
@@ -461,14 +467,53 @@ changes:
         jsonType.label: String
         user.attribute: UserModel.getEmail()
 </code></pre>
+<h2 id="deletemapper">
+  deleteMapper
+  <a class="anchor" href="#deletemapper">#</a>
+</h2>
+<p>deletes a client mapper</p>
+<h3 id="parameters-5">
+  Parameters
+  <a class="anchor" href="#parameters-5">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>clientId: String, not optional</li>
+<li>name: String, not optional</li>
+</ul>
+<h3 id="example-7">
+  Example:
+  <a class="anchor" href="#example-7">#</a>
+</h3>
+<pre><code>id: add-client-mappers
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testMappers
+  - addMapper:
+      clientId: testMappers
+      name: testPropertyMapper
+      protocolMapper: oidc-usermodel-property-mapper
+      config:
+        access.token.claim: true
+        id.token.claim: false
+        userinfo.token.claim: false
+        claim.name: customPropertyMapper
+        jsonType.label: String
+        user.attribute: UserModel.getEmail()
+  - deleteMapper:
+      clientId: testMappers
+      name: testPropertyMapper
+</code></pre>
 <h2 id="addaudiencemapper">
   addAudienceMapper
   <a class="anchor" href="#addaudiencemapper">#</a>
 </h2>
 <p>adds a audience clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-5">
+<h3 id="parameters-6">
   Parameters
-  <a class="anchor" href="#parameters-5">#</a>
+  <a class="anchor" href="#parameters-6">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -479,9 +524,9 @@ changes:
 <li>clientAudience: String, optional, default = &ldquo;&rdquo;,</li>
 <li>customAudience: String, optional, default = &quot;&rdquo;</li>
 </ul>
-<h3 id="example-7">
+<h3 id="example-8">
   Example:
-  <a class="anchor" href="#example-7">#</a>
+  <a class="anchor" href="#example-8">#</a>
 </h3>
 <pre><code>id: add-client-mappers
 author: klg71
@@ -501,9 +546,9 @@ changes:
   <a class="anchor" href="#addgroupmembershipmapper">#</a>
 </h2>
 <p>adds a group-membership clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-6">
+<h3 id="parameters-7">
   Parameters
-  <a class="anchor" href="#parameters-6">#</a>
+  <a class="anchor" href="#parameters-7">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -515,9 +560,9 @@ changes:
 <li>fullGroupPath: Boolean, optional, default = true,</li>
 <li>claimName: String?, optional, default = &laquo; name parameter&raquo;</li>
 </ul>
-<h3 id="example-8">
+<h3 id="example-9">
   Example:
-  <a class="anchor" href="#example-8">#</a>
+  <a class="anchor" href="#example-9">#</a>
 </h3>
 <pre><code>id: add-client-mappers
 author: klg71
@@ -536,9 +581,9 @@ changes:
   <a class="anchor" href="#adduserattributemapper">#</a>
 </h2>
 <p>adds a user-attribute clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-7">
+<h3 id="parameters-8">
   Parameters
-  <a class="anchor" href="#parameters-7">#</a>
+  <a class="anchor" href="#parameters-8">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -550,9 +595,9 @@ changes:
 <li>addToUserInfo: Boolean, optional, default = true,</li>
 <li>claimName: String?, optional, default = &laquo; name parameter&raquo;</li>
 </ul>
-<h3 id="example-9">
+<h3 id="example-10">
   Example:
-  <a class="anchor" href="#example-9">#</a>
+  <a class="anchor" href="#example-10">#</a>
 </h3>
 <pre><code>id: add-client-mappers
 author: klg71
@@ -571,9 +616,9 @@ changes:
   <a class="anchor" href="#adduserrealmrolemapper">#</a>
 </h2>
 <p>adds a user-realm-role clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-8">
+<h3 id="parameters-9">
   Parameters
-  <a class="anchor" href="#parameters-8">#</a>
+  <a class="anchor" href="#parameters-9">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -585,9 +630,9 @@ changes:
 <li>claimName: String?, optional, default = &laquo; name parameter&raquo;</li>
 <li>prefix: String, optional, default = &quot;&rdquo;</li>
 </ul>
-<h3 id="example-10">
+<h3 id="example-11">
   Example:
-  <a class="anchor" href="#example-10">#</a>
+  <a class="anchor" href="#example-11">#</a>
 </h3>
 <pre><code>id: add-client-mappers
 author: klg71
@@ -676,28 +721,34 @@ changes:
         <li><a href="#example-6">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addaudiencemapper">addAudienceMapper</a>
+    <li><a href="#deletemapper">deleteMapper</a>
       <ul>
         <li><a href="#parameters-5">Parameters</a></li>
         <li><a href="#example-7">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addgroupmembershipmapper">addGroupMembershipMapper</a>
+    <li><a href="#addaudiencemapper">addAudienceMapper</a>
       <ul>
         <li><a href="#parameters-6">Parameters</a></li>
         <li><a href="#example-8">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#adduserattributemapper">addUserAttributeMapper</a>
+    <li><a href="#addgroupmembershipmapper">addGroupMembershipMapper</a>
       <ul>
         <li><a href="#parameters-7">Parameters</a></li>
         <li><a href="#example-9">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#adduserrealmrolemapper">addUserRealmRoleMapper</a>
+    <li><a href="#adduserattributemapper">addUserAttributeMapper</a>
       <ul>
         <li><a href="#parameters-8">Parameters</a></li>
         <li><a href="#example-10">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#adduserrealmrolemapper">addUserRealmRoleMapper</a>
+      <ul>
+        <li><a href="#parameters-9">Parameters</a></li>
+        <li><a href="#example-11">Example:</a></li>
       </ul>
     </li>
   </ul>

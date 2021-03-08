@@ -178,6 +178,37 @@ adds a full configurable clientmapper, throws error if client or realm doesn't e
             claim.name: customPropertyMapper
             jsonType.label: String
             user.attribute: UserModel.getEmail()
+
+## deleteMapper
+deletes a client mapper
+
+### Parameters
+- realm: String, optional
+- clientId: String, not optional
+- name: String, not optional
+
+### Example:
+    id: add-client-mappers
+    author: klg71
+    realm: integ-test
+    changes:
+      - addSimpleClient:
+          clientId: testMappers
+      - addMapper:
+          clientId: testMappers
+          name: testPropertyMapper
+          protocolMapper: oidc-usermodel-property-mapper
+          config:
+            access.token.claim: true
+            id.token.claim: false
+            userinfo.token.claim: false
+            claim.name: customPropertyMapper
+            jsonType.label: String
+            user.attribute: UserModel.getEmail()
+      - deleteMapper:
+          clientId: testMappers
+          name: testPropertyMapper
+
 ## addAudienceMapper
 adds a audience clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
 

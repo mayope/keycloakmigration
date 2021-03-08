@@ -1,0 +1,15 @@
+id: add-client-mappers
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testDeleteMappers
+  - addAudienceMapper:
+      clientId: testDeleteMappers
+      name: audienceMapper
+      addToIdToken: false
+      clientAudience: testMappers
+      customAudience: completlyCustom
+  - deleteMapper:
+      clientId: testDeleteMappers
+      name: audienceMapper
