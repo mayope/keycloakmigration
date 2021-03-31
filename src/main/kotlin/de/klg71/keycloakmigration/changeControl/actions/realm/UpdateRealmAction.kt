@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.realm
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderItem
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.realmById
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
@@ -148,6 +149,7 @@ class UpdateRealmAction(
             eventsEnabled ?: oldRealm.eventsEnabled,
             eventsListeners ?: oldRealm.eventsListeners,
             enabledEventTypes ?: oldRealm.enabledEventTypes,
+            oldRealm.identityProviders,
             adminEventsEnabled ?: oldRealm.adminEventsEnabled,
             adminEventsDetailsEnabled ?: oldRealm.adminEventsDetailsEnabled,
             internationalizationEnabled ?: oldRealm.internationalizationEnabled,

@@ -1,6 +1,9 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import java.util.UUID
+
+data class IdentityProviderItem(val alias: String, val displayName: String?, val internalId: UUID)
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Realm(
@@ -67,6 +70,7 @@ data class Realm(
     val eventsEnabled: Boolean,
     val eventsListeners: List<String>,
     val enabledEventTypes: List<String>,
+    val identityProviders: List<IdentityProviderItem> = emptyList(),
     val adminEventsEnabled: Boolean,
     val adminEventsDetailsEnabled: Boolean,
     val internationalizationEnabled: Boolean,
@@ -134,18 +138,21 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     var webAuthnPolicyRpEntityName: String = existingRealm.webAuthnPolicyRpEntityName
     var webAuthnPolicySignatureAlgorithms: List<String> = existingRealm.webAuthnPolicySignatureAlgorithms
     var webAuthnPolicyRpId: String = existingRealm.webAuthnPolicyRpId
-    var webAuthnPolicyAttestationConveyancePreference: String = existingRealm.webAuthnPolicyAttestationConveyancePreference
+    var webAuthnPolicyAttestationConveyancePreference: String =
+        existingRealm.webAuthnPolicyAttestationConveyancePreference
     var webAuthnPolicyAuthenticatorAttachment: String = existingRealm.webAuthnPolicyAuthenticatorAttachment
     var webAuthnPolicyRequireResidentKey: String = existingRealm.webAuthnPolicyRequireResidentKey
     var webAuthnPolicyUserVerificationRequirement: String = existingRealm.webAuthnPolicyUserVerificationRequirement
     var webAuthnPolicyCreateTimeout: Int = existingRealm.webAuthnPolicyCreateTimeout
-    var webAuthnPolicyAvoidSameAuthenticatorRegister: Boolean = existingRealm.webAuthnPolicyAvoidSameAuthenticatorRegister
+    var webAuthnPolicyAvoidSameAuthenticatorRegister: Boolean =
+        existingRealm.webAuthnPolicyAvoidSameAuthenticatorRegister
     var webAuthnPolicyAcceptableAaguids: List<String> = existingRealm.webAuthnPolicyAcceptableAaguids
     var browserSecurityHeaders: Map<String, String> = existingRealm.browserSecurityHeaders
     var smtpServer: Map<String, String> = existingRealm.smtpServer
     var eventsEnabled: Boolean = existingRealm.eventsEnabled
     var eventsListeners: List<String> = existingRealm.eventsListeners
     var enabledEventTypes: List<String> = existingRealm.enabledEventTypes
+    var identityProviders: List<IdentityProviderItem> = existingRealm.identityProviders
     var adminEventsEnabled: Boolean = existingRealm.adminEventsEnabled
     var adminEventsDetailsEnabled: Boolean = existingRealm.adminEventsDetailsEnabled
     var internationalizationEnabled: Boolean = existingRealm.internationalizationEnabled
@@ -224,6 +231,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
         eventsEnabled,
         eventsListeners,
         enabledEventTypes,
+        identityProviders,
         adminEventsEnabled,
         adminEventsDetailsEnabled,
         internationalizationEnabled,

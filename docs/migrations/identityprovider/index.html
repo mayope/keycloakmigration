@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="IdentityProvider Migrations#All migrations referring to the identityprovider resource.
+AddKeycloakIdentityProvider#Adds a keycloak identity provider.
+Parameters# realm: String, optional alias: String, not optional authorizationUrl: String, not optional tokenUrl: String, not optional clientId: String, not optional clientSecret: String, not optional clientAuthMethod: String = &ldquo;client_secret_post&rdquo;, logoutUrl: String, optional default = &ldquo;&rdquo;, userInfoUrl: String, optional default = &ldquo;&rdquo;, issuer: String, optional default = &ldquo;&rdquo;, displayName: String, optional default = &ldquo;&rdquo;, defaultScopes: List&lt; String&gt;, optional default = emptyList(), validateSignature: String, optional default = &ldquo;&rdquo;, forwardParameters: List, optional default = emptyList(), loginHint: Boolean, optional default = false, disableUserInfo: Boolean, optional default = false, hideOnLoginPage: Boolean, optional default = false, backchannelSupported: Boolean, optional default = false, syncMode: String, optional default = &ldquo;IMPORT&rdquo;, acceptsPromptsNoneForwardFromClient: String, optional default = &ldquo;&rdquo;, uiLocales: Boolean, optional default = true, guiOrder: String, optional default = &ldquo;&rdquo;, useJwksUrl: Boolean, optional default = false, enabled: Boolean, optional default = true, trustEmail: Boolean, optional default = false, storeToken: Boolean, optional default = false, linkOnly: Boolean, optional default = false, firstBrokerLoginFlowAlias: String, optional default = &ldquo;first broker login&rdquo;, postBrokerLoginFlowAlias: String, optional default = &ldquo;&rdquo;, updateProfileFirstLoginMode: String, optional default = &ldquo;on&rdquo;,  Example#id:add-keycloak-identity-providerauthor:klg71realm:integ-testchanges:- addKeycloakIdentityProvider:alias:testAliasauthorizationUrl:https://authUrltokenUrl:https://tokenUrlclientId:clientIdclientSecret:clientSecrethideOnLoginPage:truebackchannelSupported:truetrustEmail:truestoreToken:trueDeleteIdentityProvider#Deletes an identity provider, if one with this alias exists">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="User Federation Migrations" />
+<meta property="og:description" content="IdentityProvider Migrations#All migrations referring to the identityprovider resource.
+AddKeycloakIdentityProvider#Adds a keycloak identity provider.
+Parameters# realm: String, optional alias: String, not optional authorizationUrl: String, not optional tokenUrl: String, not optional clientId: String, not optional clientSecret: String, not optional clientAuthMethod: String = &ldquo;client_secret_post&rdquo;, logoutUrl: String, optional default = &ldquo;&rdquo;, userInfoUrl: String, optional default = &ldquo;&rdquo;, issuer: String, optional default = &ldquo;&rdquo;, displayName: String, optional default = &ldquo;&rdquo;, defaultScopes: List&lt; String&gt;, optional default = emptyList(), validateSignature: String, optional default = &ldquo;&rdquo;, forwardParameters: List, optional default = emptyList(), loginHint: Boolean, optional default = false, disableUserInfo: Boolean, optional default = false, hideOnLoginPage: Boolean, optional default = false, backchannelSupported: Boolean, optional default = false, syncMode: String, optional default = &ldquo;IMPORT&rdquo;, acceptsPromptsNoneForwardFromClient: String, optional default = &ldquo;&rdquo;, uiLocales: Boolean, optional default = true, guiOrder: String, optional default = &ldquo;&rdquo;, useJwksUrl: Boolean, optional default = false, enabled: Boolean, optional default = true, trustEmail: Boolean, optional default = false, storeToken: Boolean, optional default = false, linkOnly: Boolean, optional default = false, firstBrokerLoginFlowAlias: String, optional default = &ldquo;first broker login&rdquo;, postBrokerLoginFlowAlias: String, optional default = &ldquo;&rdquo;, updateProfileFirstLoginMode: String, optional default = &ldquo;on&rdquo;,  Example#id:add-keycloak-identity-providerauthor:klg71realm:integ-testchanges:- addKeycloakIdentityProvider:alias:testAliasauthorizationUrl:https://authUrltokenUrl:https://tokenUrlclientId:clientIdclientSecret:clientSecrethideOnLoginPage:truebackchannelSupported:truetrustEmail:truestoreToken:trueDeleteIdentityProvider#Deletes an identity provider, if one with this alias exists" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://klg71.github.io/keycloakmigration/migrations/identityprovider/" />
+<meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
+<meta property="article:modified_time" content="2020-07-03T12:22:20+02:00" />
+<title>User Federation Migrations | Keycloakmigration</title>
+<link rel="manifest" href="/keycloakmigration/manifest.json">
+<link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
+<script defer src="/keycloakmigration/en.search.min.cac68b3bc4c9bd8cc9bb94627ae10a5c3700d0d705a8b968a849b0eb7db244e2.js" integrity="sha256-ysaLO8TJvYzJu5RieuEKXDcA0NcFqLloqEmw632yROI="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/keycloakmigration"><span>Keycloakmigration</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><a href="/keycloakmigration/">Overview</a></li>
+<li><a href="/keycloakmigration/quickstart/">Quick Start</a>
+<ul>
+<li><a href="/keycloakmigration/quickstart/kotlin/">Gradle Kotlin DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/groovy/">Gradle Groovy DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/jar/">Jar</a></li>
+<li><a href="/keycloakmigration/quickstart/docker/">Usage with Docker</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/migration_files/">Migration Files</a></li>
+<li><a href="/keycloakmigration/migrations/">Migrations</a>
+<ul>
+<li><a href="/keycloakmigration/migrations/user/">User Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/scopes/">ClientScope Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
+<li><a href="https://klg71.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/keycloak_api/">Using the Keycloakapi</a></li>
+<li><a href="/keycloakmigration/hashmigration/">Hash Troubleshooting</a></li>
+<li><a href="/keycloakmigration/implementation_details/">Implementation Details</a></li>
+<li><a href="/keycloakmigration/contributing/">Contributing</a></li>
+</ul>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/keycloakmigration/about/" target="_blank" rel="noopener">
+        About
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>User Federation Migrations</strong>
+
+  <label for="toc-control">
+    
+    <img src="/keycloakmigration/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#addkeycloakidentityprovider">AddKeycloakIdentityProvider</a>
+      <ul>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleteidentityprovider">DeleteIdentityProvider</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#addidentityprovider">AddIdentityProvider</a>
+      <ul>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="identityprovider-migrations">
+  IdentityProvider Migrations
+  <a class="anchor" href="#identityprovider-migrations">#</a>
+</h1>
+<p>All migrations referring to the identityprovider resource.</p>
+<h2 id="addkeycloakidentityprovider">
+  AddKeycloakIdentityProvider
+  <a class="anchor" href="#addkeycloakidentityprovider">#</a>
+</h2>
+<p>Adds a keycloak identity provider.</p>
+<h3 id="parameters">
+  Parameters
+  <a class="anchor" href="#parameters">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>alias: String, not optional</li>
+<li>authorizationUrl: String, not optional</li>
+<li>tokenUrl: String, not optional</li>
+<li>clientId: String, not optional</li>
+<li>clientSecret: String, not optional</li>
+<li>clientAuthMethod: String = &ldquo;client_secret_post&rdquo;,</li>
+<li>logoutUrl: String, optional default = &ldquo;&rdquo;,</li>
+<li>userInfoUrl: String, optional default = &ldquo;&rdquo;,</li>
+<li>issuer: String, optional default = &ldquo;&rdquo;,</li>
+<li>displayName: String, optional default = &ldquo;&rdquo;,</li>
+<li>defaultScopes: List&lt; String&gt;, optional default = emptyList(),</li>
+<li>validateSignature: String, optional default = &ldquo;&rdquo;,</li>
+<li>forwardParameters: List<!-- raw HTML omitted -->, optional default = emptyList(),</li>
+<li>loginHint: Boolean, optional default = false,</li>
+<li>disableUserInfo: Boolean, optional default = false,</li>
+<li>hideOnLoginPage: Boolean, optional default = false,</li>
+<li>backchannelSupported: Boolean, optional default = false,</li>
+<li>syncMode: String, optional default = &ldquo;IMPORT&rdquo;,</li>
+<li>acceptsPromptsNoneForwardFromClient: String, optional default = &ldquo;&rdquo;,</li>
+<li>uiLocales: Boolean, optional default = true,</li>
+<li>guiOrder: String, optional default = &ldquo;&rdquo;,</li>
+<li>useJwksUrl: Boolean, optional default = false,</li>
+<li>enabled: Boolean, optional default = true,</li>
+<li>trustEmail: Boolean, optional default = false,</li>
+<li>storeToken: Boolean, optional default = false,</li>
+<li>linkOnly: Boolean, optional default = false,</li>
+<li>firstBrokerLoginFlowAlias: String, optional default = &ldquo;first broker login&rdquo;,</li>
+<li>postBrokerLoginFlowAlias: String, optional default = &ldquo;&rdquo;,</li>
+<li>updateProfileFirstLoginMode: String, optional default = &ldquo;on&rdquo;,</li>
+</ul>
+<h3 id="example">
+  Example
+  <a class="anchor" href="#example">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-keycloak-identity-provider<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#a2f;font-weight:bold">addKeycloakIdentityProvider</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">alias</span>:<span style="color:#bbb"> </span>testAlias<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">authorizationUrl</span>:<span style="color:#bbb"> </span>https://authUrl<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">tokenUrl</span>:<span style="color:#bbb"> </span>https://tokenUrl<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">clientId</span>:<span style="color:#bbb"> </span>clientId<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">clientSecret</span>:<span style="color:#bbb"> </span>clientSecret<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">hideOnLoginPage</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">backchannelSupported</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">trustEmail</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">storeToken</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span></code></pre></div><h2 id="deleteidentityprovider">
+  DeleteIdentityProvider
+  <a class="anchor" href="#deleteidentityprovider">#</a>
+</h2>
+<p>Deletes an identity provider, if one with this alias exists</p>
+<h3 id="parameters-1">
+  Parameters
+  <a class="anchor" href="#parameters-1">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>alias: String, not optional</li>
+</ul>
+<h3 id="example-1">
+  Example
+  <a class="anchor" href="#example-1">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>delete-identity-provider<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#a2f;font-weight:bold">addIdentityProvider</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">alias</span>:<span style="color:#bbb"> </span>testAlias1<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>keycloak-oidc<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">trustEmail</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">storeToken</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">config</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">hideOnLoginPage</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">backchannelSupported</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">authorizationUrl</span>:<span style="color:#bbb"> </span>https://authUrl<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">tokenUrl</span>:<span style="color:#bbb"> </span>https://tokenUrl<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">clientId</span>:<span style="color:#bbb"> </span>clientId<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">clientSecret</span>:<span style="color:#bbb"> </span>clientSecret<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#a2f;font-weight:bold">deleteIdentityProvider</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">alias</span>:<span style="color:#bbb"> </span>testAlias1<span style="color:#bbb">
+</span></code></pre></div><h2 id="addidentityprovider">
+  AddIdentityProvider
+  <a class="anchor" href="#addidentityprovider">#</a>
+</h2>
+<p>Adds a generic identity provider, exact configuration has to be reverse engineered through the keycloak web frontent.
+If you need an identity provider please open an issue or file a pull request.</p>
+<p>Specific IdentityProvider actions (e.g. for Keycloak) are listed below</p>
+<h3 id="parameters-2">
+  Parameters
+  <a class="anchor" href="#parameters-2">#</a>
+</h3>
+<ul>
+<li>
+<p>realm: String, optional</p>
+</li>
+<li>
+<p>alias: String, not optional</p>
+</li>
+<li>
+<p>providerId: String,</p>
+</li>
+<li>
+<p>config: Map&lt;String, String&gt; not optional,</p>
+<p>configuration properties include for example:</p>
+<ul>
+<li>acceptsPromptNoneForwardFromClient</li>
+<li>authorizationUrl</li>
+<li>backchannelSupported</li>
+<li>clientAuthMethod</li>
+<li>clientId</li>
+<li>clientSecret</li>
+<li>defaultScope</li>
+<li>disableUserInfo</li>
+<li>forwardParameters</li>
+<li>guiOrder</li>
+<li>hideOnLoginPage</li>
+<li>issuer</li>
+<li>loginHint</li>
+<li>logoutUrl</li>
+<li>syncMode</li>
+<li>tokenUrl</li>
+<li>uiLocales</li>
+<li>useJwksUrl</li>
+<li>userInfoUrl</li>
+<li>validateSignature</li>
+</ul>
+</li>
+<li>
+<p>displayName: String optional, default=&rdquo;,</p>
+</li>
+<li>
+<p>enabled: Boolean, optional, default = true,</p>
+</li>
+<li>
+<p>trustEmail: Boolean, optional, default = false,</p>
+</li>
+<li>
+<p>storeToken: Boolean, optional, default = false,</p>
+</li>
+<li>
+<p>linkOnly: Boolean, optional, default = false,</p>
+</li>
+<li>
+<p>firstBrokerLoginFlowAlias: String, optional, default = &ldquo;first broker login&rdquo;,</p>
+</li>
+<li>
+<p>postBrokerLoginFlowAlias: String, optional, default = &ldquo;&rdquo;,</p>
+</li>
+</ul>
+<h3 id="example-2">
+  Example
+  <a class="anchor" href="#example-2">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-identity-provider<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#a2f;font-weight:bold">addIdentityProvider</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">alias</span>:<span style="color:#bbb"> </span>testAlias1<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>keycloak-oidc<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">trustEmail</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">storeToken</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">config</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">hideOnLoginPage</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">backchannelSupported</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">authorizationUrl</span>:<span style="color:#bbb"> </span>https://authUrl<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">tokenUrl</span>:<span style="color:#bbb"> </span>https://tokenUrl<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">clientId</span>:<span style="color:#bbb"> </span>clientId<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">clientSecret</span>:<span style="color:#bbb"> </span>clientSecret<span style="color:#bbb">
+</span></code></pre></div></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#addkeycloakidentityprovider">AddKeycloakIdentityProvider</a>
+      <ul>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleteidentityprovider">DeleteIdentityProvider</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#addidentityprovider">AddIdentityProvider</a>
+      <ul>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

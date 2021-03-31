@@ -33,6 +33,11 @@
   </url>
   
   <url>
+    <loc>https://klg71.github.io/keycloakmigration/migrations/identityprovider/</loc>
+    <lastmod>2020-07-03T12:22:20+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://klg71.github.io/keycloakmigration/migrations/userfederation/</loc>
     <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>

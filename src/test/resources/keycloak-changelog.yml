@@ -25,5 +25,6 @@ includes:
 - path: changesets/25_client_role.yml
 - path: changesets/26_client_scope.yml
 - path: changesets/27_role_scope_mapping.yml
-- path: changesets/28_admin_user.yml
 - path: changesets/29_delete_client_mapper.yml
+- path: changesets/30_add_keycloak_provider.yml
+- path: changesets/31_add_identity_provider.yml

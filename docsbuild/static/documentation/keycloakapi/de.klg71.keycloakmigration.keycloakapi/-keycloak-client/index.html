@@ -57,6 +57,13 @@
 </tr>
 <tr>
 <td>
+<h4><a href="add-identity-provider.html">addIdentityProvider</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">addIdentityProvider</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addIdentityProvider(de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider, kotlin.String)/addIdentityProvider">addIdentityProvider</span><span class="symbol">:</span>&nbsp;<a href="../../de.klg71.keycloakmigration.keycloakapi.model/-add-identity-provider/index.html"><span class="identifier">AddIdentityProvider</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addIdentityProvider(de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Response</span></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="add-mapper.html">addMapper</a></h4>
 </td>
 <td>
@@ -246,6 +253,13 @@
 </tr>
 <tr>
 <td>
+<h4><a href="delete-identity-provider.html">deleteIdentityProvider</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteIdentityProvider</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteIdentityProvider(kotlin.String, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteIdentityProvider(kotlin.String, kotlin.String)/alias">alias</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="delete-mapper.html">deleteMapper</a></h4>
 </td>
 <td>
@@ -306,6 +320,13 @@
 </td>
 <td>
 <code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">groupRoles</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$groupRoles(kotlin.String, java.util.UUID)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$groupRoles(kotlin.String, java.util.UUID)/id">id</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../de.klg71.keycloakmigration.keycloakapi.model/-role-list-item/index.html"><span class="identifier">RoleListItem</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="identity-provider.html">identityProvider</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">identityProvider</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$identityProvider(kotlin.String, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$identityProvider(kotlin.String, kotlin.String)/alias">alias</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../de.klg71.keycloakmigration.keycloakapi.model/-identity-provider/index.html"><span class="identifier">IdentityProvider</span></a></code></td>
 </tr>
 <tr>
 <td>
@@ -620,6 +641,20 @@
 </td>
 <td>
 <code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">KeycloakClient</span></a><span class="symbol">.</span><span class="identifier">groupUUID</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$groupUUID(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String)/group">group</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$groupUUID(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../identity-provider-exists-by-alias.html">identityProviderExistsByAlias</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">KeycloakClient</span></a><span class="symbol">.</span><span class="identifier">identityProviderExistsByAlias</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$identityProviderExistsByAlias(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String)/alias">alias</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$identityProviderExistsByAlias(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../identity-providers.html">identityProviders</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">KeycloakClient</span></a><span class="symbol">.</span><span class="identifier">identityProviders</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$identityProviders(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../de.klg71.keycloakmigration.keycloakapi.model/-identity-provider-item/index.html"><span class="identifier">IdentityProviderItem</span></a><span class="symbol">&gt;</span></code></td>
 </tr>
 <tr>
 <td>

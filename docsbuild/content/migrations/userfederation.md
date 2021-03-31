@@ -13,7 +13,7 @@ Adds an active directory to the realm
 ### Parameters
 - realm: String, optional
 - name: String, not optional
-- config: Map<String, String> values:
+- config: Map <String, String> values:
     - connectionUrl, not optional
     - usersDn, not optional
     - bindCredential, not optional

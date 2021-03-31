@@ -1,0 +1,18 @@
+id: add-identity-provider
+author: klg71
+realm: integ-test
+changes:
+  - addIdentityProvider:
+      alias: testAlias1
+      providerId: keycloak-oidc
+      trustEmail: true
+      storeToken: true
+      config:
+          hideOnLoginPage: true
+          backchannelSupported: true
+          authorizationUrl: https://authUrl
+          tokenUrl: https://tokenUrl
+          clientId: clientId
+          clientSecret: clientSecret
+  - deleteIdentityProvider:
+        alias: testAlias1

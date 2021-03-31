@@ -4,7 +4,7 @@ import java.net.ConnectException
 import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
-    kotlin("jvm") version "1.3.70"
+    kotlin("jvm") version "1.4.21"
     id("maven-publish")
     id("signing")
     id("de.undercouch.download") version ("3.4.3")
@@ -38,6 +38,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-core:2.11.1")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
 
+    testImplementation("io.github.openfeign:feign-slf4j:10.1.0")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
     testImplementation("io.mockk:mockk:1.9")
