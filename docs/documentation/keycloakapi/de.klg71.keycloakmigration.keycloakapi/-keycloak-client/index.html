@@ -50,6 +50,20 @@
 </tr>
 <tr>
 <td>
+<h4><a href="add-flow.html">addFlow</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">addFlow</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addFlow(kotlin.String, de.klg71.keycloakmigration.keycloakapi.model.AddFlow)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addFlow(kotlin.String, de.klg71.keycloakmigration.keycloakapi.model.AddFlow)/addFlow">addFlow</span><span class="symbol">:</span>&nbsp;<a href="../../de.klg71.keycloakmigration.keycloakapi.model/-add-flow/index.html"><span class="identifier">AddFlow</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Response</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="add-flow-execution.html">addFlowExecution</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">addFlowExecution</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addFlowExecution(kotlin.String, kotlin.String, de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addFlowExecution(kotlin.String, kotlin.String, de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution)/alias">alias</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addFlowExecution(kotlin.String, kotlin.String, de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution)/addFlowExecution">addFlowExecution</span><span class="symbol">:</span>&nbsp;<a href="../../de.klg71.keycloakmigration.keycloakapi.model/-add-flow-execution/index.html"><span class="identifier">AddFlowExecution</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Response</span></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="add-group.html">addGroup</a></h4>
 </td>
 <td>
@@ -246,6 +260,20 @@
 </tr>
 <tr>
 <td>
+<h4><a href="delete-flow.html">deleteFlow</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteFlow</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteFlow(kotlin.String, java.util.UUID)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteFlow(kotlin.String, java.util.UUID)/flowId">flowId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="delete-flow-executions.html">deleteFlowExecutions</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteFlowExecutions</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteFlowExecutions(kotlin.String, java.util.UUID)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteFlowExecutions(kotlin.String, java.util.UUID)/executionId">executionId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="delete-group.html">deleteGroup</a></h4>
 </td>
 <td>
@@ -306,6 +334,20 @@
 </td>
 <td>
 <code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteUserFederationMapper</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteUserFederationMapper(kotlin.String, java.util.UUID)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteUserFederationMapper(kotlin.String, java.util.UUID)/mapperId">mapperId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Response</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="flow-executions.html">flowExecutions</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">flowExecutions</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$flowExecutions(kotlin.String, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$flowExecutions(kotlin.String, kotlin.String)/alias">alias</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../de.klg71.keycloakmigration.keycloakapi.model/-authentication-execution/index.html"><span class="identifier">AuthenticationExecution</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="flows.html">flows</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">flows</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$flows(kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../de.klg71.keycloakmigration.keycloakapi.model/-flow/index.html"><span class="identifier">Flow</span></a><span class="symbol">&gt;</span></code></td>
 </tr>
 <tr>
 <td>
@@ -468,6 +510,20 @@
 </td>
 <td>
 <code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">updateClient</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$updateClient(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.Client, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$updateClient(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.Client, kotlin.String)/updateClient">updateClient</span><span class="symbol">:</span>&nbsp;<a href="../../de.klg71.keycloakmigration.keycloakapi.model/-client/index.html"><span class="identifier">Client</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$updateClient(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.Client, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Response</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="update-flow.html">updateFlow</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">updateFlow</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$updateFlow(kotlin.String, java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$updateFlow(kotlin.String, java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow)/flowId">flowId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$updateFlow(kotlin.String, java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow)/updateFlow">updateFlow</span><span class="symbol">:</span>&nbsp;<a href="../../de.klg71.keycloakmigration.keycloakapi.model/-update-flow/index.html"><span class="identifier">UpdateFlow</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="update-flow-execution.html">updateFlowExecution</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">updateFlowExecution</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$updateFlowExecution(kotlin.String, kotlin.String, de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$updateFlowExecution(kotlin.String, kotlin.String, de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution)/alias">alias</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$updateFlowExecution(kotlin.String, kotlin.String, de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution)/updateFlowExecution">updateFlowExecution</span><span class="symbol">:</span>&nbsp;<a href="../../de.klg71.keycloakmigration.keycloakapi.model/-update-flow-execution/index.html"><span class="identifier">UpdateFlowExecution</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Response</span></code></td>
 </tr>
 <tr>
 <td>
@@ -655,6 +711,13 @@
 </td>
 <td>
 <code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">KeycloakClient</span></a><span class="symbol">.</span><span class="identifier">identityProviders</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$identityProviders(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../de.klg71.keycloakmigration.keycloakapi.model/-identity-provider-item/index.html"><span class="identifier">IdentityProviderItem</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<h4><a href="../import-flow.html">importFlow</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">KeycloakClient</span></a><span class="symbol">.</span><span class="identifier">importFlow</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$importFlow(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, de.klg71.keycloakmigration.keycloakapi.model.ImportFlow)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$importFlow(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, de.klg71.keycloakmigration.keycloakapi.model.ImportFlow)/importFlow">importFlow</span><span class="symbol">:</span>&nbsp;<a href="../../de.klg71.keycloakmigration.keycloakapi.model/-import-flow/index.html"><span class="identifier">ImportFlow</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a></code></td>
 </tr>
 <tr>
 <td>

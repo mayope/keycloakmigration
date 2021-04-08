@@ -1,0 +1,20 @@
+id: add-flow
+author: klg71
+realm: integ-test
+changes:
+  - addFlow:
+      alias: trust-foreign-idp
+      executions:
+        - requirement: ALTERNATIVE
+          providerId: idp-create-user-if-unique
+        - requirement: ALTERNATIVE
+          providerId: idp-auto-link
+  - addFlow:
+      alias: trust-foreign-idp1
+      executions:
+        - requirement: ALTERNATIVE
+          providerId: idp-create-user-if-unique
+        - requirement: ALTERNATIVE
+          providerId: idp-auto-link
+  - deleteFlow:
+      alias: trust-foreign-idp

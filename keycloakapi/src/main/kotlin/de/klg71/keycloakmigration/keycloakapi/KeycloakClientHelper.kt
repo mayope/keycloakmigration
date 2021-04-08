@@ -2,10 +2,14 @@
 
 package de.klg71.keycloakmigration.keycloakapi
 
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
+import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
 import de.klg71.keycloakmigration.keycloakapi.model.Role
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import feign.Response
 import java.util.UUID
 
@@ -218,3 +222,30 @@ fun KeycloakClient.ldapMapperExistsByName(ldapName: String, name: String, realm:
     ldapMappers(realm, userFederationByName(ldapName, realm).id).any { it.name == name }
 
 fun KeycloakClient.identityProviders(realm: String) = realmById(realm).identityProviders
+
+fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
+    if (flows(realm).any { it.alias == importFlow.alias }) {
+        throw KeycloakApiException("Import Flow failed, Flow: ${importFlow.alias} already exists")
+    }
+    return createFlow(realm, importFlow).also {
+        configureAuthExecutors(importFlow, realm)
+    }
+}
+
+private fun KeycloakClient.createFlow(realm: String, importFlow: ImportFlow): UUID {
+    return addFlow(
+        realm, AddFlow(
+            importFlow.alias, importFlow.buildIn, importFlow.description, importFlow.providerId, importFlow.topLevel
+        )
+    ).extractLocationUUID()
+}
+
+private fun KeycloakClient.configureAuthExecutors(importFlow: ImportFlow, realm: String) {
+    importFlow.authenticationExecutions.forEach {
+        val executionId =
+            addFlowExecution(realm, importFlow.alias, AddFlowExecution(it.providerId)).extractLocationUUID()
+        updateFlowExecution(
+            realm, importFlow.alias, UpdateFlowExecution(executionId, it.requirement, it.level, it.index, it.providerId)
+        )
+    }
+}

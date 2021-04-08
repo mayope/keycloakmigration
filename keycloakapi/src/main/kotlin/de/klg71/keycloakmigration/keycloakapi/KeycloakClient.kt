@@ -2,6 +2,8 @@ package de.klg71.keycloakmigration.keycloakapi
 
 import de.klg71.keycloakmigration.keycloakapi.model.AddClient
 import de.klg71.keycloakmigration.keycloakapi.model.AddClientScope
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
@@ -14,11 +16,13 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederationMapper
 import de.klg71.keycloakmigration.keycloakapi.model.AssignClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.AssignGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AssignRole
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
 import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientListItem
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScopeItem
 import de.klg71.keycloakmigration.keycloakapi.model.ClientSecret
+import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.Group
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProvider
@@ -27,6 +31,8 @@ import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
 import de.klg71.keycloakmigration.keycloakapi.model.User
 import de.klg71.keycloakmigration.keycloakapi.model.UserFederation
@@ -345,9 +351,41 @@ interface KeycloakClient {
     fun addIdentityProvider(addIdentityProvider: AddIdentityProvider, @Param("realm") realm: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}")
-    fun identityProvider(@Param("realm") realm:String,@Param("alias") alias:String):IdentityProvider
+    fun identityProvider(@Param("realm") realm: String, @Param("alias") alias: String): IdentityProvider
 
     @RequestLine("DELETE /admin/realms/{realm}/identity-provider/instances/{alias}")
-    fun deleteIdentityProvider(@Param("realm") realm:String,@Param("alias") alias:String)
+    fun deleteIdentityProvider(@Param("realm") realm: String, @Param("alias") alias: String)
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/authentication/flows")
+    fun addFlow(@Param("realm") realm: String, addFlow: AddFlow): Response
+
+    @RequestLine("GET /admin/realms/{realm}/authentication/flows")
+    fun flows(@Param("realm") realm: String): List<Flow>
+
+    @RequestLine("GET /admin/realms/{realm}/authentication/flows/{alias}/executions")
+    fun flowExecutions(@Param("realm") realm: String,@Param("alias") alias: String): List<AuthenticationExecution>
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("PUT /admin/realms/{realm}/authentication/flows/{id}")
+    fun updateFlow(@Param("realm") realm: String, @Param("id") flowId: UUID, updateFlow: UpdateFlow)
+
+    @RequestLine("DELETE /admin/realms/{realm}/authentication/flows/{id}")
+    fun deleteFlow(@Param("realm") realm: String, @Param("id") flowId: UUID)
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/authentication/flows/{alias}/executions/execution")
+    fun addFlowExecution(@Param("realm") realm: String,
+        @Param("alias") alias: String,
+        addFlowExecution: AddFlowExecution): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("PUT /admin/realms/{realm}/authentication/flows/{alias}/executions")
+    fun updateFlowExecution(@Param("realm") realm: String,
+        @Param("alias") alias: String,
+        updateFlowExecution: UpdateFlowExecution): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/authentication/executions/{id}")
+    fun deleteFlowExecutions(@Param("realm") realm: String, @Param("id") executionId: UUID)
 }
 
