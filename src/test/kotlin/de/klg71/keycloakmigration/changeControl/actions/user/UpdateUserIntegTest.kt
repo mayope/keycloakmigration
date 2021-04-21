@@ -48,7 +48,7 @@ class UpdateUserIntegTest : AbstractIntegrationTest() {
                 hashedSaltedValue = hashedSaltedValue)))
                 .executeIt()
         val loginClient = initKeycloakLoginClient(TEST_BASE_URL)
-        val answer = loginClient.login(testRealm, "password", "admin-cli", "testIntegration", password)
+        val answer = loginClient.login(testRealm, "password", "admin-cli", "testIntegration", password,"")
         assertThat(answer.accessToken).isNotEmpty()
     }
 }

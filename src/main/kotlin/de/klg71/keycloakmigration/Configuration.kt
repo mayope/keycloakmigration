@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory
 @Suppress("LongParameterList")
 fun myModule(adminUser: String,
     adminPassword: String,
+    adminTotp:String,
     baseUrl: String,
     realm: String,
     clientId: String,
@@ -37,7 +38,7 @@ fun myModule(adminUser: String,
     single { StringEnvSubstitutor(failOnUndefinedVariabled, warnOnUndefinedVariables) }
     single(named("yamlObjectMapper")) { initYamlObjectMapper() }
     single(named("parameters")) { parameters }
-    single { initKeycloakClient(baseUrl, adminUser, adminPassword, realm, clientId, logger) }
+    single { initKeycloakClient(baseUrl, adminUser, adminPassword, realm, clientId, logger,adminTotp) }
     single(named("migrationUserId")) { loadCurrentUser(get(), adminUser, realm) }
     single { RealmChecker() }
 }

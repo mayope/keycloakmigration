@@ -2,7 +2,15 @@ package de.klg71.keycloakmigration.testmigration
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
-import de.klg71.keycloakmigration.*
+import de.klg71.keycloakmigration.DEFAULT_ADMIN_PASSWORD
+import de.klg71.keycloakmigration.DEFAULT_ADMIN_USER
+import de.klg71.keycloakmigration.DEFAULT_CLIENTID
+import de.klg71.keycloakmigration.DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
+import de.klg71.keycloakmigration.DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
+import de.klg71.keycloakmigration.DEFAULT_REALM
+import de.klg71.keycloakmigration.KeycloakNotReadyException
+import de.klg71.keycloakmigration.MigrationArgs
+import de.klg71.keycloakmigration.migrate
 import org.apache.logging.log4j.core.config.Configurator
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
@@ -28,6 +36,7 @@ class WaitForKeycloakTest {
         override fun waitForKeycloakTimeout() = 10L // seconds
         override fun failOnUndefinedVariables() = DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
         override fun warnOnUndefinedVariables() = DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
+        override fun adminTotp() = ""
     }
 
     @Test(timeout = 12 * 60 * 1000)
@@ -45,7 +54,9 @@ class WaitForKeycloakTest {
         }.start()
 
         Configurator.initialize(null, Paths.get("").toAbsolutePath().toString() + "/src/test/resources/log4j2.yml");
-        assertThatThrownBy { migrate(TestMigrationArgs) }.isInstanceOf(FileNotFoundException::class.java) // since wiremock will return nothing
+        assertThatThrownBy { migrate(TestMigrationArgs) }.isInstanceOf(
+            FileNotFoundException::class.java
+        ) // since wiremock will return nothing
     }
 
 }

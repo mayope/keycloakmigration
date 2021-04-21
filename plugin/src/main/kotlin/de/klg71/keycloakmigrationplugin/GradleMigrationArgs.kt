@@ -2,18 +2,21 @@ package de.klg71.keycloakmigrationplugin
 
 import de.klg71.keycloakmigration.MigrationArgs
 
-open class GradleMigrationArgs(private val adminUser: String, private val adminPassword: String,
-                               private val migrationFile: String, private val baseUrl: String,
-                               private val realm: String, private val clientId: String,
-                               private val correctHashes: Boolean,
-                               private val parameters: Map<String, String>,
-                               private val waitForKeycloak: Boolean,
-                               private val waitForKeycloakTimeout: Long,
-                               private val failOnUndefinedVariables: Boolean,
-                               private val warnOnUndefinedVariables: Boolean
+open class GradleMigrationArgs(private val adminUser: String,
+    private val adminPassword: String,
+    private val adminTotp: String,
+    private val migrationFile: String, private val baseUrl: String,
+    private val realm: String, private val clientId: String,
+    private val correctHashes: Boolean,
+    private val parameters: Map<String, String>,
+    private val waitForKeycloak: Boolean,
+    private val waitForKeycloakTimeout: Long,
+    private val failOnUndefinedVariables: Boolean,
+    private val warnOnUndefinedVariables: Boolean
 ) : MigrationArgs {
     override fun adminUser() = adminUser
     override fun adminPassword() = adminPassword
+    override fun adminTotp() = adminTotp
     override fun baseUrl() = baseUrl
     override fun migrationFile() = migrationFile
     override fun parameters() = parameters

@@ -4,6 +4,7 @@ package de.klg71.keycloakmigration
 interface MigrationArgs {
     fun adminUser(): String
     fun adminPassword(): String
+    fun adminTotp(): String
     fun baseUrl(): String
     fun migrationFile(): String
     fun realm(): String

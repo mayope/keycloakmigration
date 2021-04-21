@@ -22,7 +22,7 @@ class UpdateUserPasswordIntegTest : AbstractIntegrationTest() {
         val password = RandomStringUtils.randomAlphanumeric(15)
         UpdateUserPasswordAction(testRealm, "testIntegration", password = password).executeIt()
 
-        val answer = loginClient.login(testRealm, "password", "admin-cli", "testIntegration", password)
+        val answer = loginClient.login(testRealm, "password", "admin-cli", "testIntegration", password,"")
         assertThat(answer.accessToken).isNotEmpty()
     }
 
@@ -33,7 +33,7 @@ class UpdateUserPasswordIntegTest : AbstractIntegrationTest() {
         val salt = RandomStringUtils.randomAlphanumeric(15)
         UpdateUserPasswordAction(testRealm, "testIntegration", password = password, salt = salt).executeIt()
 
-        val answer = loginClient.login(testRealm, "password", "admin-cli", "testIntegration", password)
+        val answer = loginClient.login(testRealm, "password", "admin-cli", "testIntegration", password,"")
         assertThat(answer.accessToken).isNotEmpty()
     }
 

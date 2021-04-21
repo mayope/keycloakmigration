@@ -13,6 +13,9 @@ open class KeycloakMigrationTask : DefaultTask() {
     var adminPassword = "admin"
 
     @Input
+    var adminTotp = ""
+
+    @Input
     var migrationFile = "keycloak-changelog.yml"
 
     @Input
@@ -42,13 +45,15 @@ open class KeycloakMigrationTask : DefaultTask() {
     @Suppress("unused")
     @TaskAction
     fun migrate() {
-        GradleMigrationArgs(adminUser, adminPassword,
-                Paths.get(project.projectDir.toString(), migrationFile).toString(),
-                baseUrl, realm, clientId, false,
-                parameters, waitForKeycloak, waitForKeycloakTimeout, failOnUndefinedVariables, warnOnUndefinedVariables)
-                .let {
-                    de.klg71.keycloakmigration.migrate(it)
-                }
+        GradleMigrationArgs(
+            adminUser, adminPassword, adminTotp,
+            Paths.get(project.projectDir.toString(), migrationFile).toString(),
+            baseUrl, realm, clientId, false,
+            parameters, waitForKeycloak, waitForKeycloakTimeout, failOnUndefinedVariables, warnOnUndefinedVariables
+        )
+            .let {
+                de.klg71.keycloakmigration.migrate(it)
+            }
     }
 
 }

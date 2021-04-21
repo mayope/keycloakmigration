@@ -13,6 +13,9 @@ open class KeycloakMigrationCorrectHashesTask : DefaultTask() {
     var adminPassword = "admin"
 
     @Input
+    var adminTotp = ""
+
+    @Input
     var migrationFile = "keycloak-changelog.yml"
 
     @Input
@@ -42,7 +45,7 @@ open class KeycloakMigrationCorrectHashesTask : DefaultTask() {
     @Suppress("unused")
     @TaskAction
     fun migrate() {
-        GradleMigrationArgs(adminUser, adminPassword,
+        GradleMigrationArgs(adminUser, adminPassword,adminTotp,
                 Paths.get(project.projectDir.toString(), migrationFile).toString(),
                 baseUrl, realm, clientId, true,
                 parameters, waitForKeycloak, waitForKeycloakTimeout, failOnUndefinedVariables, warnOnUndefinedVariables)
