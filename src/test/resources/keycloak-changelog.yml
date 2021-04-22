@@ -29,3 +29,4 @@ includes:
 - path: changesets/30_add_keycloak_provider.yml
 - path: changesets/31_add_identity_provider.yml
 - path: changesets/32_add_flow.yml
+- path: changesets/33_update_flow.yml

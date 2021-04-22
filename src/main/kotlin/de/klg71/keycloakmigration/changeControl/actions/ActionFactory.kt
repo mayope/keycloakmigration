@@ -19,6 +19,7 @@ import de.klg71.keycloakmigration.changeControl.actions.clientscope.AddClientSco
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignDefaultClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AssignRoleToGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.DeleteGroupAction
@@ -122,6 +123,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
 
             "addFlow" -> objectMapper.readValue<AddFlowAction>(actionJson)
             "deleteFlow" -> objectMapper.readValue<DeleteFlowAction>(actionJson)
+            "updateFlow" -> objectMapper.readValue<UpdateFlowAction>(actionJson)
 
             else -> throw ParseException(
                 "Unknown Change type: $actionName"

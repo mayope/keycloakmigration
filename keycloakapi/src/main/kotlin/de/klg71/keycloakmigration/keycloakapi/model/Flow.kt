@@ -40,9 +40,13 @@ data class AddFlow(val alias: String,
     val topLevel: Boolean)
 
 data class UpdateFlow(
+    val id: UUID,
     val alias: String,
+    val providerId: String,
+    val topLevel: Boolean,
     val description: String,
 )
+
 data class AuthenticationExecutionImport(
     val requirement: Flow.Requirement,
     val providerId: String,
@@ -55,6 +59,14 @@ data class ImportFlow(
     val providerId: String,
     val topLevel: Boolean,
     val buildIn: Boolean,
+    val authenticationExecutions: List<AuthenticationExecutionImport>
+)
+
+data class UpdateFlowInPlace(
+    val newAlias: String,
+    val description: String,
+    val providerId: String,
+    val topLevel: Boolean,
     val authenticationExecutions: List<AuthenticationExecutionImport>
 )
 

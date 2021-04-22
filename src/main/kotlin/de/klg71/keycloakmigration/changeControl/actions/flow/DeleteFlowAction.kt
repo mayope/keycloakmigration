@@ -1,9 +1,9 @@
 package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.keycloakapi.executionsToImport
 import de.klg71.keycloakmigration.keycloakapi.importFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
 
@@ -27,15 +27,12 @@ class DeleteFlowAction(
     override fun undo() {
         oldFlow?.let {
             client.importFlow(
-                realm(), ImportFlow(alias, it.description, it.providerId, it.topLevel, it.builtIn,
-                    oldExecutionsToImport()
+                realm(), ImportFlow(
+                    alias, it.description, it.providerId, it.topLevel, it.builtIn,
+                    executionsToImport(oldExecutions)
                 )
             )
         }
-    }
-
-    private fun oldExecutionsToImport() = oldExecutions.map {
-        AuthenticationExecutionImport(it.requirement, it.providerId, it.level, it.index)
     }
 
     override fun name() = "DeleteFlow $alias"

@@ -386,6 +386,6 @@ interface KeycloakClient {
         updateFlowExecution: UpdateFlowExecution): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/authentication/executions/{id}")
-    fun deleteFlowExecutions(@Param("realm") realm: String, @Param("id") executionId: UUID)
+    fun deleteFlowExecution(@Param("realm") realm: String, @Param("id") executionId: UUID)
 }
 
