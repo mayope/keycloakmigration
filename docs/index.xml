@@ -39,8 +39,8 @@ Parameter# realm: String, optional name: String, not optional description: St
       
       <guid>https://klg71.github.io/keycloakmigration/migrations/flow/</guid>
       <description>Flow Migrations#All migrations referring to the Authentication Flow resource.
-AddFlow#Adds a keycloak identity provider.
-Parameters# realm: String, optional alias: String, not optional description: String, optional, default = &amp;ldquo;&amp;rdquo;, buildIn: Boolean, optional, default = false, providerId: String, optional, default = &amp;ldquo;basic-flow&amp;rdquo;, topLevel: Boolean, optional, default = true, executions: List&amp;lt; AuthenticationExecutionImport &amp;gt; = emptyList()  subclass AuthenticationExecutionImport# requirement: Flow.Requirement = &amp;ldquo;ALTERNATIVE&amp;rdquo; | &amp;ldquo;DISABLED&amp;rdquo; | &amp;ldquo;REQUIRED&amp;rdquo; | &amp;ldquo;CONDITIONAL&amp;rdquo; providerId: String = see providers in next point level: Int index: Int  Known Flow providers on Release (09.</description>
+AddFlow#Adds an authentication flow.
+Parameters# realm: String, optional alias: String, not optional description: String, optional, default = &amp;ldquo;&amp;rdquo;, buildIn: Boolean, optional, default = false, providerId: String, optional, default = &amp;ldquo;basic-flow&amp;rdquo;, topLevel: Boolean, optional, default = true, executions: List&amp;lt; AuthenticationExecutionImport &amp;gt;, default = emptyList()  subclass AuthenticationExecutionImport# requirement: Flow.Requirement = &amp;ldquo;ALTERNATIVE&amp;rdquo; | &amp;ldquo;DISABLED&amp;rdquo; | &amp;ldquo;REQUIRED&amp;rdquo; | &amp;ldquo;CONDITIONAL&amp;rdquo; providerId: String = see providers in next point level: Int index: Int  Known Flow providers on Release (09.</description>
     </item>
     
     <item>

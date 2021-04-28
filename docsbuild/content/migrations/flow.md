@@ -8,7 +8,7 @@ permalink: /migrations/flow/
 # Flow Migrations
 All migrations referring to the Authentication Flow resource.
 ## AddFlow
-Adds a keycloak identity provider.
+Adds an authentication flow.
 
 ### Parameters
 - realm: String, optional
@@ -17,7 +17,7 @@ Adds a keycloak identity provider.
 - buildIn: Boolean, optional, default = false,
 - providerId: String, optional, default = "basic-flow",
 - topLevel: Boolean, optional, default = true,
-- executions: List< AuthenticationExecutionImport > = emptyList()
+- executions: List< AuthenticationExecutionImport >, default = emptyList()
 
 #### subclass AuthenticationExecutionImport
 - requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL"
@@ -74,8 +74,53 @@ changes:
         - requirement: ALTERNATIVE
           providerId: idp-auto-link
 ```
+## UpdateFlow
+Updates an authentication flow in place.
+Only updates provided values.
+For an update of the flow `alias` use the oldAlias as `alias` and the newAlias in `newAlias`.
+
+### Parameters
+- realm: String, optional
+- alias: String, not optional
+- newAlias: String, optional, default = no update
+- description: String, default = no update
+- buildIn: Boolean, optional, default = no update,
+- providerId: String, optional, default = no update,
+- topLevel: Boolean, optional, default = no update,
+- executions: List< AuthenticationExecutionImport >, default = no update
+
+#### subclass AuthenticationExecutionImport
+- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL"
+- providerId: String = see providers in AddFlow action
+- level: Int
+- index: Int
+
+
+### Example
+```yaml
+id: update-flow
+author: klg71
+realm: integ-test
+changes:
+  - addFlow:
+      alias: trust-foreign-idp
+      executions:
+        - requirement: ALTERNATIVE
+          providerId: idp-create-user-if-unique
+        - requirement: ALTERNATIVE
+          providerId: idp-auto-link
+  - updateFlow:
+      alias: trust-foreign-idp
+      newAlias: trust-foreign-idp-update
+      description: new-description
+      executions:
+        - requirement: ALTERNATIVE
+          providerId: idp-create-user-if-unique
+        - requirement: REQUIRED
+          providerId: console-username-password
+```
 ## DeleteFlow
-Deletes an iflow, if one with this alias exists
+Deletes a flow, if one with this alias exists
 
 ### Parameters
 - realm: String, optional
