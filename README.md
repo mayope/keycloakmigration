@@ -5,7 +5,7 @@ It is inspired by the database migration tool liquibase.
 The goal is to provide a similar mechanism for Keycloak. 
 
 ## Documentation
-For full documentation please visit: https://klg71.github.io/keycloakmigration/
+For full documentation please visit: https://mayope.github.io/keycloakmigration/
 
 ## Quickstart
 ### Gradle
