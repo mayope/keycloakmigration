@@ -12,7 +12,7 @@ Parameters# realm: String, optional name: String, not optional config: Map &l
 AddAdLdap#Adds an active directory to the realm
 Parameters# realm: String, optional name: String, not optional config: Map &lt;String, String&gt; values:  connectionUrl, not optional usersDn, not optional bindCredential, not optional bindDn, not optional changedSyncPeriod, optional, default:&ldquo;86400&rdquo; fullSyncPeriod, optional, default:&ldquo;604800&rdquo; useKerberosAuthentication, optional, default: &ldquo;false&rdquo; allowKerberosAuthentication, optional, default: &ldquo;false&rdquo; pagination, optional, default: &ldquo;true&rdquo; readTimeout, optional, default: &quot;&rdquo; connectionTimeout, optional, default: &quot;&rdquo; connectionPooling, optional, default: &ldquo;true&rdquo; useTruststoreSPI, optional, default: &ldquo;ldapsOnly&rdquo; validatePasswordPolicy, optional, default: &ldquo;false&rdquo; searchScope, optional, default: &ldquo;1&rdquo; ldapFilter, optional, default: &quot;&rdquo; authenticationType, optional, default: &ldquo;simple&rdquo; userObjectClasses, optional, default: &ldquo;person, organizationalPerson, user&rdquo; uuidLdapAttribute, optional, default: &ldquo;cn&rdquo; rdnLdapAttribute, optional, default: &ldquo;cn&rdquo; usernameLdapAttribute, optional, default: &ldquo;cn&rdquo; importUsers, optional, default: &ldquo;true&rdquo; editMode, optional, default: &ldquo;READ_ONLY&rdquo; batchSize, optional, default: &ldquo;1000&rdquo; cachePolicy, optional, default: &ldquo;DEFAULT&rdquo; periodicChangedUsersSync, optional, default: &ldquo;false&rdquo; priority, optional, default: &ldquo;0&rdquo;    Example#id:add-ad-ldapauthor:klg71changes:- addAdLdap:realm:mastername:testLdapconfig:connectionUrl:https://testldapusersDN:usersTestDnbindCredential:testPasswordbindDN:testBindDnAddAdLdapFullNameMapper#Adds a full name mapper to an active directory ldap, throws an error if the ad doesn&rsquo;t exists or if a mapper with this name already exists in this ad" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://klg71.github.io/keycloakmigration/migrations/userfederation/" />
+<meta property="og:url" content="https://mayope.github.io/keycloakmigration/migrations/userfederation/" />
 <meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
 <meta property="article:modified_time" content="2021-03-31T16:28:33+02:00" />
 <title>User Federation Migrations | Keycloakmigration</title>
@@ -70,14 +70,14 @@ https://github.com/alex-shpak/hugo-book
 <li><a href="/keycloakmigration/migrations/">Migrations</a>
 <ul>
 <li><a href="/keycloakmigration/migrations/user/">User Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/scopes/">ClientScope Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/identityprovider/">IdentityProvider Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/flow/">Flow Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/scopes/">ClientScope Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/identityprovider/">IdentityProvider Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/flow/">Flow Migrations</a></li>
 </ul>
 </li>
 <li><a href="/keycloakmigration/keycloak_api/">Using the Keycloakapi</a></li>

@@ -12,7 +12,7 @@ rootProject.name = &#34;keycloak-migration&#34; keycloak-changelog.">
 plugins { id(&#34;de.klg71.keycloakmigrationplugin&#34;) version &#34;x.x.x&#34; } repositories { jcenter() } tasks { register&lt;KeycloakMigrationTask&gt;(&#34;keycloakMigrateLocal&#34;) { migrationFile = &#34;keycloak-changelog.yml&#34; adminUser = &#34;admin&#34; adminPassword = &#34;adminPassword&#34; baseUrl = &#34;http://localhost:8080&#34; realm = &#34;master&#34; waitForKeycloak(keycloakBaseUrl) parameters = mapOf( &#34;USER_NAME&#34; to &#34;testUser&#34;, &#34;PASSWORD&#34; to &#34;password&#34; ) waitForKeycloak = false waitForKeycloakTimeout = 0L // infinit wait time  } } settings.gradle.kts
 rootProject.name = &#34;keycloak-migration&#34; keycloak-changelog." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://klg71.github.io/keycloakmigration/quickstart/kotlin/" />
+<meta property="og:url" content="https://mayope.github.io/keycloakmigration/quickstart/kotlin/" />
 <meta property="article:modified_time" content="2020-07-04T10:17:11+02:00" />
 <title>Gradle Kotlin DSL | Keycloakmigration</title>
 <link rel="manifest" href="/keycloakmigration/manifest.json">
@@ -69,14 +69,14 @@ https://github.com/alex-shpak/hugo-book
 <li><a href="/keycloakmigration/migrations/">Migrations</a>
 <ul>
 <li><a href="/keycloakmigration/migrations/user/">User Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/scopes/">ClientScope Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/identityprovider/">IdentityProvider Migrations</a></li>
-<li><a href="https://klg71.github.io/keycloakmigration/migrations/flow/">Flow Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/scopes/">ClientScope Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/identityprovider/">IdentityProvider Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/flow/">Flow Migrations</a></li>
 </ul>
 </li>
 <li><a href="/keycloakmigration/keycloak_api/">Using the Keycloakapi</a></li>
@@ -212,7 +212,7 @@ tasks <span style="color:#666">{</span>
   <a class="anchor" href="#execute">#</a>
 </h2>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">gradle keycloakMigrateLocal
-</code></pre></div><p>Available migrations are listed here: <a href="https://klg71.github.io/keycloakmigration/migrations/">Migrations</a></p>
+</code></pre></div><p>Available migrations are listed here: <a href="https://mayope.github.io/keycloakmigration/migrations/">Migrations</a></p>
 </article>
  
       
