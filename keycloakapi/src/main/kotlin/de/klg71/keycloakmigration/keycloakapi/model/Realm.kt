@@ -46,7 +46,7 @@ data class Realm(
     val quickLoginCheckMilliSeconds: Int,
     val maxDeltaTimeSeconds: Int,
     val failureFactor: Int,
-    val defaultRoles: List<String>,
+    val defaultRole: Role,
     val requiredCredentials: List<String>,
     val otpPolicyType: String,
     val otpPolicyAlgorithm: String,
@@ -126,7 +126,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     var quickLoginCheckMilliSeconds: Int = existingRealm.quickLoginCheckMilliSeconds
     var maxDeltaTimeSeconds: Int = existingRealm.maxDeltaTimeSeconds
     var failureFactor: Int = existingRealm.failureFactor
-    var defaultRoles: List<String> = existingRealm.defaultRoles
+    var defaultRole: Role = existingRealm.defaultRole
     var requiredCredentials: List<String> = existingRealm.requiredCredentials
     var otpPolicyType: String = existingRealm.otpPolicyType
     var otpPolicyAlgorithm: String = existingRealm.otpPolicyAlgorithm
@@ -207,7 +207,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
         quickLoginCheckMilliSeconds,
         maxDeltaTimeSeconds,
         failureFactor,
-        defaultRoles,
+        defaultRole,
         requiredCredentials,
         otpPolicyType,
         otpPolicyAlgorithm,

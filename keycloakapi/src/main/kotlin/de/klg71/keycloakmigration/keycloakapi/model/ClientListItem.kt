@@ -12,7 +12,7 @@ data class ClientListItem(
         val surrogateAuthRequired: Boolean,
         val enabled: Boolean,
         val clientAuthenticatorType: String,
-        val defaultRoles: List<String>?,
+        val defaultRole: Role?,
         val redirectUris: List<String>,
         val webOrigins: List<String>,
         val notBefore: Int,

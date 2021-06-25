@@ -12,7 +12,7 @@ data class Client(
     val surrogateAuthRequired: Boolean,
     val enabled: Boolean,
     val clientAuthenticatorType: String,
-    val defaultRoles: List<String>?,
+    val defaultRole: Role?,
     val redirectUris: List<String>,
     val webOrigins: List<String>,
     val notBefore: Int,
@@ -48,7 +48,7 @@ class UpdateClientBuilder(private val existingClient: Client) {
     var surrogateAuthRequired: Boolean = existingClient.surrogateAuthRequired
     var enabled: Boolean = existingClient.enabled
     var clientAuthenticatorType: String = existingClient.clientAuthenticatorType
-    var defaultRoles: List<String>? = existingClient.defaultRoles
+    var defaultRole: Role? = existingClient.defaultRole
     var redirectUris: List<String> = existingClient.redirectUris
     var webOrigins: List<String> = existingClient.webOrigins
     var notBefore: Int = existingClient.notBefore
@@ -82,7 +82,7 @@ class UpdateClientBuilder(private val existingClient: Client) {
         surrogateAuthRequired,
         enabled,
         clientAuthenticatorType,
-        defaultRoles,
+        defaultRole,
         redirectUris,
         webOrigins,
         notBefore,

@@ -4,6 +4,7 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderItem
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
+import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.realmById
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
 
@@ -46,7 +47,7 @@ class UpdateRealmAction(
         private val quickLoginCheckMilliSeconds: Int? = null,
         private val maxDeltaTimeSeconds: Int? = null,
         private val failureFactor: Int? = null,
-        private val defaultRoles: List<String>? = null,
+        private val defaultRole: Role? = null,
         private val requiredCredentials: List<String>? = null,
         private val otpPolicyType: String? = null,
         private val otpPolicyAlgorithm: String? = null,
@@ -125,7 +126,7 @@ class UpdateRealmAction(
             quickLoginCheckMilliSeconds ?: oldRealm.quickLoginCheckMilliSeconds,
             maxDeltaTimeSeconds ?: oldRealm.maxDeltaTimeSeconds,
             failureFactor ?: oldRealm.failureFactor,
-            defaultRoles ?: oldRealm.defaultRoles,
+            defaultRole ?: oldRealm.defaultRole,
             requiredCredentials ?: oldRealm.requiredCredentials,
             otpPolicyType ?: oldRealm.otpPolicyType,
             otpPolicyAlgorithm ?: oldRealm.otpPolicyAlgorithm,
