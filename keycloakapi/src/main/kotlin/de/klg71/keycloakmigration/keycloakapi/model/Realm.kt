@@ -86,7 +86,8 @@ data class Realm(
     val accountTheme: String?,
     val adminTheme: String?,
     val emailTheme: String?,
-    val loginTheme: String?
+    val loginTheme: String?,
+    val requiredActions: List<RequiredActionProviderItem>?
 )
 
 
@@ -169,10 +170,11 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     var dockerAuthenticationFlow: String = existingRealm.dockerAuthenticationFlow
     var attributes: Map<String, String> = existingRealm.attributes
     var userManagedAccessAllowed: Boolean = existingRealm.userManagedAccessAllowed
-    val accountTheme: String? = existingRealm.accountTheme
-    val adminTheme: String? = existingRealm.adminTheme
-    val emailTheme: String? = existingRealm.emailTheme
-    val loginTheme: String? = existingRealm.loginTheme
+    var accountTheme: String? = existingRealm.accountTheme
+    var adminTheme: String? = existingRealm.adminTheme
+    var emailTheme: String? = existingRealm.emailTheme
+    var loginTheme: String? = existingRealm.loginTheme
+    var requiredActions: List<RequiredActionProviderItem>? = existingRealm.requiredActions
 
     fun build() = Realm(
 
@@ -255,6 +257,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
         accountTheme,
         adminTheme,
         emailTheme,
-        loginTheme
+        loginTheme,
+        requiredActions
     )
 }

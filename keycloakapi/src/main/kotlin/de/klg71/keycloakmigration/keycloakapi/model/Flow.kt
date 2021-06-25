@@ -10,7 +10,7 @@ data class Flow(val id: UUID,
     val builtIn: Boolean,
     val authenticationExecutions: List<AuthenticationExecution>) {
     enum class Requirement {
-        ALTERNATIVE, DISABLED, REQUIRED, CONDITIONAL
+        ALTERNATIVE, DISABLED, REQUIRED, CONDITIONAL, OPTIONAL
     }
 
     data class AuthenticationExecution(

@@ -1,43 +1,6 @@
 package de.klg71.keycloakmigration.keycloakapi
 
-import de.klg71.keycloakmigration.keycloakapi.model.AddClient
-import de.klg71.keycloakmigration.keycloakapi.model.AddClientScope
-import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
-import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
-import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
-import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
-import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
-import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
-import de.klg71.keycloakmigration.keycloakapi.model.AddRole
-import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
-import de.klg71.keycloakmigration.keycloakapi.model.AddUser
-import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederation
-import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederationMapper
-import de.klg71.keycloakmigration.keycloakapi.model.AssignClientScope
-import de.klg71.keycloakmigration.keycloakapi.model.AssignGroup
-import de.klg71.keycloakmigration.keycloakapi.model.AssignRole
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
-import de.klg71.keycloakmigration.keycloakapi.model.Client
-import de.klg71.keycloakmigration.keycloakapi.model.ClientListItem
-import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
-import de.klg71.keycloakmigration.keycloakapi.model.ClientScopeItem
-import de.klg71.keycloakmigration.keycloakapi.model.ClientSecret
-import de.klg71.keycloakmigration.keycloakapi.model.Flow
-import de.klg71.keycloakmigration.keycloakapi.model.Group
-import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
-import de.klg71.keycloakmigration.keycloakapi.model.IdentityProvider
-import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
-import de.klg71.keycloakmigration.keycloakapi.model.Mapper
-import de.klg71.keycloakmigration.keycloakapi.model.Realm
-import de.klg71.keycloakmigration.keycloakapi.model.Role
-import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
-import de.klg71.keycloakmigration.keycloakapi.model.User
-import de.klg71.keycloakmigration.keycloakapi.model.UserFederation
-import de.klg71.keycloakmigration.keycloakapi.model.UserFederationMapper
-import de.klg71.keycloakmigration.keycloakapi.model.UserGroupListItem
+import de.klg71.keycloakmigration.keycloakapi.model.*
 import feign.Headers
 import feign.Param
 import feign.RequestLine
@@ -387,5 +350,27 @@ interface KeycloakClient {
 
     @RequestLine("DELETE /admin/realms/{realm}/authentication/executions/{id}")
     fun deleteFlowExecution(@Param("realm") realm: String, @Param("id") executionId: UUID)
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/authentication/register-required-action")
+    fun registerRequiredAction(@Param("realm") realm: String,
+                               registerRequiredActionProvider: RegisterRequiredActionProvider): Response
+
+    @RequestLine("GET /admin/realms/{realm}/authentication/required-actions")
+    fun requiredActions(@Param("realm") realm: String): List<RequiredActionProviderItem>
+
+    @RequestLine("GET /admin/realms/{realm}/authentication/required-actions/{alias}")
+    fun requiredAction(@Param("realm") realm: String,
+                       @Param("alias") alias: String): RequiredActionProviderItem
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("PUT /admin/realms/{realm}/authentication/required-actions/{alias}")
+    fun updateRequiredAction(@Param("realm") realm: String,
+                             @Param("alias") alias: String,
+                             requiredActionProviderItem: RequiredActionProviderItem): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/authentication/required-actions/{alias}")
+    fun deleteRequiredAction(@Param("realm") realm: String,
+                             @Param("alias") alias: String): Response
 }
 

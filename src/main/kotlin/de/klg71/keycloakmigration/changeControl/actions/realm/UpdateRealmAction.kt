@@ -4,6 +4,7 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderItem
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
+import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.realmById
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
@@ -86,7 +87,8 @@ class UpdateRealmAction(
         private val accountTheme: String? = null,
         private val adminTheme: String? = null,
         private val emailTheme: String? = null,
-        private val loginTheme: String? = null) : Action() {
+        private val loginTheme: String? = null,
+        private val requiredActions: List<RequiredActionProviderItem>? = null) : Action() {
 
 
     lateinit var oldRealm: Realm
@@ -170,7 +172,8 @@ class UpdateRealmAction(
             accountTheme ?: oldRealm.accountTheme,
             adminTheme ?: oldRealm.adminTheme,
             emailTheme ?: oldRealm.emailTheme,
-            loginTheme ?: oldRealm.loginTheme)
+            loginTheme ?: oldRealm.loginTheme,
+            requiredActions ?: oldRealm.requiredActions)
 
     private fun mergeAttributes(): Map<String, String> {
         val newMap = oldRealm.attributes.toMutableMap()
