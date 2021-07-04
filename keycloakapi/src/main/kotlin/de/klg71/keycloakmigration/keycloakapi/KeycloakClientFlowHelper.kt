@@ -2,14 +2,7 @@
 
 package de.klg71.keycloakmigration.keycloakapi
 
-import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
-import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
-import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowInPlace
+import de.klg71.keycloakmigration.keycloakapi.model.*
 import java.util.UUID
 
 fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
@@ -60,6 +53,13 @@ private fun KeycloakClient.addExecution(realm: String,
             executionImport.providerId
         )
     )
+    updateFlowExecutionWithNewConfiguration(
+        realm, executionId.toString(), AuthenticatorConfig(
+            executionImport.providerId + "_config",
+            executionImport.config,
+            null
+        )
+    )
 }
 
 private fun KeycloakClient.updateAuthExecutors(flowAlias: String,
@@ -73,6 +73,9 @@ private fun KeycloakClient.updateAuthExecutors(flowAlias: String,
     }
 }
 
-fun executionsToImport(executions: List<AuthenticationExecution>) = executions.map {
-    AuthenticationExecutionImport(it.requirement, it.providerId, it.level, it.index)
+fun KeycloakClient.executionsToImport(realm: String, flowAlias: String) = flowExecutions(realm, flowAlias).map {
+    AuthenticationExecutionImport(
+            it.requirement, it.providerId, it.level, it.index,
+            if (it.authenticatorConfig == null ) null else getAuthenticatorConfiguration(realm, it.authenticatorConfig).config
+    )
 }

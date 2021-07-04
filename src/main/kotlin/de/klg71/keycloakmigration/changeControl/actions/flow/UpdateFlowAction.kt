@@ -20,14 +20,14 @@ class UpdateFlowAction(
 ) : Action(realm) {
 
     private var oldFlow: Flow? = null
-    private val oldExecutions: MutableList<AuthenticationExecution> = mutableListOf()
+    private val oldExecutions: MutableList<AuthenticationExecutionImport> = mutableListOf()
 
 
     override fun execute() {
         client.flows(realm())
             .firstOrNull { it.alias == alias }?.also {
                 oldFlow = it
-                oldExecutions.addAll(client.flowExecutions(realm(), alias))
+                oldExecutions.addAll(client.executionsToImport(realm(), alias))
             }?.let {
                 client.updateFlowInPlace(
                     realm(), it.alias, UpdateFlowInPlace(
@@ -35,7 +35,7 @@ class UpdateFlowAction(
                         description ?: it.description,
                         providerId ?: it.providerId,
                         topLevel ?: it.topLevel,
-                        executions ?: executionsToImport(oldExecutions)
+                        executions ?: oldExecutions
                     )
                 )
             }
@@ -52,7 +52,7 @@ class UpdateFlowAction(
                         updateFlow.description,
                         updateFlow.providerId,
                         updateFlow.topLevel,
-                        executionsToImport(oldExecutions)
+                        oldExecutions
                     )
                 )
             }

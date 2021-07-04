@@ -348,6 +348,17 @@ interface KeycloakClient {
         @Param("alias") alias: String,
         updateFlowExecution: UpdateFlowExecution): Response
 
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/authentication/executions/{executionId}/config")
+    fun updateFlowExecutionWithNewConfiguration(@Param("realm") realm: String,
+                                                @Param("executionId") executionId: String,
+                                                authenticatorConfig: AuthenticatorConfig): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("GET /admin/realms/{realm}/authentication/config/{configurationId}")
+    fun getAuthenticatorConfiguration(@Param("realm") realm: String,
+                                      @Param("configurationId") configurationId: String): AuthenticatorConfig
+
     @RequestLine("DELETE /admin/realms/{realm}/authentication/executions/{id}")
     fun deleteFlowExecution(@Param("realm") realm: String, @Param("id") executionId: UUID)
 

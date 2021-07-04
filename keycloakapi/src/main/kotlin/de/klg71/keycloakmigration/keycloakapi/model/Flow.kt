@@ -31,7 +31,8 @@ data class AuthenticationExecution(
     val configurable: Boolean,
     val providerId: String,
     val level: Int,
-    val index: Int)
+    val index: Int,
+    val authenticatorConfig: String?)
 
 data class AddFlow(val alias: String,
     val builtIn: Boolean,
@@ -51,7 +52,8 @@ data class AuthenticationExecutionImport(
     val requirement: Flow.Requirement,
     val providerId: String,
     val level: Int,
-    val index: Int)
+    val index: Int,
+    val config: Map<String, String>?)
 
 data class ImportFlow(
     val alias: String,
@@ -77,3 +79,7 @@ data class UpdateFlowExecution(val id: UUID,
     val level: Int,
     val index: Int,
     val providerId: String)
+
+data class AuthenticatorConfig(val alias: String?,
+                               val config: Map<String, String>?,
+                               val id: UUID?)
