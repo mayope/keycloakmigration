@@ -47,6 +47,7 @@ import de.klg71.keycloakmigration.changeControl.actions.user.RevokeRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserAction
 import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserPasswordAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddAdLdapAction
+import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddUserFederationAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.DeleteUserFederationAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper.AddAdLdapFullNameMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper.AddAdLdapGroupMapperAction
@@ -106,6 +107,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addUserRealmRoleMapper" -> objectMapper.readValue<AddUserRealmRoleMapperAction>(actionJson)
 
             "addAdLdap" -> objectMapper.readValue<AddAdLdapAction>(actionJson)
+            "addUserFederation" -> objectMapper.readValue<AddUserFederationAction>(actionJson)
             "deleteUserFederation" -> objectMapper.readValue<DeleteUserFederationAction>(actionJson)
             "addAdLdapFullNameMapper" -> objectMapper.readValue<AddAdLdapFullNameMapperAction>(actionJson)
             "addAdLdapGroupMapper" -> objectMapper.readValue<AddAdLdapGroupMapperAction>(actionJson)
