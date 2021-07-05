@@ -5,6 +5,7 @@ import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.clientScopeByName
 import de.klg71.keycloakmigration.keycloakapi.existsClientScope
 import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
+import de.klg71.keycloakmigration.keycloakapi.model.ProtocolMapper
 import de.klg71.keycloakmigration.keycloakapi.model.addClientScope
 import java.util.UUID
 
@@ -13,6 +14,7 @@ class AddClientScopeAction(
         private val name: String,
         private val description: String? = null,
         private val protocol: String = "openid-connect",
+        private val protocolMappers: List<ProtocolMapper>?,
         private val consentScreenText: String? = null,
         private val displayOnConsentScreen: Boolean = false,
         private val guiOrder: Int? = null,
@@ -25,7 +27,7 @@ class AddClientScopeAction(
         if (client.existsClientScope(name, realm())) {
             throw MigrationException("ClientScope with name: $name already exists in realm: ${realm()}!")
         }
-        client.addClientScope(realm(), addClientScope(name, description, protocol, consentScreenText,
+        client.addClientScope(realm(), addClientScope(name, description, protocol, protocolMappers, consentScreenText,
                 displayOnConsentScreen, guiOrder, includeInTokenScope)).run {
             scopeUUID = extractLocationUUID()
         }
