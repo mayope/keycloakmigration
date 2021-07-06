@@ -18,7 +18,10 @@ class AddSimpleClientIntegTest : AbstractIntegrationTest() {
         val testClient = client.clientById("simpleClient", testRealm)
 
         assertThat(testClient.enabled).isEqualTo(true)
-        assertThat(testClient.attributes).isEqualTo(mapOf("test" to "1", "test2" to "2"))
+        assertThat(testClient.attributes).isEqualTo(mapOf(
+                "backchannel.logout.revoke.offline.tokens" to "false", "backchannel.logout.session.required" to "true",
+                "test" to "1", "test2" to "2"
+        ))
     }
 
     @Test
@@ -28,7 +31,10 @@ class AddSimpleClientIntegTest : AbstractIntegrationTest() {
         val testClient = client.clientById("simpleClient", testRealm)
 
         assertThat(testClient.enabled).isEqualTo(true)
-        assertThat(testClient.attributes).isEqualTo(mapOf("test" to "1", "test2" to "2"))
+        assertThat(testClient.attributes).isEqualTo(mapOf(
+                "backchannel.logout.revoke.offline.tokens" to "false", "backchannel.logout.session.required" to "true",
+                "test" to "1", "test2" to "2"
+        ))
         assertThat(testClient.publicClient).isEqualTo(false)
         val secret = client.clientSecret(testClient.id, testRealm)
         assertThat(secret.type).isEqualTo("secret")

@@ -33,7 +33,6 @@ class DeleteClientAction(
                         surrogateAuthRequired,
                         enabled,
                         clientAuthenticatorType,
-                        defaultRole,
                         redirectUris,
                         webOrigins,
                         notBefore,

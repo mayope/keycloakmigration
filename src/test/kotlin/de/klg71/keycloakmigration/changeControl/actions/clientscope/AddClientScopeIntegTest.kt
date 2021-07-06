@@ -3,6 +3,7 @@ package de.klg71.keycloakmigration.changeControl.actions.clientscope
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.model.ProtocolMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
@@ -39,4 +40,6 @@ class AddClientScopeIntegTest : AbstractIntegrationTest() {
         val scopes = client.clientScopes(testRealm)
         assertThat(scopes.any { it.name == scopeName }).isFalse()
     }
+
+    //TODO: add more tests about client scope protocol mapper
 }

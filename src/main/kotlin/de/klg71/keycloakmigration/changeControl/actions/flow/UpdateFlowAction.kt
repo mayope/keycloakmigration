@@ -2,7 +2,6 @@ package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.executionsToImport
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowInPlace

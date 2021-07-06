@@ -14,7 +14,7 @@ class AddClientScopeAction(
         private val name: String,
         private val description: String? = null,
         private val protocol: String = "openid-connect",
-        private val protocolMappers: List<ProtocolMapper>?,
+        private val protocolMappers: List<ProtocolMapper>? = listOf(),
         private val consentScreenText: String? = null,
         private val displayOnConsentScreen: Boolean = false,
         private val guiOrder: Int? = null,
