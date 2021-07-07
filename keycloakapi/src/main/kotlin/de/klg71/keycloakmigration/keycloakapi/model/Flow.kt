@@ -14,7 +14,7 @@ data class Flow(val id: UUID,
     }
 
     data class AuthenticationExecution(
-        val authenticator: String?,
+        val authenticator: String? = null,
         val requirement: Requirement,
         val priority: Int,
         val userSetupAllowed: Boolean,
@@ -32,7 +32,7 @@ data class AuthenticationExecution(
     val providerId: String,
     val level: Int,
     val index: Int,
-    val authenticationConfig: String?)
+    val authenticationConfig: String? = null)
 
 data class AddFlow(val alias: String,
     val builtIn: Boolean,
@@ -80,6 +80,6 @@ data class UpdateFlowExecution(val id: UUID,
     val index: Int,
     val providerId: String)
 
-data class AuthenticatorConfig(val alias: String?,
+data class AuthenticatorConfig(val alias: String? = null,
                                val config: Map<String, String>,
-                               val id: UUID?)
+                               val id: UUID? = null)

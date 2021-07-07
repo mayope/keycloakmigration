@@ -2,8 +2,15 @@
 
 package de.klg71.keycloakmigration.keycloakapi
 
-import de.klg71.keycloakmigration.keycloakapi.model.*
-import java.util.UUID
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
+import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowInPlace
+import java.util.*
 
 fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
     if (flows(realm).any { it.alias == importFlow.alias }) {

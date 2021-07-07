@@ -2,9 +2,9 @@ package de.klg71.keycloakmigration.keycloakapi.model
 
 data class AddClient(
         val clientId: String,
-        val name: String?,
-        val description: String?,
-        val baseUrl: String?,
+        val name: String? = null,
+        val description: String? = null,
+        val baseUrl: String? = null,
         val surrogateAuthRequired: Boolean,
         val enabled: Boolean,
         val clientAuthenticatorType: String,
@@ -19,14 +19,14 @@ data class AddClient(
         val serviceAccountsEnabled: Boolean,
         val publicClient: Boolean,
         val frontchannelLogout: Boolean,
-        val protocol: String?,
+        val protocol: String? = null,
         val attributes: Map<String, String>,
         val authenticationFlowBindingOverrides: Map<String, List<String>>,
         val fullScopeAllowed: Boolean,
         val nodeReRegistrationTimeout: Int,
-        val protocolMappers: List<ProtocolMapper>?,
+        val protocolMappers: List<ProtocolMapper>? = null,
         val defaultClientScopes: List<String>,
         val optionalClientScopes: List<String>,
         val access: ClientAccess,
-        val adminUrl: String?,
-        val rootUrl: String?)
+        val adminUrl: String? = null,
+        val rootUrl: String? = null)

@@ -3,14 +3,14 @@ package de.klg71.keycloakmigration.keycloakapi.model
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.util.UUID
 
-data class IdentityProviderItem(val alias: String, val displayName: String?, val internalId: UUID)
+data class IdentityProviderItem(val alias: String, val displayName: String? = null, val internalId: UUID)
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Realm(
     val id: String,
     val realm: String,
-    var displayName: String?,
-    var displayNameHtml: String?,
+    var displayName: String? = null,
+    var displayNameHtml: String? = null,
     val notBefore: Int,
     val revokeRefreshToken: Boolean,
     val refreshTokenMaxReuse: Int,
@@ -83,11 +83,11 @@ data class Realm(
     val dockerAuthenticationFlow: String,
     val attributes: Map<String, String>,
     val userManagedAccessAllowed: Boolean,
-    val accountTheme: String?,
-    val adminTheme: String?,
-    val emailTheme: String?,
-    val loginTheme: String?,
-    val requiredActions: List<RequiredActionProviderItem>?
+    val accountTheme: String? = null,
+    val adminTheme: String? = null,
+    val emailTheme: String? = null,
+    val loginTheme: String? = null,
+    val requiredActions: List<RequiredActionProviderItem>? = null
 )
 
 

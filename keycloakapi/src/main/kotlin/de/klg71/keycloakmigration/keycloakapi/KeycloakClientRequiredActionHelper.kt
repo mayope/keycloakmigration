@@ -2,7 +2,8 @@
 
 package de.klg71.keycloakmigration.keycloakapi
 
-import de.klg71.keycloakmigration.keycloakapi.model.*
+import de.klg71.keycloakmigration.keycloakapi.model.RegisterRequiredActionProvider
+import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
 
 fun KeycloakClient.importRequiredAction(realm: String, requiredActionProviderItem: RequiredActionProviderItem) {
     registerRequiredAction(realm, RegisterRequiredActionProvider(

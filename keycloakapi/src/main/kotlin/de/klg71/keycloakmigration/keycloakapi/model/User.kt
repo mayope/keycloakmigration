@@ -15,17 +15,17 @@ data class User(
     val username: String,
     val enabled: Boolean,
     val emailVerified: Boolean,
-    val attributes: Attributes?,
+    val attributes: Attributes? = null,
     val notBefore: Long,
     val totp: Boolean,
-    val access: UserAccess?,
+    val access: UserAccess? = null,
     val disableableCredentialTypes: List<String>,
     val requiredActions: List<String>,
-    val email: String?,
-    val firstName: String?,
-    val lastName: String?,
+    val email: String? = null,
+    val firstName: String? = null,
+    val lastName: String? = null,
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    val credentials: List<UserCredential>?,
+    val credentials: List<UserCredential>? = null,
     val federationLink: String? = null
 )
 

@@ -1,9 +1,7 @@
 package de.klg71.keycloakmigration.changeControl.actions.requiredactions
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.keycloakapi.importFlow
-import de.klg71.keycloakmigration.keycloakapi.model.*
-import java.util.UUID
+import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
 
 
 class UpdateRequiredActionAction(

@@ -134,7 +134,6 @@ tasks {
     register<Exec>("addWindowsAdminUser") {
         workingDir("keycloak/keycloak-$keycloakVersion/bin")
         commandLine("cmd", "/c", "add-user-keycloak.bat", "-r", "master", "-u", "admin", "-p", "admin")
-        //environment("JAVA_OPTS", "--add-modules=java.se")
         environment("NOPAUSE", "true")
         isIgnoreExitValue = true
         standardOutput = System.out
