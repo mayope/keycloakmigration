@@ -86,8 +86,7 @@ class UpdateRealmAction(
         private val accountTheme: String? = null,
         private val adminTheme: String? = null,
         private val emailTheme: String? = null,
-        private val loginTheme: String? = null,
-        private val requiredActions: List<RequiredActionProviderItem>? = null) : Action() {
+        private val loginTheme: String? = null) : Action() {
 
 
     lateinit var oldRealm: Realm
@@ -170,8 +169,7 @@ class UpdateRealmAction(
             accountTheme ?: oldRealm.accountTheme,
             adminTheme ?: oldRealm.adminTheme,
             emailTheme ?: oldRealm.emailTheme,
-            loginTheme ?: oldRealm.loginTheme,
-            requiredActions ?: oldRealm.requiredActions)
+            loginTheme ?: oldRealm.loginTheme)
 
     private fun mergeAttributes(): Map<String, String> {
         val newMap = oldRealm.attributes.toMutableMap()
