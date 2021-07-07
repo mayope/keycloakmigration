@@ -6,6 +6,10 @@ import de.klg71.keycloakmigration.keycloakapi.model.RegisterRequiredActionProvid
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
 
 fun KeycloakClient.importRequiredAction(realm: String, requiredActionProviderItem: RequiredActionProviderItem) {
+    if (requiredActions(realm).any { it.alias == requiredActionProviderItem.alias }) {
+        throw KeycloakApiException("Import RequiredAction failed, RequiredAction: ${requiredActionProviderItem.alias} already exists")
+    }
+
     registerRequiredAction(realm, RegisterRequiredActionProvider(
             requiredActionProviderItem.providerId, requiredActionProviderItem.name
     ))
