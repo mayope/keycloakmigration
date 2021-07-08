@@ -9,7 +9,7 @@ import org.junit.Test
 import org.koin.core.inject
 import java.util.*
 
-class UpdateRequiredActionActionIntegTest : AbstractIntegrationTest() {
+class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
 

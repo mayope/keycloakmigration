@@ -8,7 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.koin.core.inject
 
-class DeleteRequiredActionActionIntegTest : AbstractIntegrationTest() {
+class DeleteRequiredActionIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
 
