@@ -1,6 +1,8 @@
 package de.klg71.keycloakmigration.changeControl.actions.client.mapper
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.keycloakapi.clientScopeUUID
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
 import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
@@ -8,27 +10,48 @@ import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 
 internal class DeleteMapperAction(
     realm: String?,
-    private val clientId: String,
+    private val clientId: String?,
+    private val clientScopeName: String?,
     private val name: String
 ) : Action(realm) {
-
-    private var oldMapper: Mapper? = null
+    private var deletedClientMapper: Mapper? = null;
+    private var deletedMapper: Mapper? = null;
 
     override fun execute() {
-        val clientUUID = client.clientUUID(clientId, realm())
-        oldMapper = client.mappers(clientUUID, realm()).firstOrNull { it.name == name }
+        if (clientId == null && clientScopeName == null) {
+            throw MigrationException(
+                "Unable to delete mapper. Neither a client nor client scope is given, nothing to delete!");
+        }
 
-        oldMapper?.let {
-            client.deleteMapper(clientUUID, it.id, realm())
+        if (clientId != null) {
+            val clientUUID = client.clientUUID(clientId, realm())
+            deletedClientMapper = client.clientMappers(clientUUID, realm()).firstOrNull { it.name == name }
+            deletedClientMapper?.let {
+                client.deleteClientMapper(clientUUID, it.id, realm())
+            }
+        }
+        if (clientScopeName != null) {
+            val clientScopeUUID = client.clientScopeUUID(clientScopeName, realm())
+            deletedMapper = client.mappers(clientScopeUUID, realm()).firstOrNull { it.name == name }
+            deletedMapper?.let {
+                client.deleteMapper(clientScopeUUID, it.id, realm())
+            }
         }
 
     }
 
     override fun undo() {
-        oldMapper?.let {
-            addMapper(client, AddMapper(it.name, it.config, it.protocol, it.protocolMapper), clientId, it.name, realm())
+        if (clientId != null) {
+            deletedClientMapper?.let {
+                addClientMapper(client, AddMapper.from(it), clientId, name, realm())
+            }
+        }
+        if (clientScopeName != null) {
+            deletedMapper?.let {
+                addMapper(client, AddMapper.from(it), clientScopeName, name, realm())
+            }
         }
     }
 
-    override fun name() = "DeleteMapper $name for client: $clientId"
+    override fun name() = "DeleteMapper $name from ${clientId ?: clientScopeName}"
 }

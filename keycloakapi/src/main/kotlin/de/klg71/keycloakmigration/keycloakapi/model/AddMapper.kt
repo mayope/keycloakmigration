@@ -1,7 +1,12 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
 data class AddMapper(val name: String, val config: Map<String, String>,
-                              val protocol: String, val protocolMapper: String)
+                              val protocol: String, val protocolMapper: String) {
+    companion object {
+        @JvmStatic
+        fun from(mapper: Mapper) = AddMapper(mapper.name, mapper.config, mapper.protocol, mapper.protocolMapper)
+    }
+}
 
 @Suppress("LongParameterList")
 fun groupMembershipMapper(name: String, addToAccessToken: Boolean, addToIdToken: Boolean,
