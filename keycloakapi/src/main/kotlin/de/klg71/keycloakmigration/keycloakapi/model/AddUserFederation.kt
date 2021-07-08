@@ -11,14 +11,14 @@ data class AddUserFederation(val name: String,
                              val providerType: String = "org.keycloak.storage.UserStorageProvider")
 
 fun constructUserFederationConfig(config: Map<String, String>): Map<String, List<String>> =
-        mutableMapOf<String, List<String>>().apply {
-            put("enabled", listOf("true"))
-            put("priority", listOf(priority(config)))
-            put("cachePolicy", listOf(cachePolicy(config)))
-            put("evictionDay", listOf())
-            put("evictionHour", listOf())
-            put("evictionMinute", listOf())
-            put("maxLifespan", listOf())
+        HashMap(config.mapValues { listOf(it.value) }).apply {
+            putIfAbsent("enabled", listOf("true"))
+            putIfAbsent("priority", listOf(priority(config)))
+            putIfAbsent("cachePolicy", listOf(cachePolicy(config)))
+            putIfAbsent("evictionDay", listOf())
+            putIfAbsent("evictionHour", listOf())
+            putIfAbsent("evictionMinute", listOf())
+            putIfAbsent("maxLifespan", listOf())
         }
 
 fun constructAdLdapConfig(config: Map<String, String>): Map<String, List<String>> =
