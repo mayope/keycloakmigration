@@ -19,6 +19,7 @@ headless = true
   - [UserFederation Migrations]({{< ref  "/migrations/userfederation.md" >}})
   - [IdentityProvider Migrations]({{< ref  "/migrations/identityprovider.md" >}})
   - [Flow Migrations]({{< ref  "/migrations/flow.md" >}})
+  - [RequiredActions Migrations]({{< ref  "/migrations/requiredactions.md" >}})
 - [Using the Keycloakapi]({{< relref "/keycloak_api.md" >}})
 - [Hash Troubleshooting]({{< relref "/hashmigration.md" >}})
 - [Implementation Details]({{< relref "/implementation_details.md" >}})
