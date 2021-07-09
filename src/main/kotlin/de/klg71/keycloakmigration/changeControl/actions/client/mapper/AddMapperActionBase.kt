@@ -2,7 +2,12 @@ package de.klg71.keycloakmigration.changeControl.actions.client.mapper
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.keycloakapi.*
+import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.clientMapperExistsByName
+import de.klg71.keycloakmigration.keycloakapi.clientScopeUUID
+import de.klg71.keycloakmigration.keycloakapi.clientUUID
+import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
+import de.klg71.keycloakmigration.keycloakapi.mapperExistsByName
 import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
 import java.util.UUID
 

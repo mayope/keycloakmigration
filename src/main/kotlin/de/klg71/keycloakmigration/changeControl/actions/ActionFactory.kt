@@ -9,8 +9,11 @@ import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientActio
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteRoleScopeMappingAction
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.UpdateClientAction
-import de.klg71.keycloakmigration.changeControl.actions.client.mapper.*
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddAudienceMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddGroupMembershipMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserAttributeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserRealmRoleMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AddClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignDefaultClientScopeAction
