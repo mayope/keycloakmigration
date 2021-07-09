@@ -15,6 +15,7 @@ headless = true
   - [Role Migrations]({{< ref "/migrations/role.md" >}})
   - [Client Migrations]({{< ref "/migrations/client.md" >}})
   - [ClientScope Migrations]({{< ref "/migrations/scopes.md" >}})
+  - [ProtocolMapper Migrations]({{< ref "/migrations/mapper.md" >}})
   - [Realm Migrations]({{< ref "/migrations/realm.md" >}})
   - [UserFederation Migrations]({{< ref  "/migrations/userfederation.md" >}})
   - [IdentityProvider Migrations]({{< ref  "/migrations/identityprovider.md" >}})
