@@ -10,9 +10,9 @@ import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 
 internal class DeleteMapperAction(
     realm: String?,
-    private val clientId: String?,
-    private val clientScopeName: String?,
-    private val name: String
+    private val name: String,
+    private val clientId: String? = null,
+    private val clientScopeName: String? = null,
 ) : Action(realm) {
     private var deletedClientMapper: Mapper? = null;
     private var deletedMapper: Mapper? = null;

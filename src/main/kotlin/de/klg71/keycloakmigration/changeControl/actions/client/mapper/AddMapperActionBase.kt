@@ -33,9 +33,9 @@ internal fun addClientMapper(client: KeycloakClient, mapper: AddMapper, clientId
 
 abstract class AddMapperActionBase(
         realm: String?,
-        private val clientId: String?,
-        private val clientScopeName: String?,
-        private val name: String
+        protected val name: String,
+        protected val clientId: String? = null,
+        protected val clientScopeName: String? = null,
 ): Action(realm) {
     protected lateinit var clientMapperUuid: UUID
     protected lateinit var mapperUuid: UUID
@@ -87,13 +87,13 @@ abstract class AddMapperActionBase(
 
 internal class AddMapperAction(
         realm: String?,
-        clientId: String?,
-        clientScopeName: String?,
-        private val name: String,
+        name: String,
+        clientId: String? = null,
+        clientScopeName: String? = null,
         private val config: Map<String, String>,
         private val protocolMapper: String,
         private val protocol: String = "openid-connect"
-) : AddMapperActionBase(realm, clientId, clientScopeName, name) {
+) : AddMapperActionBase(realm, name, clientId, clientScopeName) {
 
     override fun createMapper(): AddMapper {
         return AddMapper(name, config, protocol, protocolMapper);

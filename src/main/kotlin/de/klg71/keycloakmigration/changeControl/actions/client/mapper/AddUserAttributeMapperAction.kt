@@ -5,9 +5,9 @@ import java.util.*
 
 class AddUserAttributeMapperAction(
     realm: String?,
-    private val clientId: String?,
-    private val clientScopeName: String?,
-    private val name: String,
+    name: String,
+    clientId: String? = null,
+    clientScopeName: String? = null,
     private val userAttribute: String,
     private val addToIdToken: Boolean = true,
     private val addToAccessToken: Boolean = true,
@@ -16,7 +16,7 @@ class AddUserAttributeMapperAction(
     private val multivalued: Boolean = false,
     // Indicates whether user attributes should be aggregated with the group attributes
     private val aggregateAttributeValues: Boolean = true
-) : AddMapperActionBase(realm, clientId, clientScopeName, name) {
+) : AddMapperActionBase(realm, name, clientId, clientScopeName) {
 
     override fun createMapper() = userAttributeMapper(
         name, addToAccessToken, addToIdToken, addToUserInfo,

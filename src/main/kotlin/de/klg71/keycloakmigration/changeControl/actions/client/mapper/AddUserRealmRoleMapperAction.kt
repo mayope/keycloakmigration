@@ -4,15 +4,16 @@ import de.klg71.keycloakmigration.keycloakapi.model.userRealmRoleMapper
 
 class AddUserRealmRoleMapperAction(
     realm: String?,
-    private val clientId: String?,
-    private val clientScopeName: String?,
-    private val name: String,
+    name: String,
+    clientId: String? = null,
+    clientScopeName: String? = null,
     private val addToIdToken: Boolean = true,
     private val addToAccessToken: Boolean = true,
     private val addToUserInfo: Boolean = true,
     private val claimName: String? = null,
     private val prefix: String = ""
-) : AddMapperActionBase(realm, clientId, clientScopeName, name) {
+) : AddMapperActionBase(realm, name, clientId, clientScopeName) {
+
     override fun createMapper() =
         userRealmRoleMapper(name, addToAccessToken, addToIdToken, addToUserInfo, claimName ?: name, prefix)
 

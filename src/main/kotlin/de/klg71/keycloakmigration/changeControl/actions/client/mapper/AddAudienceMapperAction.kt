@@ -4,14 +4,14 @@ import de.klg71.keycloakmigration.keycloakapi.model.audienceMapper
 
 class AddAudienceMapperAction(
         realm: String?,
-        private val clientId: String?,
-        private val clientScopeName: String?,
-        private val name: String,
+        name: String,
+        clientId: String? = null,
+        clientScopeName: String? = null,
         private val addToIdToken: Boolean = true,
         private val addToAccessToken: Boolean = true,
         private val clientAudience: String = "",
         private val customAudience: String = ""
-) : AddMapperActionBase(realm, clientId, clientScopeName, name) {
+) : AddMapperActionBase(realm, name, clientId, clientScopeName) {
 
     override fun createMapper() = audienceMapper(name, addToAccessToken, addToIdToken, clientAudience, customAudience)
 
