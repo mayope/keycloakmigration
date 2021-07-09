@@ -3,13 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://mayope.github.io/keycloakmigration/migrations/mapper/</loc>
+    <lastmod>2021-07-09T20:21:34+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mayope.github.io/keycloakmigration/migrations/</loc>
     <lastmod>2020-07-04T10:17:11+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://mayope.github.io/keycloakmigration/migrations/client/</loc>
-    <lastmod>2021-03-08T22:19:12+01:00</lastmod>
+    <lastmod>2021-07-09T20:21:34+02:00</lastmod>
   </url>
   
   <url>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ProtocolMapper Migrations#All migrations referring to the ProtocolMapper resource.
+addMapper#Adds a fully configurable protocol mapper to either a client, or a client scope, throws an error if client, client scope or realm doesn&rsquo;t exist or mapper with same name already exists
+ Only use this action if you can&rsquo;t find a convenient method to add the mapper below
+ Parameters# realm: String, optional name: String, not optional clientId: String, optional if client scope is set clientScopeName: String, optional if client id is set config: Map&lt;String,String&gt;, not optional protocolMapper: String, not optional protocol: String, optional, default=&quot;openid-connect&rdquo;  Example:#id: add-client-mappersauthor: klg71realm: integ-testchanges:- addSimpleClient:clientId: testMappers- addMapper:clientId: testMappersname: testPropertyMapperprotocolMapper: oidc-usermodel-property-mapperconfig:access.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="ProtocolMapper Migrations" />
+<meta property="og:description" content="ProtocolMapper Migrations#All migrations referring to the ProtocolMapper resource.
+addMapper#Adds a fully configurable protocol mapper to either a client, or a client scope, throws an error if client, client scope or realm doesn&rsquo;t exist or mapper with same name already exists
+ Only use this action if you can&rsquo;t find a convenient method to add the mapper below
+ Parameters# realm: String, optional name: String, not optional clientId: String, optional if client scope is set clientScopeName: String, optional if client id is set config: Map&lt;String,String&gt;, not optional protocolMapper: String, not optional protocol: String, optional, default=&quot;openid-connect&rdquo;  Example:#id: add-client-mappersauthor: klg71realm: integ-testchanges:- addSimpleClient:clientId: testMappers- addMapper:clientId: testMappersname: testPropertyMapperprotocolMapper: oidc-usermodel-property-mapperconfig:access." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mayope.github.io/keycloakmigration/migrations/mapper/" />
+<meta property="article:published_time" content="2020-07-09T20:03:42+02:00" />
+<meta property="article:modified_time" content="2021-07-09T20:21:34+02:00" />
+<title>ProtocolMapper Migrations | Keycloakmigration</title>
+<link rel="manifest" href="/keycloakmigration/manifest.json">
+<link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
+<script defer src="/keycloakmigration/en.search.min.9dbe22851f77ff468687381181e08b77e1aaa877d26d9966a0165fff359bec93.js" integrity="sha256-nb4ihR93/0aGhzgRgeCLd&#43;GqqHfSbZlmoBZf/zWb7JM="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/keycloakmigration"><span>Keycloakmigration</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><a href="/keycloakmigration/">Overview</a></li>
+<li><a href="/keycloakmigration/quickstart/">Quick Start</a>
+<ul>
+<li><a href="/keycloakmigration/quickstart/kotlin/">Gradle Kotlin DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/groovy/">Gradle Groovy DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/jar/">Jar</a></li>
+<li><a href="/keycloakmigration/quickstart/docker/">Usage with Docker</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/migration_files/">Migration Files</a></li>
+<li><a href="/keycloakmigration/migrations/">Migrations</a>
+<ul>
+<li><a href="/keycloakmigration/migrations/user/">User Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/scopes/">ClientScope Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/mapper/">ProtocolMapper Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/identityprovider/">IdentityProvider Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/flow/">Flow Migrations</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/keycloak_api/">Using the Keycloakapi</a></li>
+<li><a href="/keycloakmigration/hashmigration/">Hash Troubleshooting</a></li>
+<li><a href="/keycloakmigration/implementation_details/">Implementation Details</a></li>
+<li><a href="/keycloakmigration/contributing/">Contributing</a></li>
+</ul>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/keycloakmigration/about/" target="_blank" rel="noopener">
+        About
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>ProtocolMapper Migrations</strong>
+
+  <label for="toc-control">
+    
+    <img src="/keycloakmigration/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#addmapper">addMapper</a>
+      <ul>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#example">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#deletemapper">deleteMapper</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#addaudiencemapper">addAudienceMapper</a>
+      <ul>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#addgroupmembershipmapper">addGroupMembershipMapper</a>
+      <ul>
+        <li><a href="#parameters-3">Parameters</a></li>
+        <li><a href="#example-3">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#adduserattributemapper">addUserAttributeMapper</a>
+      <ul>
+        <li><a href="#parameters-4">Parameters</a></li>
+        <li><a href="#example-4">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#adduserrealmrolemapper">addUserRealmRoleMapper</a>
+      <ul>
+        <li><a href="#parameters-5">Parameters</a></li>
+        <li><a href="#example-5">Example:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="protocolmapper-migrations">
+  ProtocolMapper Migrations
+  <a class="anchor" href="#protocolmapper-migrations">#</a>
+</h1>
+<p>All migrations referring to the ProtocolMapper resource.</p>
+<h2 id="addmapper">
+  addMapper
+  <a class="anchor" href="#addmapper">#</a>
+</h2>
+<p>Adds a fully configurable protocol mapper to either a client, or a client scope, throws an error if client, client scope
+or realm doesn&rsquo;t exist or mapper with same name already exists</p>
+<blockquote>
+<p>Only use this action if you can&rsquo;t find a convenient method to add the mapper below</p>
+</blockquote>
+<h3 id="parameters">
+  Parameters
+  <a class="anchor" href="#parameters">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>clientId: String, optional if client scope is set</li>
+<li>clientScopeName: String, optional if client id is set</li>
+<li>config: Map&lt;String,String&gt;, not optional</li>
+<li>protocolMapper: String, not optional</li>
+<li>protocol: String, optional, default=&quot;openid-connect&rdquo;</li>
+</ul>
+<h3 id="example">
+  Example:
+  <a class="anchor" href="#example">#</a>
+</h3>
+<pre><code>id: add-client-mappers
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testMappers
+  - addMapper:
+      clientId: testMappers
+      name: testPropertyMapper
+      protocolMapper: oidc-usermodel-property-mapper
+      config:
+        access.token.claim: true
+        id.token.claim: false
+        userinfo.token.claim: false
+        claim.name: customPropertyMapper
+        jsonType.label: String
+        user.attribute: UserModel.getEmail()
+</code></pre>
+<h2 id="deletemapper">
+  deleteMapper
+  <a class="anchor" href="#deletemapper">#</a>
+</h2>
+<p>deletes a client mapper</p>
+<h3 id="parameters-1">
+  Parameters
+  <a class="anchor" href="#parameters-1">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>clientId: String, optional if client scope is set</li>
+<li>clientScopeName: String, optional if client id is set</li>
+</ul>
+<h3 id="example-1">
+  Example:
+  <a class="anchor" href="#example-1">#</a>
+</h3>
+<pre><code>id: add-client-mappers
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testMappers
+  - addMapper:
+      clientId: testMappers
+      name: testPropertyMapper
+      protocolMapper: oidc-usermodel-property-mapper
+      config:
+        access.token.claim: true
+        id.token.claim: false
+        userinfo.token.claim: false
+        claim.name: customPropertyMapper
+        jsonType.label: String
+        user.attribute: UserModel.getEmail()
+  - deleteMapper:
+      clientId: testMappers
+      name: testPropertyMapper
+</code></pre>
+<h2 id="addaudiencemapper">
+  addAudienceMapper
+  <a class="anchor" href="#addaudiencemapper">#</a>
+</h2>
+<p>adds a audience clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
+<h3 id="parameters-2">
+  Parameters
+  <a class="anchor" href="#parameters-2">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>clientId: String, optional if client scope is set</li>
+<li>clientScopeName: String, optional if client id is set</li>
+<li>addToIdToken: Boolean , optional, default = true,</li>
+<li>addToAccessToken: Boolean, optional, default = true,</li>
+<li>clientAudience: String, optional, default = &ldquo;&rdquo;,</li>
+<li>customAudience: String, optional, default = &quot;&rdquo;</li>
+</ul>
+<h3 id="example-2">
+  Example:
+  <a class="anchor" href="#example-2">#</a>
+</h3>
+<pre><code>id: add-client-mappers
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testMappers
+  - addAudienceMapper:
+      clientId: testMappers
+      name: audienceMapper
+      addToIdToken: false
+      clientAudience: testMappers
+      customAudience: completlyCustom
+</code></pre>
+<h2 id="addgroupmembershipmapper">
+  addGroupMembershipMapper
+  <a class="anchor" href="#addgroupmembershipmapper">#</a>
+</h2>
+<p>adds a group-membership clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
+<h3 id="parameters-3">
+  Parameters
+  <a class="anchor" href="#parameters-3">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>clientId: String, optional if client scope is set</li>
+<li>clientScopeName: String, optional if client id is set</li>
+<li>addToIdToken: Boolean , optional, default = true,</li>
+<li>addToAccessToken: Boolean, optional, default = true,</li>
+<li>addToUserInfo: Boolean, optional, default = true,</li>
+<li>fullGroupPath: Boolean, optional, default = true,</li>
+<li>claimName: String?, optional, default = &laquo; name parameter&raquo;</li>
+</ul>
+<h3 id="example-3">
+  Example:
+  <a class="anchor" href="#example-3">#</a>
+</h3>
+<pre><code>id: add-client-mappers
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testMappers
+  - addGroupMembershipMapper:
+      clientId: testMappers
+      name: groupMembership
+      addToAccessToken: false
+      claimName: groupClaim
+</code></pre>
+<h2 id="adduserattributemapper">
+  addUserAttributeMapper
+  <a class="anchor" href="#adduserattributemapper">#</a>
+</h2>
+<p>adds a user-attribute clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
+<h3 id="parameters-4">
+  Parameters
+  <a class="anchor" href="#parameters-4">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>clientId: String, optional if client scope is set</li>
+<li>clientScopeName: String, optional if client id is set</li>
+<li>userAttribute: String, not optional</li>
+<li>addToIdToken: Boolean , optional, default = true,</li>
+<li>addToAccessToken: Boolean, optional, default = true,</li>
+<li>addToUserInfo: Boolean, optional, default = true,</li>
+<li>claimName: String?, optional, default = &laquo; name parameter&raquo;</li>
+<li>multivalued: Boolean, optional, default = false,</li>
+<li>aggregateAttributeValues: Boolean, optional, default = true</li>
+</ul>
+<h3 id="example-4">
+  Example:
+  <a class="anchor" href="#example-4">#</a>
+</h3>
+<pre><code>id: add-scope-mapper
+author: klg71
+realm: integ-test
+changes:
+  - addClientScope:
+      name: testMappers
+  - addUserAttributeMapper:
+      clientScopeName: testMappers
+      name: userAttribute
+      userAttribute: testAttribute
+      addToUserInfo: false
+</code></pre>
+<h2 id="adduserrealmrolemapper">
+  addUserRealmRoleMapper
+  <a class="anchor" href="#adduserrealmrolemapper">#</a>
+</h2>
+<p>adds a user-realm-role clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
+<h3 id="parameters-5">
+  Parameters
+  <a class="anchor" href="#parameters-5">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>clientId: String, optional if client scope is set</li>
+<li>clientScopeName: String, optional if client id is set</li>
+<li>addToIdToken: Boolean , optional, default = true,</li>
+<li>addToAccessToken: Boolean, optional, default = true,</li>
+<li>addToUserInfo: Boolean, optional, default = true,</li>
+<li>claimName: String?, optional, default = &laquo; name parameter&raquo;</li>
+<li>prefix: String, optional, default = &quot;&rdquo;</li>
+</ul>
+<h3 id="example-5">
+  Example:
+  <a class="anchor" href="#example-5">#</a>
+</h3>
+<pre><code>id: add-client-mappers
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testMappers
+  - addUserRealmRoleMapper:
+      clientId: testMappers
+      name: userRealmRole
+      prefix: rolePrefix
+</code></pre>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#addmapper">addMapper</a>
+      <ul>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#example">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#deletemapper">deleteMapper</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#addaudiencemapper">addAudienceMapper</a>
+      <ul>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#addgroupmembershipmapper">addGroupMembershipMapper</a>
+      <ul>
+        <li><a href="#parameters-3">Parameters</a></li>
+        <li><a href="#example-3">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#adduserattributemapper">addUserAttributeMapper</a>
+      <ul>
+        <li><a href="#parameters-4">Parameters</a></li>
+        <li><a href="#example-4">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#adduserrealmrolemapper">addUserRealmRoleMapper</a>
+      <ul>
+        <li><a href="#parameters-5">Parameters</a></li>
+        <li><a href="#example-5">Example:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
