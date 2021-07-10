@@ -64,7 +64,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
                 yamlNodeValue = actionJson
             }
 
-    @Suppress("ComplexMethod")
+    @Suppress("ComplexMethod","LongMethod")
     private fun mapToAction(actionName: String, actionJson: String): Action =
         when (actionName) {
             "addUser" -> objectMapper.readValue<AddUserAction>(actionJson)

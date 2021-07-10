@@ -6,7 +6,7 @@ data class RequiredActionProviderItem(
         val defaultAction: Boolean,
         val enabled: Boolean,
         val name: String,
-        val priority: Int,
+        val priority: Int?,
         val providerId: String)
 
 data class RegisterRequiredActionProvider(val providerId: String,

@@ -1,0 +1,12 @@
+id: add-required-action
+author: klg71
+realm: integ-test
+changes:
+  - deleteRequiredAction:
+      alias: VERIFY_EMAIL
+  - addRequiredAction:
+      providerId: verify-email
+      alias: VERIFY_EMAIL
+      name: Verify Email
+      defaultAction: true
+      enabled: true

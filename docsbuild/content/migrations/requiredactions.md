@@ -6,7 +6,7 @@ date:   2021-07-08 12:22:20 +0200
 permalink: /migrations/requiredactions/
 ---
 # Required Actions
-All migrations referring to the Required Actions resource.
+All migrations referring to the Required Actions resource in Authentication.
 ## AddRequiredAction
 Adds a required action.
 
@@ -15,10 +15,10 @@ Adds a required action.
 - providerId: String, mandatory
 - alias: String, mandatory
 - name: String, mandatory
-- config: Map<String,String>, optional
-- defaultAction: Boolean, optional
-- enabled: Boolean, optional
-- priority: Boolean, optional
+- config: Map<String,String>, optional, default = emptyMap
+- defaultAction: Boolean, optional, default = false
+- enabled: Boolean, optional, default = true
+- priority: Boolean, optional, default = preset through keycloak
 
 ### Example
 ```yaml
@@ -75,7 +75,7 @@ Deletes a required action, if one with this alias exists
 
 ### Example
 ```yaml
-id: delete-flow
+id: delete-required-action
 author: klg71
 realm: integ-test
 changes:
