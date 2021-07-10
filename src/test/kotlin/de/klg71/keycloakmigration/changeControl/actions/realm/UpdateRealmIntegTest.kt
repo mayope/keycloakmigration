@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.realm
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.realmById
 import org.assertj.core.api.Assertions.assertThat
@@ -48,6 +49,30 @@ class UpdateRealmIntegTest : AbstractIntegrationTest() {
         UpdateRealmAction("testRealm", attributes = mapOf("modify" to "modified")).executeIt()
 
         assertThat(client.realmById("testRealm").attributes["modify"]).isEqualTo("modified")
+        DeleteRealmAction("testRealm").executeIt()
+    }
+
+    @Test
+    fun testUpdateRealmThemes() {
+        AddRealmAction("testRealm", id = "testRealm").executeIt()
+
+        assertThat(client.realmById("testRealm").accountTheme).isEqualTo(null)
+        assertThat(client.realmById("testRealm").adminTheme).isEqualTo(null)
+        assertThat(client.realmById("testRealm").emailTheme).isEqualTo(null)
+        assertThat(client.realmById("testRealm").loginTheme).isEqualTo(null)
+
+        UpdateRealmAction(
+                "testRealm",
+                accountTheme = "keycloak",
+                adminTheme = "keycloak",
+                emailTheme = "keycloak",
+                loginTheme = "keycloak"
+        ).executeIt()
+
+        assertThat(client.realmById("testRealm").accountTheme).isEqualTo("keycloak")
+        assertThat(client.realmById("testRealm").adminTheme).isEqualTo("keycloak")
+        assertThat(client.realmById("testRealm").emailTheme).isEqualTo("keycloak")
+        assertThat(client.realmById("testRealm").loginTheme).isEqualTo("keycloak")
         DeleteRealmAction("testRealm").executeIt()
     }
 }

@@ -9,4 +9,4 @@ data class Group(val id: UUID,
                  val realmRoles: List<String>,
                  val clientRoles: Map<String, List<String>>,
                  val subGroups: List<Group>,
-                 val access: Map<String, Boolean>?)
+                 val access: Map<String, Boolean>? = null)

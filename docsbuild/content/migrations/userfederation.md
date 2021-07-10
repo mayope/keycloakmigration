@@ -213,7 +213,28 @@ or if a mapper with this name already exists in this ad.
               use.realm.roles.mapping: "true"
               user.roles.retrieve.strategy: "LOAD_ROLES_BY_MEMBERSHIP_ATTRIBUTE"
           
-                
+## AddUserFederation
+Adds a user federation to the realm
+
+### Parameters
+- realm: String, optional
+- name: String, mandatory
+- providerId: String, mandatory
+- providerType: String, optional, default = "org.keycloak.storage.UserStorageProvider"
+- config: Map <String, String>, optional
+
+### Example
+```yaml
+id: add-user-federation
+author: klg71
+changes:
+  - addUserFederation:
+        realm: master
+        name: testUserFederation
+        providerId: my-user-storage-provider
+```
+
+          
 ## DeleteUserFederation
 Deletes an userFederation from the realm, throws an exception if it doesn't exist.
 

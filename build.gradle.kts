@@ -56,7 +56,7 @@ repositories {
 }
 
 tasks {
-    val keycloakVersion = "11.0.0"
+    val keycloakVersion = "14.0.0"
 
     named("build") {
         dependsOn("buildDocker", ":docsbuild:buildDocs")
@@ -90,7 +90,7 @@ tasks {
 
     register<Download>("downloadKeycloak") {
         description = "Download local keycloak distribution for testing purposes"
-        src("https://downloads.jboss.org/keycloak/$keycloakVersion/keycloak-$keycloakVersion.zip")
+        src("https://github.com/keycloak/keycloak/releases/download/$keycloakVersion/keycloak-$keycloakVersion.zip")
         dest("$buildDir/keycloak-$keycloakVersion.zip")
         overwrite(false)
     }
@@ -134,7 +134,6 @@ tasks {
     register<Exec>("addWindowsAdminUser") {
         workingDir("keycloak/keycloak-$keycloakVersion/bin")
         commandLine("cmd", "/c", "add-user-keycloak.bat", "-r", "master", "-u", "admin", "-p", "admin")
-        environment("JAVA_OPTS", "--add-modules=java.se")
         environment("NOPAUSE", "true")
         isIgnoreExitValue = true
         standardOutput = System.out

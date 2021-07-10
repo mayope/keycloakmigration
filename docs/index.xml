@@ -11,6 +11,17 @@
     
     
     <item>
+      <title>Required Actions</title>
+      <link>https://mayope.github.io/keycloakmigration/migrations/requiredactions/</link>
+      <pubDate>Thu, 08 Jul 2021 12:22:20 +0200</pubDate>
+      
+      <guid>https://mayope.github.io/keycloakmigration/migrations/requiredactions/</guid>
+      <description>Required Actions#All migrations referring to the Required Actions resource.
+AddRequiredAction#Adds a required action.
+Parameters# realm: String, optional providerId: String, mandatory alias: String, mandatory name: String, mandatory config: Map&amp;lt;String,String&amp;gt;, optional defaultAction: Boolean, optional enabled: Boolean, optional priority: Boolean, optional  Example#id:add-required-actionauthor:klg71realm:integ-testchanges:- addRequiredAction:providerId:verify-emailalias:VERIFY_EMAILname:VerifyEmaildefaultAction:trueenabled:trueUpdateRequiredAction#Updates a required action. Only updates provided values. For an update of the required action alias use the oldAlias as alias and the newAlias in newAlias.</description>
+    </item>
+    
+    <item>
       <title>Client Migrations</title>
       <link>https://mayope.github.io/keycloakmigration/migrations/client/</link>
       <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
@@ -29,7 +40,7 @@ Parameter# realm: String, optional clientId: String, not optional, enabled: B
       <guid>https://mayope.github.io/keycloakmigration/migrations/scopes/</guid>
       <description>ClientScope Migrations#All migrations referring to the ClientScope resource.
 addClientScope#Adds a clientScope to keycloak, fails if a clientScope with that name already exists
-Parameter# realm: String, optional name: String, not optional description: String, optional, default = null protocol: String, optional, default = &amp;ldquo;openid-connect&amp;rdquo; consentScreenText: String, optional, default = null displayOnConsentScreen: Boolean, optional, default = false guiOrder: Int, optional, default = null includeInTokenScope: Boolean, optional, default = true  Example#id:add-client-scopesauthor:klg71realm:integ-testchanges:- addClientScope:name:apiassignDefaultClientScope#Assigns a default clientScope to a client, fails if the client or scope doesn&amp;rsquo;t exist.</description>
+Parameter# realm: String, optional name: String, not optional description: String, optional, default = null protocol: String, optional, default = &amp;ldquo;openid-connect&amp;rdquo; protocolMappers: List&amp;lt; ProtocolMapper &amp;gt;, optional, default = empty list consentScreenText: String, optional, default = null displayOnConsentScreen: Boolean, optional, default = false guiOrder: Int, optional, default = null includeInTokenScope: Boolean, optional, default = true  subclass ProtocolMapper# name: String, mandatory protocol: String, mandatory, default = null protocolMapper: String, mandatory consentRequired: Boolean, optional config: Map&amp;lt;String, String&amp;gt;, optional, default = empty  Example#id:add-client-scopesauthor:klg71realm:integ-testchanges:- addClientScope:name:apiassignDefaultClientScope#Assigns a default clientScope to a client, fails if the client or scope doesn&amp;rsquo;t exist.</description>
     </item>
     
     <item>
@@ -40,7 +51,7 @@ Parameter# realm: String, optional name: String, not optional description: St
       <guid>https://mayope.github.io/keycloakmigration/migrations/flow/</guid>
       <description>Flow Migrations#All migrations referring to the Authentication Flow resource.
 AddFlow#Adds an authentication flow.
-Parameters# realm: String, optional alias: String, not optional description: String, optional, default = &amp;ldquo;&amp;rdquo;, buildIn: Boolean, optional, default = false, providerId: String, optional, default = &amp;ldquo;basic-flow&amp;rdquo;, topLevel: Boolean, optional, default = true, executions: List&amp;lt; AuthenticationExecutionImport &amp;gt;, default = emptyList()  subclass AuthenticationExecutionImport# requirement: Flow.Requirement = &amp;ldquo;ALTERNATIVE&amp;rdquo; | &amp;ldquo;DISABLED&amp;rdquo; | &amp;ldquo;REQUIRED&amp;rdquo; | &amp;ldquo;CONDITIONAL&amp;rdquo; providerId: String = see providers in next point level: Int index: Int  Known Flow providers on Release (09.</description>
+Parameters# realm: String, optional alias: String, not optional description: String, optional, default = &amp;ldquo;&amp;rdquo;, buildIn: Boolean, optional, default = false, providerId: String, optional, default = &amp;ldquo;basic-flow&amp;rdquo;, topLevel: Boolean, optional, default = true, executions: List&amp;lt; AuthenticationExecutionImport &amp;gt;, default = emptyList()  subclass AuthenticationExecutionImport# requirement: Flow.Requirement = &amp;ldquo;ALTERNATIVE&amp;rdquo; | &amp;ldquo;DISABLED&amp;rdquo; | &amp;ldquo;REQUIRED&amp;rdquo; | &amp;ldquo;CONDITIONAL&amp;rdquo; | &amp;ldquo;OPTIONAL&amp;rdquo; providerId: String = see providers in next point level: Int index: Int config: Map&amp;lt;String, String&amp;gt;, optional, default = empty  Known Flow providers on Release (09.</description>
     </item>
     
     <item>

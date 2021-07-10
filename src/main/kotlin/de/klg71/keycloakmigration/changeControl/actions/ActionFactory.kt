@@ -31,6 +31,9 @@ import de.klg71.keycloakmigration.changeControl.actions.identityprovider.DeleteI
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
+import de.klg71.keycloakmigration.changeControl.actions.requiredactions.AddRequiredActionAction
+import de.klg71.keycloakmigration.changeControl.actions.requiredactions.DeleteRequiredActionAction
+import de.klg71.keycloakmigration.changeControl.actions.requiredactions.UpdateRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAction
@@ -44,6 +47,7 @@ import de.klg71.keycloakmigration.changeControl.actions.user.RevokeRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserAction
 import de.klg71.keycloakmigration.changeControl.actions.user.UpdateUserPasswordAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddAdLdapAction
+import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddUserFederationAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.DeleteUserFederationAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper.AddAdLdapFullNameMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper.AddAdLdapGroupMapperAction
@@ -103,6 +107,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addUserRealmRoleMapper" -> objectMapper.readValue<AddUserRealmRoleMapperAction>(actionJson)
 
             "addAdLdap" -> objectMapper.readValue<AddAdLdapAction>(actionJson)
+            "addUserFederation" -> objectMapper.readValue<AddUserFederationAction>(actionJson)
             "deleteUserFederation" -> objectMapper.readValue<DeleteUserFederationAction>(actionJson)
             "addAdLdapFullNameMapper" -> objectMapper.readValue<AddAdLdapFullNameMapperAction>(actionJson)
             "addAdLdapGroupMapper" -> objectMapper.readValue<AddAdLdapGroupMapperAction>(actionJson)
@@ -124,6 +129,10 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addFlow" -> objectMapper.readValue<AddFlowAction>(actionJson)
             "deleteFlow" -> objectMapper.readValue<DeleteFlowAction>(actionJson)
             "updateFlow" -> objectMapper.readValue<UpdateFlowAction>(actionJson)
+
+            "addRequiredAction" -> objectMapper.readValue<AddRequiredActionAction>(actionJson)
+            "deleteRequiredAction" -> objectMapper.readValue<DeleteRequiredActionAction>(actionJson)
+            "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
 
             else -> throw ParseException(
                 "Unknown Change type: $actionName"

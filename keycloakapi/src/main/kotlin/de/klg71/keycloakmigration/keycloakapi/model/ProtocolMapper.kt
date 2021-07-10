@@ -3,7 +3,7 @@ package de.klg71.keycloakmigration.keycloakapi.model
 import java.util.*
 
 
-data class ProtocolMapper(val id: UUID,
+data class ProtocolMapper(val id: UUID? = null,
                           val name: String,
                           val protocol: String,
                           val protocolMapper: String,
