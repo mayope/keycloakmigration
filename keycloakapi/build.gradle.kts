@@ -75,7 +75,7 @@ publishing {
         }
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/klg71/keycloakmigration")
+            url = uri("https://maven.pkg.github.com/mayope/keycloakmigration")
             credentials {
                 val githubUser = project.findProperty("githubPublishUser") as String? ?: ""
                 username = githubUser
@@ -96,12 +96,12 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
             val root = asNode()
             root.appendNode("name", "keycloakapi")
             root.appendNode("description", "Keycloak configuration as migration files")
-            root.appendNode("url", "https://github.com/klg71/keycloakmigration")
+            root.appendNode("url", "https://github.com/mayope/keycloakmigration")
         }
         licenses {
             license {
                 name.set("MIT License")
-                url.set("https://github.com/klg71/keycloakmigration")
+                url.set("https://github.com/mayope/keycloakmigration")
                 distribution.set("repo")
             }
         }
@@ -113,9 +113,9 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
             }
         }
         scm {
-            url.set("https://github.com/klg71/keycloakmigration")
-            connection.set("scm:git:git://github.com/klg71/keycloakmigration.git")
-            developerConnection.set("scm:git:ssh://git@github.com/klg71/keycloakmigration.git")
+            url.set("https://github.com/mayope/keycloakmigration")
+            connection.set("scm:git:git://github.com/mayope/keycloakmigration.git")
+            developerConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
         }
     }
 }
