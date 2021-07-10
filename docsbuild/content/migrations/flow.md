@@ -20,10 +20,11 @@ Adds an authentication flow.
 - executions: List< AuthenticationExecutionImport >, default = emptyList()
 
 #### subclass AuthenticationExecutionImport
-- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL"
+- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL"
 - providerId: String = see providers in next point
 - level: Int
 - index: Int
+- config: Map<String, String>, optional, default = empty
 
 #### Known Flow providers on Release (09.04.2021)
 - no-cookie-redirect,Browser Redirect/Refresh,Perform a 302 redirect to get user agent's current URI on authenticate path with an auth_session_id query parameter.  This is for client's that do not support cookies.
@@ -90,10 +91,11 @@ For an update of the flow `alias` use the oldAlias as `alias` and the newAlias i
 - executions: List< AuthenticationExecutionImport >, default = no update
 
 #### subclass AuthenticationExecutionImport
-- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL"
+- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL"
 - providerId: String = see providers in AddFlow action
 - level: Int
 - index: Int
+- config: Map<String, String>, optional, default = empty
 
 
 ### Example

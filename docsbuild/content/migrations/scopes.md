@@ -15,10 +15,18 @@ Adds a clientScope to keycloak, fails if a clientScope with that name already ex
 - name: String, not optional
 - description: String, optional, default = null
 - protocol: String, optional, default = "openid-connect"
+- protocolMappers: List< ProtocolMapper >, optional, default = empty list
 - consentScreenText: String, optional, default = null
 - displayOnConsentScreen: Boolean, optional, default = false
 - guiOrder: Int, optional, default = null
 - includeInTokenScope: Boolean, optional, default = true
+
+#### subclass ProtocolMapper
+- name: String, mandatory
+- protocol: String, mandatory, default = null
+- protocolMapper: String, mandatory
+- consentRequired: Boolean, optional
+- config: Map<String, String>, optional, default = empty
 
 ### Example
 ```yaml

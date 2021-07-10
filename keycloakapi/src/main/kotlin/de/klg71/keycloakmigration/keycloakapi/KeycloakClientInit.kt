@@ -51,7 +51,7 @@ fun initKeycloakLoginClient(baseUrl: String, logger: Logger? = null): KeycloakLo
         }
 
 internal fun initKeycloakLoginClient(objectMapper: ObjectMapper,
-                                     baseUrl: String, logger: Logger?): KeycloakLoginClient = Feign.builder().run {
+                                     baseUrl: String, logger: Logger? = null): KeycloakLoginClient = Feign.builder().run {
     encoder(FormEncoder(JacksonEncoder(objectMapper)))
     decoder(JacksonDecoder(objectMapper))
     logger?.let {

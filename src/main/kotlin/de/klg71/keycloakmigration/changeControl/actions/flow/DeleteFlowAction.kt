@@ -3,7 +3,7 @@ package de.klg71.keycloakmigration.changeControl.actions.flow
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.executionsToImport
 import de.klg71.keycloakmigration.keycloakapi.importFlow
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
 
@@ -13,13 +13,13 @@ class DeleteFlowAction(
 ) : Action(realm) {
 
     private var oldFlow: Flow? = null
-    private val oldExecutions: MutableList<AuthenticationExecution> = mutableListOf()
+    private val oldExecutions: MutableList<AuthenticationExecutionImport> = mutableListOf()
 
     override fun execute() {
         client.flows(realm())
             .firstOrNull { it.alias == alias }?.let {
                 oldFlow = it
-                oldExecutions.addAll(client.flowExecutions(realm(), alias))
+                oldExecutions.addAll(client.executionsToImport(realm(), alias))
                 client.deleteFlow(realm(), it.id)
             }
     }
@@ -29,7 +29,7 @@ class DeleteFlowAction(
             client.importFlow(
                 realm(), ImportFlow(
                     alias, it.description, it.providerId, it.topLevel, it.builtIn,
-                    executionsToImport(oldExecutions)
+                    oldExecutions
                 )
             )
         }

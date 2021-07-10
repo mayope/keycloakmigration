@@ -4,6 +4,8 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderItem
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
+import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
+import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.realmById
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
 
@@ -46,7 +48,6 @@ class UpdateRealmAction(
         private val quickLoginCheckMilliSeconds: Int? = null,
         private val maxDeltaTimeSeconds: Int? = null,
         private val failureFactor: Int? = null,
-        private val defaultRoles: List<String>? = null,
         private val requiredCredentials: List<String>? = null,
         private val otpPolicyType: String? = null,
         private val otpPolicyAlgorithm: String? = null,
@@ -81,7 +82,11 @@ class UpdateRealmAction(
         private val clientAuthenticationFlow: String? = null,
         private val dockerAuthenticationFlow: String? = null,
         private val attributes: Map<String, String>? = null,
-        private val userManagedAccessAllowed: Boolean? = null) : Action() {
+        private val userManagedAccessAllowed: Boolean? = null,
+        private val accountTheme: String? = null,
+        private val adminTheme: String? = null,
+        private val emailTheme: String? = null,
+        private val loginTheme: String? = null) : Action() {
 
 
     lateinit var oldRealm: Realm
@@ -125,7 +130,6 @@ class UpdateRealmAction(
             quickLoginCheckMilliSeconds ?: oldRealm.quickLoginCheckMilliSeconds,
             maxDeltaTimeSeconds ?: oldRealm.maxDeltaTimeSeconds,
             failureFactor ?: oldRealm.failureFactor,
-            defaultRoles ?: oldRealm.defaultRoles,
             requiredCredentials ?: oldRealm.requiredCredentials,
             otpPolicyType ?: oldRealm.otpPolicyType,
             otpPolicyAlgorithm ?: oldRealm.otpPolicyAlgorithm,
@@ -161,7 +165,11 @@ class UpdateRealmAction(
             clientAuthenticationFlow ?: oldRealm.clientAuthenticationFlow,
             dockerAuthenticationFlow ?: oldRealm.dockerAuthenticationFlow,
             mergeAttributes(),
-            userManagedAccessAllowed ?: oldRealm.userManagedAccessAllowed)
+            userManagedAccessAllowed ?: oldRealm.userManagedAccessAllowed,
+            accountTheme ?: oldRealm.accountTheme,
+            adminTheme ?: oldRealm.adminTheme,
+            emailTheme ?: oldRealm.emailTheme,
+            loginTheme ?: oldRealm.loginTheme)
 
     private fun mergeAttributes(): Map<String, String> {
         val newMap = oldRealm.attributes.toMutableMap()

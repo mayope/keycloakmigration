@@ -10,6 +10,6 @@ data class UserCredential(val algorithm: String? = "pbkdf2-sha256",
                           val hashIterations: Int? = 27500,
                           val hashedSaltedValue: String?,
                           val period: Int? = 0,
-                          val salt: String?,
+                          val salt: String? = null,
                           val type: String? = "password",
                           val config: Map<String, String>? = emptyMap())

@@ -3,14 +3,14 @@ package de.klg71.keycloakmigration.keycloakapi.model
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.util.UUID
 
-data class IdentityProviderItem(val alias: String, val displayName: String?, val internalId: UUID)
+data class IdentityProviderItem(val alias: String, val displayName: String? = null, val internalId: UUID)
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Realm(
     val id: String,
     val realm: String,
-    var displayName: String?,
-    var displayNameHtml: String?,
+    var displayName: String? = null,
+    var displayNameHtml: String? = null,
     val notBefore: Int,
     val revokeRefreshToken: Boolean,
     val refreshTokenMaxReuse: Int,
@@ -46,7 +46,6 @@ data class Realm(
     val quickLoginCheckMilliSeconds: Int,
     val maxDeltaTimeSeconds: Int,
     val failureFactor: Int,
-    val defaultRoles: List<String>,
     val requiredCredentials: List<String>,
     val otpPolicyType: String,
     val otpPolicyAlgorithm: String,
@@ -82,7 +81,12 @@ data class Realm(
     val clientAuthenticationFlow: String,
     val dockerAuthenticationFlow: String,
     val attributes: Map<String, String>,
-    val userManagedAccessAllowed: Boolean
+    val userManagedAccessAllowed: Boolean,
+    val accountTheme: String? = null,
+    val adminTheme: String? = null,
+    val emailTheme: String? = null,
+    val loginTheme: String? = null,
+    val requiredActions: List<RequiredActionProviderItem>? = null
 )
 
 
@@ -126,7 +130,6 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     var quickLoginCheckMilliSeconds: Int = existingRealm.quickLoginCheckMilliSeconds
     var maxDeltaTimeSeconds: Int = existingRealm.maxDeltaTimeSeconds
     var failureFactor: Int = existingRealm.failureFactor
-    var defaultRoles: List<String> = existingRealm.defaultRoles
     var requiredCredentials: List<String> = existingRealm.requiredCredentials
     var otpPolicyType: String = existingRealm.otpPolicyType
     var otpPolicyAlgorithm: String = existingRealm.otpPolicyAlgorithm
@@ -165,6 +168,11 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     var dockerAuthenticationFlow: String = existingRealm.dockerAuthenticationFlow
     var attributes: Map<String, String> = existingRealm.attributes
     var userManagedAccessAllowed: Boolean = existingRealm.userManagedAccessAllowed
+    var accountTheme: String? = existingRealm.accountTheme
+    var adminTheme: String? = existingRealm.adminTheme
+    var emailTheme: String? = existingRealm.emailTheme
+    var loginTheme: String? = existingRealm.loginTheme
+    var requiredActions: List<RequiredActionProviderItem>? = existingRealm.requiredActions
 
     fun build() = Realm(
 
@@ -207,7 +215,6 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
         quickLoginCheckMilliSeconds,
         maxDeltaTimeSeconds,
         failureFactor,
-        defaultRoles,
         requiredCredentials,
         otpPolicyType,
         otpPolicyAlgorithm,
@@ -243,6 +250,11 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
         clientAuthenticationFlow,
         dockerAuthenticationFlow,
         attributes,
-        userManagedAccessAllowed
+        userManagedAccessAllowed,
+        accountTheme,
+        adminTheme,
+        emailTheme,
+        loginTheme,
+        requiredActions
     )
 }

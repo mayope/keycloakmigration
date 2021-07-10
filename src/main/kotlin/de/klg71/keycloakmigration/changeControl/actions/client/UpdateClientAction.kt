@@ -37,7 +37,6 @@ class UpdateClientAction(
             oldClient.surrogateAuthRequired,
             enabled ?: oldClient.enabled,
             oldClient.clientAuthenticatorType,
-            oldClient.defaultRoles,
             redirectUris ?: oldClient.redirectUris,
             webOrigins ?: oldClient.webOrigins,
             oldClient.notBefore,

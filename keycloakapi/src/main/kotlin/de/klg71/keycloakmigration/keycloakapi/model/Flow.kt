@@ -10,11 +10,11 @@ data class Flow(val id: UUID,
     val builtIn: Boolean,
     val authenticationExecutions: List<AuthenticationExecution>) {
     enum class Requirement {
-        ALTERNATIVE, DISABLED, REQUIRED, CONDITIONAL
+        ALTERNATIVE, DISABLED, REQUIRED, CONDITIONAL, OPTIONAL
     }
 
     data class AuthenticationExecution(
-        val authenticator: String?,
+        val authenticator: String? = null,
         val requirement: Requirement,
         val priority: Int,
         val userSetupAllowed: Boolean,
@@ -31,7 +31,8 @@ data class AuthenticationExecution(
     val configurable: Boolean,
     val providerId: String,
     val level: Int,
-    val index: Int)
+    val index: Int,
+    val authenticationConfig: String? = null)
 
 data class AddFlow(val alias: String,
     val builtIn: Boolean,
@@ -51,7 +52,8 @@ data class AuthenticationExecutionImport(
     val requirement: Flow.Requirement,
     val providerId: String,
     val level: Int,
-    val index: Int)
+    val index: Int,
+    val config: Map<String, String>)
 
 data class ImportFlow(
     val alias: String,
@@ -77,3 +79,7 @@ data class UpdateFlowExecution(val id: UUID,
     val level: Int,
     val index: Int,
     val providerId: String)
+
+data class AuthenticatorConfig(val alias: String? = null,
+                               val config: Map<String, String>,
+                               val id: UUID? = null)

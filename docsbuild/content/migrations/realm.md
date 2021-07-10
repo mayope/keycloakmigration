@@ -77,7 +77,6 @@ updates a Realm, throws error if realm with that id does not exists
 - quickLoginCheckMilliSeconds:Int, optional
 - maxDeltaTimeSeconds:Int, optional
 - failureFactor:Int, optional
-- defaultRoles:List< String>, optional
 - requiredCredentials:List< String>, optional
 - otpPolicyType:String, optional
 - otpPolicyAlgorithm:String, optional
@@ -142,6 +141,10 @@ updates a Realm, throws error if realm with that id does not exists
     - waitIncrementSeconds
     - offlineSessionMaxLifespanEnabled
 - userManagedAccessAllowed:Boolean, optional
+- accountTheme:String, optional
+- adminTheme:String, optional
+- emailTheme:String, optional
+- loginTheme:String, optional
 
 ### Example
     id: update-realm
