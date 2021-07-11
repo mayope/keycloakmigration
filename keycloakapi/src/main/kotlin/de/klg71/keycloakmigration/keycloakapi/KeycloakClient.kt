@@ -222,15 +222,15 @@ interface KeycloakClient {
 
     @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/protocol-mappers/models")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addMapper(@Param("client-scope-id") clientScopeId: UUID, addMapper: AddMapper, @Param("realm") realm: String): Response
+    fun addClientScopeMapper(@Param("client-scope-id") clientScopeId: UUID, addMapper: AddMapper, @Param("realm") realm: String): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}/protocol-mappers/models/{mapper-id}")
-    fun deleteMapper(@Param("client-scope-id") clientScopeId: UUID, @Param("mapper-id") mapperId: UUID, @Param(
+    fun deleteClientScopeMapper(@Param("client-scope-id") clientScopeId: UUID, @Param("mapper-id") mapperId: UUID, @Param(
         "realm"
     ) realm: String)
 
     @RequestLine("GET /admin/realms/{realm}/client-scopes/{client-scope-id}/protocol-mappers/models")
-    fun mappers(@Param("client-scope-id") clientScopeId: UUID, @Param("realm") realm: String): List<Mapper>
+    fun clientScopeMappers(@Param("client-scope-id") clientScopeId: UUID, @Param("realm") realm: String): List<Mapper>
 
     @RequestLine("GET /admin/realms/{realm}/client-scopes")
     fun clientScopes(@Param("realm") realm: String): List<ClientScope>
