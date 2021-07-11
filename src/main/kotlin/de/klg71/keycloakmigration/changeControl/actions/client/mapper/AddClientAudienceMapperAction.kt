@@ -1,0 +1,37 @@
+package de.klg71.keycloakmigration.changeControl.actions.client.mapper
+
+import de.klg71.keycloakmigration.keycloakapi.model.audienceMapper
+
+// todo: remove `open` modifier when deprecation below gets removed!
+open class AddClientAudienceMapperAction(
+    realm: String?,
+    name: String,
+    clientId: String,
+    private val addToIdToken: Boolean = true,
+    private val addToAccessToken: Boolean = true,
+    private val clientAudience: String = "",
+    private val customAudience: String = ""
+) : AddClientMapperAction(realm, clientId, name) {
+
+    override fun createMapper() = audienceMapper(name, addToAccessToken, addToIdToken, clientAudience, customAudience)
+
+    override fun name() = "AddClientAudienceMapper $name to $clientId"
+
+}
+
+@Deprecated("Will be removed in a future release. Use AddClientAudienceMapper action instead")
+class AddAudienceMapperAction(
+    realm: String?,
+    name: String,
+    clientId: String,
+    addToIdToken: Boolean = true,
+    addToAccessToken: Boolean = true,
+    clientAudience: String = "",
+    customAudience: String = ""
+) : AddClientAudienceMapperAction(
+    realm, name, clientId, addToIdToken, addToAccessToken, clientAudience, customAudience
+) {
+
+    override fun name() = "AddAudienceMapper $name to $clientId"
+
+}

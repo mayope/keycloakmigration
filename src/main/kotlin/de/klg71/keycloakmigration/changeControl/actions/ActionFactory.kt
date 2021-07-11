@@ -10,13 +10,25 @@ import de.klg71.keycloakmigration.changeControl.actions.client.DeleteRoleScopeMa
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.UpdateClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddAudienceMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddClientAudienceMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddClientGroupMembershipMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddClientMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddClientUserAttributeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddClientUserRealmRoleMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddGroupMembershipMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserRealmRoleMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteClientMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AddClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignDefaultClientScopeAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeAudienceMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeGroupMembershipMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeUserAttributeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeUserRealmRoleMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.DeleteClientScopeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateFlowAction
@@ -105,6 +117,26 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addGroupMembershipMapper" -> objectMapper.readValue<AddGroupMembershipMapperAction>(actionJson)
             "addUserAttributeMapper" -> objectMapper.readValue<AddUserAttributeMapperAction>(actionJson)
             "addUserRealmRoleMapper" -> objectMapper.readValue<AddUserRealmRoleMapperAction>(actionJson)
+
+            "addClientMapper" -> objectMapper.readValue<AddClientMapperAction>(actionJson)
+            "deleteClientMapper" -> objectMapper.readValue<DeleteClientMapperAction>(actionJson)
+            "addClientAudienceMapper" -> objectMapper.readValue<AddClientAudienceMapperAction>(actionJson)
+            "addClientGroupMembershipMapper" -> objectMapper.readValue<AddClientGroupMembershipMapperAction>(actionJson)
+            "addClientUserAttributeMapper" -> objectMapper.readValue<AddClientUserAttributeMapperAction>(actionJson)
+            "addClientUserRealmRoleMapper" -> objectMapper.readValue<AddClientUserRealmRoleMapperAction>(actionJson)
+
+            "addClientScopeMapper" -> objectMapper.readValue<AddClientScopeMapperAction>(actionJson)
+            "deleteClientScopeMapper" -> objectMapper.readValue<DeleteClientScopeMapperAction>(actionJson)
+            "addClientScopeAudienceMapper" -> objectMapper.readValue<AddClientScopeAudienceMapperAction>(actionJson)
+            "addClientScopeGroupMembershipMapper" -> objectMapper.readValue<AddClientScopeGroupMembershipMapperAction>(
+                actionJson
+            )
+            "addClientScopeUserAttributeMapper" -> objectMapper.readValue<AddClientScopeUserAttributeMapperAction>(
+                actionJson
+            )
+            "addClientScopeUserRealmRoleMapper" -> objectMapper.readValue<AddClientScopeUserRealmRoleMapperAction>(
+                actionJson
+            )
 
             "addAdLdap" -> objectMapper.readValue<AddAdLdapAction>(actionJson)
             "addUserFederation" -> objectMapper.readValue<AddUserFederationAction>(actionJson)

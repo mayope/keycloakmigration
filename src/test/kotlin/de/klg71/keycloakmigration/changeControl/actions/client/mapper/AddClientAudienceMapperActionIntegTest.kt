@@ -12,7 +12,7 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.inject
 
-class AddAudienceMapperActionIntegTest : AbstractIntegrationTest() {
+class AddClientAudienceMapperActionIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
     val mapperName = "testMapper"
@@ -22,15 +22,13 @@ class AddAudienceMapperActionIntegTest : AbstractIntegrationTest() {
     val customAudience = "customAudience"
 
     val clientId = "simpleClient"
-    val clientScopeName = "simpleClientScope"
 
     @Test
     fun testAddMapper() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
-        AddClientScopeAction(testRealm, clientScopeName).executeIt()
 
-        AddAudienceMapperAction(
-            testRealm, mapperName, clientId, clientScopeName,
+        AddClientAudienceMapperAction(
+            testRealm, mapperName, clientId,
             clientAudience = clientAudience,
             customAudience = customAudience
         ).executeIt()
@@ -46,47 +44,25 @@ class AddAudienceMapperActionIntegTest : AbstractIntegrationTest() {
         assertThat(clientMapper.protocolMapper).isEqualTo(protocolMapper)
         assertThat(clientMapper.config["included.client.audience"]).isEqualTo(clientAudience)
         assertThat(clientMapper.config["included.custom.audience"]).isEqualTo(customAudience)
-
-        val mappers = client.mappers(client.clientScopeUUID(clientScopeName, testRealm), testRealm)
-
-        assertThat(mappers).hasSize(1)
-
-        val mapper = mappers[0]
-
-        assertThat(mapper.name).isEqualTo(mapperName)
-        assertThat(mapper.protocol).isEqualTo(protocol)
-        assertThat(mapper.protocolMapper).isEqualTo(protocolMapper)
-        assertThat(mapper.config["included.client.audience"]).isEqualTo(clientAudience)
-        assertThat(mapper.config["included.custom.audience"]).isEqualTo(customAudience)
     }
 
     @Test
     fun testAddExistingMapper() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
-        AddClientScopeAction(testRealm, clientScopeName).executeIt()
 
-        AddAudienceMapperAction(
-            testRealm, mapperName, clientId, clientScopeName,
+        AddClientAudienceMapperAction(
+            testRealm, mapperName, clientId,
             clientAudience = clientAudience,
             customAudience = customAudience
         ).executeIt()
 
         assertThatThrownBy {
-            AddAudienceMapperAction(
-                testRealm, mapperName, clientId, null,
+            AddClientAudienceMapperAction(
+                testRealm, mapperName, clientId,
                 clientAudience = clientAudience,
                 customAudience = customAudience
             ).executeIt()
         }.isInstanceOf(MigrationException::class.java)
             .hasMessage("Mapper with name: $mapperName already exists in client: $clientId on realm: $testRealm!")
-
-        assertThatThrownBy {
-            AddAudienceMapperAction(
-                testRealm, mapperName, null, clientScopeName,
-                clientAudience = clientAudience,
-                customAudience = customAudience
-            ).executeIt()
-        }.isInstanceOf(MigrationException::class.java)
-            .hasMessage("Mapper with name: $mapperName already exists in client scope: $clientScopeName on realm: $testRealm!")
     }
 }

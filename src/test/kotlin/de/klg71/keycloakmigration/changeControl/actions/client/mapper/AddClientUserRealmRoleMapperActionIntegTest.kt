@@ -10,27 +10,21 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.koin.core.inject
 
-class AddUserAttributeMapperActionIntegTest : AbstractIntegrationTest() {
+class AddClientUserRealmRoleMapperActionIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
     val mapperName = "testMapper"
     val protocol = "openid-connect"
-    val protocolMapper = "oidc-usermodel-attribute-mapper"
-    val userAttribute = "testAttribute"
+    val protocolMapper = "oidc-usermodel-realm-role-mapper"
     val claimName = "claimName"
 
     val clientId = "simpleClient"
-    val clientScopeName = "simpleClientScope"
 
     @Test
     fun testAddMapper() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
-        AddClientScopeAction(testRealm, clientScopeName).executeIt()
 
-        AddUserAttributeMapperAction(
-            testRealm, mapperName, clientId, clientScopeName,
-            userAttribute
-        ).executeIt()
+        AddClientUserRealmRoleMapperAction(testRealm, mapperName, clientId).executeIt()
 
         val clientMappers = client.clientMappers(client.clientUUID(clientId, testRealm), testRealm)
 
@@ -41,30 +35,15 @@ class AddUserAttributeMapperActionIntegTest : AbstractIntegrationTest() {
         assertThat(clientMapper.name).isEqualTo(mapperName)
         assertThat(clientMapper.protocol).isEqualTo(protocol)
         assertThat(clientMapper.protocolMapper).isEqualTo(protocolMapper)
-        assertThat(clientMapper.config["user.attribute"]).isEqualTo(userAttribute)
-        assertThat(clientMapper.config["claim.name"]).isEqualTo(mapperName)
-
-        val mappers = client.mappers(client.clientScopeUUID(clientScopeName, testRealm), testRealm)
-
-        assertThat(mappers).hasSize(1)
-
-        val mapper = mappers[0]
-
-        assertThat(mapper.name).isEqualTo(mapperName)
-        assertThat(mapper.protocol).isEqualTo(protocol)
-        assertThat(mapper.protocolMapper).isEqualTo(protocolMapper)
-        assertThat(mapper.config["user.attribute"]).isEqualTo(userAttribute)
-        assertThat(mapper.config["claim.name"]).isEqualTo(mapperName)
     }
 
     @Test
     fun testAddMapperWithClaimName() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
-        AddClientScopeAction(testRealm, clientScopeName).executeIt()
 
-        AddUserAttributeMapperAction(
-            testRealm, mapperName, clientId, clientScopeName,
-            userAttribute, claimName = claimName
+        AddClientUserRealmRoleMapperAction(
+            testRealm, mapperName, clientId,
+            claimName = claimName
         ).executeIt()
 
         val clientMappers = client.clientMappers(client.clientUUID(clientId, testRealm), testRealm)
@@ -72,12 +51,5 @@ class AddUserAttributeMapperActionIntegTest : AbstractIntegrationTest() {
 
         assertThat(clientMapper.name).isEqualTo(mapperName)
         assertThat(clientMapper.config["claim.name"]).isEqualTo(claimName)
-
-        val mappers = client.mappers(client.clientScopeUUID(clientScopeName, testRealm), testRealm)
-        val mapper = mappers[0]
-
-        assertThat(mapper.name).isEqualTo(mapperName)
-        assertThat(mapper.config["claim.name"]).isEqualTo(claimName)
     }
-
 }

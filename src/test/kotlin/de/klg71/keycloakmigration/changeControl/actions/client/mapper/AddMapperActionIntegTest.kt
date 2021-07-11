@@ -28,15 +28,13 @@ class AddMapperActionIntegTest : AbstractIntegrationTest() {
     val protocolMapper = "oidc-usermodel-property-mapper"
 
     val clientId = "simpleClient"
-    val clientScopeName = "simpleClientScope"
 
     @Test
     fun testAddMapper() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
-        AddClientScopeAction(testRealm, clientScopeName).executeIt()
 
-        AddMapperAction(
-            testRealm, mapperName, clientId, clientScopeName,
+        AddClientMapperAction(
+            testRealm, mapperName, clientId,
             config, protocolMapper, protocol
         ).executeIt()
 
@@ -50,44 +48,24 @@ class AddMapperActionIntegTest : AbstractIntegrationTest() {
         assertThat(clientMapper.name).isEqualTo(mapperName)
         assertThat(clientMapper.protocol).isEqualTo(protocol)
         assertThat(clientMapper.protocolMapper).isEqualTo(protocolMapper)
-
-        val mappers = client.mappers(client.clientScopeUUID(clientScopeName, testRealm), testRealm)
-
-        assertThat(mappers).hasSize(1)
-
-        val mapper = mappers[0]
-
-        assertThat(mapper.config).isEqualTo(config)
-        assertThat(mapper.name).isEqualTo(mapperName)
-        assertThat(mapper.protocol).isEqualTo(protocol)
-        assertThat(mapper.protocolMapper).isEqualTo(protocolMapper)
     }
 
     @Test
     fun testAddExistingMapper() {
         AddSimpleClientAction(testRealm, clientId).executeIt();
-        AddClientScopeAction(testRealm, clientScopeName).executeIt()
 
-        AddMapperAction(
-            testRealm, mapperName, clientId, clientScopeName,
+        AddClientMapperAction(
+            testRealm, mapperName, clientId,
             config, protocolMapper, protocol
         ).executeIt()
 
         assertThatThrownBy {
-            AddMapperAction(
-                testRealm, mapperName, clientId, null,
+            AddClientMapperAction(
+                testRealm, mapperName, clientId,
                 config, protocolMapper, protocol
             ).executeIt()
         }.isInstanceOf(MigrationException::class.java)
             .hasMessage("Mapper with name: $mapperName already exists in client: $clientId on realm: $testRealm!")
-
-        assertThatThrownBy {
-            AddMapperAction(
-                testRealm, mapperName, null, clientScopeName,
-                config, protocolMapper, protocol
-            ).executeIt()
-        }.isInstanceOf(MigrationException::class.java)
-            .hasMessage("Mapper with name: $mapperName already exists in client scope: $clientScopeName on realm: $testRealm!")
 
     }
 

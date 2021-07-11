@@ -10,7 +10,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.koin.core.inject
 
-class DeleteMapperActionIntegTest : AbstractIntegrationTest() {
+class DeleteClientMapperActionIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
     val config = mapOf(
@@ -25,26 +25,20 @@ class DeleteMapperActionIntegTest : AbstractIntegrationTest() {
     val protocolMapper = "oidc-usermodel-property-mapper"
 
     val clientId = "simpleClient"
-    val clientScopeName = "simpleClientScope"
 
     @Test
     fun testDeleteMapper() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
-        AddClientScopeAction(testRealm, clientScopeName).executeIt()
 
-        AddMapperAction(
-            testRealm, mapperName, clientId, clientScopeName,
+        AddClientMapperAction(
+            testRealm, mapperName, clientId,
             config, protocolMapper, protocol
         ).executeIt()
 
-        DeleteMapperAction(testRealm, mapperName, clientId, clientScopeName).executeIt()
+        DeleteClientMapperAction(testRealm, mapperName, clientId).executeIt()
 
         val clientMappers = client.clientMappers(client.clientUUID(clientId, testRealm), testRealm)
 
         assertThat(clientMappers).hasSize(0)
-
-        val mappers = client.mappers(client.clientScopeUUID(clientScopeName, testRealm), testRealm)
-
-        assertThat(mappers).hasSize(0)
     }
 }
