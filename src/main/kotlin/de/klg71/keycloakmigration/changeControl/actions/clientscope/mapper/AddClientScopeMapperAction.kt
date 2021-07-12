@@ -30,7 +30,7 @@ internal fun addClientScopeMapper(
 
 open class AddClientScopeMapperAction(
     realm: String?,
-    protected val clientScope: String,
+    protected val clientScopeName: String,
     protected val name: String,
     protected val config: Map<String, String> = mapOf(),
     protected val protocol: String = "openid-connect",
@@ -42,15 +42,15 @@ open class AddClientScopeMapperAction(
     protected open fun createMapper(): AddMapper = AddMapper(name, config, protocol, protocolMapper)
 
     override fun execute() {
-        mapperUuid = addClientScopeMapper(client, createMapper(), clientScope, name, realm())
+        mapperUuid = addClientScopeMapper(client, createMapper(), clientScopeName, name, realm())
     }
 
     override fun undo() {
-        client.clientScopeUUID(clientScope, realm()).let {
+        client.clientScopeUUID(clientScopeName, realm()).let {
             client.deleteClientScopeMapper(it, mapperUuid, realm())
         }
     }
 
-    override fun name(): String = "AddClientScopeMapper $protocol:$protocolMapper $name to $clientScope";
+    override fun name(): String = "AddClientScopeMapper $protocol:$protocolMapper $name to $clientScopeName";
 
 }

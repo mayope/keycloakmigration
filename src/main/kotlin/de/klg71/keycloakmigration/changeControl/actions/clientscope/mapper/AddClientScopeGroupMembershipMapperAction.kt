@@ -5,20 +5,20 @@ import de.klg71.keycloakmigration.keycloakapi.model.groupMembershipMapper
 open class AddClientScopeGroupMembershipMapperAction(
     realm: String?,
     name: String,
-    clientScope: String,
+    clientScopeName: String,
     private val addToIdToken: Boolean = true,
     private val addToAccessToken: Boolean = true,
     private val fullGroupPath: Boolean = true,
     private val addToUserInfo: Boolean = true,
     private val claimName: String? = null
-) : AddClientScopeMapperAction(realm, name, clientScope) {
+) : AddClientScopeMapperAction(realm, name, clientScopeName) {
 
     override fun createMapper() = groupMembershipMapper(
         name, addToAccessToken, addToIdToken,
         fullGroupPath, addToUserInfo, claimName ?: name
     )
 
-    override fun name() = "AddClientScopeGroupMembershipMapper $name to $clientScope"
+    override fun name() = "AddClientScopeGroupMembershipMapper $name to $clientScopeName"
 
 }
 

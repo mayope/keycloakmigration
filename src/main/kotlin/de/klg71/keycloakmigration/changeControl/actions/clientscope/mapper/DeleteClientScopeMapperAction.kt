@@ -1,33 +1,33 @@
 package de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.keycloakapi.clientUUID
+import de.klg71.keycloakmigration.keycloakapi.clientScopeUUID
 import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 
 open class DeleteClientScopeMapperAction(
     realm: String?,
-    protected val name: String,
-    protected val clientId: String
+    private val name: String,
+    private val clientScopeName: String
 ) : Action(realm) {
 
     private var deletedMapper: Mapper? = null;
 
     override fun execute() {
-        val clientUUID = client.clientUUID(clientId, realm())
-        deletedMapper = client.clientMappers(clientUUID, realm()).firstOrNull { it.name == name }
+        val clientScopeUUID = client.clientScopeUUID(clientScopeName, realm())
+        deletedMapper = client.clientScopeMappers(clientScopeUUID, realm()).firstOrNull { it.name == name }
         deletedMapper?.let {
-            client.deleteClientMapper(clientUUID, it.id, realm())
+            client.deleteClientScopeMapper(clientScopeUUID, it.id, realm())
         }
     }
 
     override fun undo() {
         deletedMapper?.let {
-            addClientScopeMapper(client, AddMapper.from(it), clientId, name, realm())
+            addClientScopeMapper(client, AddMapper.from(it), clientScopeName, name, realm())
         }
     }
 
-    override fun name() = "DeleteClientScopeMapper $name from $clientId"
+    override fun name() = "DeleteClientScopeMapper $name from $clientScopeName"
 
 }
 
