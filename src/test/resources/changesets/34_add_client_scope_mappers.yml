@@ -1,21 +1,21 @@
-id: add-client-mappers
-author: klg71
+id: add-client-scope-mappers
+author: janunld
 realm: integ-test
 changes:
-  - addSimpleClient:
-      clientId: testMappers
-  - addClientAudienceMapper:
+  - addClientScope:
+      name: testMappers
+  - addClientScopeAudienceMapper:
       clientId: testMappers
       name: audienceMapper
       addToIdToken: false
       clientAudience: testMappers
       customAudience: completlyCustom
-  - addClientGroupMembershipMapper:
+  - addClientScopeGroupMembershipMapper:
       clientId: testMappers
       name: groupMembership
       addToAccessToken: false
       claimName: groupClaim
-  - addClientMapper:
+  - addClientScopeMapper:
       clientId: testMappers
       name: testPropertyMapper
       protocolMapper: oidc-usermodel-property-mapper
@@ -26,12 +26,12 @@ changes:
         claim.name: customPropertyMapper
         jsonType.label: String
         user.attribute: UserModel.getEmail()
-  - addClientUserAttributeMapper:
+  - addClientScopeUserAttributeMapper:
       clientId: testMappers
       name: userAttribute
       userAttribute: testAttribute
       addToUserInfo: false
-  - addClientUserRealmRoleMapper:
+  - addClientScopeUserRealmRoleMapper:
       clientId: testMappers
       name: userRealmRole
       prefix: rolePrefix
