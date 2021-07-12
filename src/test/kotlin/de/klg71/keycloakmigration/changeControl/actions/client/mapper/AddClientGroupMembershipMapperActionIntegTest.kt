@@ -25,7 +25,7 @@ class AddClientGroupMembershipMapperActionIntegTest : AbstractIntegrationTest() 
         AddSimpleClientAction(testRealm, clientId).executeIt()
 
         AddClientGroupMembershipMapperAction(
-            testRealm, mapperName, clientId,
+            testRealm, clientId, mapperName,
             claimName = claimName
         ).executeIt()
 
@@ -46,13 +46,13 @@ class AddClientGroupMembershipMapperActionIntegTest : AbstractIntegrationTest() 
         AddSimpleClientAction(testRealm, clientId).executeIt()
 
         AddClientGroupMembershipMapperAction(
-            testRealm, mapperName, clientId,
+            testRealm, clientId, mapperName,
             claimName = claimName
         ).executeIt()
 
         assertThatThrownBy {
             AddClientGroupMembershipMapperAction(
-                testRealm, mapperName, clientId,
+                testRealm, clientId, mapperName,
                 claimName = claimName
             ).executeIt()
         }.isInstanceOf(MigrationException::class.java)

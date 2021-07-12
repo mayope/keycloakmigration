@@ -5,8 +5,8 @@ import de.klg71.keycloakmigration.keycloakapi.model.userAttributeMapper
 // todo: remove `open` modifier when deprecation below gets removed!
 open class AddClientUserAttributeMapperAction(
     realm: String?,
-    name: String,
     clientId: String,
+    name: String,
     private val userAttribute: String,
     private val addToIdToken: Boolean = true,
     private val addToAccessToken: Boolean = true,
@@ -29,8 +29,8 @@ open class AddClientUserAttributeMapperAction(
 @Deprecated("Will be removed in a future release. Use AddClientUserAttributeMapperAction action instead")
 class AddUserAttributeMapperAction(
     realm: String?,
-    name: String,
     clientId: String,
+    name: String,
     userAttribute: String,
     addToIdToken: Boolean = true,
     addToAccessToken: Boolean = true,
@@ -40,7 +40,7 @@ class AddUserAttributeMapperAction(
     /** Indicates whether user attributes should be aggregated with the group attributes */
     aggregateAttributeValues: Boolean = true
 ): AddClientUserAttributeMapperAction(
-    realm, name, clientId, userAttribute, addToIdToken, addToAccessToken, addToUserInfo,
+    realm, clientId, name, userAttribute, addToIdToken, addToAccessToken, addToUserInfo,
     claimName, multivalued, aggregateAttributeValues
 ) {
 

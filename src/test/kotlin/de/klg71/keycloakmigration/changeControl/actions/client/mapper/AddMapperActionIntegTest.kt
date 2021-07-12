@@ -12,7 +12,7 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.inject
 
-class AddMapperActionIntegTest : AbstractIntegrationTest() {
+class AddClientMapperActionIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
     val config = mapOf(
@@ -34,8 +34,8 @@ class AddMapperActionIntegTest : AbstractIntegrationTest() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
 
         AddClientMapperAction(
-            testRealm, mapperName, clientId,
-            config, protocolMapper, protocol
+            testRealm, clientId, mapperName,
+            config, protocol, protocolMapper
         ).executeIt()
 
         val clientMappers = client.clientMappers(client.clientUUID(clientId, testRealm), testRealm)
@@ -55,14 +55,14 @@ class AddMapperActionIntegTest : AbstractIntegrationTest() {
         AddSimpleClientAction(testRealm, clientId).executeIt();
 
         AddClientMapperAction(
-            testRealm, mapperName, clientId,
-            config, protocolMapper, protocol
+            testRealm, clientId, mapperName,
+            config, protocol, protocolMapper
         ).executeIt()
 
         assertThatThrownBy {
             AddClientMapperAction(
-                testRealm, mapperName, clientId,
-                config, protocolMapper, protocol
+                testRealm, clientId, mapperName,
+                config, protocol, protocolMapper
             ).executeIt()
         }.isInstanceOf(MigrationException::class.java)
             .hasMessage("Mapper with name: $mapperName already exists in client: $clientId on realm: $testRealm!")

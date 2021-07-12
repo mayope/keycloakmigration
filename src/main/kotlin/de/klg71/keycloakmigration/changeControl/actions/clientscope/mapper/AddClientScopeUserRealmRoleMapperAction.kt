@@ -4,8 +4,8 @@ import de.klg71.keycloakmigration.keycloakapi.model.userRealmRoleMapper
 
 open class AddClientScopeUserRealmRoleMapperAction(
     realm: String?,
-    name: String,
     clientScopeName: String,
+    name: String,
     private val addToIdToken: Boolean = true,
     private val addToAccessToken: Boolean = true,
     private val addToUserInfo: Boolean = true,

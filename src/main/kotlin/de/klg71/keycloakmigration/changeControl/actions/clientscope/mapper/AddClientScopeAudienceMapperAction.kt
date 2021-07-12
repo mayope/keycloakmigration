@@ -4,8 +4,8 @@ import de.klg71.keycloakmigration.keycloakapi.model.audienceMapper
 
 open class AddClientScopeAudienceMapperAction(
     realm: String?,
-    name: String,
     clientScopeName: String,
+    name: String,
     private val addToIdToken: Boolean = true,
     private val addToAccessToken: Boolean = true,
     private val clientAudience: String = "",

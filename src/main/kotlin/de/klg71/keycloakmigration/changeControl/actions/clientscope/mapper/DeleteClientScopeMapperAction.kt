@@ -7,8 +7,8 @@ import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 
 open class DeleteClientScopeMapperAction(
     realm: String?,
-    private val name: String,
-    private val clientScopeName: String
+    private val clientScopeName: String,
+    private val name: String
 ) : Action(realm) {
 
     private var deletedMapper: Mapper? = null;

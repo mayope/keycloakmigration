@@ -4,8 +4,8 @@ import de.klg71.keycloakmigration.keycloakapi.model.userAttributeMapper
 
 open class AddClientScopeUserAttributeMapperAction(
     realm: String?,
-    name: String,
     clientScopeName: String,
+    name: String,
     private val userAttribute: String,
     private val addToIdToken: Boolean = true,
     private val addToAccessToken: Boolean = true,

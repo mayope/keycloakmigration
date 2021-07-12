@@ -24,7 +24,7 @@ class AddClientUserRealmRoleMapperActionIntegTest : AbstractIntegrationTest() {
     fun testAddMapper() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
 
-        AddClientUserRealmRoleMapperAction(testRealm, mapperName, clientId).executeIt()
+        AddClientUserRealmRoleMapperAction(testRealm, clientId, mapperName).executeIt()
 
         val clientMappers = client.clientMappers(client.clientUUID(clientId, testRealm), testRealm)
 
@@ -42,7 +42,7 @@ class AddClientUserRealmRoleMapperActionIntegTest : AbstractIntegrationTest() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
 
         AddClientUserRealmRoleMapperAction(
-            testRealm, mapperName, clientId,
+            testRealm, clientId, mapperName,
             claimName = claimName
         ).executeIt()
 

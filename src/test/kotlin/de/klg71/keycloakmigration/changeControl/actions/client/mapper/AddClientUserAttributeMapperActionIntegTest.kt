@@ -26,7 +26,7 @@ class AddClientUserAttributeMapperActionIntegTest : AbstractIntegrationTest() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
 
         AddClientUserAttributeMapperAction(
-            testRealm, mapperName, clientId,
+            testRealm, clientId, mapperName,
             userAttribute
         ).executeIt()
 
@@ -48,7 +48,7 @@ class AddClientUserAttributeMapperActionIntegTest : AbstractIntegrationTest() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
 
         AddClientUserAttributeMapperAction(
-            testRealm, mapperName, clientId,
+            testRealm, clientId, mapperName,
             userAttribute, claimName = claimName
         ).executeIt()
 

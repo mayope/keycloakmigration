@@ -31,11 +31,11 @@ class DeleteClientMapperActionIntegTest : AbstractIntegrationTest() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
 
         AddClientMapperAction(
-            testRealm, mapperName, clientId,
-            config, protocolMapper, protocol
+            testRealm, clientId, mapperName,
+            config, protocol, protocolMapper
         ).executeIt()
 
-        DeleteClientMapperAction(testRealm, mapperName, clientId).executeIt()
+        DeleteClientMapperAction(testRealm, clientId, mapperName).executeIt()
 
         val clientMappers = client.clientMappers(client.clientUUID(clientId, testRealm), testRealm)
 

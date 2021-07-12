@@ -8,8 +8,8 @@ import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 // todo: remove `open` modifier when deprecation below gets removed!
 open class DeleteClientMapperAction(
     realm: String?,
-    protected val name: String,
-    protected val clientId: String
+    protected val clientId: String,
+    protected val name: String
 ) : Action(realm) {
 
     private var deletedMapper: Mapper? = null;
@@ -34,9 +34,9 @@ open class DeleteClientMapperAction(
 
 @Deprecated("Will be removed in a future release. Use DeleteClientMapperAction action instead")
 class DeleteMapperAction(
-    realm: String?, name: String, clientId: String
+    realm: String?, clientId: String, name: String
 ) : DeleteClientMapperAction(
-    realm, name, clientId
+    realm, clientId, name
 ) {
 
     override fun name() = "DeleteMapper $name from $clientId"

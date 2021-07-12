@@ -5,14 +5,14 @@ import de.klg71.keycloakmigration.keycloakapi.model.groupMembershipMapper
 // todo: remove `open` modifier when deprecation below gets removed!
 open class AddClientGroupMembershipMapperAction(
     realm: String?,
-    name: String,
     clientId: String,
+    name: String,
     private val addToIdToken: Boolean = true,
     private val addToAccessToken: Boolean = true,
     private val fullGroupPath: Boolean = true,
     private val addToUserInfo: Boolean = true,
     private val claimName: String? = null
-) : AddClientMapperAction(realm, name, clientId) {
+) : AddClientMapperAction(realm, clientId, name) {
 
     override fun createMapper() = groupMembershipMapper(
         name, addToAccessToken, addToIdToken,
@@ -26,15 +26,15 @@ open class AddClientGroupMembershipMapperAction(
 @Deprecated("Will be removed in a future release. Use AddClientGroupMembershipMapperAction action instead")
 class AddGroupMembershipMapperAction(
     realm: String?,
-    name: String,
     clientId: String,
+    name: String,
     addToIdToken: Boolean = true,
     addToAccessToken: Boolean = true,
     fullGroupPath: Boolean = true,
     addToUserInfo: Boolean = true,
     claimName: String? = null
 ) : AddClientGroupMembershipMapperAction(
-    realm, name, clientId, addToIdToken, addToAccessToken, fullGroupPath, addToUserInfo, claimName
+    realm, clientId, name, addToIdToken, addToAccessToken, fullGroupPath, addToUserInfo, claimName
 ) {
 
     override fun name() = "AddGroupMembershipMapper $name to $clientId"

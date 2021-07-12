@@ -28,7 +28,7 @@ class AddClientAudienceMapperActionIntegTest : AbstractIntegrationTest() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
 
         AddClientAudienceMapperAction(
-            testRealm, mapperName, clientId,
+            testRealm, clientId, mapperName,
             clientAudience = clientAudience,
             customAudience = customAudience
         ).executeIt()
@@ -51,14 +51,14 @@ class AddClientAudienceMapperActionIntegTest : AbstractIntegrationTest() {
         AddSimpleClientAction(testRealm, clientId).executeIt()
 
         AddClientAudienceMapperAction(
-            testRealm, mapperName, clientId,
+            testRealm, clientId, mapperName,
             clientAudience = clientAudience,
             customAudience = customAudience
         ).executeIt()
 
         assertThatThrownBy {
             AddClientAudienceMapperAction(
-                testRealm, mapperName, clientId,
+                testRealm, clientId, mapperName,
                 clientAudience = clientAudience,
                 customAudience = customAudience
             ).executeIt()
