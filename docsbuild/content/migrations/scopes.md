@@ -59,3 +59,171 @@ changes:
       clientId: testClientScope
       clientScopeName: api
 ```
+
+
+## addClientScopeMapper
+adds a full configurable client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
+
+> Only use this action if you can't find a convenient method to add the mapper below
+
+### Parameters
+- realm: String, optional
+- clientScopeName: String, not optional
+- name: String, not optional
+- config: Map<String,String>, not optional
+- protocolMapper: String, not optional
+- protocol: String, optional, default="openid-connect"
+
+### Example:
+    id: add-client-scope-mappers
+    author: klg71
+    realm: integ-test
+    changes:
+      - addClientScope:
+          clientScopeName: testMappers
+      - addClientScopeMapper:
+          clientScopeName: testMappers
+          name: testPropertyMapper
+          protocolMapper: oidc-usermodel-property-mapper
+          config:
+            access.token.claim: true
+            id.token.claim: false
+            userinfo.token.claim: false
+            claim.name: customPropertyMapper
+            jsonType.label: String
+            user.attribute: UserModel.getEmail()
+
+## deleteClientScopeMapper
+deletes a client scope mapper
+
+### Parameters
+- realm: String, optional
+- clientScopeName: String, not optional
+- name: String, not optional
+
+### Example:
+    id: add-client-scope-mappers
+    author: klg71
+    realm: integ-test
+    changes:
+      - addClientScope:
+          clientScopeName: testMappers
+      - addClientScopeMapper:
+          clientScopeName: testMappers
+          name: testPropertyMapper
+          protocolMapper: oidc-usermodel-property-mapper
+          config:
+            access.token.claim: true
+            id.token.claim: false
+            userinfo.token.claim: false
+            claim.name: customPropertyMapper
+            jsonType.label: String
+            user.attribute: UserModel.getEmail()
+      - deleteClientScopeMapper:
+          clientScopeName: testMappers
+          name: testPropertyMapper
+
+## addClientScopeAudienceMapper
+adds an audience client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
+
+### Parameters
+- realm: String, optional
+- clientScopeName: String, not optional
+- name: String, not optional
+- addToIdToken: Boolean , optional, default = true,
+- addToAccessToken: Boolean, optional, default = true,
+- clientAudience: String, optional, default = "",
+- customAudience: String, optional, default = ""
+
+### Example:
+    id: add-client-scope-mappers
+    author: klg71
+    realm: integ-test
+    changes:
+      - addClientScope:
+          clientScopeName: testMappers
+      - addClientScopeAudienceMapper:
+          clientScopeName: testMappers
+          name: audienceMapper
+          addToIdToken: false
+          clientAudience: testMappers
+          customAudience: completlyCustom
+
+## addClientScopeGroupMembershipMapper
+adds a group-membership client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
+
+### Parameters
+- realm: String, optional
+- clientScopeName: String, not optional
+- name: String, not optional
+- addToIdToken: Boolean , optional, default = true,
+- addToAccessToken: Boolean, optional, default = true,
+- addToUserInfo: Boolean, optional, default = true,
+- fullGroupPath: Boolean, optional, default = true,
+- claimName: String?, optional, default = << name parameter>>
+
+### Example:
+    id: add-client-scope-mappers
+    author: klg71
+    realm: integ-test
+    changes:
+      - addClientScope:
+          clientScopeName: testMappers
+      - addClientScopeGroupMembershipMapper:
+          clientScopeName: testMappers
+          name: groupMembership
+          addToAccessToken: false
+          claimName: groupClaim
+
+## addClientScopeUserAttributeMapper
+adds a user-attribute client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
+
+### Parameters
+- realm: String, optional
+- clientScopeName: String, not optional
+- name: String, not optional
+- userAttribute: String, not optional
+- addToIdToken: Boolean , optional, default = true,
+- addToAccessToken: Boolean, optional, default = true,
+- addToUserInfo: Boolean, optional, default = true,
+- claimName: String?, optional, default = << name parameter>>
+- multivalued: Boolean, optional, default = false,
+- aggregateAttributeValues: Boolean, optional, default = true
+
+### Example:
+    id: add-client-scope-mappers
+    author: klg71
+    realm: integ-test
+    changes:
+      - addClientScope:
+          clientScopeName: testMappers
+      - addClientScopeUserAttributeMapper:
+          clientScopeName: testMappers
+          name: userAttribute
+          userAttribute: testAttribute
+          addToUserInfo: false
+
+## addClientScopeUserRealmRoleMapper
+adds a user-realm-role client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
+
+### Parameters
+- realm: String, optional
+- clientScopeName: String, not optional
+- name: String, not optional
+- addToIdToken: Boolean , optional, default = true,
+- addToAccessToken: Boolean, optional, default = true,
+- addToUserInfo: Boolean, optional, default = true,
+- claimName: String?, optional, default = << name parameter>>
+- prefix: String, optional, default = ""
+
+### Example:
+    id: add-client-scope-mappers
+    author: klg71
+    realm: integ-test
+    changes:
+      - addClientScope:
+          name: testMappers
+      - addClientScopeUserRealmRoleMapper:
+          clientScopeName: testMappers
+          name: userRealmRole
+          prefix: rolePrefix
