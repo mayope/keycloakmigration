@@ -80,7 +80,7 @@ adds a full configurable client scope mapper, throws error if client or realm do
     realm: integ-test
     changes:
       - addClientScope:
-          clientScopeName: testMappers
+          name: testMappers
       - addClientScopeMapper:
           clientScopeName: testMappers
           name: testPropertyMapper
@@ -107,7 +107,7 @@ deletes a client scope mapper
     realm: integ-test
     changes:
       - addClientScope:
-          clientScopeName: testMappers
+          name: testMappers
       - addClientScopeMapper:
           clientScopeName: testMappers
           name: testPropertyMapper
@@ -141,7 +141,7 @@ adds an audience client scope mapper, throws error if client or realm doesn't ex
     realm: integ-test
     changes:
       - addClientScope:
-          clientScopeName: testMappers
+          name: testMappers
       - addClientScopeAudienceMapper:
           clientScopeName: testMappers
           name: audienceMapper
@@ -168,7 +168,7 @@ adds a group-membership client scope mapper, throws error if client or realm doe
     realm: integ-test
     changes:
       - addClientScope:
-          clientScopeName: testMappers
+          name: testMappers
       - addClientScopeGroupMembershipMapper:
           clientScopeName: testMappers
           name: groupMembership
@@ -196,7 +196,7 @@ adds a user-attribute client scope mapper, throws error if client or realm doesn
     realm: integ-test
     changes:
       - addClientScope:
-          clientScopeName: testMappers
+          name: testMappers
       - addClientScopeUserAttributeMapper:
           clientScopeName: testMappers
           name: userAttribute
