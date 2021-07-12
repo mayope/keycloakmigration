@@ -209,22 +209,24 @@ interface KeycloakClient {
     fun updateClient(@Param("client-id") clientId: UUID, updateClient: Client, @Param("realm") realm: String): Response
 
     @Deprecated("Will be removed in a future release. Use addClientMapper action instead")
-    fun addMapper(clientId: UUID, addMapper: AddMapper, realm: String) = addClientMapper(clientId, addMapper, realm)
+    @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addMapper(@Param("client-id") clientId: UUID, addMapper: AddMapper, @Param("realm") realm: String): Response
 
     @Deprecated("Will be removed in a future release. Use deleteClientMapper action instead")
-    fun deleteMapper(clientId: UUID, mapperId: UUID, realm: String) = deleteClientMapper(clientId, mapperId, realm)
+    @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models/{mapper-id}")
+    fun deleteMapper(@Param("client-id") clientId: UUID, @Param("mapper-id") mapperId: UUID, @Param("realm") realm: String)
 
     @Deprecated("Will be removed in a future release. Use clientMappers action instead")
-    fun mappers(clientId: UUID, realm: String) = clientMappers(clientId, realm)
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models")
+    fun mappers(@Param("client-id") clientId: UUID, @Param("realm") realm: String): List<Mapper>
 
     @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addClientMapper(@Param("client-id") clientId: UUID, addMapper: AddMapper, @Param("realm") realm: String): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models/{mapper-id}")
-    fun deleteClientMapper(@Param("client-id") clientId: UUID, @Param("mapper-id") mapperId: UUID, @Param(
-        "realm"
-    ) realm: String)
+    fun deleteClientMapper(@Param("client-id") clientId: UUID, @Param("mapper-id") mapperId: UUID, @Param("realm") realm: String)
 
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models")
     fun clientMappers(@Param("client-id") clientId: UUID, @Param("realm") realm: String): List<Mapper>
