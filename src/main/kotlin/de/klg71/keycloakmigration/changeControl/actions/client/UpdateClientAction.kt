@@ -59,8 +59,8 @@ class UpdateClientAction(
             oldClient.access,
             baseUrl ?: oldClient.baseUrl,
             adminUrl ?: oldClient.adminUrl,
-            rootUrl ?: oldClient.rootUrl,
-            oldClient.secret)
+            oldClient.secret,
+        rootUrl ?: oldClient.rootUrl)
 
     override fun execute() {
         if (!client.existsClient(clientId, realm())) {
