@@ -9,7 +9,6 @@ import de.klg71.keycloakmigration.keycloakapi.clientRoleByName
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.roleExistsByName
-import java.util.*
 
 data class RoleSelector(val name: String,
                         val clientId: String? = null)
