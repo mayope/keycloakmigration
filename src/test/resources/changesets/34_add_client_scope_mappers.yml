@@ -5,18 +5,18 @@ changes:
   - addClientScope:
       name: testMappers
   - addClientScopeAudienceMapper:
-      clientId: testMappers
+      clientScopeName: testMappers
       name: audienceMapper
       addToIdToken: false
       clientAudience: testMappers
       customAudience: completlyCustom
   - addClientScopeGroupMembershipMapper:
-      clientId: testMappers
+      clientScopeName: testMappers
       name: groupMembership
       addToAccessToken: false
       claimName: groupClaim
   - addClientScopeMapper:
-      clientId: testMappers
+      clientScopeName: testMappers
       name: testPropertyMapper
       protocolMapper: oidc-usermodel-property-mapper
       config:
@@ -27,11 +27,11 @@ changes:
         jsonType.label: String
         user.attribute: UserModel.getEmail()
   - addClientScopeUserAttributeMapper:
-      clientId: testMappers
+      clientScopeName: testMappers
       name: userAttribute
       userAttribute: testAttribute
       addToUserInfo: false
   - addClientScopeUserRealmRoleMapper:
-      clientId: testMappers
+      clientScopeName: testMappers
       name: userRealmRole
       prefix: rolePrefix
