@@ -16,9 +16,9 @@
       <pubDate>Thu, 08 Jul 2021 12:22:20 +0200</pubDate>
       
       <guid>https://mayope.github.io/keycloakmigration/migrations/requiredactions/</guid>
-      <description>Required Actions#All migrations referring to the Required Actions resource.
+      <description>Required Actions#All migrations referring to the Required Actions resource in Authentication.
 AddRequiredAction#Adds a required action.
-Parameters# realm: String, optional providerId: String, mandatory alias: String, mandatory name: String, mandatory config: Map&amp;lt;String,String&amp;gt;, optional defaultAction: Boolean, optional enabled: Boolean, optional priority: Boolean, optional  Example#id:add-required-actionauthor:klg71realm:integ-testchanges:- addRequiredAction:providerId:verify-emailalias:VERIFY_EMAILname:VerifyEmaildefaultAction:trueenabled:trueUpdateRequiredAction#Updates a required action. Only updates provided values. For an update of the required action alias use the oldAlias as alias and the newAlias in newAlias.</description>
+Parameters# realm: String, optional providerId: String, mandatory alias: String, mandatory name: String, mandatory config: Map&amp;lt;String,String&amp;gt;, optional, default = emptyMap defaultAction: Boolean, optional, default = false enabled: Boolean, optional, default = true priority: Boolean, optional, default = preset through keycloak  Example#id:add-required-actionauthor:klg71realm:integ-testchanges:- addRequiredAction:providerId:verify-emailalias:VERIFY_EMAILname:VerifyEmaildefaultAction:trueenabled:trueUpdateRequiredAction#Updates a required action.</description>
     </item>
     
     <item>

@@ -1,0 +1,7 @@
+id: add-required-action
+author: klg71
+realm: integ-test
+changes:
+  - updateRequiredAction:
+      alias: VERIFY_EMAIL
+      defaultAction: false

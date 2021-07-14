@@ -20,8 +20,8 @@ dependencies {
 }
 
 pluginBundle {
-    website = "https://www.klg71.de"
-    vcsUrl = "https://github.com/klg71/keycloakmigrationplugin"
+    website = "https://mayope.net"
+    vcsUrl = "https://github.com/mayope/keycloakmigration"
     tags = listOf("keycloak", "migration")
 
     plugins {
@@ -48,12 +48,12 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
             val root = asNode()
             root.appendNode("name", "keycloakmigrationplugin")
             root.appendNode("description", "Keycloak configuration as migration files, gradle plugin")
-            root.appendNode("url", "https://github.com/klg71/keycloakmigrationplugin")
+            root.appendNode("url", "https://github.com/mayope/keycloakmigration")
         }
         licenses {
             license {
                 name.set("MIT License")
-                url.set("https://github.com/klg71/keycloakmigrationplugin")
+                url.set("https://github.com/mayope/keycloakmigration")
                 distribution.set("repo")
             }
         }
@@ -65,9 +65,9 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
             }
         }
         scm {
-            url.set("https://github.com/klg71/keycloakmigration")
-            connection.set("scm:git:git://github.com/klg71/keycloakmigrationplugin.git")
-            developerConnection.set("scm:git:ssh://git@github.com/klg71/keycloakmigrationplugin.git")
+            url.set("https://github.com/mayope/keycloakmigration")
+            connection.set("scm:git:git://github.com/mayope/keycloakmigration.git")
+            developerConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
         }
     }
 }

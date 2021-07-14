@@ -171,6 +171,13 @@ interface KeycloakClient {
     @RequestLine("DELETE /admin/realms/{realm}/roles-by-id/{role-id}")
     fun deleteRole(@Param("role-id") roleId: UUID, @Param("realm") realm: String)
 
+    @RequestLine("POST /admin/realms/{realm}/roles-by-id/{role-id}/composites")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addCompositeToRole(roles: List<RoleListItem>, @Param("role-id") roleId: UUID, @Param("realm") realm: String): Response
+
+    @RequestLine("GET /admin/realms/{realm}/roles-by-id/{role-id}/composites")
+    fun getCompositeChildRoles(@Param("role-id") roleId: UUID, @Param("realm") realm: String): List<RoleListItem>
+
     @RequestLine("GET /admin/realms/{realm}/roles/{name}")
     fun roleByName(@Param("name") name: String, @Param("realm") realm: String): Role
 
