@@ -46,19 +46,8 @@ class AddRoleAction(
         setExecuted()
         val role = findRole()
         client.updateRole(updateRole(role), role.id, realm())
-        if(composite != null && composite && !compositeChildRoles.isNullOrEmpty()) {
-            val roleItems = compositeChildRoles.map {
-                val foundRole = if (it.clientId == null) {
-                    client.roleByName(it.name, realm())
-                } else {
-                    client.clientRoleByName(it.name, it.clientId, realm())
-                }
-
-                RoleListItem(
-                        foundRole.id, foundRole.name, foundRole.description,
-                        foundRole.composite, foundRole.clientRole, foundRole.containerId
-                )
-            }
+        if(composite == true && !compositeChildRoles.isNullOrEmpty()) {
+            val roleItems = compositeChildRoles.map(this::findRoleAsRoleListItem)
             val response = client.addCompositeToRole(roleItems, role.id, realm())
             if(response.status() != 204) {
                 throw KeycloakApiException("addCompositeToRole failed. response: $response")
@@ -72,10 +61,19 @@ class AddRoleAction(
         }
     }
 
-    private fun findRole() = if (clientId == null) {
-        client.roleByName(name, realm())
+    private fun findRole() = findRole(RoleSelector(name = name, clientId = clientId))
+
+    private fun findRole(selector: RoleSelector) = if (selector.clientId == null) {
+        client.roleByName(selector.name, realm())
     } else {
-        client.clientRoleByName(name, clientId, realm())
+        client.clientRoleByName(selector.name, selector.clientId, realm())
+    }
+
+    private fun findRoleAsRoleListItem(selector: RoleSelector) = findRole(selector).let {
+        RoleListItem(
+                it.id, it.name, it.description,
+                it.composite, it.clientRole, it.containerId
+        )
     }
 
     override fun name() = "AddRole $name"
