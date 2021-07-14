@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Flow Migrations #  All migrations referring to the Authentication Flow resource.
+AddFlow #  Adds an authentication flow.
+Parameters #   realm: String, optional alias: String, not optional description: String, optional, default = &ldquo;&rdquo;, buildIn: Boolean, optional, default = false, providerId: String, optional, default = &ldquo;basic-flow&rdquo;, topLevel: Boolean, optional, default = true, executions: List&lt; AuthenticationExecutionImport &gt;, default = emptyList()  subclass AuthenticationExecutionImport #   requirement: Flow.Requirement = &ldquo;ALTERNATIVE&rdquo; | &ldquo;DISABLED&rdquo; | &ldquo;REQUIRED&rdquo; | &ldquo;CONDITIONAL&rdquo; | &ldquo;OPTIONAL&rdquo; providerId: String = see providers in next point level: Int index: Int config: Map&lt;String, String&gt;, optional, default = empty  Known Flow providers on Release (09.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Flow Migrations" />
+<meta property="og:description" content="Flow Migrations #  All migrations referring to the Authentication Flow resource.
+AddFlow #  Adds an authentication flow.
+Parameters #   realm: String, optional alias: String, not optional description: String, optional, default = &ldquo;&rdquo;, buildIn: Boolean, optional, default = false, providerId: String, optional, default = &ldquo;basic-flow&rdquo;, topLevel: Boolean, optional, default = true, executions: List&lt; AuthenticationExecutionImport &gt;, default = emptyList()  subclass AuthenticationExecutionImport #   requirement: Flow.Requirement = &ldquo;ALTERNATIVE&rdquo; | &ldquo;DISABLED&rdquo; | &ldquo;REQUIRED&rdquo; | &ldquo;CONDITIONAL&rdquo; | &ldquo;OPTIONAL&rdquo; providerId: String = see providers in next point level: Int index: Int config: Map&lt;String, String&gt;, optional, default = empty  Known Flow providers on Release (09." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mayope.github.io/keycloakmigration/migrations/flow/" />
+<meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
+<meta property="article:modified_time" content="2021-07-08T17:01:02+03:00" />
+<title>Flow Migrations | Keycloakmigration</title>
+<link rel="manifest" href="/keycloakmigration/manifest.json">
+<link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
+<script defer src="/keycloakmigration/en.search.min.5ffb3f1e95df9b5811988f7719f5ced7e1fe9768e85a9c73570e1ab7203e4b80.js" integrity="sha256-X/s/HpXfm1gRmI93GfXO1&#43;H&#43;l2joWpxzVw4atyA&#43;S4A="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/keycloakmigration"><span>Keycloakmigration</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><a href="/keycloakmigration/">Overview</a></li>
+<li><a href="/keycloakmigration/quickstart/">Quick Start</a>
+<ul>
+<li><a href="/keycloakmigration/quickstart/kotlin/">Gradle Kotlin DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/groovy/">Gradle Groovy DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/jar/">Jar</a></li>
+<li><a href="/keycloakmigration/quickstart/docker/">Usage with Docker</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/migration_files/">Migration Files</a></li>
+<li><a href="/keycloakmigration/migrations/">Migrations</a>
+<ul>
+<li><a href="/keycloakmigration/migrations/user/">User Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/scopes/">ClientScope Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/identityprovider/">IdentityProvider Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/flow/">Flow Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/requiredactions/">RequiredActions Migrations</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/keycloak_api/">Using the Keycloakapi</a></li>
+<li><a href="/keycloakmigration/hashmigration/">Hash Troubleshooting</a></li>
+<li><a href="/keycloakmigration/implementation_details/">Implementation Details</a></li>
+<li><a href="/keycloakmigration/contributing/">Contributing</a></li>
+</ul>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/keycloakmigration/about/" target="_blank" rel="noopener">
+        About
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Flow Migrations</strong>
+
+  <label for="toc-control">
+    
+    <img src="/keycloakmigration/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#addflow">AddFlow</a>
+      <ul>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#updateflow">UpdateFlow</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleteflow">DeleteFlow</a>
+      <ul>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="flow-migrations">
+  Flow Migrations
+  <a class="anchor" href="#flow-migrations">#</a>
+</h1>
+<p>All migrations referring to the Authentication Flow resource.</p>
+<h2 id="addflow">
+  AddFlow
+  <a class="anchor" href="#addflow">#</a>
+</h2>
+<p>Adds an authentication flow.</p>
+<h3 id="parameters">
+  Parameters
+  <a class="anchor" href="#parameters">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>alias: String, not optional</li>
+<li>description: String, optional, default = &ldquo;&rdquo;,</li>
+<li>buildIn: Boolean, optional, default = false,</li>
+<li>providerId: String, optional, default = &ldquo;basic-flow&rdquo;,</li>
+<li>topLevel: Boolean, optional, default = true,</li>
+<li>executions: List&lt; AuthenticationExecutionImport &gt;, default = emptyList()</li>
+</ul>
+<h4 id="subclass-authenticationexecutionimport">
+  subclass AuthenticationExecutionImport
+  <a class="anchor" href="#subclass-authenticationexecutionimport">#</a>
+</h4>
+<ul>
+<li>requirement: Flow.Requirement = &ldquo;ALTERNATIVE&rdquo; | &ldquo;DISABLED&rdquo; | &ldquo;REQUIRED&rdquo; | &ldquo;CONDITIONAL&rdquo; | &ldquo;OPTIONAL&rdquo;</li>
+<li>providerId: String = see providers in next point</li>
+<li>level: Int</li>
+<li>index: Int</li>
+<li>config: Map&lt;String, String&gt;, optional, default = empty</li>
+</ul>
+<h4 id="known-flow-providers-on-release-09042021">
+  Known Flow providers on Release (09.04.2021)
+  <a class="anchor" href="#known-flow-providers-on-release-09042021">#</a>
+</h4>
+<ul>
+<li>no-cookie-redirect,Browser Redirect/Refresh,Perform a 302 redirect to get user agent&rsquo;s current URI on authenticate path with an auth_session_id query parameter.  This is for client&rsquo;s that do not support cookies.</li>
+<li>auth-cookie,Cookie,Validates the SSO cookie set by the auth server.</li>
+<li>console-username-password,Username Password Challenge,Proprietary challenge protocol for CLI clients that queries for username password</li>
+<li>reset-credentials-choose-user,Choose User,Choose a user to reset credentials for</li>
+<li>direct-grant-validate-password,Password,Validates the password supplied as a &lsquo;password&rsquo; form parameter in direct grant request</li>
+<li>webauthn-authenticator,WebAuthn Authenticator,Authenticator for WebAuthn. Usually used for WebAuthn two-factor authentication</li>
+<li>auth-spnego,Kerberos,Initiates the SPNEGO protocol.  Most often used with Kerberos.</li>
+<li>reset-password,Reset Password,Sets the Update Password required action if execution is REQUIRED.  Will also set it if execution is OPTIONAL and the password is currently configured for it.</li>
+<li>direct-grant-auth-x509-username,X509/Validate Username,Validates username and password from X509 client certificate received as a part of mutual SSL handshake.</li>
+<li>auth-password-form,Password Form,Validates a password from login form.</li>
+<li>docker-http-basic-authenticator,Docker Authenticator,Uses HTTP Basic authentication to validate docker users, returning a docker error token on auth failure</li>
+<li>idp-username-password-form,Username Password Form for identity provider reauthentication,Validates a password from login form. Username may be already known from identity provider authentication</li>
+<li>idp-email-verification,Verify existing account by Email,Email verification of existing Keycloak user, that wants to link his user account with identity provider</li>
+<li>idp-auto-link,Automatically set existing user,Automatically set existing user to authentication context without any verification</li>
+<li>auth-x509-client-username-form,X509/Validate Username Form,Validates username and password from X509 client certificate received as a part of mutual SSL handshake.</li>
+<li>conditional-user-role,Condition - user role,Flow is executed only if user has the given role.</li>
+<li>basic-auth,Basic Auth Challenge,Challenge-response authentication using HTTP BASIC scheme.</li>
+<li>identity-provider-redirector,Identity Provider Redirector,Redirects to default Identity Provider or Identity Provider specified with kc_idp_hint query parameter</li>
+<li>direct-grant-validate-username,Username Validation,Validates the username supplied as a &lsquo;username&rsquo; form parameter in direct grant request</li>
+<li>reset-otp,Reset OTP,Sets the Configure OTP required action.</li>
+<li>conditional-user-configured,Condition - user configured,Executes the current flow only if authenticators are configured</li>
+<li>webauthn-authenticator-passwordless,WebAuthn Passwordless Authenticator,Authenticator for Passwordless WebAuthn authentication</li>
+<li>basic-auth-otp,Basic Auth Password+OTP,Challenge-response authentication using HTTP BASIC scheme.  Password param should contain a combination of password + otp. Realm&rsquo;s OTP policy is used to determine how to parse this. This SHOULD NOT BE USED in conjection with regular basic auth provider.</li>
+<li>idp-review-profile,Review Profile,User reviews and updates profile data retrieved from Identity Provider in the displayed form</li>
+<li>idp-confirm-link,Confirm link existing account,Show the form where user confirms if he wants to link identity provider with existing account or rather edit user profile data retrieved from identity provider to avoid conflict</li>
+<li>auth-conditional-otp-form,Conditional OTP Form,Validates a OTP on a separate OTP form. Only shown if required based on the configured conditions.</li>
+<li>auth-username-password-form,Username Password Form,Validates a username and password from login form.</li>
+<li>reset-credential-email,Send Reset Email,Send email to user and wait for response.</li>
+<li>auth-username-form,Username Form,Selects a user from his username.</li>
+<li>http-basic-authenticator,HTTP Basic Authentication,Validates username and password from Authorization HTTP header</li>
+<li>auth-otp-form,OTP Form,Validates a OTP on a separate OTP form.</li>
+<li>direct-grant-validate-otp,OTP,Validates the one time password supplied as a &lsquo;totp&rsquo; form parameter in direct grant request</li>
+<li>idp-create-user-if-unique,Create User If Unique,Detect if there is existing Keycloak account with same email like identity provider. If no, create new user</li>
+</ul>
+<h3 id="example">
+  Example
+  <a class="anchor" href="#example">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-flow<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#008000;font-weight:bold">addFlow</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">alias</span>:<span style="color:#bbb"> </span>trust-foreign-idp<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">executions</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- <span style="color:#008000;font-weight:bold">requirement</span>:<span style="color:#bbb"> </span>ALTERNATIVE<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#008000;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>idp-create-user-if-unique<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- <span style="color:#008000;font-weight:bold">requirement</span>:<span style="color:#bbb"> </span>ALTERNATIVE<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#008000;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>idp-auto-link<span style="color:#bbb">
+</span></code></pre></div><h2 id="updateflow">
+  UpdateFlow
+  <a class="anchor" href="#updateflow">#</a>
+</h2>
+<p>Updates an authentication flow in place.
+Only updates provided values.
+For an update of the flow <code>alias</code> use the oldAlias as <code>alias</code> and the newAlias in <code>newAlias</code>.</p>
+<h3 id="parameters-1">
+  Parameters
+  <a class="anchor" href="#parameters-1">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>alias: String, not optional</li>
+<li>newAlias: String, optional, default = no update</li>
+<li>description: String, default = no update</li>
+<li>buildIn: Boolean, optional, default = no update,</li>
+<li>providerId: String, optional, default = no update,</li>
+<li>topLevel: Boolean, optional, default = no update,</li>
+<li>executions: List&lt; AuthenticationExecutionImport &gt;, default = no update</li>
+</ul>
+<h4 id="subclass-authenticationexecutionimport-1">
+  subclass AuthenticationExecutionImport
+  <a class="anchor" href="#subclass-authenticationexecutionimport-1">#</a>
+</h4>
+<ul>
+<li>requirement: Flow.Requirement = &ldquo;ALTERNATIVE&rdquo; | &ldquo;DISABLED&rdquo; | &ldquo;REQUIRED&rdquo; | &ldquo;CONDITIONAL&rdquo; | &ldquo;OPTIONAL&rdquo;</li>
+<li>providerId: String = see providers in AddFlow action</li>
+<li>level: Int</li>
+<li>index: Int</li>
+<li>config: Map&lt;String, String&gt;, optional, default = empty</li>
+</ul>
+<h3 id="example-1">
+  Example
+  <a class="anchor" href="#example-1">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">id</span>:<span style="color:#bbb"> </span>update-flow<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#008000;font-weight:bold">addFlow</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">alias</span>:<span style="color:#bbb"> </span>trust-foreign-idp<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">executions</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- <span style="color:#008000;font-weight:bold">requirement</span>:<span style="color:#bbb"> </span>ALTERNATIVE<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#008000;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>idp-create-user-if-unique<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- <span style="color:#008000;font-weight:bold">requirement</span>:<span style="color:#bbb"> </span>ALTERNATIVE<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#008000;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>idp-auto-link<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#008000;font-weight:bold">updateFlow</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">alias</span>:<span style="color:#bbb"> </span>trust-foreign-idp<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">newAlias</span>:<span style="color:#bbb"> </span>trust-foreign-idp-update<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">description</span>:<span style="color:#bbb"> </span>new-description<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#008000;font-weight:bold">executions</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- <span style="color:#008000;font-weight:bold">requirement</span>:<span style="color:#bbb"> </span>ALTERNATIVE<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#008000;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>idp-create-user-if-unique<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- <span style="color:#008000;font-weight:bold">requirement</span>:<span style="color:#bbb"> </span>REQUIRED<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#008000;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>console-username-password<span style="color:#bbb">
+</span></code></pre></div><h2 id="deleteflow">
+  DeleteFlow
+  <a class="anchor" href="#deleteflow">#</a>
+</h2>
+<p>Deletes a flow, if one with this alias exists</p>
+<h3 id="parameters-2">
+  Parameters
+  <a class="anchor" href="#parameters-2">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>alias: String, not optional</li>
+</ul>
+<h3 id="example-2">
+  Example
+  <a class="anchor" href="#example-2">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#008000;font-weight:bold">id</span>:<span style="color:#bbb"> </span>delete-flow<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#008000;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#008000;font-weight:bold">addFlow</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">alias</span>:<span style="color:#bbb"> </span>trust-foreign-idp<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">executions</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#008000;font-weight:bold">requirement</span>:<span style="color:#bbb"> </span>ALTERNATIVE<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#008000;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>idp-create-user-if-unique<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#008000;font-weight:bold">requirement</span>:<span style="color:#bbb"> </span>ALTERNATIVE<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#008000;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>idp-auto-link<span style="color:#bbb">
+</span><span style="color:#bbb">  </span>- <span style="color:#008000;font-weight:bold">deleteFlow</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#008000;font-weight:bold">alias</span>:<span style="color:#bbb"> </span>trust-foreign-idp<span style="color:#bbb">
+</span></code></pre></div></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#addflow">AddFlow</a>
+      <ul>
+        <li><a href="#parameters">Parameters</a></li>
+        <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#updateflow">UpdateFlow</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#deleteflow">DeleteFlow</a>
+      <ul>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

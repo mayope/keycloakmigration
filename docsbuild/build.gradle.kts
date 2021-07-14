@@ -22,7 +22,7 @@ tasks {
             } else {
                 project.exec {
                     workingDir(project.projectDir)
-                    commandLine("sh", "bin/hugo", "-d", "..\\docs")
+                    commandLine( "hugo", "-d", "..\\docs")
                 }
             }
         }

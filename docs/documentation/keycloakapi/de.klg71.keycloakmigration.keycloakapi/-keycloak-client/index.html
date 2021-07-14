@@ -29,6 +29,13 @@
 </tr>
 <tr>
 <td>
+<h4><a href="add-client-mapper.html">addClientMapper</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">addClientMapper</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addClientMapper(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.AddMapper, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addClientMapper(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.AddMapper, kotlin.String)/addMapper">addMapper</span><span class="symbol">:</span>&nbsp;<a href="../../de.klg71.keycloakmigration.keycloakapi.model/-add-mapper/index.html"><span class="identifier">AddMapper</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addClientMapper(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.AddMapper, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Response</span></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="add-client-role.html">addClientRole</a></h4>
 </td>
 <td>
@@ -81,7 +88,7 @@
 <h4><a href="add-mapper.html">addMapper</a></h4>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">addMapper</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addMapper(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.AddMapper, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addMapper(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.AddMapper, kotlin.String)/addMapper">addMapper</span><span class="symbol">:</span>&nbsp;<a href="../../de.klg71.keycloakmigration.keycloakapi.model/-add-mapper/index.html"><span class="identifier">AddMapper</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addMapper(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.AddMapper, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Response</span></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">addMapper</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addMapper(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.AddMapper, kotlin.String)/clientScopeId">clientScopeId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addMapper(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.AddMapper, kotlin.String)/addMapper">addMapper</span><span class="symbol">:</span>&nbsp;<a href="../../de.klg71.keycloakmigration.keycloakapi.model/-add-mapper/index.html"><span class="identifier">AddMapper</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$addMapper(java.util.UUID, de.klg71.keycloakmigration.keycloakapi.model.AddMapper, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Response</span></code></td>
 </tr>
 <tr>
 <td>
@@ -183,6 +190,13 @@
 </tr>
 <tr>
 <td>
+<h4><a href="client-mappers.html">clientMappers</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">clientMappers</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$clientMappers(java.util.UUID, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$clientMappers(java.util.UUID, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../de.klg71.keycloakmigration.keycloakapi.model/-mapper/index.html"><span class="identifier">Mapper</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="client-role.html">clientRole</a></h4>
 </td>
 <td>
@@ -246,6 +260,13 @@
 </tr>
 <tr>
 <td>
+<h4><a href="delete-client-mapper.html">deleteClientMapper</a></h4>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteClientMapper</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteClientMapper(java.util.UUID, java.util.UUID, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteClientMapper(java.util.UUID, java.util.UUID, kotlin.String)/mapperId">mapperId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteClientMapper(java.util.UUID, java.util.UUID, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="delete-client-role-scope-mapping-of-client.html">deleteClientRoleScopeMappingOfClient</a></h4>
 </td>
 <td>
@@ -291,7 +312,7 @@
 <h4><a href="delete-mapper.html">deleteMapper</a></h4>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteMapper</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteMapper(java.util.UUID, java.util.UUID, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteMapper(java.util.UUID, java.util.UUID, kotlin.String)/mapperId">mapperId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteMapper(java.util.UUID, java.util.UUID, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteMapper</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteMapper(java.util.UUID, java.util.UUID, kotlin.String)/clientScopeId">clientScopeId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteMapper(java.util.UUID, java.util.UUID, kotlin.String)/mapperId">mapperId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$deleteMapper(java.util.UUID, java.util.UUID, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
 </tr>
 <tr>
 <td>
@@ -403,7 +424,7 @@
 <h4><a href="mappers.html">mappers</a></h4>
 </td>
 <td>
-<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">mappers</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$mappers(java.util.UUID, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$mappers(java.util.UUID, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../de.klg71.keycloakmigration.keycloakapi.model/-mapper/index.html"><span class="identifier">Mapper</span></a><span class="symbol">&gt;</span></code></td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">mappers</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$mappers(java.util.UUID, kotlin.String)/clientScopeId">clientScopeId</span><span class="symbol">:</span>&nbsp;<a href="https://docs.oracle.com/javase/6/docs/api/java/util/UUID.html"><span class="identifier">UUID</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi.KeycloakClient$mappers(java.util.UUID, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../de.klg71.keycloakmigration.keycloakapi.model/-mapper/index.html"><span class="identifier">Mapper</span></a><span class="symbol">&gt;</span></code></td>
 </tr>
 <tr>
 <td>
@@ -665,6 +686,13 @@
 </tr>
 <tr>
 <td>
+<h4><a href="../client-mapper-exists-by-name.html">clientMapperExistsByName</a></h4>
+</td>
+<td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">KeycloakClient</span></a><span class="symbol">.</span><span class="identifier">clientMapperExistsByName</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$clientMapperExistsByName(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$clientMapperExistsByName(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String, kotlin.String)/mapperName">mapperName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$clientMapperExistsByName(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
 <h4><a href="../client-role-by-name.html">clientRoleByName</a></h4>
 </td>
 <td>
@@ -801,7 +829,7 @@
 <h4><a href="../mapper-exists-by-name.html">mapperExistsByName</a></h4>
 </td>
 <td>
-<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">KeycloakClient</span></a><span class="symbol">.</span><span class="identifier">mapperExistsByName</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$mapperExistsByName(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$mapperExistsByName(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String, kotlin.String)/mapperName">mapperName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$mapperExistsByName(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">fun </span><a href="./index.html"><span class="identifier">KeycloakClient</span></a><span class="symbol">.</span><span class="identifier">mapperExistsByName</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$mapperExistsByName(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String, kotlin.String)/clientScopeName">clientScopeName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$mapperExistsByName(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String, kotlin.String)/mapperName">mapperName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$mapperExistsByName(de.klg71.keycloakmigration.keycloakapi.KeycloakClient, kotlin.String, kotlin.String, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
 </tr>
 <tr>
 <td>

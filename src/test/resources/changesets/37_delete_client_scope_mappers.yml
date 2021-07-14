@@ -1,0 +1,13 @@
+id: delete-client-scope-mappers
+author: janunld
+realm: integ-test
+changes:
+  - addClientScopeAudienceMapper:
+      clientScopeName: testMappers
+      name: tempAudienceMapper
+      addToIdToken: false
+      clientAudience: testMappers
+      customAudience: completlyCustom
+  - deleteClientScopeMapper:
+      clientScopeName: testMappers
+      name: tempAudienceMapper

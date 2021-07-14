@@ -90,7 +90,7 @@ Update a client
         redirectUris: 
             - http://localhost:8080
             - https://www.example.com
-            
+
 ## assignRoleToClient
 Assigns a realm- or client-role(if roleClientId is set) to a service account of a client.
 
@@ -147,7 +147,7 @@ See https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings
           role: query-users
           roleClientId: realm-management
 
-## addMapper
+## addClientMapper
 adds a full configurable clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
 
 > Only use this action if you can't find a convenient method to add the mapper below
@@ -167,7 +167,7 @@ adds a full configurable clientmapper, throws error if client or realm doesn't e
     changes:
       - addSimpleClient:
           clientId: testMappers
-      - addMapper:
+      - addClientMapper:
           clientId: testMappers
           name: testPropertyMapper
           protocolMapper: oidc-usermodel-property-mapper
@@ -179,7 +179,7 @@ adds a full configurable clientmapper, throws error if client or realm doesn't e
             jsonType.label: String
             user.attribute: UserModel.getEmail()
 
-## deleteMapper
+## deleteClientMapper
 deletes a client mapper
 
 ### Parameters
@@ -194,7 +194,7 @@ deletes a client mapper
     changes:
       - addSimpleClient:
           clientId: testMappers
-      - addMapper:
+      - addClientMapper:
           clientId: testMappers
           name: testPropertyMapper
           protocolMapper: oidc-usermodel-property-mapper
@@ -205,11 +205,11 @@ deletes a client mapper
             claim.name: customPropertyMapper
             jsonType.label: String
             user.attribute: UserModel.getEmail()
-      - deleteMapper:
+      - deleteClientMapper:
           clientId: testMappers
           name: testPropertyMapper
 
-## addAudienceMapper
+## addClientAudienceMapper
 adds a audience clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
 
 ### Parameters
@@ -228,13 +228,14 @@ adds a audience clientmapper, throws error if client or realm doesn't exist or m
     changes:
       - addSimpleClient:
           clientId: testMappers
-      - addAudienceMapper:
+      - addClientAudienceMapper:
           clientId: testMappers
           name: audienceMapper
           addToIdToken: false
           clientAudience: testMappers
           customAudience: completlyCustom
-## addGroupMembershipMapper
+
+## addClientGroupMembershipMapper
 adds a group-membership clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
 
 ### Parameters
@@ -254,12 +255,13 @@ adds a group-membership clientmapper, throws error if client or realm doesn't ex
     changes:
       - addSimpleClient:
           clientId: testMappers
-      - addGroupMembershipMapper:
+      - addClientGroupMembershipMapper:
           clientId: testMappers
           name: groupMembership
           addToAccessToken: false
           claimName: groupClaim
-## addUserAttributeMapper
+
+## addClientUserAttributeMapper
 adds a user-attribute clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
 
 ### Parameters
@@ -281,12 +283,13 @@ adds a user-attribute clientmapper, throws error if client or realm doesn't exis
     changes:
       - addSimpleClient:
           clientId: testMappers
-      - addUserAttributeMapper:
+      - addClientUserAttributeMapper:
           clientId: testMappers
           name: userAttribute
           userAttribute: testAttribute
           addToUserInfo: false
-## addUserRealmRoleMapper
+
+## addClientUserRealmRoleMapper
 adds a user-realm-role clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
 
 ### Parameters
@@ -306,7 +309,7 @@ adds a user-realm-role clientmapper, throws error if client or realm doesn't exi
     changes:
       - addSimpleClient:
           clientId: testMappers
-      - addUserRealmRoleMapper:
+      - addClientUserRealmRoleMapper:
           clientId: testMappers
           name: userRealmRole
           prefix: rolePrefix

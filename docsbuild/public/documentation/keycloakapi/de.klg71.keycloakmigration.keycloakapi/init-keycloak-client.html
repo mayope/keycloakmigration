@@ -1,0 +1,26 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>initKeycloakClient - keycloakapi</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">keycloakapi</a>&nbsp;/&nbsp;<a href="index.html">de.klg71.keycloakmigration.keycloakapi</a>&nbsp;/&nbsp;<a href="./init-keycloak-client.html">initKeycloakClient</a><br/>
+<br/>
+<h1>initKeycloakClient</h1>
+<a name="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, feign.Logger, kotlin.String)"></a>
+<code><span class="keyword">fun </span><span class="identifier">initKeycloakClient</span><span class="symbol">(</span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, feign.Logger, kotlin.String)/baseUrl">baseUrl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, feign.Logger, kotlin.String)/adminUser">adminUser</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, feign.Logger, kotlin.String)/adminPassword">adminPassword</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, feign.Logger, kotlin.String)/realm">realm</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, feign.Logger, kotlin.String)/clientId">clientId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, feign.Logger, kotlin.String)/logger">logger</span><span class="symbol">:</span>&nbsp;<span class="identifier">Logger</span><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="de.klg71.keycloakmigration.keycloakapi$initKeycloakClient(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.String, feign.Logger, kotlin.String)/totp">totp</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>&nbsp;<span class="symbol">=</span>&nbsp;""<span class="symbol">)</span><span class="symbol">: </span><a href="-keycloak-client/index.html"><span class="identifier">KeycloakClient</span></a></code>
+<p>Builds the <a href="-keycloak-client/index.html">KeycloakClient</a></p>
+<h3>Parameters</h3>
+<p><a name="baseUrl"></a>
+<code>baseUrl</code> - base url of the keycloak instance e.g. http://localhost:8080/auth</p>
+<p><a name="adminUser"></a>
+<code>adminUser</code> - user to execute the migrations. executed migrations are stored in the user-attributes as hashes</p>
+<p><a name="adminPassword"></a>
+<code>adminPassword</code> - password of the user to execute the migrations</p>
+<p><a name="realm"></a>
+<code>realm</code> - Realm to use for the login of the user</p>
+<p><a name="clientId"></a>
+<code>clientId</code> - id of the client to use for the login of the user</p>
+</BODY>
+</HTML>

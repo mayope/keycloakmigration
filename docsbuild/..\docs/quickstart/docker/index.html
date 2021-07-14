@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Usage with docker #  you can also use keycloakmigraiton with docker. The migrations are then controlled trough environment variables and mounted volumes.
+Usage #  docker run --env BASEURL=http://localhost:8080 klg71/keycloakmigration Environment variables #    KEYCLOAK_CHANGELOG migration changelog, should be mounted
+default: /migration/keycloak-changelog.yml
+  ADMIN_USER user to execute migration
+default: admin
+  ADMIN_PASSWORD password of user to execute migration
+default: admin
+  ADMIN_CLIENT client to use for admin login">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Usage with Docker" />
+<meta property="og:description" content="Usage with docker #  you can also use keycloakmigraiton with docker. The migrations are then controlled trough environment variables and mounted volumes.
+Usage #  docker run --env BASEURL=http://localhost:8080 klg71/keycloakmigration Environment variables #    KEYCLOAK_CHANGELOG migration changelog, should be mounted
+default: /migration/keycloak-changelog.yml
+  ADMIN_USER user to execute migration
+default: admin
+  ADMIN_PASSWORD password of user to execute migration
+default: admin
+  ADMIN_CLIENT client to use for admin login" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mayope.github.io/keycloakmigration/quickstart/docker/" />
+<meta property="article:modified_time" content="2020-07-05T23:59:29+02:00" />
+<title>Usage with Docker | Keycloakmigration</title>
+<link rel="manifest" href="/keycloakmigration/manifest.json">
+<link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
+<script defer src="/keycloakmigration/en.search.min.5ffb3f1e95df9b5811988f7719f5ced7e1fe9768e85a9c73570e1ab7203e4b80.js" integrity="sha256-X/s/HpXfm1gRmI93GfXO1&#43;H&#43;l2joWpxzVw4atyA&#43;S4A="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/keycloakmigration"><span>Keycloakmigration</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><a href="/keycloakmigration/">Overview</a></li>
+<li><a href="/keycloakmigration/quickstart/">Quick Start</a>
+<ul>
+<li><a href="/keycloakmigration/quickstart/kotlin/">Gradle Kotlin DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/groovy/">Gradle Groovy DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/jar/">Jar</a></li>
+<li><a href="/keycloakmigration/quickstart/docker/"class=active>Usage with Docker</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/migration_files/">Migration Files</a></li>
+<li><a href="/keycloakmigration/migrations/">Migrations</a>
+<ul>
+<li><a href="/keycloakmigration/migrations/user/">User Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/scopes/">ClientScope Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/identityprovider/">IdentityProvider Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/flow/">Flow Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/requiredactions/">RequiredActions Migrations</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/keycloak_api/">Using the Keycloakapi</a></li>
+<li><a href="/keycloakmigration/hashmigration/">Hash Troubleshooting</a></li>
+<li><a href="/keycloakmigration/implementation_details/">Implementation Details</a></li>
+<li><a href="/keycloakmigration/contributing/">Contributing</a></li>
+</ul>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/keycloakmigration/about/" target="_blank" rel="noopener">
+        About
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Usage with Docker</strong>
+
+  <label for="toc-control">
+    
+    <img src="/keycloakmigration/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#environment-variables">Environment variables</a></li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="usage-with-docker">
+  Usage with docker
+  <a class="anchor" href="#usage-with-docker">#</a>
+</h1>
+<p>you can also use keycloakmigraiton with docker. The migrations are then controlled trough environment variables and mounted volumes.</p>
+<h2 id="usage">
+  Usage
+  <a class="anchor" href="#usage">#</a>
+</h2>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">docker run --env <span style="color:#b8860b">BASEURL</span><span style="color:#666">=</span>http://localhost:8080 klg71/keycloakmigration 
+</code></pre></div><h2 id="environment-variables">
+  Environment variables
+  <a class="anchor" href="#environment-variables">#</a>
+</h2>
+<ul>
+<li>
+<p><code>KEYCLOAK_CHANGELOG</code> migration changelog, should be mounted</p>
+<p>default: /migration/keycloak-changelog.yml</p>
+</li>
+<li>
+<p><code>ADMIN_USER</code> user to execute migration</p>
+<p>default: admin</p>
+</li>
+<li>
+<p><code>ADMIN_PASSWORD</code> password of user to execute migration</p>
+<p>default: admin</p>
+</li>
+<li>
+<p><code>ADMIN_CLIENT</code> client to use for admin login</p>
+<p>default: admin-cli</p>
+</li>
+<li>
+<p><code>LOGIN_REALM</code> realm to use for admin login</p>
+<p>default: master</p>
+</li>
+<li>
+<p><code>BASEURL</code> Baseurl for the keycloak instance</p>
+<p>default: http://localhost:8080/auth</p>
+</li>
+<li>
+<p><code>WAIT_FOR_KEYCLOAK</code>(flag) If keycloakmigration should wait for the keycloak instance</p>
+<p>default: unset</p>
+</li>
+<li>
+<p><code>WAIT_FOR_KEYCLOAK_TIMEOUT</code> Wait time till keycloak migration fails if keycloak is not ready (only if <code>WAIT_FOR_KEYCLOAK</code> is set)</p>
+<p>default:   0(infinit)</p>
+</li>
+<li>
+<p><code>FAIL_ON_UNDEFINED_VARIABLES</code>(flag) If keycloakmigration should fail if undefined template variables occur</p>
+<p>default:   unset=false</p>
+</li>
+<li>
+<p><code>DISABLE_WARN_ON_UNDEFINED_VARIABLES</code>(flag) If keycloakmigration should not warn if undefined template variables occur</p>
+<p>default:   unset=false</p>
+</li>
+<li>
+<p><code>CORRECT_HASHES</code>(flag) If keycloakmigration should migrate not matching hashes (see <a href="/keycloakmigration/hashmigration/">Hash Troubleshooting</a> )</p>
+<p>default:   unset=false</p>
+</li>
+<li>
+<p><code>STAY_IDLE</code>(flag) Don&rsquo;t kill container when migration is finished (useful for k8s deployment)</p>
+<p>default:   unset=false</p>
+</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#environment-variables">Environment variables</a></li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

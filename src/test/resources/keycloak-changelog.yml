@@ -32,3 +32,5 @@ includes:
 - path: changesets/33_update_flow.yml
 - path: changesets/34_add_required_action.yml
 - path: changesets/35_update_required_action.yml
+- path: changesets/36_add_client_scope_mappers.yml
+- path: changesets/37_delete_client_scope_mappers.yml

@@ -1,0 +1,6 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:de.klg71.keycloakmigration.keycloakapi$extractLocationUUID(feign.Response)de.klg71.keycloakmigration.keycloakapi/feign.-response/extract-location-u-u-i-d.html
+$dokka.location:de.klg71.keycloakmigration.keycloakapi$isSuccessful(feign.Response)de.klg71.keycloakmigration.keycloakapi/feign.-response/is-successful.html
+de.klg71.keycloakmigration.keycloakapi
+de.klg71.keycloakmigration.keycloakapi.model

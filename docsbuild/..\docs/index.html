@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" dir=>
+
+<head>
+	<meta name="generator" content="Hugo 0.79.1" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Keycloakmigration #  Infrastructure as code for the Keycloak authentication provider
+This projects aims to automate the configuration of the keycloak authentication provider. It is inspired by the database migration tool liquibase. The goal is to provide a similar mechanism for Keycloak.
+Usage #  Gradle #  Apply the current version of the Plugin:
+plugins { id &#34;de.klg71.keycloakmigrationplugin&#34; version &#34;x.x.x&#34; } Use the Tasks to execute the migration:
+Groovy #  task keycloakMigrateLocal(type: KeycloakMigrationTask) { group = &quot;keycloak&quot; description = &quot;Migrate the keycloak instance&quot; migrationFile = &quot;migration/keycloak-changelog.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Keycloakmigration" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://mayope.github.io/keycloakmigration/" />
+
+<title>Keycloakmigration | Keycloakmigration</title>
+<link rel="manifest" href="/keycloakmigration/manifest.json">
+<link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/keycloakmigration/book.min.b3215d9d1d18d9051e7fbe8f256ff80e30f41d29073b86348e230d297b771002.css" integrity="sha256-syFdnR0Y2QUef76PJW/4DjD0HSkHO4Y0jiMNKXt3EAI=">
+<script defer src="/keycloakmigration/en.search.min.5ffb3f1e95df9b5811988f7719f5ced7e1fe9768e85a9c73570e1ab7203e4b80.js" integrity="sha256-X/s/HpXfm1gRmI93GfXO1&#43;H&#43;l2joWpxzVw4atyA&#43;S4A="></script>
+<link rel="alternate" type="application/rss+xml" href="https://mayope.github.io/keycloakmigration/index.xml" title="Keycloakmigration" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir=>
+  <input type="checkbox" class="hidden" id="menu-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      
+  <nav>
+<h2 class="book-brand">
+  <a href="/keycloakmigration"><span>Keycloakmigration</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><a href="/keycloakmigration/"class=active>Overview</a></li>
+<li><a href="/keycloakmigration/quickstart/">Quick Start</a>
+<ul>
+<li><a href="/keycloakmigration/quickstart/kotlin/">Gradle Kotlin DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/groovy/">Gradle Groovy DSL</a></li>
+<li><a href="/keycloakmigration/quickstart/jar/">Jar</a></li>
+<li><a href="/keycloakmigration/quickstart/docker/">Usage with Docker</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/migration_files/">Migration Files</a></li>
+<li><a href="/keycloakmigration/migrations/">Migrations</a>
+<ul>
+<li><a href="/keycloakmigration/migrations/user/">User Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/group/">Group Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/role/">Role Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/client/">Client Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/scopes/">ClientScope Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/realm/">Realm Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/userfederation/">UserFederation Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/identityprovider/">IdentityProvider Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/flow/">Flow Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/requiredactions/">RequiredActions Migrations</a></li>
+</ul>
+</li>
+<li><a href="/keycloakmigration/keycloak_api/">Using the Keycloakapi</a></li>
+<li><a href="/keycloakmigration/hashmigration/">Hash Troubleshooting</a></li>
+<li><a href="/keycloakmigration/implementation_details/">Implementation Details</a></li>
+<li><a href="/keycloakmigration/contributing/">Contributing</a></li>
+</ul>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="/keycloakmigration/about/" target="_blank" rel="noopener">
+        About
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/keycloakmigration/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Keycloakmigration</strong>
+
+  <label for="toc-control">
+    
+    <img src="/keycloakmigration/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+    <input type="checkbox" class="hidden" id="toc-control" />
+    <aside class="hidden clearfix">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#usage">Usage</a>
+      <ul>
+        <li><a href="#gradle">Gradle</a></li>
+        <li><a href="#kotlin">Kotlin</a></li>
+        <li><a href="#using-the-fatjar">Using the fatjar</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+    </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="keycloakmigration">
+  Keycloakmigration
+  <a class="anchor" href="#keycloakmigration">#</a>
+</h1>
+<p>Infrastructure as code for the <a href="https://www.keycloak.org/">Keycloak</a> authentication provider</p>
+<p>This projects aims to automate the configuration of the keycloak authentication provider.
+It is inspired by the database migration tool <a href="https://www.liquibase.org/">liquibase</a>.
+The goal is to provide a similar mechanism for Keycloak.</p>
+<h2 id="usage">
+  Usage
+  <a class="anchor" href="#usage">#</a>
+</h2>
+<h3 id="gradle">
+  Gradle
+  <a class="anchor" href="#gradle">#</a>
+</h3>
+<p>Apply the current version of the Plugin:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-gradle" data-lang="gradle">plugins <span style="color:#666">{</span>
+  id <span style="color:#b44">&#34;de.klg71.keycloakmigrationplugin&#34;</span> version <span style="color:#b44">&#34;x.x.x&#34;</span>
+<span style="color:#666">}</span>
+</code></pre></div><p>Use the Tasks to execute the migration:</p>
+<h4 id="groovy">
+  Groovy
+  <a class="anchor" href="#groovy">#</a>
+</h4>
+<pre><code>task keycloakMigrateLocal(type: KeycloakMigrationTask) {
+  group = &quot;keycloak&quot;
+  description = &quot;Migrate the keycloak instance&quot;
+
+  migrationFile = &quot;migration/keycloak-changelog.yml&quot;
+  adminUser = &quot;admin&quot;
+  adminPassword = &quot;admin&quot;
+  baseUrl = &quot;http://localhost:8080&quot;
+  realm = &quot;master&quot;
+  parameters = [USERNAME: &quot;testUser&quot;, PASSWORD: &quot;testPassword&quot;]
+  waitForKeycloak = false
+  waitForKeycloakTimeout = 0L // infinit wait time
+  failOnUndefinedVariables = false
+  warnOnUndefinedVariables = true
+}
+</code></pre>
+<h3 id="kotlin">
+  Kotlin
+  <a class="anchor" href="#kotlin">#</a>
+</h3>
+<pre><code>register&lt;KeycloakMigrationTask&gt;(&quot;keycloakMigrateLocal&quot;) {
+    group = &quot;keycloak&quot;
+    description = &quot;Migrate the keycloak instance&quot;
+
+    migrationFile = &quot;migration/keycloak-changelog.yml&quot;
+    adminUser = &quot;admin&quot;
+    adminPassword = &quot;admin&quot;
+    baseUrl = &quot;http://localhost:8080/auth&quot;
+    realm = &quot;master&quot;
+    parameters = mapOf(
+            &quot;USER_NAME&quot; to &quot;testUser&quot;,
+            &quot;PASSWORD&quot; to &quot;password&quot;
+    )
+    waitForKeycloak = false
+    waitForKeycloakTimeout = 0L // infinit wait time
+    failOnUndefinedVariables = false
+    warnOnUndefinedVariables = true
+}
+</code></pre>
+<p>To correct existing hashes please use the <code>KeycloakMigrationCorrectHashesTask</code>.</p>
+<h3 id="using-the-fatjar">
+  Using the fatjar
+  <a class="anchor" href="#using-the-fatjar">#</a>
+</h3>
+<p>Then migration can simply be invoked through the jar. (Found attached to the latest release on github <a href="https://github.com/klg71/keycloakmigration/releases">https://github.com/klg71/keycloakmigration/releases</a>)</p>
+<pre><code>java -jar keycloakmigration.jar --help
+usage: [-h] [-u USER] [-p PASSWORD] [-b BASEURL] [MIGRATION-FILE] [-r REALM]
+       [-c CLIENT] [--correct-hashes] [-k PARAMETER]... [--wait-for-keycloak]
+       [--wait-for-keycloak-timeout WAIT_FOR_KEYCLOAK_TIMEOUT]
+
+optional arguments:
+  -h, --help                                              show this help message and exit
+
+  -u USER, --user USER                                    Username for the migration user, defaulting to admin.
+
+  -p PASSWORD, --password PASSWORD                        Password for the migration user, defaulting to admin.
+
+  -b BASEURL, --baseurl BASEURL                           Base url of keycloak server, defaulting to
+                                                          http://localhost:18080/auth.
+                                                          
+  -r REALM, --realm REALM                                 Realm to use for migration, defaulting to master
+
+  -c CLIENT, --client CLIENT                              Client to use for
+                                                          migration,
+                                                          defaulting to master
+
+  --correct-hashes                                        Correct hashes to most recent version, defaulting to false
+
+                                                          Just choose this option if you didn't change anything in
+                                                          the changelog since the last migration!
+                                                          This will replace all old hashes with the new hash version
+                                                          and can be omitted next time the migration is run.
+                                                          See README.md for further explanation!
+
+  -k PARAMETER, --parameter PARAMETER                     Parameters to substitute in changelog, syntax is:
+                                                          -k param1=value1
+                                                          will replace
+                                                          ${param1} with
+                                                          value1 in changelog
+
+  --wait-for-keycloak                                     Wait for Keycloak to become ready.
+
+  --wait-for-keycloak-timeout WAIT_FOR_KEYCLOAK_TIMEOUT   Wait for Keycloak to become ready timeout in seconds (defaulting to 0=infinit).
+  
+  --fail-on-undefined-variables                           Fail if variables could not be replaced, defaulting to false.
+
+  --warn-on-undefined-variables                           Fail if variables could not bereplaced, to true.                                                
+  
+
+positional arguments:
+  MIGRATION-FILE                                          File to migrate, defaulting to keycloak-changelog.yml
+</code></pre>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      
+  <nav id="TableOfContents">
+  <ul>
+    <li><a href="#usage">Usage</a>
+      <ul>
+        <li><a href="#gradle">Gradle</a></li>
+        <li><a href="#kotlin">Kotlin</a></li>
+        <li><a href="#using-the-fatjar">Using the fatjar</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+ 
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
