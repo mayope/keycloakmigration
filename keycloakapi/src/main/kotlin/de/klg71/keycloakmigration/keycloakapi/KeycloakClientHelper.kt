@@ -2,18 +2,10 @@
 
 package de.klg71.keycloakmigration.keycloakapi
 
-import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
-import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
 import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
-import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
-import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
 import de.klg71.keycloakmigration.keycloakapi.model.Role
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowInPlace
 import feign.Response
 import java.util.UUID
 
@@ -211,8 +203,11 @@ fun KeycloakClient.userFederationExistsByName(name: String, realm: String) =
 fun KeycloakClient.identityProviderExistsByAlias(alias: String, realm: String) =
     identityProviders(realm).any { it.alias == alias }
 
-fun KeycloakClient.mapperExistsByName(clientId: String, mapperName: String, realm: String) =
-    mappers(clientUUID(clientId, realm), realm).any { it.name == mapperName }
+fun KeycloakClient.clientMapperExistsByName(clientId: String, mapperName: String, realm: String) =
+    clientMappers(clientUUID(clientId, realm), realm).any { it.name == mapperName }
+
+fun KeycloakClient.clientScopeMapperExistsByName(clientScopeName: String, mapperName: String, realm: String) =
+    clientScopeMappers(clientScopeUUID(clientScopeName, realm), realm).any { it.name == mapperName }
 
 fun KeycloakClient.ldapMapperByName(ldapName: String, name: String, realm: String) =
     ldapMappers(realm, userFederationByName(ldapName, realm).id).firstOrNull { it.name == name }
