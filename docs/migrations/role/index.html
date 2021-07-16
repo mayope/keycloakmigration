@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Role Migrations#All migrations referring to the role resource.
 addRole#Add a role to keycloak, fails if the role already exists
-Parameter# realm: String, optional name: String, not optional, clientId: String, optional, default=realmRole, description: String, optional, default=&rdquo;&rdquo; attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty composite: Boolean, optional, default=false clientRole: Boolean, optional, default=false, containerId: String, optional, default=not set  Example#id: add-roleauthor: klg71changes:- addRole:realm: mastername: test3attributes:role:- value1- value2 deleteRole#Delete a role from keycloak, fails if the role does not exist">
+Parameter# realm: String, optional name: String, mandatory, clientId: String, optional, default=realmRole, description: String, optional, default=&rdquo;&rdquo; attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty composite: Boolean, optional, default=false, must be true if compositeChildRoles is specified clientRole: Boolean, optional, default=false, containerId: String, optional, default=not set compositeChildRoles: List, optional, default=not set  subclass RoleSelector# name: String, mandatory clientId: String, optional  Example#id: add-roleauthor: klg71changes:- addRole:realm: mastername: test3attributes:role:- value1- value2 deleteRole#Delete a role from keycloak, fails if the role does not exist">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Role Migrations" />
 <meta property="og:description" content="Role Migrations#All migrations referring to the role resource.
 addRole#Add a role to keycloak, fails if the role already exists
-Parameter# realm: String, optional name: String, not optional, clientId: String, optional, default=realmRole, description: String, optional, default=&rdquo;&rdquo; attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty composite: Boolean, optional, default=false clientRole: Boolean, optional, default=false, containerId: String, optional, default=not set  Example#id: add-roleauthor: klg71changes:- addRole:realm: mastername: test3attributes:role:- value1- value2 deleteRole#Delete a role from keycloak, fails if the role does not exist" />
+Parameter# realm: String, optional name: String, mandatory, clientId: String, optional, default=realmRole, description: String, optional, default=&rdquo;&rdquo; attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty composite: Boolean, optional, default=false, must be true if compositeChildRoles is specified clientRole: Boolean, optional, default=false, containerId: String, optional, default=not set compositeChildRoles: List, optional, default=not set  subclass RoleSelector# name: String, mandatory clientId: String, optional  Example#id: add-roleauthor: klg71changes:- addRole:realm: mastername: test3attributes:role:- value1- value2 deleteRole#Delete a role from keycloak, fails if the role does not exist" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mayope.github.io/keycloakmigration/migrations/role/" />
 <meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
-<meta property="article:modified_time" content="2020-07-04T10:17:11+02:00" />
+<meta property="article:modified_time" content="2021-07-16T16:05:24+03:00" />
 <title>Role Migrations | Keycloakmigration</title>
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.a8f172e9514e766ee7562278ee2929cc668544eb977d0ee52069556d89261049.css" integrity="sha256-qPFy6VFOdm7nViJ47ikpzGaFROuXfQ7lIGlVbYkmEEk=">
-<script defer src="/keycloakmigration/en.search.min.b899d7bafbb204d15a80fbd49aeb403eacb1d8db271db146bd7b22e1656d35ab.js" integrity="sha256-uJnXuvuyBNFagPvUmutAPqyx2NsnHbFGvXsi4WVtNas="></script>
+<script defer src="/keycloakmigration/en.search.min.8d2a027e8999bd5b42dc1de0570f0b33bb48e80c6673574b7a8d9ede3ff35cb5.js" integrity="sha256-jSoCfomZvVtC3B3gVw8LM7tI6Axmc1dLeo2e3j/zXLU="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -182,13 +182,22 @@ https://github.com/alex-shpak/hugo-book
 </h3>
 <ul>
 <li>realm: String, optional</li>
-<li>name: String, not optional,</li>
+<li>name: String, mandatory,</li>
 <li>clientId: String, optional, default=realmRole,</li>
 <li>description: String, optional, default=&rdquo;&rdquo;</li>
 <li>attributes: Map&lt; String,List&lt; String&raquo;, optional, default=empty</li>
-<li>composite: Boolean, optional, default=false</li>
+<li>composite: Boolean, optional, default=false, must be true if compositeChildRoles is specified</li>
 <li>clientRole: Boolean, optional, default=false,</li>
 <li>containerId: String, optional, default=not set</li>
+<li>compositeChildRoles: List<!-- raw HTML omitted -->, optional, default=not set</li>
+</ul>
+<h4 id="subclass-roleselector">
+  subclass RoleSelector
+  <a class="anchor" href="#subclass-roleselector">#</a>
+</h4>
+<ul>
+<li>name: String, mandatory</li>
+<li>clientId: String, optional</li>
 </ul>
 <h3 id="example">
   Example
