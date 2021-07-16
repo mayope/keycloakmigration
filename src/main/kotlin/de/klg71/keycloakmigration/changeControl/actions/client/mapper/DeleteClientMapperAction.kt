@@ -5,7 +5,6 @@ import de.klg71.keycloakmigration.keycloakapi.clientUUID
 import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 
-// todo: remove `open` modifier when deprecation below gets removed!
 open class DeleteClientMapperAction(
     realm: String?,
     protected val clientId: String,

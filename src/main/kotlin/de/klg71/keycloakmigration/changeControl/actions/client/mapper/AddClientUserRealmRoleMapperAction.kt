@@ -2,7 +2,6 @@ package de.klg71.keycloakmigration.changeControl.actions.client.mapper
 
 import de.klg71.keycloakmigration.keycloakapi.model.userRealmRoleMapper
 
-// todo: remove `open` modifier when deprecation below gets removed!
 open class AddClientUserRealmRoleMapperAction(
     realm: String?,
     clientId: String,

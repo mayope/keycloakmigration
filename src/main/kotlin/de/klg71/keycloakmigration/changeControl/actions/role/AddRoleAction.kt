@@ -3,33 +3,37 @@ package de.klg71.keycloakmigration.changeControl.actions.role
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
-import de.klg71.keycloakmigration.keycloakapi.model.AddRole
-import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.clientRoleByName
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
+import de.klg71.keycloakmigration.keycloakapi.model.AddRole
+import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.roleExistsByName
 
 data class RoleSelector(val name: String,
-                        val clientId: String? = null)
+    val clientId: String? = null)
+
+private const val HTTP_NO_CONTENT = 204
 
 class AddRoleAction(
-        realm: String? = null,
-        private val name: String,
-        private val clientId: String? = null,
-        private val description: String = "",
-        private val attributes: Map<String, List<String>>? = null,
-        private val composite: Boolean? = null,
-        private val clientRole: Boolean? = null,
-        private val containerId: String? = null,
-        private val compositeChildRoles: List<RoleSelector>? = null) : Action(realm) {
+    realm: String? = null,
+    private val name: String,
+    private val clientId: String? = null,
+    private val description: String = "",
+    private val attributes: Map<String, List<String>>? = null,
+    private val composite: Boolean? = null,
+    private val clientRole: Boolean? = null,
+    private val containerId: String? = null,
+    private val compositeChildRoles: List<RoleSelector>? = null) : Action(realm) {
 
     private fun addRole() = AddRole(name, description)
-    private fun updateRole(createdRole: Role) = Role(createdRole.id, createdRole.name, createdRole.description,
-            composite ?: createdRole.composite,
-            clientRole ?: createdRole.clientRole,
-            containerId ?: createdRole.containerId,
-            attributes())
+    private fun updateRole(createdRole: Role) = Role(
+        createdRole.id, createdRole.name, createdRole.description,
+        composite ?: createdRole.composite,
+        clientRole ?: createdRole.clientRole,
+        containerId ?: createdRole.containerId,
+        attributes()
+    )
 
     private fun attributes(): Map<String, List<String>> = attributes ?: emptyMap()
 
@@ -46,10 +50,10 @@ class AddRoleAction(
         setExecuted()
         val role = findRole()
         client.updateRole(updateRole(role), role.id, realm())
-        if(composite == true && !compositeChildRoles.isNullOrEmpty()) {
+        if (composite == true && !compositeChildRoles.isNullOrEmpty()) {
             val roleItems = compositeChildRoles.map(this::findRoleAsRoleListItem)
             val response = client.addCompositeToRole(roleItems, role.id, realm())
-            if(response.status() != 204) {
+            if (response.status() != HTTP_NO_CONTENT) {
                 throw KeycloakApiException("addCompositeToRole failed. response: $response")
             }
         }
@@ -71,8 +75,8 @@ class AddRoleAction(
 
     private fun findRoleAsRoleListItem(selector: RoleSelector) = findRole(selector).let {
         RoleListItem(
-                it.id, it.name, it.description,
-                it.composite, it.clientRole, it.containerId
+            it.id, it.name, it.description,
+            it.composite, it.clientRole, it.containerId
         )
     }
 

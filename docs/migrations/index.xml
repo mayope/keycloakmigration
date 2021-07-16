@@ -23,18 +23,6 @@ Parameters# realm: String, optional providerId: String, mandatory alias: Stri
     </item>
     
     <item>
-      <title>ProtocolMapper Migrations</title>
-      <link>https://mayope.github.io/keycloakmigration/migrations/mapper/</link>
-      <pubDate>Thu, 09 Jul 2020 20:03:42 +0200</pubDate>
-      
-      <guid>https://mayope.github.io/keycloakmigration/migrations/mapper/</guid>
-      <description>ProtocolMapper Migrations#All migrations referring to the ProtocolMapper resource.
-addMapper#Adds a fully configurable protocol mapper to either a client, or a client scope, throws an error if client, client scope or realm doesn&amp;rsquo;t exist or mapper with same name already exists
- Only use this action if you can&amp;rsquo;t find a convenient method to add the mapper below
- Parameters# realm: String, optional name: String, not optional clientId: String, optional if client scope is set clientScopeName: String, optional if client id is set config: Map&amp;lt;String,String&amp;gt;, not optional protocolMapper: String, not optional protocol: String, optional, default=&amp;quot;openid-connect&amp;rdquo;  Example:#id: add-client-mappersauthor: klg71realm: integ-testchanges:- addSimpleClient:clientId: testMappers- addMapper:clientId: testMappersname: testPropertyMapperprotocolMapper: oidc-usermodel-property-mapperconfig:access.</description>
-    </item>
-    
-    <item>
       <title>Client Migrations</title>
       <link>https://mayope.github.io/keycloakmigration/migrations/client/</link>
       <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>

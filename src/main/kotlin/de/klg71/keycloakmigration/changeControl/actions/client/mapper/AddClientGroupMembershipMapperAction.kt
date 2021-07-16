@@ -2,7 +2,6 @@ package de.klg71.keycloakmigration.changeControl.actions.client.mapper
 
 import de.klg71.keycloakmigration.keycloakapi.model.groupMembershipMapper
 
-// todo: remove `open` modifier when deprecation below gets removed!
 open class AddClientGroupMembershipMapperAction(
     realm: String?,
     clientId: String,
