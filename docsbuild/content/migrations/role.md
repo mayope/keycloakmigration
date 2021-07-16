@@ -11,13 +11,18 @@ All migrations referring to the role resource.
 Add a role to keycloak, fails if the role already exists
 ### Parameter
 - realm: String, optional
-- name: String, not optional,
+- name: String, mandatory,
 - clientId: String, optional, default=realmRole,
 - description: String, optional, default=""
 - attributes: Map< String,List< String>>, optional, default=empty
-- composite: Boolean, optional, default=false
+- composite: Boolean, optional, default=false, must be true if compositeChildRoles is specified
 - clientRole: Boolean, optional, default=false,
 - containerId: String, optional, default=not set
+- compositeChildRoles: List<RoleSelector>, optional, default=not set
+
+#### subclass RoleSelector
+- name: String, mandatory
+- clientId: String, optional
 
 ### Example
     id: add-role
