@@ -18,12 +18,14 @@ class TokenHolder(private val client: KeycloakLoginClient,
         val LOG = LoggerFactory.getLogger(TokenHolder::class.java)!!
     }
 
+    private val safetyDurationMs = 1000
+
     private var token: AccessToken = client.login(realm, "password", clientId, adminUser, adminPassword, totp)
     private var tokenReceived: Long = currentTimeMillis()
     private var tokenReceivedNs: Long = nanoTime()
 
-    private fun tokenExpired() = currentTimeMillis() - tokenReceived > SECONDS.toMillis(token.expiresIn)
-    private fun refreshExpired() = currentTimeMillis() - tokenReceived > SECONDS.toMillis(token.refreshExpiresIn)
+    private fun tokenExpired() = currentTimeMillis() - tokenReceived > SECONDS.toMillis(token.expiresIn) - safetyDurationMs
+    private fun refreshExpired() = currentTimeMillis() - tokenReceived > SECONDS.toMillis(token.refreshExpiresIn) - safetyDurationMs
 
     fun tokenExpirationNs() = tokenReceivedNs + SECONDS.toNanos(token.expiresIn)
     fun tokenExpiration() = tokenReceived + SECONDS.toMillis(token.expiresIn)
