@@ -18,17 +18,18 @@ import feign.jackson.JacksonEncoder
  * @param clientId id of the client to use for the login of the user
  */
 fun initKeycloakClient(baseUrl: String, adminUser: String, adminPassword: String, realm: String,
-                       clientId: String, logger: Logger? = null, totp:String="") = Feign.builder().run {
+                       clientId: String, logger: Logger? = null, totp:String="", tokenHolder: TokenHolder? = null) = Feign.builder().run {
     val objectMapper = initObjectMapper()
-    val tokenHolder = TokenHolder(initKeycloakLoginClient(objectMapper, baseUrl, logger), adminUser, adminPassword,
-            realm,
-            clientId,totp)
+    val tokenHolder2 = tokenHolder ?: TokenHolder(
+            initKeycloakLoginClient(objectMapper, baseUrl, logger),
+            adminUser, adminPassword, realm, clientId,totp
+    )
     encoder(JacksonEncoder(objectMapper))
     decoder(JacksonDecoder(objectMapper.apply {
         configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     }))
     requestInterceptor {
-        tokenHolder.token().run {
+        tokenHolder2.token().run {
             it.header("Authorization", "Bearer $accessToken")
         }
     }
@@ -50,7 +51,7 @@ fun initKeycloakLoginClient(baseUrl: String, logger: Logger? = null): KeycloakLo
             initKeycloakLoginClient(it, baseUrl, logger)
         }
 
-internal fun initKeycloakLoginClient(objectMapper: ObjectMapper,
+fun initKeycloakLoginClient(objectMapper: ObjectMapper,
                                      baseUrl: String, logger: Logger? = null): KeycloakLoginClient = Feign.builder().run {
     encoder(FormEncoder(JacksonEncoder(objectMapper)))
     decoder(JacksonDecoder(objectMapper))
