@@ -1,12 +1,8 @@
 package de.klg71.keycloakmigration
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import de.klg71.keycloakmigration.changeControl.MigrationChangelogTest
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
-import de.klg71.keycloakmigration.keycloakapi.TokenHolder
 import de.klg71.keycloakmigration.keycloakapi.initKeycloakClient
-import de.klg71.keycloakmigration.keycloakapi.initKeycloakLoginClient
 import de.klg71.keycloakmigration.keycloakapi.model.RealmUpdateBuilder
 import de.klg71.keycloakmigration.keycloakapi.model.User
 import de.klg71.keycloakmigration.keycloakapi.realmById
@@ -14,6 +10,7 @@ import feign.slf4j.Slf4jLogger
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.slf4j.LoggerFactory
+import java.util.function.Supplier
 import kotlin.test.fail
 
 class TokenFlakinessTest {
@@ -21,7 +18,7 @@ class TokenFlakinessTest {
     private val LOG = LoggerFactory.getLogger(MigrationChangelogTest::class.java)
     private val feignLOG = Slf4jLogger(MigrationChangelogTest::class.java)
 
-    //@Test
+    @Test
     fun testFlakiness() {
         val masterTokenLifespan = 2000L
 
@@ -30,8 +27,6 @@ class TokenFlakinessTest {
         val realmName = "master"
         val clientId = "admin-cli"
         val adminPassword = "admin"
-        val objectMapper = ObjectMapper().registerModule(KotlinModule())!!
-
         val configureClient = initKeycloakClient(baseUrl, adminUser, adminPassword, realmName, clientId, feignLOG)
         val realm = configureClient.realmById(realmName)
         val updatedRealm = RealmUpdateBuilder(realm).run {
@@ -43,13 +38,11 @@ class TokenFlakinessTest {
 
         repeat(10000) {
             val preTokenTestDurationBeforeStartNs = 10L
-            val tokenHolder = TokenHolder(
-                    initKeycloakLoginClient(objectMapper, baseUrl, feignLOG),
-                    adminUser, adminPassword, realmName, clientId, ""
-            )
-            val client = initKeycloakClient(baseUrl, adminUser, adminPassword, realmName, clientId, feignLOG, tokenHolder = tokenHolder)
-
-            val testCallStartTimeNs = tokenHolder.tokenExpirationNs() - preTokenTestDurationBeforeStartNs
+            var tokenRefreshTimeNsSupplier: Supplier<Long>? = null
+            val client = initKeycloakClient(baseUrl, adminUser, adminPassword, realmName, clientId, feignLOG, tokenRefreshTimeNs = {
+                tokenRefreshTimeNsSupplier = it
+            })
+            val testCallStartTimeNs = tokenRefreshTimeNsSupplier!!.get() - preTokenTestDurationBeforeStartNs
             while (System.nanoTime() < testCallStartTimeNs) {
             }
             if (!testCall(client)) {
