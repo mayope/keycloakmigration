@@ -79,6 +79,9 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/users/{user-id}")
     fun user(@Param("user-id") userId: UUID, @Param("realm") realm: String): User
 
+    @RequestLine("GET /admin/realms/{realm}/users/{user-id}")
+    fun tryUser(@Param("user-id") userId: UUID, @Param("realm") realm: String): Response
+
     @RequestLine("PUT /admin/realms/{realm}/users/{user-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun updateUser(@Param("user-id") userId: UUID, user: User, @Param("realm") realm: String)

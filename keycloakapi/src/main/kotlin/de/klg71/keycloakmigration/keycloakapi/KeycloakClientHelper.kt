@@ -10,7 +10,7 @@ import feign.Response
 import java.util.UUID
 
 /**
- * File contains a lot of convenience functions when interacting with the keycloak clien
+ * File contains a lot of convenience functions when interacting with the keycloak client
  */
 
 fun KeycloakClient.userByName(name: String, realm: String) =
@@ -23,6 +23,12 @@ fun KeycloakClient.userByName(name: String, realm: String) =
         }
         .run {
             user(id, realm)
+        }
+
+fun KeycloakClient.userExists(user: UUID, realm: String) =
+    tryUser(user, realm)
+        .run {
+            status() == 200
         }
 
 fun KeycloakClient.clientById(clientId: String, realm: String): Client =
@@ -123,7 +129,7 @@ fun KeycloakClient.existsClientRole(name: String, realm: String, clientId: Strin
     }
 
 private fun List<GroupListItem>.searchByName(name: String): GroupListItem? {
-    return firstOrNull { it.name == name } ?: map { it.subGroups.searchByName(name) }.filterNotNull().firstOrNull()
+    return firstOrNull { it.name == name } ?: mapNotNull { it.subGroups.searchByName(name) }.firstOrNull()
 }
 
 fun KeycloakClient.clientRoleByName(name: String, clientId: String, realm: String): Role =
