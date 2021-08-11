@@ -5,7 +5,7 @@ if [ -z ${WAIT_FOR_KEYCLOAK+x} ]; then echo "dont wait for keycloak"; else ARGUM
 if [ -z ${FAIL_ON_UNDEFINED_VARIABLES+x} ]; then echo "dont fail on errors"; else ARGUMENTS="$ARGUMENTS --fail-on-undefined-variables"; fi
 if [ -z ${DISABLE_WARN_ON_UNDEFINED_VARIABLES+x} ]; then echo "warn on errors"; else ARGUMENTS="$ARGUMENTS --disable-warn-on-undefined-variables"; fi
 if [ -z ${CORRECT_HASHES+x} ]; then echo "dont correct hashes"; else ARGUMENTS="$ARGUMENTS --correct-hashes"; fi
-if [ -z ${STAY_IDLE+x} ]; then echo "dont stay idle"; else ARGUMENTS="$ARGUMENTS && tail -f /dev/null "; fi
+if [ -z ${STAY_IDLE+x} ]; then echo "dont stay idle"; else ARGUMENTS="$ARGUMENTS || true && tail -f /dev/null "; fi
 
 if [ -z ${PRINT_ARGUMENTS} ]; then echo ""; else echo "$ARGUMENTS"; fi
 /bin/sh -c "java -jar keycloakmigration.jar $ARGUMENTS" || true
