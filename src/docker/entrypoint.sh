@@ -8,4 +8,4 @@ if [ -z ${CORRECT_HASHES+x} ]; then echo "dont correct hashes"; else ARGUMENTS="
 if [ -z ${STAY_IDLE+x} ]; then echo "dont stay idle"; else ARGUMENTS="$ARGUMENTS && tail -f /dev/null "; fi
 
 if [ -z ${PRINT_ARGUMENTS} ]; then echo ""; else echo "$ARGUMENTS"; fi
-/bin/sh -c "java -jar keycloakmigration.jar $ARGUMENTS"
+/bin/sh -c "java -jar keycloakmigration.jar $ARGUMENTS" || true
