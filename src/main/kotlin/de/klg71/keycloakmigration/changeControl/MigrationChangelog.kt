@@ -5,8 +5,8 @@ import de.klg71.keycloakmigration.changeControl.model.ChangeSet
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.model.Attributes
 import de.klg71.keycloakmigration.keycloakapi.model.User
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.slf4j.LoggerFactory
 import java.util.UUID
 

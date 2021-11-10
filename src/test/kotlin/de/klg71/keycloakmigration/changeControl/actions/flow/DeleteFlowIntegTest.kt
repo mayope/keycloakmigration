@@ -6,7 +6,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImpor
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class DeleteFlowIntegTest : AbstractIntegrationTest() {
 

@@ -8,7 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.clientScopeUUID
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class DeleteClientMapperActionIntegTest : AbstractIntegrationTest() {
 

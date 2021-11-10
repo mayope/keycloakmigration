@@ -5,7 +5,7 @@ import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import feign.slf4j.Slf4jLogger
 import org.junit.After
 import org.junit.Before
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.slf4j.LoggerFactory

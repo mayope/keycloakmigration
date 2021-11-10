@@ -21,7 +21,7 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.10.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.3")
-    implementation("org.koin:koin-core:2.0.1")
+    implementation("io.insert-koin:koin-core:3.1.3")
     implementation("commons-codec:commons-codec:1.11")
     implementation("com.xenomachina:kotlin-argparser:2.0.7")
 
@@ -36,7 +36,7 @@ dependencies {
     testImplementation(kotlin("test-junit"))
     testImplementation("io.mockk:mockk:1.9")
     testImplementation("org.assertj:assertj-core:3.11.1")
-    testImplementation("org.koin:koin-test:2.0.1")
+    testImplementation("io.insert-koin:koin-test:3.1.3")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
     testImplementation("org.assertj:assertj-core:3.11.1")
 }

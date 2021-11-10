@@ -7,8 +7,8 @@ import de.klg71.keycloakmigration.changeControl.actions.ParseException
 import de.klg71.keycloakmigration.changeControl.model.ChangeLog
 import de.klg71.keycloakmigration.changeControl.model.ChangeSet
 import org.apache.commons.codec.digest.DigestUtils.sha256Hex
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 import org.slf4j.LoggerFactory
 import java.io.File

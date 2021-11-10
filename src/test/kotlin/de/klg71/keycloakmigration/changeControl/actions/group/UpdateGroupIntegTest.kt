@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class UpdateGroupIntegTest : AbstractIntegrationTest() {
 

@@ -4,7 +4,7 @@ import de.klg71.keycloakmigration.changeControl.StringEnvSubstitutor
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
-import org.koin.core.inject
+import org.koin.core.component.inject
 import java.io.FileInputStream
 import java.nio.file.Paths
 import java.util.UUID

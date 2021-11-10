@@ -2,8 +2,8 @@ package de.klg71.keycloakmigration.changeControl
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.model.ChangeSet
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 import org.slf4j.LoggerFactory
 import java.util.UUID

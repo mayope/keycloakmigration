@@ -11,7 +11,7 @@ import de.klg71.keycloakmigration.keycloakapi.userFederationByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class AddAdLdapMapperIntegTest : AbstractIntegrationTest() {
 
