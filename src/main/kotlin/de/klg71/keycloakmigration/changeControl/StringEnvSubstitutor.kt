@@ -6,7 +6,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 
-internal class StringEnvSubstitutor(private val failOnUndefinedVariables: Boolean = false,
+internal open class StringEnvSubstitutor(private val failOnUndefinedVariables: Boolean = false,
                                     private val warnOnUndefinedVariables: Boolean = true) : KoinComponent {
 
     private val parameters: Map<String, String> by inject(named("parameters"))

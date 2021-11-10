@@ -34,7 +34,7 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-    testImplementation("io.mockk:mockk:1.9")
+    testImplementation("io.mockk:mockk:1.12.0")
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("io.insert-koin:koin-test:3.1.3")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
