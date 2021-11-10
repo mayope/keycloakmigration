@@ -5,8 +5,8 @@ import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.clientById
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.koin.core.component.inject
 import org.koin.core.context.stopKoin
-import org.koin.core.inject
 
 class ImportClientIntegTest : AbstractIntegrationTest() {
 

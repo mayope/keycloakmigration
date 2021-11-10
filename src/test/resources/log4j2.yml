@@ -21,7 +21,7 @@ Configutation:
 
   Loggers:
       Root:
-        level: debug
+        level: DEBUG
         AppenderRef:
           - ref: Console_Appender
       Logger:

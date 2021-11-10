@@ -2,13 +2,11 @@ package de.klg71.keycloakmigration.changeControl.actions.client.mapper
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.client.AddSimpleClientAction
-import de.klg71.keycloakmigration.changeControl.actions.clientscope.AddClientScopeAction
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
-import de.klg71.keycloakmigration.keycloakapi.clientScopeUUID
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class DeleteClientMapperActionIntegTest : AbstractIntegrationTest() {
 
@@ -19,7 +17,8 @@ class DeleteClientMapperActionIntegTest : AbstractIntegrationTest() {
         "id.token.claim" to "true",
         "jsonType.label" to "String",
         "user.attribute" to "UserModel.getEmail()",
-        "userinfo.token.claim" to "true")
+        "userinfo.token.claim" to "true"
+    )
     val mapperName = "testMapper"
     val protocol = "openid-connect"
     val protocolMapper = "oidc-usermodel-property-mapper"

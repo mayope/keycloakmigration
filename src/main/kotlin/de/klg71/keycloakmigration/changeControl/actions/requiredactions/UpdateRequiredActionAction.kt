@@ -4,6 +4,7 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
 
 
+@Suppress("LongParameterList")
 class UpdateRequiredActionAction(
     realm: String?,
     private val alias: String,

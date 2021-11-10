@@ -4,24 +4,24 @@ import de.klg71.keycloakmigration.changeControl.StringEnvSubstitutor
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
-import org.koin.core.inject
+import org.koin.core.component.inject
 import java.io.FileInputStream
 import java.nio.file.Paths
 import java.util.UUID
 
 class ImportClientAction(
-        realm: String? = null,
-        private val clientRepresentationJsonFilename: String,
-        private val relativeToFile: Boolean = true) : Action(realm) {
+    realm: String? = null,
+    private val clientRepresentationJsonFilename: String,
+    private val relativeToFile: Boolean = true) : Action(realm) {
     private lateinit var clientUuid: UUID
     private val stringEnvSubstitutor by inject<StringEnvSubstitutor>()
 
     private fun fileBufferedReader() =
-            if (relativeToFile) {
-                FileInputStream(Paths.get(path, clientRepresentationJsonFilename).toString()).bufferedReader()
-            } else {
-                FileInputStream(clientRepresentationJsonFilename).bufferedReader()
-            }
+        if (relativeToFile) {
+            FileInputStream(Paths.get(path, clientRepresentationJsonFilename).toString()).bufferedReader()
+        } else {
+            FileInputStream(clientRepresentationJsonFilename).bufferedReader()
+        }
 
     private fun readJsonContentWithWhitespace() = fileBufferedReader().use { it.readText() }.let {
         stringEnvSubstitutor.substituteParameters(it)

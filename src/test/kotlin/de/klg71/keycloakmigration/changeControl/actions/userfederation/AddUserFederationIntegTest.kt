@@ -6,12 +6,10 @@ import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.model.constructAdLdapConfig
 import de.klg71.keycloakmigration.keycloakapi.userFederationByName
-import feign.FeignException
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class AddUserFederationIntegTest : AbstractIntegrationTest() {
 
@@ -20,16 +18,17 @@ class AddUserFederationIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddUserFederation() {
         val ldapConfig = mapOf(
-                "connectionUrl" to "https://testUrl",
-                "usersDn" to "usersTestDn",
-                "bindCredential" to "testPassword",
-                "bindDn" to "testBindDn")
+            "connectionUrl" to "https://testUrl",
+            "usersDn" to "usersTestDn",
+            "bindCredential" to "testPassword",
+            "bindDn" to "testBindDn"
+        )
         AddUserFederationAction(
-                testRealm, "test",
-                constructAdLdapConfig(ldapConfig)
-                        .filter { (_, value) -> value.isNotEmpty() }
-                        .mapValues { it.value.first() },
-                "ldap", "org.keycloak.storage.UserStorageProvider"
+            testRealm, "test",
+            constructAdLdapConfig(ldapConfig)
+                .filter { (_, value) -> value.isNotEmpty() }
+                .mapValues { it.value.first() },
+            "ldap", "org.keycloak.storage.UserStorageProvider"
         ).executeIt()
 
         val createdFederation = client.userFederationByName("test", testRealm);
@@ -44,43 +43,45 @@ class AddUserFederationIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddUserFederationAlreadyExists() {
         val ldapConfig = mapOf(
-                "connectionUrl" to "https://testUrl",
-                "usersDn" to "usersTestDn",
-                "bindCredential" to "testPassword",
-                "bindDn" to "testBindDn")
+            "connectionUrl" to "https://testUrl",
+            "usersDn" to "usersTestDn",
+            "bindCredential" to "testPassword",
+            "bindDn" to "testBindDn"
+        )
         AddUserFederationAction(
-                testRealm, "test",
-                constructAdLdapConfig(ldapConfig)
-                        .filter { (_, value) -> value.isNotEmpty() }
-                        .mapValues { it.value.first() },
-                "ldap", "org.keycloak.storage.UserStorageProvider"
+            testRealm, "test",
+            constructAdLdapConfig(ldapConfig)
+                .filter { (_, value) -> value.isNotEmpty() }
+                .mapValues { it.value.first() },
+            "ldap", "org.keycloak.storage.UserStorageProvider"
         ).executeIt()
 
         assertThatThrownBy {
             AddUserFederationAction(
-                    testRealm, "test",
-                    constructAdLdapConfig(ldapConfig)
-                            .filter { (_, value) -> value.isNotEmpty() }
-                            .mapValues { it.value.first() },
-                    "ldap", "org.keycloak.storage.UserStorageProvider"
+                testRealm, "test",
+                constructAdLdapConfig(ldapConfig)
+                    .filter { (_, value) -> value.isNotEmpty() }
+                    .mapValues { it.value.first() },
+                "ldap", "org.keycloak.storage.UserStorageProvider"
             ).executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("UserFederation with name: test already exists in realm: ${testRealm}!")
+            .hasMessage("UserFederation with name: test already exists in realm: ${testRealm}!")
     }
 
     @Test
     fun testAddUserFederation_Rollback() {
         val ldapConfig = mapOf(
-                "connectionUrl" to "https://testUrl",
-                "usersDn" to "usersTestDn",
-                "bindCredential" to "testPassword",
-                "bindDn" to "testBindDn")
+            "connectionUrl" to "https://testUrl",
+            "usersDn" to "usersTestDn",
+            "bindCredential" to "testPassword",
+            "bindDn" to "testBindDn"
+        )
         val action = AddUserFederationAction(
-                testRealm, "test",
-                constructAdLdapConfig(ldapConfig)
-                        .filter { (_, value) -> value.isNotEmpty() }
-                        .mapValues { it.value.first() },
-                "ldap", "org.keycloak.storage.UserStorageProvider"
+            testRealm, "test",
+            constructAdLdapConfig(ldapConfig)
+                .filter { (_, value) -> value.isNotEmpty() }
+                .mapValues { it.value.first() },
+            "ldap", "org.keycloak.storage.UserStorageProvider"
         )
 
         action.executeIt()
@@ -90,6 +91,7 @@ class AddUserFederationIntegTest : AbstractIntegrationTest() {
         action.undoIt()
         assertThatThrownBy {
             client.userFederationByName("test", testRealm)
-        }.isInstanceOf(KeycloakApiException::class.java).hasMessageContaining("UserFederation with name: test does not exist in test!")
+        }.isInstanceOf(KeycloakApiException::class.java)
+            .hasMessageContaining("UserFederation with name: test does not exist in test!")
     }
 }

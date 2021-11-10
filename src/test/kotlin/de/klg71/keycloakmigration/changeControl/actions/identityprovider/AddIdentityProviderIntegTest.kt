@@ -6,7 +6,7 @@ import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class AddIdentityProviderIntegTest : AbstractIntegrationTest() {
 
@@ -61,7 +61,8 @@ class AddIdentityProviderIntegTest : AbstractIntegrationTest() {
                 testRealm, "test", "keycloak-oidc", config, displayName = "displayName", true, true, true, true,
                 "first broker login", ""
             ).executeIt()
-        }.isInstanceOf(MigrationException::class.java).hasMessage("Identity Provider with alias: test already exists in realm: test!")
+        }.isInstanceOf(MigrationException::class.java)
+            .hasMessage("Identity Provider with alias: test already exists in realm: test!")
 
     }
 }

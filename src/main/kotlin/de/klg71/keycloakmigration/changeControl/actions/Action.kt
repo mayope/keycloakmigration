@@ -2,8 +2,9 @@ package de.klg71.keycloakmigration.changeControl.actions
 
 import de.klg71.keycloakmigration.changeControl.RealmChecker
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.java.KoinJavaComponent.inject
 import org.slf4j.LoggerFactory
 
 /**
@@ -73,13 +74,14 @@ abstract class Action(var realm: String? = null) : KoinComponent {
     /**
      * Marks the action as executed so it will be rolled back if an error occurs calling the method undo
      */
-    protected fun setExecuted(){
-        executed=true
+    protected fun setExecuted() {
+        executed = true
     }
 
     protected fun realm(): String = (realm
-            ?: throw ParseException(
-                    "Realm is null for ${name()}, either provide it in the change or the changeset!")).also {
+        ?: throw ParseException(
+            "Realm is null for ${name()}, either provide it in the change or the changeset!"
+        )).also {
         realmChecker.check(it)
     }
 }

@@ -5,8 +5,8 @@ import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.model.User
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.core.inject
-import java.util.*
+import org.koin.core.component.inject
+import java.util.UUID
 
 class DeleteUserIntegTest : AbstractIntegrationTest() {
 
@@ -18,11 +18,14 @@ class DeleteUserIntegTest : AbstractIntegrationTest() {
 
         DeleteUserAction(testRealm, "test").executeIt()
 
-        User(id = UUID.randomUUID(), createdTimestamp = 0L, username = "test", enabled = true, emailVerified = true,
-                notBefore = 1L, totp = false, requiredActions = emptyList(), attributes = null, access = null,
-                disableableCredentialTypes = emptyList(), email = null, firstName = null, lastName = null,
-                credentials = emptyList()).let {
-            assertThat(client.users(testRealm)).usingElementComparatorOnFields("username", "enabled", "emailVerified").doesNotContain(it)
+        User(
+            id = UUID.randomUUID(), createdTimestamp = 0L, username = "test", enabled = true, emailVerified = true,
+            notBefore = 1L, totp = false, requiredActions = emptyList(), attributes = null, access = null,
+            disableableCredentialTypes = emptyList(), email = null, firstName = null, lastName = null,
+            credentials = emptyList()
+        ).let {
+            assertThat(client.users(testRealm)).usingElementComparatorOnFields("username", "enabled", "emailVerified")
+                .doesNotContain(it)
         }
 
     }

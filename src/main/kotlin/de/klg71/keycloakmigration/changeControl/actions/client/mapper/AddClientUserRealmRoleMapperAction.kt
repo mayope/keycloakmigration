@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.client.mapper
 
 import de.klg71.keycloakmigration.keycloakapi.model.userRealmRoleMapper
 
+@Suppress("LongParameterList")
 open class AddClientUserRealmRoleMapperAction(
     realm: String?,
     clientId: String,
@@ -22,6 +23,7 @@ open class AddClientUserRealmRoleMapperAction(
 
 }
 
+@Suppress("LongParameterList")
 @Deprecated("Will be removed in a future release. Use AddClientUserRealmRoleMapperAction action instead")
 class AddUserRealmRoleMapperAction(
     realm: String?,

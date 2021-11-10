@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.client.mapper
 
 import de.klg71.keycloakmigration.keycloakapi.model.groupMembershipMapper
 
+@Suppress("LongParameterList")
 open class AddClientGroupMembershipMapperAction(
     realm: String?,
     clientId: String,
@@ -22,6 +23,7 @@ open class AddClientGroupMembershipMapperAction(
 
 }
 
+@Suppress("LongParameterList")
 @Deprecated("Will be removed in a future release. Use AddClientGroupMembershipMapperAction action instead")
 class AddGroupMembershipMapperAction(
     realm: String?,

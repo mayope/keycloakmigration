@@ -2,14 +2,14 @@ package de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddAdLdapAction
-import de.klg71.keycloakmigration.keycloakapi.model.USER_ATTRIBUTE_MAPPER
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.ldapMapperByName
 import de.klg71.keycloakmigration.keycloakapi.ldapMapperExistsByName
+import de.klg71.keycloakmigration.keycloakapi.model.USER_ATTRIBUTE_MAPPER
 import de.klg71.keycloakmigration.keycloakapi.userFederationByName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class AddAdLdapUserAttributeMapperIntegTest : AbstractIntegrationTest() {
 
@@ -18,13 +18,16 @@ class AddAdLdapUserAttributeMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapUserAttributeMapper() {
         val ldapConfig = mapOf(
-                "connectionUrl" to "https://testUrl",
-                "usersDn" to "usersTestDn",
-                "bindCredential" to "testPassword",
-                "bindDn" to "testBindDn")
+            "connectionUrl" to "https://testUrl",
+            "usersDn" to "usersTestDn",
+            "bindCredential" to "testPassword",
+            "bindDn" to "testBindDn"
+        )
         val userFederationName = "testName"
-        AddAdLdapAction(testRealm,
-                userFederationName, ldapConfig).executeIt()
+        AddAdLdapAction(
+            testRealm,
+            userFederationName, ldapConfig
+        ).executeIt()
 
         val createdFederation = client.userFederationByName(userFederationName, testRealm);
 
@@ -32,11 +35,14 @@ class AddAdLdapUserAttributeMapperIntegTest : AbstractIntegrationTest() {
         val userModelAttribute = "userModelAttribute"
         val ldapAttribute = "ldapAttribute"
         AddAdLdapUserAttributeMapperAction(
-                testRealm, mapperName, createdFederation.name, userModelAttribute, ldapAttribute).executeIt()
+            testRealm, mapperName, createdFederation.name, userModelAttribute, ldapAttribute
+        ).executeIt()
 
         val createdMapper = client.ldapMapperByName(createdFederation.name, mapperName, testRealm)
 
-        assertThat((createdMapper.config["user.model.attribute"] ?: error("test error"))[0]).isEqualTo(userModelAttribute)
+        assertThat((createdMapper.config["user.model.attribute"] ?: error("test error"))[0]).isEqualTo(
+            userModelAttribute
+        )
         assertThat((createdMapper.config["ldap.attribute"] ?: error("test error"))[0]).isEqualTo(ldapAttribute)
         assertThat((createdMapper.config["read.only"] ?: error("test error"))[0]).isEqualTo("false")
         assertThat((createdMapper.config["always.read.value.from.ldap"] ?: error("test error"))[0]).isEqualTo("false")
@@ -47,13 +53,16 @@ class AddAdLdapUserAttributeMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapUserAttributeMapper_Undo() {
         val ldapConfig = mapOf(
-                "connectionUrl" to "https://testUrl",
-                "usersDn" to "usersTestDn",
-                "bindCredential" to "testPassword",
-                "bindDn" to "testBindDn")
+            "connectionUrl" to "https://testUrl",
+            "usersDn" to "usersTestDn",
+            "bindCredential" to "testPassword",
+            "bindDn" to "testBindDn"
+        )
         val userFederationName = "testName"
-        AddAdLdapAction(testRealm,
-                userFederationName, ldapConfig).executeIt()
+        AddAdLdapAction(
+            testRealm,
+            userFederationName, ldapConfig
+        ).executeIt()
 
         val createdFederation = client.userFederationByName(userFederationName, testRealm);
 
@@ -62,7 +71,8 @@ class AddAdLdapUserAttributeMapperIntegTest : AbstractIntegrationTest() {
         val ldapAttribute = "ldapAttribute"
 
         val action = AddAdLdapUserAttributeMapperAction(
-                testRealm, mapperName, createdFederation.name, userModelAttribute, ldapAttribute)
+            testRealm, mapperName, createdFederation.name, userModelAttribute, ldapAttribute
+        )
         action.executeIt()
         action.undoIt()
 

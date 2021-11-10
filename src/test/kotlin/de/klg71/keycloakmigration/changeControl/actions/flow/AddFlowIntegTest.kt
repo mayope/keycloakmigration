@@ -8,7 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 import java.util.AbstractMap
 
 class AddFlowIntegTest : AbstractIntegrationTest() {
@@ -21,10 +21,10 @@ class AddFlowIntegTest : AbstractIntegrationTest() {
         AddFlowAction(
             testRealm, alias, "Right round", executions = listOf(
                 AuthenticationExecutionImport(
-                        Flow.Requirement.REQUIRED,
-                        "idp-auto-link",
-                        0, 0,
-                        mapOf("foo" to "bar", "foo1" to "bar1")
+                    Flow.Requirement.REQUIRED,
+                    "idp-auto-link",
+                    0, 0,
+                    mapOf("foo" to "bar", "foo1" to "bar1")
                 )
             )
         ).executeIt()
@@ -38,10 +38,11 @@ class AddFlowIntegTest : AbstractIntegrationTest() {
         assertThat(executions.first().index).isEqualTo(0)
         assertThat(executions.first().level).isEqualTo(0)
         assertThat(executions.first().authenticationConfig != null)
-        val authenticatorConfiguration = client.getAuthenticatorConfiguration(testRealm, executions.first().authenticationConfig!!)
+        val authenticatorConfiguration =
+            client.getAuthenticatorConfiguration(testRealm, executions.first().authenticationConfig!!)
         assertThat(authenticatorConfiguration.config).containsExactly(
-                AbstractMap.SimpleEntry("foo", "bar"),
-                AbstractMap.SimpleEntry("foo1", "bar1"),
+            AbstractMap.SimpleEntry("foo", "bar"),
+            AbstractMap.SimpleEntry("foo1", "bar1"),
         )
     }
 
@@ -51,16 +52,16 @@ class AddFlowIntegTest : AbstractIntegrationTest() {
         AddFlowAction(
             testRealm, alias, "Right round", executions = listOf(
                 AuthenticationExecutionImport(
-                        Flow.Requirement.REQUIRED,
-                        "idp-auto-link",
-                        0, 0,
-                        mapOf("foo" to "bar", "foo1" to "bar1")
+                    Flow.Requirement.REQUIRED,
+                    "idp-auto-link",
+                    0, 0,
+                    mapOf("foo" to "bar", "foo1" to "bar1")
                 ),
                 AuthenticationExecutionImport(
-                        Flow.Requirement.ALTERNATIVE,
-                        "idp-confirm-link",
-                        0, 1,
-                        mapOf("foo2" to "bar2", "foo3" to "bar3")
+                    Flow.Requirement.ALTERNATIVE,
+                    "idp-confirm-link",
+                    0, 1,
+                    mapOf("foo2" to "bar2", "foo3" to "bar3")
                 ),
             )
         ).executeIt()
@@ -69,17 +70,19 @@ class AddFlowIntegTest : AbstractIntegrationTest() {
         assertThat(executions).hasSize(2)
         assertThat(executions.first().providerId).isEqualTo("idp-auto-link")
         assertThat(executions.first().requirement).isEqualTo(Flow.Requirement.REQUIRED)
-        val authenticatorConfiguration1 = client.getAuthenticatorConfiguration(testRealm, executions.first().authenticationConfig!!)
+        val authenticatorConfiguration1 =
+            client.getAuthenticatorConfiguration(testRealm, executions.first().authenticationConfig!!)
         assertThat(authenticatorConfiguration1.config).containsExactly(
-                AbstractMap.SimpleEntry("foo", "bar"),
-                AbstractMap.SimpleEntry("foo1", "bar1"),
+            AbstractMap.SimpleEntry("foo", "bar"),
+            AbstractMap.SimpleEntry("foo1", "bar1"),
         )
         assertThat(executions[1].providerId).isEqualTo("idp-confirm-link")
         assertThat(executions[1].requirement).isEqualTo(Flow.Requirement.ALTERNATIVE)
-        val authenticatorConfiguration2 = client.getAuthenticatorConfiguration(testRealm, executions[1].authenticationConfig!!)
+        val authenticatorConfiguration2 =
+            client.getAuthenticatorConfiguration(testRealm, executions[1].authenticationConfig!!)
         assertThat(authenticatorConfiguration2.config).containsExactly(
-                AbstractMap.SimpleEntry("foo2", "bar2"),
-                AbstractMap.SimpleEntry("foo3", "bar3"),
+            AbstractMap.SimpleEntry("foo2", "bar2"),
+            AbstractMap.SimpleEntry("foo3", "bar3"),
         )
     }
 

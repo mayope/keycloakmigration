@@ -3,13 +3,13 @@ package de.klg71.keycloakmigration.changeControl.actions.client
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
-import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
+import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 import java.util.UUID
 
 class AssignRoleToClientIntegTest : AbstractIntegrationTest() {
@@ -41,16 +41,18 @@ class AssignRoleToClientIntegTest : AbstractIntegrationTest() {
         UpdateClientAction(testRealm, clientId, serviceAccountsEnabled = true).executeIt()
         val roleClientId = "testRoleClient"
         AddSimpleClientAction(testRealm, roleClientId).executeIt()
-        AddRoleAction(testRealm, role,clientId= roleClientId).executeIt()
+        AddRoleAction(testRealm, role, clientId = roleClientId).executeIt()
 
         AssignRoleToClientAction(testRealm, role, clientId, roleClientId).executeIt()
 
         val serviceAccount = client.clientServiceAccount(client.clientUUID(clientId, testRealm), testRealm)
 
-        val testRole = RoleListItem(UUID.randomUUID(), role, null, false, true,
-                client.clientUUID(roleClientId,testRealm).toString())
+        val testRole = RoleListItem(
+            UUID.randomUUID(), role, null, false, true,
+            client.clientUUID(roleClientId, testRealm).toString()
+        )
 
-        client.userClientRoles(testRealm, serviceAccount.id,client.clientUUID(roleClientId,testRealm)).let {
+        client.userClientRoles(testRealm, serviceAccount.id, client.clientUUID(roleClientId, testRealm)).let {
             assertThat(it).usingElementComparatorOnFields("name", "containerId").contains(testRole)
         }
     }
@@ -61,7 +63,7 @@ class AssignRoleToClientIntegTest : AbstractIntegrationTest() {
         assertThatThrownBy {
             AssignRoleToClientAction(testRealm, role, clientId).executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("Client with name: $clientId does not exist in realm: ${testRealm}!")
+            .hasMessage("Client with name: $clientId does not exist in realm: ${testRealm}!")
     }
 
     @Test
@@ -70,7 +72,7 @@ class AssignRoleToClientIntegTest : AbstractIntegrationTest() {
         assertThatThrownBy {
             AssignRoleToClientAction(testRealm, role, clientId).executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("Role with name: $role does not exist in realm: ${testRealm}!")
+            .hasMessage("Role with name: $role does not exist in realm: ${testRealm}!")
     }
 
     @Test
@@ -80,7 +82,7 @@ class AssignRoleToClientIntegTest : AbstractIntegrationTest() {
         assertThatThrownBy {
             AssignRoleToClientAction(testRealm, role, clientId, "testRoleClient").executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("Role with name: $role in client: testRoleClient does not exist in realm: $testRealm!")
+            .hasMessage("Role with name: $role in client: testRoleClient does not exist in realm: $testRealm!")
     }
 
     @Test

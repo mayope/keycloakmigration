@@ -1,12 +1,10 @@
 package de.klg71.keycloakmigration.changeControl.actions
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.reset
-import com.nhaarman.mockitokotlin2.validateMockitoUsage
 import de.klg71.keycloakmigration.KoinLogger
 import de.klg71.keycloakmigration.changeControl.RealmChecker
-import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.model.Realm
+import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat
@@ -18,15 +16,14 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.koin.test.KoinTest
-import org.mockito.Mockito
 import org.slf4j.LoggerFactory
 
 class ActionTest : KoinTest {
 
     class MockAction(private val throwException: Boolean = false,
-                     private val undoOnException: Boolean = false,
-                     private val exceptionInUndo: Boolean = false,
-                     realm: String? = null) : Action(realm) {
+        private val undoOnException: Boolean = false,
+        private val exceptionInUndo: Boolean = false,
+        realm: String? = null) : Action(realm) {
         var undoCalled = false
         override fun execute() {
             if (undoOnException) {
@@ -51,24 +48,23 @@ class ActionTest : KoinTest {
 
 
     private val logger = LoggerFactory.getLogger(ActionTest::class.java)!!
-    private val client = mock<KeycloakClient>()
-    private val realmChecker = mock<RealmChecker>()
+    private val client = mockk<KeycloakClient>()
+    private val realmChecker = mockk<RealmChecker>(relaxed = true)
 
     @Before
     fun setup() {
-        reset(client, realmChecker)
+        clearMocks(client, realmChecker)
         startKoin {
             logger(KoinLogger(logger))
             modules(module {
                 single { client }
-                single {realmChecker}
+                single { realmChecker }
             })
         }
     }
 
     @After
     fun tearDown() {
-        validateMockitoUsage()
         stopKoin()
     }
 
@@ -119,7 +115,7 @@ class ActionTest : KoinTest {
         assertThatThrownBy {
             mockAction.callRealm()
         }.isInstanceOf(ParseException::class.java)
-                .hasMessage("Realm is null for testAction, either provide it in the change or the changeset!")
+            .hasMessage("Realm is null for testAction, either provide it in the change or the changeset!")
     }
 
     @Test
@@ -130,7 +126,7 @@ class ActionTest : KoinTest {
             mockRealm.id
         }.returns("test")
 
-        Mockito.`when`(client.realms()).thenReturn(listOf(mockRealm))
+        every { client.realms() }.returns(listOf(mockRealm))
 
         assertThat(mockAction.callRealm()).isEqualTo("test")
     }
@@ -139,7 +135,7 @@ class ActionTest : KoinTest {
     fun testRealm_SetUnReachable() {
         val mockAction = MockAction(realm = "test")
 
-        Mockito.`when`(realmChecker.check("test")).thenThrow(MigrationException("Realm does not exist"))
+        every { realmChecker.check("test") }.throws(MigrationException("Realm does not exist"))
 
         assertThatThrownBy {
             mockAction.callRealm()

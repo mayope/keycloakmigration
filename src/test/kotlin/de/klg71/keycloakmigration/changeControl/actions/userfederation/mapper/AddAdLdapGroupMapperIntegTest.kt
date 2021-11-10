@@ -3,14 +3,14 @@ package de.klg71.keycloakmigration.changeControl.actions.userfederation.mapper
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.userfederation.AddAdLdapAction
-import de.klg71.keycloakmigration.keycloakapi.model.GROUP_MAPPER
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.ldapMapperByName
 import de.klg71.keycloakmigration.keycloakapi.ldapMapperExistsByName
+import de.klg71.keycloakmigration.keycloakapi.model.GROUP_MAPPER
 import de.klg71.keycloakmigration.keycloakapi.userFederationByName
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class AddAdLdapGroupMapperIntegTest : AbstractIntegrationTest() {
 
@@ -19,13 +19,16 @@ class AddAdLdapGroupMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapGroupMapper() {
         val ldapConfig = mapOf(
-                "connectionUrl" to "https://testUrl",
-                "usersDn" to "usersTestDn",
-                "bindCredential" to "testPassword",
-                "bindDn" to "testBindDn")
+            "connectionUrl" to "https://testUrl",
+            "usersDn" to "usersTestDn",
+            "bindCredential" to "testPassword",
+            "bindDn" to "testBindDn"
+        )
         val userFederationName = "testName"
-        AddAdLdapAction(testRealm,
-                userFederationName, ldapConfig).executeIt()
+        AddAdLdapAction(
+            testRealm,
+            userFederationName, ldapConfig
+        ).executeIt()
 
         val createdFederation = client.userFederationByName(userFederationName, testRealm);
 
@@ -35,7 +38,8 @@ class AddAdLdapGroupMapperIntegTest : AbstractIntegrationTest() {
         val mapperName = "mapperName"
         val groupsDns = "groupsDns"
         AddAdLdapGroupMapperAction(
-                testRealm, mapperName, createdFederation.name, groupsDns).executeIt()
+            testRealm, mapperName, createdFederation.name, groupsDns
+        ).executeIt()
 
         val createdMapper = client.ldapMapperByName(createdFederation.name, mapperName, testRealm)
 
@@ -47,13 +51,16 @@ class AddAdLdapGroupMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapGroupMapper_Undo() {
         val ldapConfig = mapOf(
-                "connectionUrl" to "https://testUrl",
-                "usersDn" to "usersTestDn",
-                "bindCredential" to "testPassword",
-                "bindDn" to "testBindDn")
+            "connectionUrl" to "https://testUrl",
+            "usersDn" to "usersTestDn",
+            "bindCredential" to "testPassword",
+            "bindDn" to "testBindDn"
+        )
         val userFederationName = "testName"
-        AddAdLdapAction(testRealm,
-                userFederationName, ldapConfig).executeIt()
+        AddAdLdapAction(
+            testRealm,
+            userFederationName, ldapConfig
+        ).executeIt()
 
         val createdFederation = client.userFederationByName(userFederationName, testRealm);
 
@@ -62,7 +69,8 @@ class AddAdLdapGroupMapperIntegTest : AbstractIntegrationTest() {
         val mapperName = "mapperName"
         val groupsDns = "groupsDns"
         val action = AddAdLdapGroupMapperAction(
-                testRealm, mapperName, createdFederation.name, groupsDns)
+            testRealm, mapperName, createdFederation.name, groupsDns
+        )
         action.executeIt()
         action.undoIt()
 

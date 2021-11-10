@@ -10,7 +10,7 @@ import de.klg71.keycloakmigration.keycloakapi.userByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class UpdateUserIntegTest : AbstractIntegrationTest() {
 
@@ -32,23 +32,29 @@ class UpdateUserIntegTest : AbstractIntegrationTest() {
         assertThatThrownBy {
             UpdateUserAction(testRealm, "testIntegration", email = "testEmail").executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("User with name: testIntegration does not exist in realm: ${testRealm}!")
+            .hasMessage("User with name: testIntegration does not exist in realm: ${testRealm}!")
 
     }
 
     @Test
     fun testUpdateUser_password() {
         AddUserAction(testRealm, "testIntegration").executeIt()
-        val hashedSaltedValue = "1tWf95Drz6t8/9kKE3tiJXOywCzG/C0KDnmCIFXEDdFQMPB6iVWWxjLO9HJI3YwTfWZa78N+hcmYHcT1tkavcA=="
+        val hashedSaltedValue =
+            "1tWf95Drz6t8/9kKE3tiJXOywCzG/C0KDnmCIFXEDdFQMPB6iVWWxjLO9HJI3YwTfWZa78N+hcmYHcT1tkavcA=="
         val salt = "dGVzdA=="
         val password = "1234"
 
-        UpdateUserAction(testRealm, "testIntegration", credentials = listOf(UserCredential(
-                salt = salt,
-                hashedSaltedValue = hashedSaltedValue)))
-                .executeIt()
+        UpdateUserAction(
+            testRealm, "testIntegration", credentials = listOf(
+                UserCredential(
+                    salt = salt,
+                    hashedSaltedValue = hashedSaltedValue
+                )
+            )
+        )
+            .executeIt()
         val loginClient = initKeycloakLoginClient(TEST_BASE_URL)
-        val answer = loginClient.login(testRealm, "password", "admin-cli", "testIntegration", password,"")
+        val answer = loginClient.login(testRealm, "password", "admin-cli", "testIntegration", password, "")
         assertThat(answer.accessToken).isNotEmpty()
     }
 }

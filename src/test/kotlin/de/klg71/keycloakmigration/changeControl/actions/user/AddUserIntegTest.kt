@@ -12,8 +12,8 @@ import de.klg71.keycloakmigration.keycloakapi.userByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
-import java.util.*
+import org.koin.core.component.inject
+import java.util.UUID
 
 class AddUserIntegTest : AbstractIntegrationTest() {
 
@@ -21,14 +21,20 @@ class AddUserIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testAddUser() {
-        AddUserAction(testRealm, name = "test", email = "local@local.local", firstName = "test", lastName = "user").executeIt()
+        AddUserAction(
+            testRealm, name = "test", email = "local@local.local", firstName = "test", lastName = "user"
+        ).executeIt()
 
-        User(id = UUID.randomUUID(), createdTimestamp = 0L, username = "test", enabled = true, emailVerified = true,
-                notBefore = 1L, totp = false, requiredActions = emptyList(), attributes = null, access = null,
-                disableableCredentialTypes = emptyList(), email = "local@local.local", firstName = "test",
-                lastName = "user", credentials = emptyList()).let {
-            assertThat(client.users(testRealm)).usingElementComparatorOnFields("username", "enabled", "emailVerified",
-                    "email", "firstName", "lastName").contains(it)
+        User(
+            id = UUID.randomUUID(), createdTimestamp = 0L, username = "test", enabled = true, emailVerified = true,
+            notBefore = 1L, totp = false, requiredActions = emptyList(), attributes = null, access = null,
+            disableableCredentialTypes = emptyList(), email = "local@local.local", firstName = "test",
+            lastName = "user", credentials = emptyList()
+        ).let {
+            assertThat(client.users(testRealm)).usingElementComparatorOnFields(
+                "username", "enabled", "emailVerified",
+                "email", "firstName", "lastName"
+            ).contains(it)
         }
     }
 
@@ -45,15 +51,19 @@ class AddUserIntegTest : AbstractIntegrationTest() {
         AddSimpleClientAction(testRealm, "testClient").executeIt()
         AddRoleAction(testRealm, "testClientRole", "testClient").executeIt()
         AddRoleAction(testRealm, "testRealmRole").executeIt()
-        AddUserAction(testRealm, "test",
-                groups = listOf("testGroup"),
-                realmRoles = listOf("testRealmRole"),
-                clientRoles = listOf(ClientRole("testClientRole", "testClient"))).executeIt()
+        AddUserAction(
+            testRealm, "test",
+            groups = listOf("testGroup"),
+            realmRoles = listOf("testRealmRole"),
+            clientRoles = listOf(ClientRole("testClientRole", "testClient"))
+        ).executeIt()
 
         val user = client.userByName(testRealm, "test")
         assertThat(client.userGroups(testRealm, user.id).map { it.name }).containsOnly("testGroup")
         assertThat(client.userRoles(testRealm, user.id).map { it.name }).contains("testRealmRole")
-        assertThat(client.userClientRoles(testRealm, user.id, client.clientUUID("testClient", testRealm)).map { it.name }).containsOnly("testClientRole")
+        assertThat(
+            client.userClientRoles(testRealm, user.id, client.clientUUID("testClient", testRealm))
+                .map { it.name }).containsOnly("testClientRole")
     }
 
     @Test

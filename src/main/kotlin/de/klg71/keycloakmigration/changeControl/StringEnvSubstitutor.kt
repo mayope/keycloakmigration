@@ -2,12 +2,12 @@ package de.klg71.keycloakmigration.changeControl
 
 import org.apache.commons.text.StringSubstitutor
 import org.apache.commons.text.matcher.StringMatcher
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.qualifier.named
 
 internal class StringEnvSubstitutor(private val failOnUndefinedVariables: Boolean = false,
-                                    private val warnOnUndefinedVariables: Boolean = true) : KoinComponent {
+    private val warnOnUndefinedVariables: Boolean = true) : KoinComponent {
 
     private val parameters: Map<String, String> by inject(named("parameters"))
 
@@ -54,5 +54,5 @@ internal class StringEnvSubstitutor(private val failOnUndefinedVariables: Boolea
     }
 
     private fun StringMatcher.matchesAt(value: String, position: Int) =
-            isMatch(value.toCharArray(), position, 0, value.length) > 0
+        isMatch(value.toCharArray(), position, 0, value.length) > 0
 }

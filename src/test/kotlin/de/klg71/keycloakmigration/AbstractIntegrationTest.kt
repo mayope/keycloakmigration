@@ -5,28 +5,25 @@ import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import feign.slf4j.Slf4jLogger
 import org.junit.After
 import org.junit.Before
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
-import org.slf4j.LoggerFactory
 
-private val adminUser = "admin"
-private val adminPass = "admin"
+private const val adminUser = "admin"
+private const val adminPass = "admin"
 const val TEST_BASE_URL = "http://localhost:18080/auth"
-private val realm = "master"
-private val clientId = "admin-cli"
+private const val realm = "master"
+private const val clientId = "admin-cli"
 
 abstract class AbstractIntegrationTest : KoinComponent {
 
     protected val testRealm = "test"
 
-    private val logger = LoggerFactory.getLogger(AbstractIntegrationTest::class.java)
-
     init {
         startKoin {
             modules(
                 myModule(
-                    adminUser, adminPass,"", TEST_BASE_URL, realm, clientId, emptyMap(),
+                    adminUser, adminPass, "", TEST_BASE_URL, realm, clientId, emptyMap(),
                     failOnUndefinedVariabled = true, warnOnUndefinedVariables = true, Slf4jLogger()
                 )
             )
@@ -37,7 +34,7 @@ abstract class AbstractIntegrationTest : KoinComponent {
         startKoin {
             modules(
                 myModule(
-                    adminUser, adminPass,"", TEST_BASE_URL, realm, clientId, parameters,
+                    adminUser, adminPass, "", TEST_BASE_URL, realm, clientId, parameters,
                     failOnUndefinedVariabled = true, warnOnUndefinedVariables = true
                 )
             )

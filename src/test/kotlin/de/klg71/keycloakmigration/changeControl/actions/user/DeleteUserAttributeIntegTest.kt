@@ -7,7 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.userByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class DeleteUserAttributeIntegTest : AbstractIntegrationTest() {
 
@@ -30,8 +30,9 @@ class DeleteUserAttributeIntegTest : AbstractIntegrationTest() {
         assertThatThrownBy {
             DeleteUserAttributeAction(testRealm, "test", "testAttribute").executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("Attribute testAttribute is not present on user test!")
+            .hasMessage("Attribute testAttribute is not present on user test!")
     }
+
     @Test
     fun testDeleteUserAttribute_notExisting_failOnMissingFalse() {
         AddUserAction(testRealm, "test").executeIt()

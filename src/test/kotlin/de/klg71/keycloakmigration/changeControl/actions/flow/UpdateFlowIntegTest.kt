@@ -6,8 +6,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImpor
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.core.inject
-import java.util.AbstractMap
+import org.koin.core.component.inject
 import java.util.AbstractMap.SimpleEntry
 
 class UpdateFlowIntegTest : AbstractIntegrationTest() {
@@ -28,7 +27,9 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         val description = "Left round"
         UpdateFlowAction(
             testRealm, flow.alias, newAlias, description, null, null, listOf(
-                AuthenticationExecutionImport(Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, mapOf("foo1" to "bar1"))
+                AuthenticationExecutionImport(
+                    Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, mapOf("foo1" to "bar1")
+                )
             )
         ).executeIt()
         val updatedFlow = client.flows(testRealm).first { it.alias == newAlias }
@@ -37,7 +38,8 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         assertThat(executions).hasSize(1)
         assertThat(executions.first().providerId).isEqualTo("idp-confirm-link")
         assertThat(executions.first().requirement).isEqualTo(Flow.Requirement.REQUIRED)
-        val authenticatorConfiguration = client.getAuthenticatorConfiguration(testRealm, executions.first().authenticationConfig!!)
+        val authenticatorConfiguration =
+            client.getAuthenticatorConfiguration(testRealm, executions.first().authenticationConfig!!)
         assertThat(authenticatorConfiguration.config).containsExactly(SimpleEntry("foo1", "bar1"))
     }
 
@@ -56,7 +58,9 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         val description = "Left round"
         val action = UpdateFlowAction(
             testRealm, flow.alias, newAlias, description, null, null, listOf(
-                AuthenticationExecutionImport(Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, mapOf("foo1" to "bar1"))
+                AuthenticationExecutionImport(
+                    Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, mapOf("foo1" to "bar1")
+                )
             )
         )
         action.executeIt()

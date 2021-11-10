@@ -7,7 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.userByName
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class AddUserAttributeIntegTest : AbstractIntegrationTest() {
 
@@ -30,7 +30,7 @@ class AddUserAttributeIntegTest : AbstractIntegrationTest() {
         Assertions.assertThatThrownBy {
             AddUserAttributeAction(testRealm, "test", "testAttribute", listOf("testValue1", "testValue2")).executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("Attribute testAttribute is already present on user test!")
+            .hasMessage("Attribute testAttribute is already present on user test!")
     }
 
     @Test

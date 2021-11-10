@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper
 
 import de.klg71.keycloakmigration.keycloakapi.model.userRealmRoleMapper
 
+@Suppress("LongParameterList")
 open class AddClientScopeUserRealmRoleMapperAction(
     realm: String?,
     clientScopeName: String,

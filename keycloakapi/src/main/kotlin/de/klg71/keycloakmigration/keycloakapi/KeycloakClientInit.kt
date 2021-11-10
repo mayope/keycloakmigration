@@ -18,7 +18,7 @@ import feign.jackson.JacksonEncoder
  * @param clientId id of the client to use for the login of the user
  */
 fun initKeycloakClient(baseUrl: String, adminUser: String, adminPassword: String, realm: String,
-    clientId: String, logger: Logger? = null, totp: String = "", tokenOffsetMs: Long = 100) = initObjectMapper().let {
+    clientId: String, logger: Logger? = null, totp: String = "", tokenOffsetMs: Long = 1000) = initObjectMapper().let {
     TokenHolder(
         initKeycloakLoginClient(baseUrl, logger),
         adminUser, adminPassword, realm, clientId, totp, tokenOffsetMs

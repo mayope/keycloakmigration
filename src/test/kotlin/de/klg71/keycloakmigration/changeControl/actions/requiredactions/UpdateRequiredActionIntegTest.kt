@@ -6,8 +6,8 @@ import feign.FeignException
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.core.inject
-import java.util.*
+import org.koin.core.component.inject
+import java.util.AbstractMap
 
 class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
 
@@ -16,20 +16,20 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
     @Test
     fun testUpdateRequiredAction() {
         AddRequiredActionAction(
-                testRealm, "UPDATE_PASSWORD", "update_password", "Update password",
-                mapOf(
-                        "foo" to "bar",
-                        "foo1" to "bar1"
-                ), false, true, 123
+            testRealm, "UPDATE_PASSWORD", "update_password", "Update password",
+            mapOf(
+                "foo" to "bar",
+                "foo1" to "bar1"
+            ), false, true, 123
         ).executeIt()
 
         val requiredAction = client.requiredAction(testRealm, "update_password")
         UpdateRequiredActionAction(
-                testRealm, requiredAction.alias, null, "update_password2", "Update password 2",
-                mapOf(
-                        "foo" to "bar",
-                        "foo3" to "bar3"
-                ), true, null, 321
+            testRealm, requiredAction.alias, null, "update_password2", "Update password 2",
+            mapOf(
+                "foo" to "bar",
+                "foo3" to "bar3"
+            ), true, null, 321
         ).executeIt()
 
         Assertions.assertThatThrownBy {
@@ -42,8 +42,8 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
         assertThat(updatedRequiredAction.providerId).isEqualTo(requiredAction.providerId)
         assertThat(updatedRequiredAction.name).isEqualTo("Update password 2")
         assertThat(updatedRequiredAction.config).containsExactly(
-                AbstractMap.SimpleEntry("foo3", "bar3"),
-                AbstractMap.SimpleEntry("foo", "bar")
+            AbstractMap.SimpleEntry("foo3", "bar3"),
+            AbstractMap.SimpleEntry("foo", "bar")
         )
         assertThat(updatedRequiredAction.defaultAction).isEqualTo(true)
         assertThat(updatedRequiredAction.enabled).isEqualTo(requiredAction.enabled)
@@ -53,20 +53,20 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
     @Test
     fun testUpdateRequiredActions_Rollback() {
         AddRequiredActionAction(
-                testRealm, "UPDATE_PASSWORD", "update_password", "Update password",
-                mapOf(
-                        "foo" to "bar",
-                        "foo1" to "bar1"
-                ), false, true, 123
+            testRealm, "UPDATE_PASSWORD", "update_password", "Update password",
+            mapOf(
+                "foo" to "bar",
+                "foo1" to "bar1"
+            ), false, true, 123
         ).executeIt()
 
         val requiredAction = client.requiredAction(testRealm, "update_password")
         val action = UpdateRequiredActionAction(
-                testRealm, requiredAction.alias, null, "update_password2", "Update password 2",
-                mapOf(
-                        "foo" to "bar",
-                        "foo3" to "bar3"
-                ), true, null, 321
+            testRealm, requiredAction.alias, null, "update_password2", "Update password 2",
+            mapOf(
+                "foo" to "bar",
+                "foo3" to "bar3"
+            ), true, null, 321
         )
 
         action.executeIt()
@@ -81,8 +81,8 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
         assertThat(updatedRequiredAction.providerId).isEqualTo(requiredAction.providerId)
         assertThat(updatedRequiredAction.name).isEqualTo("Update password 2")
         assertThat(updatedRequiredAction.config).containsExactly(
-                AbstractMap.SimpleEntry("foo3", "bar3"),
-                AbstractMap.SimpleEntry("foo", "bar")
+            AbstractMap.SimpleEntry("foo3", "bar3"),
+            AbstractMap.SimpleEntry("foo", "bar")
         )
         assertThat(updatedRequiredAction.defaultAction).isEqualTo(true)
         assertThat(updatedRequiredAction.enabled).isEqualTo(requiredAction.enabled)
@@ -100,8 +100,8 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
         assertThat(revertedRequiredAction.providerId).isEqualTo("UPDATE_PASSWORD")
         assertThat(revertedRequiredAction.name).isEqualTo("Update password")
         assertThat(revertedRequiredAction.config).containsExactly(
-                AbstractMap.SimpleEntry("foo", "bar"),
-                AbstractMap.SimpleEntry("foo1", "bar1")
+            AbstractMap.SimpleEntry("foo", "bar"),
+            AbstractMap.SimpleEntry("foo1", "bar1")
         )
         assertThat(revertedRequiredAction.defaultAction).isEqualTo(false)
         assertThat(revertedRequiredAction.enabled).isEqualTo(true)

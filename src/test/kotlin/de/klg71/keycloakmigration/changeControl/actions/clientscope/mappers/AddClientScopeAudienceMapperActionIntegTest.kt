@@ -3,28 +3,22 @@ package de.klg71.keycloakmigration.changeControl.actions.clientscope.mappers
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AddClientScopeAction
-import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeAudienceMapperAction
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.clientScopeUUID
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
-class AddClientScopeMapperActionIntegTest : AbstractIntegrationTest() {
+class AddClientScopeAudienceMapperActionIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
-    val config = mapOf(
-        "userinfo.token.claim" to "true",
-        "user.attribute" to "title",
-        "id.token.claim" to "false",
-        "access.token.claim" to "true",
-        "claim.name" to "title",
-        "jsonType.label" to "String"
-    )
     val mapperName = "testMapper"
     val protocol = "openid-connect"
-    val protocolMapper = "oidc-usermodel-attribute-mapper"
+    val protocolMapper = "oidc-audience-mapper"
+    val clientAudience = "clientAudience"
+    val customAudience = "customAudience"
 
     val clientScopeName = "simpleClientScope"
 
@@ -32,9 +26,10 @@ class AddClientScopeMapperActionIntegTest : AbstractIntegrationTest() {
     fun testAddMapper() {
         AddClientScopeAction(testRealm, clientScopeName).executeIt()
 
-        AddClientScopeMapperAction(
+        AddClientScopeAudienceMapperAction(
             testRealm, clientScopeName, mapperName,
-            config, protocol, protocolMapper
+            clientAudience = clientAudience,
+            customAudience = customAudience
         ).executeIt()
 
         val mappers = client.clientScopeMappers(client.clientScopeUUID(clientScopeName, testRealm), testRealm)
@@ -43,29 +38,32 @@ class AddClientScopeMapperActionIntegTest : AbstractIntegrationTest() {
 
         val mapper = mappers[0]
 
-        assertThat(mapper.config).isEqualTo(config)
         assertThat(mapper.name).isEqualTo(mapperName)
         assertThat(mapper.protocol).isEqualTo(protocol)
         assertThat(mapper.protocolMapper).isEqualTo(protocolMapper)
+        assertThat(mapper.config["included.client.audience"]).isEqualTo(clientAudience)
+        assertThat(mapper.config["included.custom.audience"]).isEqualTo(customAudience)
     }
 
     @Test
     fun testAddExistingMapper() {
-        AddClientScopeAction(testRealm, clientScopeName).executeIt();
+        AddClientScopeAction(testRealm, clientScopeName).executeIt()
 
-        AddClientScopeMapperAction(
+        AddClientScopeAudienceMapperAction(
             testRealm, clientScopeName, mapperName,
-            config, protocol, protocolMapper
+            clientAudience = clientAudience,
+            customAudience = customAudience
         ).executeIt()
 
         assertThatThrownBy {
-            AddClientScopeMapperAction(
+            AddClientScopeAudienceMapperAction(
                 testRealm, clientScopeName, mapperName,
-                config, protocol, protocolMapper
+                clientAudience = clientAudience,
+                customAudience = customAudience
             ).executeIt()
         }.isInstanceOf(MigrationException::class.java)
-            .hasMessage("Mapper with name: $mapperName already exists in client scope: $clientScopeName on realm: $testRealm!")
-
+            .hasMessage(
+                "Mapper with name: $mapperName already exists in client scope: $clientScopeName on realm: $testRealm!"
+            )
     }
-
 }

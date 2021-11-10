@@ -3,14 +3,14 @@ package de.klg71.keycloakmigration.changeControl.actions.user
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
-import de.klg71.keycloakmigration.keycloakapi.model.UserGroupListItem
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.model.UserGroupListItem
 import de.klg71.keycloakmigration.keycloakapi.userByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
-import java.util.*
+import org.koin.core.component.inject
+import java.util.UUID
 
 class AssignGroupIntegTest : AbstractIntegrationTest() {
 
@@ -34,7 +34,8 @@ class AssignGroupIntegTest : AbstractIntegrationTest() {
         AddGroupAction(testRealm, "testGroup").executeIt()
         assertThatThrownBy {
             AssignGroupAction(testRealm, "testIntegration", "testGroup").executeIt()
-        }.isInstanceOf(MigrationException::class.java).hasMessage("User with name: testIntegration does not exist in realm: $testRealm!")
+        }.isInstanceOf(MigrationException::class.java)
+            .hasMessage("User with name: testIntegration does not exist in realm: $testRealm!")
     }
 
     @Test
@@ -42,6 +43,7 @@ class AssignGroupIntegTest : AbstractIntegrationTest() {
         AddUserAction(testRealm, "testIntegration").executeIt()
         assertThatThrownBy {
             AssignGroupAction(testRealm, "testIntegration", "testGroup").executeIt()
-        }.isInstanceOf(MigrationException::class.java).hasMessage("Group with name: testGroup does not exist in realm: $testRealm!")
+        }.isInstanceOf(MigrationException::class.java)
+            .hasMessage("Group with name: testGroup does not exist in realm: $testRealm!")
     }
 }

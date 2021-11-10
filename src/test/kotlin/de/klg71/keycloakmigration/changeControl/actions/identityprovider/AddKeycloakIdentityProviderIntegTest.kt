@@ -6,7 +6,7 @@ import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class AddKeycloakIdentityProviderIntegTest : AbstractIntegrationTest() {
 
@@ -31,8 +31,9 @@ class AddKeycloakIdentityProviderIntegTest : AbstractIntegrationTest() {
             defaultScopes = scopes, issuer = issuer
         ).executeIt()
 
-        val identityProvider = client.identityProvider(testRealm
-            , "test")
+        val identityProvider = client.identityProvider(
+            testRealm, "test"
+        )
 
         assertThat(identityProvider.alias).isEqualTo("test")
         assertThat(identityProvider.providerId).isEqualTo("keycloak-oidc")

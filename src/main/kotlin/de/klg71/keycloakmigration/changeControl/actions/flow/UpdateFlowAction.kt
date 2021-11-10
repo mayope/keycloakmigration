@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowInPlace
 import de.klg71.keycloakmigration.keycloakapi.updateFlowInPlace
 
 
+@Suppress("LongParameterList")
 class UpdateFlowAction(
     realm: String?,
     private val alias: String,

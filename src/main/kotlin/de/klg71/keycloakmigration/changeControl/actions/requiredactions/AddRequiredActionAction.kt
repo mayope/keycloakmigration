@@ -5,6 +5,7 @@ import de.klg71.keycloakmigration.keycloakapi.importRequiredAction
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
 
 
+@Suppress("LongParameterList")
 class AddRequiredActionAction(
     realm: String?,
     private val providerId: String,

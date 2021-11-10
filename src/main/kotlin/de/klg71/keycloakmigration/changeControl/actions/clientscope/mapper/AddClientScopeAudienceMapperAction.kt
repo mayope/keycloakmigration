@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper
 
 import de.klg71.keycloakmigration.keycloakapi.model.audienceMapper
 
+@Suppress("LongParameterList")
 open class AddClientScopeAudienceMapperAction(
     realm: String?,
     clientScopeName: String,

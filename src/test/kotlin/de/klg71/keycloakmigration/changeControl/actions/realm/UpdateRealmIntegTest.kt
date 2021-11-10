@@ -2,14 +2,13 @@ package de.klg71.keycloakmigration.changeControl.actions.realm
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
-import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.realmById
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.After
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class UpdateRealmIntegTest : AbstractIntegrationTest() {
 
@@ -38,8 +37,8 @@ class UpdateRealmIntegTest : AbstractIntegrationTest() {
         assertThatThrownBy {
             UpdateRealmAction("testRealm", displayName = "myDisplayName").executeIt()
         }
-                .isInstanceOf(MigrationException::class.java)
-                .hasMessage("Realm with id: testRealm does not exist!")
+            .isInstanceOf(MigrationException::class.java)
+            .hasMessage("Realm with id: testRealm does not exist!")
     }
 
     @Test
@@ -62,11 +61,11 @@ class UpdateRealmIntegTest : AbstractIntegrationTest() {
         assertThat(client.realmById("testRealm").loginTheme).isEqualTo(null)
 
         UpdateRealmAction(
-                "testRealm",
-                accountTheme = "keycloak",
-                adminTheme = "keycloak",
-                emailTheme = "keycloak",
-                loginTheme = "keycloak"
+            "testRealm",
+            accountTheme = "keycloak",
+            adminTheme = "keycloak",
+            emailTheme = "keycloak",
+            loginTheme = "keycloak"
         ).executeIt()
 
         assertThat(client.realmById("testRealm").accountTheme).isEqualTo("keycloak")

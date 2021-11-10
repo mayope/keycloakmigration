@@ -13,7 +13,7 @@ plugins {
     // Security check for dependencies by task
     id("org.owasp.dependencycheck") version "5.3.0"
     // static code analysis
-    id("io.gitlab.arturbosch.detekt") version "1.7.0-beta1"
+    id("io.gitlab.arturbosch.detekt") version "1.19.0-RC1"
 
     id("com.github.johnrengelman.shadow") version "6.0.0" apply (false)
 }
@@ -25,7 +25,7 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.10.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.3")
-    implementation("org.koin:koin-core:2.0.1")
+    implementation("io.insert-koin:koin-core:3.1.3")
     implementation("commons-codec:commons-codec:1.11")
     implementation("com.xenomachina:kotlin-argparser:2.0.7")
 
@@ -44,15 +44,14 @@ dependencies {
     testImplementation("io.mockk:mockk:1.9")
 
     testImplementation("org.assertj:assertj-core:3.11.1")
-    testImplementation("org.koin:koin-test:2.0.1")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
+    testImplementation("io.insert-koin:koin-test:3.1.3")
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.27.0")
 }
 
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 tasks {

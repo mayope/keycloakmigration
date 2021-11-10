@@ -7,6 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
 import de.klg71.keycloakmigration.keycloakapi.model.OPENID_CONNECT_PROTOCOL
 import java.util.*
 
+@Suppress("LongParameterList")
 class AddSimpleClientAction(
         realm: String?,
         private val clientId: String,

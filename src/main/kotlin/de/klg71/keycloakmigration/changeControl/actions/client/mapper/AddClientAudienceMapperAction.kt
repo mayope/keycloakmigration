@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.client.mapper
 
 import de.klg71.keycloakmigration.keycloakapi.model.audienceMapper
 
+@Suppress("LongParameterList")
 open class AddClientAudienceMapperAction(
     realm: String?,
     clientId: String,
@@ -18,6 +19,7 @@ open class AddClientAudienceMapperAction(
 
 }
 
+@Suppress("LongParameterList")
 @Deprecated("Will be removed in a future release. Use AddClientAudienceMapper action instead")
 class AddAudienceMapperAction(
     realm: String?,

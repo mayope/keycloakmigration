@@ -6,6 +6,7 @@ import de.klg71.keycloakmigration.changeControl.KeycloakMigration
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.slf4j.LoggerFactory
+import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketException
 import java.net.URL
@@ -32,10 +33,13 @@ internal fun waitForKeycloak(baseUrl: String, timeout: Long) {
     }
 }
 
+@Suppress("SwallowedException")
 private fun isKeycloakReady(baseUrl: String): Boolean {
     try {
         if (URL(baseUrl).readBytes().isNotEmpty())
             return true
+    } catch (e: IOException) {
+        // nothing to do
     } catch (e: ConnectException) {
         // nothing to do
     } catch (e: SocketException) {
@@ -52,8 +56,12 @@ fun migrate(migrationArgs: MigrationArgs) {
         try {
             startKoin {
                 logger(KoinLogger(KOIN_LOGGER))
-                modules(myModule(adminUser(), adminPassword(),adminTotp(), baseUrl(), realm(), clientId(), parameters(),
-                        failOnUndefinedVariables(), warnOnUndefinedVariables()))
+                modules(
+                    myModule(
+                        adminUser(), adminPassword(), adminTotp(), baseUrl(), realm(), clientId(), parameters(),
+                        failOnUndefinedVariables(), warnOnUndefinedVariables()
+                    )
+                )
                 KeycloakMigration(migrationFile(), realm(), correctHashes()).execute()
             }
         } finally {

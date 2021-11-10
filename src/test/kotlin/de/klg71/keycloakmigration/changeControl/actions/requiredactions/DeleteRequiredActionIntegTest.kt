@@ -6,7 +6,7 @@ import feign.FeignException
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class DeleteRequiredActionIntegTest : AbstractIntegrationTest() {
 
@@ -15,11 +15,11 @@ class DeleteRequiredActionIntegTest : AbstractIntegrationTest() {
     @Test
     fun testDeleteRequiredAction() {
         AddRequiredActionAction(
-                testRealm, "UPDATE_PASSWORD", "update_password", "Update password",
-                mapOf(
-                        "foo" to "bar",
-                        "foo1" to "bar1"
-                ), false, true, 123
+            testRealm, "UPDATE_PASSWORD", "update_password", "Update password",
+            mapOf(
+                "foo" to "bar",
+                "foo1" to "bar1"
+            ), false, true, 123
         ).executeIt()
 
         val requiredAction = client.requiredAction(testRealm, "update_password")
@@ -44,11 +44,11 @@ class DeleteRequiredActionIntegTest : AbstractIntegrationTest() {
     @Test
     fun testDeleteRequiredAction_rollBack() {
         AddRequiredActionAction(
-                testRealm, "UPDATE_PASSWORD", "update_password", "Update password",
-                mapOf(
-                        "foo" to "bar",
-                        "foo1" to "bar1"
-                ), false, true, 123
+            testRealm, "UPDATE_PASSWORD", "update_password", "Update password",
+            mapOf(
+                "foo" to "bar",
+                "foo1" to "bar1"
+            ), false, true, 123
         ).executeIt()
 
         assertThat(client.requiredAction(testRealm, "update_password")).isNotNull()

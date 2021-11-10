@@ -7,6 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
 import java.util.UUID
 
 
+@Suppress("LongParameterList")
 class AddFlowAction(
     realm: String?,
     private val alias: String,

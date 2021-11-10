@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.client.mapper
 
 import de.klg71.keycloakmigration.keycloakapi.model.userAttributeMapper
 
+@Suppress("LongParameterList")
 open class AddClientUserAttributeMapperAction(
     realm: String?,
     clientId: String,
@@ -25,6 +26,7 @@ open class AddClientUserAttributeMapperAction(
 
 }
 
+@Suppress("LongParameterList")
 @Deprecated("Will be removed in a future release. Use AddClientUserAttributeMapperAction action instead")
 class AddUserAttributeMapperAction(
     realm: String?,

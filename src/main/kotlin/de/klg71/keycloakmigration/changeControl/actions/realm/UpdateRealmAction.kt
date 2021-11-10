@@ -9,6 +9,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.realmById
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
 
+@Suppress("LongParameterList")
 class UpdateRealmAction(
         private val id: String,
         private val realmName: String? = null,

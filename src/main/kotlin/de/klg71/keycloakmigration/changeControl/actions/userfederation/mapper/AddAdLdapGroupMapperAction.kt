@@ -6,6 +6,7 @@ import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
 import de.klg71.keycloakmigration.keycloakapi.userFederationByName
 import java.util.UUID
 
+@Suppress("LongParameterList")
 class AddAdLdapGroupMapperAction(
         realm: String? = null,
         private val name: String,

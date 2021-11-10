@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.UserCredential
 import de.klg71.keycloakmigration.keycloakapi.existsUser
 import de.klg71.keycloakmigration.keycloakapi.userByName
 
+@Suppress("LongParameterList")
 class UpdateUserAction(
         realm: String? = null,
         private val name: String,

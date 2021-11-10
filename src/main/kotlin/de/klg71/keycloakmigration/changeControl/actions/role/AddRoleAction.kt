@@ -15,6 +15,7 @@ data class RoleSelector(val name: String,
 
 private const val HTTP_NO_CONTENT = 204
 
+@Suppress("LongParameterList")
 class AddRoleAction(
     realm: String? = null,
     private val name: String,

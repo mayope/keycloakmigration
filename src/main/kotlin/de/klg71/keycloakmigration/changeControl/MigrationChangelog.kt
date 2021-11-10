@@ -5,8 +5,8 @@ import de.klg71.keycloakmigration.changeControl.model.ChangeSet
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.model.Attributes
 import de.klg71.keycloakmigration.keycloakapi.model.User
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.slf4j.LoggerFactory
 import java.util.UUID
 
@@ -58,11 +58,12 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
     }
 
     private fun List<ChangeSet>.handleHashError(
-            correctHashes: Boolean, remoteHash: String, migrationIndex: Int) {
+        correctHashes: Boolean, remoteHash: String, migrationIndex: Int) {
         if (!correctHashes) {
             throw MigrationException(
-                    "Invalid hash expected: $remoteHash (remote) " +
-                            "got ${get(migrationIndex).hash()} (local) in migration: ${get(migrationIndex).id}")
+                "Invalid hash expected: $remoteHash (remote) " +
+                        "got ${get(migrationIndex).hash()} (local) in migration: ${get(migrationIndex).id}"
+            )
         }
         formatHashV2(migrationIndex, get(migrationIndex).hash).let {
             replaceHash(remoteHash, it)
@@ -78,9 +79,13 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
             userAttributes().run {
                 addMigration(change)
             }.let {
-                client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
+                client.updateUser(
+                    id, User(
+                        id, createdTimestamp, username, enabled, emailVerified, it,
                         notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName,
-                        lastName, null), realm)
+                        lastName, null
+                    ), realm
+                )
             }
         }
     }
@@ -92,9 +97,13 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
                     put(migrationAttributeName, migrations().replaceString(oldHash, newHash))
                 }
             }.let {
-                client.updateUser(id, User(id, createdTimestamp, username, enabled, emailVerified, it,
+                client.updateUser(
+                    id, User(
+                        id, createdTimestamp, username, enabled, emailVerified, it,
                         notBefore, totp, access, disableableCredentialTypes, requiredActions, email, firstName,
-                        lastName, null), realm)
+                        lastName, null
+                    ), realm
+                )
             }
         }
     }
@@ -118,9 +127,9 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
     } ?: 0
 
     private fun List<String>.addChangeHash(change: ChangeSet, index: Int) =
-            toMutableList().apply {
-                add(formatHashV2(index, change.hash()))
-            }
+        toMutableList().apply {
+            add(formatHashV2(index, change.hash()))
+        }
 
     private fun User.userAttributes() = attributes ?: emptyMap()
 
@@ -142,7 +151,8 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
             val (version, order, hash) = it.split("/")
             if (version != CURRENT_CHANGELOG_VERSION) {
                 throw MigrationException(
-                        "Unknown changelog version: $version detected, expected version: $CURRENT_CHANGELOG_VERSION.")
+                    "Unknown changelog version: $version detected, expected version: $CURRENT_CHANGELOG_VERSION."
+                )
             }
             MigrationEntity(version, order.toInt(), hash)
         }
@@ -179,6 +189,7 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
 
     private fun migrationHashAttributes(): List<String> {
         client.user(migrationUserId, realm).run {
+            println(attributes)
             if (attributesNullOrEmpty()) {
                 return emptyList()
             }

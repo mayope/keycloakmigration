@@ -2,19 +2,14 @@ package de.klg71.keycloakmigration.changeControl
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.eq
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.reset
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.validateMockitoUsage
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import de.klg71.keycloakmigration.KoinLogger
 import de.klg71.keycloakmigration.changeControl.model.ChangeLog
 import de.klg71.keycloakmigration.changeControl.model.ChangeSet
 import de.klg71.keycloakmigration.changeControl.model.ChangeSetEntry
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.After
@@ -33,15 +28,14 @@ import java.nio.file.Files
 class ChangeFileReaderTest : KoinTest {
 
     private val LOG = LoggerFactory.getLogger(ChangeFileReaderTest::class.java)!!
-    private val parameters = mutableMapOf<String,String>()
 
-    private val yamlObjectMapper = mock<ObjectMapper> {}
-    private val stringEnvSubstitutor = mock<StringEnvSubstitutor> {}
+    private val yamlObjectMapper = mockk<ObjectMapper> {}
+    private val stringEnvSubstitutor = mockk<StringEnvSubstitutor> {}
 
     @Before
     fun setup() {
-        reset(yamlObjectMapper)
-        whenever(stringEnvSubstitutor.substituteParameters(any())).thenAnswer { it.getArgument(0) as String}
+        clearAllMocks()
+        every { stringEnvSubstitutor.substituteParameters(any()) }.answers { firstArg() }
         startKoin {
             logger(KoinLogger(LOG))
             modules(module {
@@ -57,23 +51,23 @@ class ChangeFileReaderTest : KoinTest {
 
     @After
     fun tearDown() {
-        validateMockitoUsage()
         stopKoin()
     }
 
     @Test
     fun testChangesTodo_onEmptyListReturnEmpty() {
         val tempFile = File.createTempFile("unittest", "ChangeFileReader")
-        Files.writeString(tempFile.toPath(),"changelog")
+        Files.writeString(tempFile.toPath(), "changelog")
 
 
-        val changeLog = mock<ChangeLog> {
-            on { includes } doReturn emptyList()
-        }
+        val changeLog = mockk<ChangeLog>()
+        every {
+            changeLog.includes
+        }.returns(emptyList())
 
 
-        whenever(yamlObjectMapper.readValue<ChangeLog>(eq("changelog"), any<TypeReference<ChangeLog>>()))
-                .thenReturn(changeLog)
+        every { yamlObjectMapper.readValue<ChangeLog>(eq("changelog"), any<TypeReference<ChangeLog>>()) }
+            .returns(changeLog)
 
         val reader = ChangeFileReader()
         val result = reader.changes(tempFile.absolutePath)
@@ -84,65 +78,90 @@ class ChangeFileReaderTest : KoinTest {
     @Test
     fun testChangesTodo_ShouldReturnReadChangeSetNotRelativeToFile() {
         val tempChangeLog = File.createTempFile("changeLog", "ChangeFileReader")
-        Files.writeString(tempChangeLog.toPath(),"changelog")
+        Files.writeString(tempChangeLog.toPath(), "changelog")
         val tempChangeSet = File.createTempFile("changeSet", "ChangeFileReader")
-        Files.writeString(tempChangeSet.toPath(),"changeset")
+        Files.writeString(tempChangeSet.toPath(), "changeset")
 
         val reader = ChangeFileReader()
 
-        val changeSetEntry = mock<ChangeSetEntry> {
-            on { path } doReturn tempChangeSet.absolutePath
-            on { relativeToFile } doReturn false
-        }
-        val changeLog = mock<ChangeLog> {
-            on { includes } doReturn listOf(changeSetEntry)
-        }
+        val changeSetEntry = mockk<ChangeSetEntry>(relaxed = true)
+        every {
+            changeSetEntry.path
+        } returns (tempChangeSet.absolutePath)
+        every { changeSetEntry.relativeToFile }.returns(false)
 
-        val changeSet = mock<ChangeSet> {
-            on { changes } doReturn emptyList()
-        }
+        val changeLog = mockk<ChangeLog>()
+        every {
+            changeLog.includes
+        }.returns(listOf(changeSetEntry))
 
-        whenever(yamlObjectMapper.readValue<ChangeLog>(eq("changelog"),
-                any<TypeReference<ChangeLog>>()))
-                .thenReturn(changeLog)
-        whenever(yamlObjectMapper.readValue<ChangeSet>(eq("changeset"),
-                any<TypeReference<ChangeSet>>()))
-                .thenReturn(changeSet)
+        val changeSet = mockk<ChangeSet>(relaxed = true)
+        every {
+            changeSet.changes
+        }.returns(emptyList())
+
+        every {
+            yamlObjectMapper.readValue(
+                "changelog",
+                any<TypeReference<ChangeLog>>()
+            )
+        }.returns(changeLog)
+        every {
+            yamlObjectMapper.readValue(
+                "changeset",
+                any<TypeReference<ChangeSet>>()
+            )
+        }.returns(changeSet)
 
         val result = reader.changes(tempChangeLog.absolutePath)
 
         assertThat(result).isEqualTo(listOf(changeSet))
-        verify(stringEnvSubstitutor, times(2)).substituteParameters(any())
+        verify(atLeast = 2, atMost = 2) {
+            stringEnvSubstitutor.substituteParameters(any())
+        }
     }
 
     @Test
     fun testChangesTodo_ShouldReturnReadChangeSetRelativeToFile() {
         val dir = Files.createTempDirectory("ChangeFileReader")
         val tempChangeLog = File.createTempFile("changeLog", "ChangeFileReader", dir.toFile())
-        Files.writeString(tempChangeLog.toPath(),"changelog")
+        Files.writeString(tempChangeLog.toPath(), "changelog")
         val tempChangeSet = File.createTempFile("changeSet", "ChangeFileReader", dir.toFile())
-        Files.writeString(tempChangeSet.toPath(),"changeset")
+        Files.writeString(tempChangeSet.toPath(), "changeset")
 
         val reader = ChangeFileReader()
 
-        val changeSetEntry = mock<ChangeSetEntry> {
-            on { path } doReturn tempChangeSet.name
-            on { relativeToFile } doReturn true
-        }
-        val changeLog = mock<ChangeLog> {
-            on { includes } doReturn listOf(changeSetEntry)
-        }
+        val changeSetEntry = mockk<ChangeSetEntry>()
+        every {
+            changeSetEntry.path
+        } returns (tempChangeSet.name)
+        every { changeSetEntry.relativeToFile }.returns(true)
 
-        val changeSet = mock<ChangeSet> {
-            on { changes } doReturn emptyList()
-        }
+        val changeLog = mockk<ChangeLog>()
+        every {
+            changeLog.includes
+        }.returns(listOf(changeSetEntry))
 
-        whenever(yamlObjectMapper.readValue<ChangeLog>(eq("changelog"),
-                any<TypeReference<ChangeLog>>()))
-                .thenReturn(changeLog)
-        whenever(yamlObjectMapper.readValue<ChangeSet>(eq("changeset"),
-                any<TypeReference<ChangeSet>>()))
-                .thenReturn(changeSet)
+        val changeSet = mockk<ChangeSet>(relaxed = true)
+        every {
+            changeSet.changes
+        }.returns(emptyList())
+
+
+
+        every {
+            yamlObjectMapper.readValue(
+                "changelog",
+                any<TypeReference<ChangeLog>>()
+            )
+        }
+            .returns(changeLog)
+        every {
+            yamlObjectMapper.readValue(
+                "changeset",
+                any<TypeReference<ChangeSet>>()
+            )
+        }.returns(changeSet)
 
         val result = reader.changes(tempChangeLog.absolutePath)
 

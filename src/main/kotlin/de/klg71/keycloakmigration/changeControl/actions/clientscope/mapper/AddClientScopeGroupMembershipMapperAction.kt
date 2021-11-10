@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper
 
 import de.klg71.keycloakmigration.keycloakapi.model.groupMembershipMapper
 
+@Suppress("LongParameterList")
 open class AddClientScopeGroupMembershipMapperAction(
     realm: String?,
     clientScopeName: String,

@@ -3,14 +3,14 @@ package de.klg71.keycloakmigration.changeControl.actions.group
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
-import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.groupByName
+import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
-import java.util.*
+import org.koin.core.component.inject
+import java.util.UUID
 
 class AssignRoleToGroupIntegTest : AbstractIntegrationTest() {
 
@@ -34,7 +34,8 @@ class AssignRoleToGroupIntegTest : AbstractIntegrationTest() {
         AddRoleAction(testRealm, "testRole").executeIt()
         assertThatThrownBy {
             AssignRoleToGroupAction(testRealm, "testRole", "testIntegration").executeIt()
-        }.isInstanceOf(MigrationException::class.java).hasMessage("Group with name: testIntegration does not exist in realm: ${testRealm}!")
+        }.isInstanceOf(MigrationException::class.java)
+            .hasMessage("Group with name: testIntegration does not exist in realm: ${testRealm}!")
     }
 
     @Test
@@ -42,6 +43,7 @@ class AssignRoleToGroupIntegTest : AbstractIntegrationTest() {
         AddGroupAction(testRealm, "testIntegration").executeIt()
         assertThatThrownBy {
             AssignRoleToGroupAction(testRealm, "testRole", "testIntegration").executeIt()
-        }.isInstanceOf(MigrationException::class.java).hasMessage("Role with name: testRole does not exist in realm: ${testRealm}!")
+        }.isInstanceOf(MigrationException::class.java)
+            .hasMessage("Role with name: testRole does not exist in realm: ${testRealm}!")
     }
 }

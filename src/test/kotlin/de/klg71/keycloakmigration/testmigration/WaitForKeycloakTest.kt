@@ -1,7 +1,10 @@
 package de.klg71.keycloakmigration.testmigration
 
 import com.github.tomakehurst.wiremock.WireMockServer
+import com.github.tomakehurst.wiremock.client.WireMock.get
+import com.github.tomakehurst.wiremock.client.WireMock.ok
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
+import com.github.tomakehurst.wiremock.matching.UrlPattern
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_PASSWORD
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_USER
 import de.klg71.keycloakmigration.DEFAULT_CLIENTID
@@ -11,9 +14,11 @@ import de.klg71.keycloakmigration.DEFAULT_REALM
 import de.klg71.keycloakmigration.KeycloakNotReadyException
 import de.klg71.keycloakmigration.MigrationArgs
 import de.klg71.keycloakmigration.migrate
+import feign.FeignException
 import org.apache.logging.log4j.core.config.Configurator
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
+import org.koin.core.error.InstanceCreationException
 import java.io.FileNotFoundException
 import java.nio.file.Paths
 
@@ -33,7 +38,7 @@ class WaitForKeycloakTest {
         }
 
         override fun waitForKeycloak() = true
-        override fun waitForKeycloakTimeout() = 10L // seconds
+        override fun waitForKeycloakTimeout() = 20L // seconds
         override fun failOnUndefinedVariables() = DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
         override fun warnOnUndefinedVariables() = DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
         override fun adminTotp() = ""
@@ -51,11 +56,14 @@ class WaitForKeycloakTest {
             val wireMockServer = WireMockServer(options().port(8888))
             Thread.sleep(5000)
             wireMockServer.start()
+            wireMockServer.stubFor(
+                get(UrlPattern.ANY).willReturn(ok().withBody("ok"))
+            )
         }.start()
 
         Configurator.initialize(null, Paths.get("").toAbsolutePath().toString() + "/src/test/resources/log4j2.yml");
         assertThatThrownBy { migrate(TestMigrationArgs) }.isInstanceOf(
-            FileNotFoundException::class.java
+            InstanceCreationException::class.java
         ) // since wiremock will return nothing
     }
 

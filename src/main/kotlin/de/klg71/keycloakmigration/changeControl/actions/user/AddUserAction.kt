@@ -17,6 +17,7 @@ import java.util.UUID
 
 data class ClientRole(val role: String, val client: String)
 
+@Suppress("LongParameterList")
 class AddUserAction(
         realm: String? = null,
         private val name: String,

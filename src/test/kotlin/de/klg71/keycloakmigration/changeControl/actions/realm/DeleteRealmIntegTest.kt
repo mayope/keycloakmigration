@@ -7,7 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.realmExistsById
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class DeleteRealmIntegTest : AbstractIntegrationTest() {
 
@@ -26,7 +26,7 @@ class DeleteRealmIntegTest : AbstractIntegrationTest() {
         assertThatThrownBy {
             DeleteRealmAction("testRealm").executeIt()
         }.isInstanceOf(KeycloakApiException::class.java)
-                .hasMessage("Realm with id: testRealm does not exist!")
+            .hasMessage("Realm with id: testRealm does not exist!")
 
     }
 }

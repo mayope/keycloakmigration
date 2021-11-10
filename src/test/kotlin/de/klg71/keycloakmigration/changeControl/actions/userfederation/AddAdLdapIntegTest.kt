@@ -7,7 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.userFederationByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
-import org.koin.core.inject
+import org.koin.core.component.inject
 
 class AddAdLdapIntegTest : AbstractIntegrationTest() {
 
@@ -16,10 +16,11 @@ class AddAdLdapIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdap() {
         val ldapConfig = mapOf(
-                "connectionUrl" to "https://testUrl",
-                "usersDn" to "usersTestDn",
-                "bindCredential" to "testPassword",
-                "bindDn" to "testBindDn")
+            "connectionUrl" to "https://testUrl",
+            "usersDn" to "usersTestDn",
+            "bindCredential" to "testPassword",
+            "bindDn" to "testBindDn"
+        )
         AddAdLdapAction(testRealm, "test", ldapConfig).executeIt()
 
         val createdFederation = client.userFederationByName("test", testRealm);
@@ -34,16 +35,17 @@ class AddAdLdapIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapAlreadyExists() {
         val ldapConfig = mapOf(
-                "connectionUrl" to "https://testUrl",
-                "usersDn" to "usersTestDn",
-                "bindCredential" to "testPassword",
-                "bindDn" to "testBindDn")
+            "connectionUrl" to "https://testUrl",
+            "usersDn" to "usersTestDn",
+            "bindCredential" to "testPassword",
+            "bindDn" to "testBindDn"
+        )
         AddAdLdapAction(testRealm, "test", ldapConfig).executeIt()
 
         assertThatThrownBy {
             AddAdLdapAction(testRealm, "test", ldapConfig).executeIt()
         }.isInstanceOf(MigrationException::class.java)
-                .hasMessage("UserFederation with name: test already exists in realm: ${testRealm}!")
+            .hasMessage("UserFederation with name: test already exists in realm: ${testRealm}!")
 
     }
 }

@@ -9,6 +9,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ProtocolMapper
 import de.klg71.keycloakmigration.keycloakapi.model.addClientScope
 import java.util.UUID
 
+@Suppress("LongParameterList")
 class AddClientScopeAction(
         realm: String?,
         private val name: String,

@@ -7,6 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.identityProviders
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.addKeycloakIdentityProvider
 
+@Suppress("LongParameterList")
 class AddKeycloakIdentityProviderAction(
     realm: String? = null,
     private val alias: String,

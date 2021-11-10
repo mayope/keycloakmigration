@@ -34,3 +34,5 @@ includes:
 - path: changesets/35_update_required_action.yml
 - path: changesets/36_add_client_scope_mappers.yml
 - path: changesets/37_delete_client_scope_mappers.yml
+- path: changesets/38_set_mayope_theme.yml
+
