@@ -1,6 +1,6 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
-import com.nhaarman.mockitokotlin2.*
+import org.mockito.kotlin.*
 import de.klg71.keycloakmigration.KoinLogger
 import de.klg71.keycloakmigration.changeControl.MigrationChangelogTest
 import de.klg71.keycloakmigration.changeControl.actions.Action

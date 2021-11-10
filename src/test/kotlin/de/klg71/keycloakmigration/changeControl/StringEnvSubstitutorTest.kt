@@ -1,24 +1,22 @@
 package de.klg71.keycloakmigration.changeControl
 
-import com.nhaarman.mockitokotlin2.validateMockitoUsage
+import org.mockito.kotlin.validateMockitoUsage
 import de.klg71.keycloakmigration.KoinLogger
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import org.koin.test.KoinTest
 import org.slf4j.LoggerFactory
 
-class StringEnvSubstitutorTest  {
+class StringEnvSubstitutorTest {
 
     private val LOG = LoggerFactory.getLogger(StringEnvSubstitutorTest::class.java)!!
 
-    private fun startKoin(parameters:Map<String,String>) {
+    private fun startKoin(parameters: Map<String, String>) {
         startKoin {
             logger(KoinLogger(LOG))
             modules(module {
@@ -42,7 +40,8 @@ class StringEnvSubstitutorTest  {
 
         assertThatThrownBy {
             substitutor.substituteParameters("\${NOT_SUBSTITUTED}")
-        }.isInstanceOf(IllegalArgumentException::class.java).hasMessage("Cannot resolve variable 'NOT_SUBSTITUTED' (enableSubstitutionInVariables=false).")
+        }.isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("Cannot resolve variable 'NOT_SUBSTITUTED' (enableSubstitutionInVariables=false).")
     }
 
     @Test

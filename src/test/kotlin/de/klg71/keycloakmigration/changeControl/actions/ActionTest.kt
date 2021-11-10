@@ -1,8 +1,8 @@
 package de.klg71.keycloakmigration.changeControl.actions
 
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.reset
-import com.nhaarman.mockitokotlin2.validateMockitoUsage
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.reset
+import org.mockito.kotlin.validateMockitoUsage
 import de.klg71.keycloakmigration.KoinLogger
 import de.klg71.keycloakmigration.changeControl.RealmChecker
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
