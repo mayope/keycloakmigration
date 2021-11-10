@@ -1,4 +1,4 @@
-# Keycloakmigration ![Maven metadata URL](https://img.shields.io/maven-metadata/v/https/repo.maven.apache.org/maven2/de/klg71/keycloakmigration/keycloakmigration/maven-metadata.xml.svg?label=mavenCentral)
+# Keycloakmigration ![Maven metadata URL](https://img.shields.io/maven-metadata/v/https/repo.maven.apache.org/maven2/de/klg71/keycloakmigration/keycloakmigration/maven-metadata.xml.svg?label=mavenCentral) [![CircleCI](https://circleci.com/gh/ghilainm/keycloakmigration/tree/master.svg?style=svg)](https://circleci.com/gh/ghilainm/keycloakmigration/tree/master)
 
 This projects aims to automate the configuration of the keycloak authentication provider.
 It is inspired by the database migration tool liquibase.
