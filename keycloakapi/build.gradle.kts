@@ -17,6 +17,8 @@ dependencies {
     implementation("io.github.openfeign:feign-jackson:10.1.0")
     implementation("io.github.openfeign:feign-httpclient:10.1.0")
     implementation("io.github.openfeign.form:feign-form:3.4.1")
+    implementation("io.github.resilience4j:resilience4j-feign:1.5.0")
+    implementation("io.github.resilience4j:resilience4j-micrometer:1.5.0")
 
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.10.3")

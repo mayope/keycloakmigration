@@ -5,9 +5,20 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import feign.Feign
 import feign.Logger
+import feign.RetryableException
+import feign.Retryer
 import feign.form.FormEncoder
 import feign.jackson.JacksonDecoder
 import feign.jackson.JacksonEncoder
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException
+import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry
+import io.github.resilience4j.core.IntervalFunction
+import io.github.resilience4j.feign.FeignDecorator
+import io.github.resilience4j.feign.FeignDecorators
+import io.github.resilience4j.feign.Resilience4jFeign
+import io.github.resilience4j.retry.Retry
+import io.github.resilience4j.retry.RetryConfig
+import java.time.Duration
 
 /**
  * Builds the [KeycloakClient]
@@ -28,7 +39,7 @@ fun initKeycloakClient(baseUrl: String, adminUser: String, adminPassword: String
 }
 
 internal fun initKeycloakClientWithTokenHolder(baseUrl: String, logger: Logger? = null, tokenHolder: TokenHolder) =
-    Feign.builder().run {
+    Resilience4jFeign.builder(resilienceDecorator()).run {
         val objectMapper = initObjectMapper()
         encoder(JacksonEncoder(objectMapper))
         decoder(JacksonDecoder(objectMapper.apply {
@@ -45,6 +56,22 @@ internal fun initKeycloakClientWithTokenHolder(baseUrl: String, logger: Logger? 
         logLevel(Logger.Level.FULL)
         target(KeycloakClient::class.java, baseUrl)
     }!!
+
+private fun resilienceDecorator(): FeignDecorator {
+    return FeignDecorators.builder().run {
+        withRetry(Retry.of("keycloakRetry", retryDefaultConfig()))
+        build()
+    }
+}
+fun retryDefaultConfig(): RetryConfig {
+    return RetryConfig.from<RetryConfig>(RetryConfig.ofDefaults()).run {
+        retryOnException {
+            it !is CallNotPermittedException
+        }
+        intervalFunction(IntervalFunction.ofExponentialBackoff(Duration.ofSeconds(1), 2.0))
+        build()
+    }
+}
 
 /**
  * Builds the [KeycloakLoginClient]
