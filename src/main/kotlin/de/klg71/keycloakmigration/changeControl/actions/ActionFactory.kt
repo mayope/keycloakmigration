@@ -40,6 +40,8 @@ import de.klg71.keycloakmigration.changeControl.actions.group.UpdateGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddIdentityProviderAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddKeycloakIdentityProviderAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.DeleteIdentityProviderAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.UpdateIdentityProviderAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.UpdateKeycloakIdentityProviderAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
@@ -76,7 +78,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
                 yamlNodeValue = actionJson
             }
 
-    @Suppress("ComplexMethod","LongMethod")
+    @Suppress("ComplexMethod", "LongMethod")
     private fun mapToAction(actionName: String, actionJson: String): Action =
         when (actionName) {
             "addUser" -> objectMapper.readValue<AddUserAction>(actionJson)
@@ -157,6 +159,8 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addIdentityProvider" -> objectMapper.readValue<AddIdentityProviderAction>(actionJson)
             "addKeycloakIdentityProvider" -> objectMapper.readValue<AddKeycloakIdentityProviderAction>(actionJson)
             "deleteIdentityProvider" -> objectMapper.readValue<DeleteIdentityProviderAction>(actionJson)
+            "updateIdentityProvider" -> objectMapper.readValue<UpdateIdentityProviderAction>(actionJson)
+            "updateKeycloakIdentityProvider" -> objectMapper.readValue<UpdateKeycloakIdentityProviderAction>(actionJson)
 
             "addFlow" -> objectMapper.readValue<AddFlowAction>(actionJson)
             "deleteFlow" -> objectMapper.readValue<DeleteFlowAction>(actionJson)

@@ -1,0 +1,8 @@
+id: update-keycloak-identity-provider
+author: sideisra
+realm: integ-test
+changes:
+  - updateKeycloakIdentityProvider:
+      alias: testAlias
+      clientId: newClientId
+      storeToken: false
