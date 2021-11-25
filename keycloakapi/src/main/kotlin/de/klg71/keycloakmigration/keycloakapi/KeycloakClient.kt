@@ -37,6 +37,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateIdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.User
 import de.klg71.keycloakmigration.keycloakapi.model.UserFederation
 import de.klg71.keycloakmigration.keycloakapi.model.UserFederationMapper
@@ -385,6 +386,10 @@ interface KeycloakClient {
     @RequestLine("POST /admin/realms/{realm}/identity-provider/instances")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addIdentityProvider(addIdentityProvider: AddIdentityProvider, @Param("realm") realm: String): Response
+
+    @RequestLine("PUT /admin/realms/{realm}/identity-provider/instances/{alias}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateIdentityProvider(updateIdentityProvider: UpdateIdentityProvider, @Param("realm") realm: String, @Param("alias") alias: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}")
     fun identityProvider(@Param("realm") realm: String, @Param("alias") alias: String): IdentityProvider

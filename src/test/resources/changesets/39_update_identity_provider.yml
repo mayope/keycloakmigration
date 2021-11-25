@@ -1,0 +1,23 @@
+id: update-identity-provider
+author: sideisra
+realm: integ-test
+changes:
+  - addIdentityProvider:
+      alias: testAlias1
+      providerId: keycloak-oidc
+      trustEmail: true
+      storeToken: true
+      config:
+        hideOnLoginPage: true
+        backchannelSupported: true
+        authorizationUrl: https://authUrl
+        tokenUrl: https://tokenUrl
+        clientId: clientId
+        clientSecret: clientSecret
+  - updateIdentityProvider:
+      alias: testAlias1
+      storeToken: false
+      config:
+        clientId: newClientId
+  - deleteIdentityProvider:
+      alias: testAlias1
