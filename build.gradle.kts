@@ -4,7 +4,7 @@ import java.net.ConnectException
 import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
-    kotlin("jvm") version "1.4.21"
+    kotlin("jvm") version "1.6.0"
     id("maven-publish")
     id("signing")
     id("de.undercouch.download") version ("3.4.3")
