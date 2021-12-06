@@ -2,11 +2,11 @@ plugins {
     kotlin("jvm")
     id("maven-publish")
     id("signing")
-    id("org.jetbrains.dokka") version "0.10.1"
+    id("org.jetbrains.dokka") version "1.6.0"
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -143,16 +143,18 @@ gradle.taskGraph.whenReady {
 }
 
 tasks {
-    register<org.jetbrains.dokka.gradle.DokkaTask>("documentation") {
+    dokkaHtml.configure {
         doFirst {
             System.setProperty("idea.io.use.fallback", "true")
         }
-        outputFormat = "html"
-        outputDirectory = "${rootProject.projectDir}/docsbuild/static/documentation"
-        configuration {
-            includes = listOf("keycloakapi.md")
+        outputDirectory.set(File("${rootProject.projectDir}/docsbuild/static/documentation"))
+        dokkaSourceSets {
+            configureEach {
+                includes.setFrom(listOf("keycloakapi.md"))
+            }
         }
     }
+
 }
 
 

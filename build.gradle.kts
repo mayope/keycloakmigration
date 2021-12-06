@@ -41,7 +41,7 @@ dependencies {
     testImplementation("io.github.openfeign:feign-slf4j:10.1.0")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-    testImplementation("io.mockk:mockk:1.9")
+    testImplementation("io.mockk:mockk:1.12.1")
 
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("io.insert-koin:koin-test:3.1.3")

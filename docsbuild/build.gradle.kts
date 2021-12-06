@@ -12,7 +12,7 @@ repositories {
 tasks {
 
     register("buildDocs") {
-        dependsOn(":keycloakapi:documentation")
+        dependsOn(":keycloakapi:dokkaHtml")
         doLast {
             if (isFamily(FAMILY_WINDOWS)) {
                 project.exec {
