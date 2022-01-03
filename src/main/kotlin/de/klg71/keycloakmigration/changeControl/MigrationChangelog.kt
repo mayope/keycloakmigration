@@ -122,7 +122,7 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
         put(migrationAttributeName, migrations().addChangeHash(change, nextIndex()))
     }
 
-    private fun nextIndex() = parse(migrationHashAttributes()).maxBy { it.order }?.let {
+    private fun nextIndex() = parse(migrationHashAttributes()).maxByOrNull { it.order }?.let {
         it.order + 1
     } ?: 0
 

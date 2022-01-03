@@ -4,7 +4,7 @@ import java.net.ConnectException
 import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
-    kotlin("jvm") version "1.6.0"
+    kotlin("jvm") version "1.5.32"
     id("maven-publish")
     id("signing")
     id("de.undercouch.download") version ("3.4.3")
@@ -25,7 +25,7 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.10.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.3")
-    implementation("io.insert-koin:koin-core:3.1.3")
+    implementation("io.insert-koin:koin-core:3.1.4")
     implementation("commons-codec:commons-codec:1.11")
     implementation("com.xenomachina:kotlin-argparser:2.0.7")
 
@@ -35,8 +35,8 @@ dependencies {
 
     // Logging
     implementation("org.slf4j:slf4j-api:1.7.30")
-    implementation("org.apache.logging.log4j:log4j-core:2.11.1")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
+    implementation("org.apache.logging.log4j:log4j-core:2.17.1")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.17.1")
 
     testImplementation("io.github.openfeign:feign-slf4j:10.1.0")
     testImplementation(kotlin("test"))
@@ -44,7 +44,7 @@ dependencies {
     testImplementation("io.mockk:mockk:1.12.1")
 
     testImplementation("org.assertj:assertj-core:3.11.1")
-    testImplementation("io.insert-koin:koin-test:3.1.3")
+    testImplementation("io.insert-koin:koin-test:3.1.4")
     testImplementation("org.assertj:assertj-core:3.11.1")
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.27.0")
 }

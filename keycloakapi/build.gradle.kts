@@ -31,8 +31,8 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.9")
 
     testImplementation("org.slf4j:slf4j-api:1.7.30")
-    testImplementation("org.apache.logging.log4j:log4j-core:2.11.1")
-    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
+    testImplementation("org.apache.logging.log4j:log4j-core:2.17.1")
+    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.17.1")
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
