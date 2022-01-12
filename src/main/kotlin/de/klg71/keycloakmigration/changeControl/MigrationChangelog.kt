@@ -189,7 +189,6 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
 
     private fun migrationHashAttributes(): List<String> {
         client.user(migrationUserId, realm).run {
-            println(attributes)
             if (attributesNullOrEmpty()) {
                 return emptyList()
             }
