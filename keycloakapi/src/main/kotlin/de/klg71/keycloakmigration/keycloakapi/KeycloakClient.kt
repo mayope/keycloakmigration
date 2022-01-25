@@ -264,19 +264,25 @@ interface KeycloakClient {
     @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}")
     fun deleteClientScope(@Param("realm") realm: String, @Param("client-scope-id") clientScopeId: UUID): Response
 
-    @RequestLine("GET /admin/realms/{realm}/client-scopes/{client-scope-id}"/role-mappings/clients/{client-id}")
+    @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/role-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun clientScopeRoles(@Param("realm") realm: String, @Param("client-scope-id") clientScopeId: UUID,
-     @Param("client-id") clientId: UUID): List<RoleListItem>
+    fun assignRealmRoleToClientScope(roles: List<AssignRole>, @Param("realm") realm: String,
+        @Param("client-scope-id") clientScopeId: UUID,)
 
-    @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}"/role-mappings/clients/{client-id}")
+    @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}/role-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun assignRoleToClientScope(roles: List<AssignRole>, @Param("realm") realm: String, 
-        @Param("client-scope-id") clientScopeId: UUID, @Param("client-id") clientId: UUID)
+    fun revokeRealmRoleFromClientScope(roles: List<AssignRole>, @Param("realm") realm: String,
+        @Param("client-scope-id") clientScopeId: UUID): Response    
+         
+    @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/role-mappings/clients/{client-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun assignClientRoleToClientScope(roles: List<AssignRole>, @Param("realm") realm: String, 
+        @Param("client-scope-id") clientScopeId: UUID, @Param("client-id") clientId: UUID): Response
 
-    @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}"/role-mappings/realm")
+    @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}/role-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun revokeRoleFromClientScope(roles: List<AssignRole>, @Param("realm") realm: String, @Param("user-id") userId: UUID)
+    fun revokeClientRoleFromClientScope(roles: List<AssignRole>, @Param("realm") realm: String,
+        @Param("client-scope-id") clientScopeId: UUID, @Param("client-id") clientId: UUID): Response
 
     @RequestLine("PUT /admin/realms/{realm}/clients/{client-id}/default-client-scopes/{client-scope-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
