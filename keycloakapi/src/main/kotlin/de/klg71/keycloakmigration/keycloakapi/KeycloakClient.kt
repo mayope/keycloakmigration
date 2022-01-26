@@ -274,12 +274,12 @@ interface KeycloakClient {
     fun revokeRealmRoleFromClientScope(roles: List<AssignRole>, @Param("realm") realm: String,
         @Param("client-scope-id") clientScopeId: UUID): Response    
          
-    @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/role-mappings/clients/{client-id}")
+    @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun assignClientRoleToClientScope(roles: List<AssignRole>, @Param("realm") realm: String, 
         @Param("client-scope-id") clientScopeId: UUID, @Param("client-id") clientId: UUID): Response
 
-    @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}/role-mappings/clients/{client-id}")
+    @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun revokeClientRoleFromClientScope(roles: List<AssignRole>, @Param("realm") realm: String,
         @Param("client-scope-id") clientScopeId: UUID, @Param("client-id") clientId: UUID): Response
