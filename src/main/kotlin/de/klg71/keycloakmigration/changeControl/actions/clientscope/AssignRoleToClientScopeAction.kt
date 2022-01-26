@@ -6,33 +6,31 @@ import de.klg71.keycloakmigration.keycloakapi.clientScopeUUID
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
 import de.klg71.keycloakmigration.keycloakapi.existsClientRole
 import de.klg71.keycloakmigration.keycloakapi.existsClientScope
+import de.klg71.keycloakmigration.keycloakapi.clientRoleByName
 import de.klg71.keycloakmigration.keycloakapi.existsRole
 import de.klg71.keycloakmigration.keycloakapi.model.AssignRole
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import java.util.Objects.isNull
 
 class AssignRoleToClientScopeAction(
-        realm: String? = null,
-        private val name: String,
-        private val role: String,
-        private val clientId: String? = null
+    realm: String? = null, private val name: String, private val role: String, private val clientId: String? = null
 ) : Action(realm) {
     override fun execute() {
         if (!client.existsClientScope(name, realm())) {
             throw MigrationException(
-                    "ClientScope with name: $name does not exist in realm: ${realm()}!"
+                "ClientScope with name: $name does not exist in realm: ${realm()}!"
             )
         }
         if (clientId == null) {
             if (!client.existsRole(role, realm())) {
                 throw MigrationException(
-                        "Role with name: $role does not exist in realm: ${realm()}!"
+                    "Role with name: $role does not exist in realm: ${realm()}!"
                 )
             }
         } else {
             if (!client.existsClientRole(role, realm(), clientId)) {
                 throw MigrationException(
-                        "Role with name: $role in client: $clientId does not exist in realm: ${realm()}!"
+                    "Role with name: $role in client: $clientId does not exist in realm: ${realm()}!"
                 )
             }
         }
@@ -44,10 +42,7 @@ class AssignRoleToClientScopeAction(
                 val clientUUID = client.clientUUID(clientId, realm())
 
                 client.assignClientRoleToClientScope(
-                        listOf(it),
-                        realm(),
-                        clientScopeUUID,
-                        clientUUID
+                    listOf(it), realm(), clientScopeUUID, clientUUID
                 )
             } else {
                 client.assignRealmRoleToClientScope(listOf(it), realm(), clientScopeUUID)
@@ -64,10 +59,7 @@ class AssignRoleToClientScopeAction(
             if (clientId != null) {
                 val clientUUID = client.clientUUID(clientId, realm())
                 client.revokeClientRoleFromClientScope(
-                        listOf(it),
-                        realm(),
-                        clientScopeUUID,
-                        clientUUID
+                    listOf(it), realm(), clientScopeUUID, clientUUID
                 )
             } else {
                 client.revokeRealmRoleFromClientScope(listOf(it), realm(), clientScopeUUID)
@@ -75,12 +67,11 @@ class AssignRoleToClientScopeAction(
         }
     }
 
-    private fun findRole() =
-            if (clientId == null) {
-                client.roleByName(role, realm())
-            } else {
-                client.clientRoleByName(role, clientId, realm())
-            }
+    private fun findRole() = if (clientId == null) {
+        client.roleByName(role, realm())
+    } else {
+        client.clientRoleByName(role, clientId, realm())
+    }
 
     override fun name() = "AssignRole $role to ClientScope: $name"
 }
