@@ -11,7 +11,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AssignRole
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import java.util.Objects.isNull
 
-class AssignRoleToGroupAction(
+class AssignRoleToClientScopeAction(
         realm: String? = null,
         private val name: String,
         private val role: String,
