@@ -234,7 +234,7 @@ adds a user-attribute client scope mapper, throws error if client or realm doesn
 ## addClientScopeUserRealmRoleMapper
 adds a user-realm-role client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
 
-### Parameter
+### Parameters
 - realm: String, optional
 - clientScopeName: String, not optional
 - name: String, not optional
