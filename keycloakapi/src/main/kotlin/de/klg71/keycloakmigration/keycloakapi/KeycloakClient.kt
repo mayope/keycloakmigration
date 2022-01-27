@@ -264,16 +264,25 @@ interface KeycloakClient {
     @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}")
     fun deleteClientScope(@Param("realm") realm: String, @Param("client-scope-id") clientScopeId: UUID): Response
 
-    @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/role-mappings/realm")
+    @RequestLine("GET /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/realm")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun clientScopeRealmRoles(@Param("realm") realm: String, @Param("client-scope-id") clientScopeId: UUID): List<RoleListItem>
+
+    @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun assignRealmRoleToClientScope(roles: List<AssignRole>, @Param("realm") realm: String,
         @Param("client-scope-id") clientScopeId: UUID,)
 
-    @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}/role-mappings/realm")
+    @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun revokeRealmRoleFromClientScope(roles: List<AssignRole>, @Param("realm") realm: String,
-        @Param("client-scope-id") clientScopeId: UUID): Response    
-         
+        @Param("client-scope-id") clientScopeId: UUID): Response
+
+    @RequestLine("GET /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/clients/{client-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun clientScopeClientRoles(@Param("realm") realm: String, @Param("client-scope-id") clientScopeId: UUID,
+        @Param("client-id") clientId: UUID): List<RoleListItem>
+
     @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun assignClientRoleToClientScope(roles: List<AssignRole>, @Param("realm") realm: String, 
