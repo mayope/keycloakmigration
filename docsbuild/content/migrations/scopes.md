@@ -39,7 +39,7 @@ changes:
 ```
 
 ## assignRoleToClientScope
-Adds a realm- or client-role(if roleClientId is set) a clientScope.
+Adds a realm- or client-role (if roleClientId is set) to a clientScope.
 
 ### Parameters
 - realm: String, optional
