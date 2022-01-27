@@ -38,6 +38,34 @@ changes:
       name: api
 ```
 
+## assignRoleToClientScope
+Adds a realm- or client-role (if roleClientId is set) to a clientScope.
+
+### Parameters
+- realm: String, optional
+- name: String, not optional
+- role: String, not optional
+- roleClientId: String, optional, default = realmRole
+
+### Example
+```yaml
+id: add-role-to-clientscope
+author: klg71
+realm: integ-test
+changes:
+ - addClientScope:
+      name: testClientScope
+ - addSimpleClient:
+      clientId: testClient
+ - addRole:
+      name: test-role
+      clientId: testClientScope
+ - assignRoleToClientScope:
+      name: testClientScope
+      role: test-role
+      roleClientId: testClient
+```
+
 ## assignDefaultClientScope
 Assigns a default clientScope to a client, fails if the client or scope doesn't exist.
 ### Parameter
@@ -206,7 +234,7 @@ adds a user-attribute client scope mapper, throws error if client or realm doesn
 ## addClientScopeUserRealmRoleMapper
 adds a user-realm-role client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
 
-### Parameters
+### Parameter
 - realm: String, optional
 - clientScopeName: String, not optional
 - name: String, not optional
