@@ -10,7 +10,7 @@ All migrations referring to the ClientScope resource.
 
 ## addClientScope
 Adds a clientScope to keycloak, fails if a clientScope with that name already exists
-### Parameter
+### Parameters
 - realm: String, optional
 - name: String, not optional
 - description: String, optional, default = null
@@ -68,7 +68,7 @@ changes:
 
 ## assignDefaultClientScope
 Assigns a default clientScope to a client, fails if the client or scope doesn't exist.
-### Parameter
+### Parameters
 - realm: String, optional
 - clientScopeName: String
 - clientId: String

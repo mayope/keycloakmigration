@@ -9,7 +9,7 @@ permalink: /migrations/role/
 All migrations referring to the role resource.
 ## addRole
 Add a role to keycloak, fails if the role already exists
-### Parameter
+### Parameters
 - realm: String, optional
 - name: String, not optional,
 - clientId: String, optional, default=realmRole,
@@ -37,7 +37,7 @@ Add a role to keycloak, fails if the role already exists
           - value2
 ## deleteRole
 Delete a role from keycloak, fails if the role does not exist
-### Parameter
+### Parameters
 - realm: String, optional
 - name: String, not optional,
 - clientId: String, optional, default=realmRole

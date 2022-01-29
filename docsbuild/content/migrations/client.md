@@ -9,7 +9,7 @@ permalink: /migrations/client/
 All migrations referring to the client resource.
 ## addSimpleClient
 Simple command to add a client to keycloak, TODO: add more fields
-### Parameter
+### Parameters
 - realm: String, optional
 - clientId: String, not optional,
 - enabled: Boolean, optional, default=true
@@ -28,7 +28,7 @@ Simple command to add a client to keycloak, TODO: add more fields
 
 ## deleteClient
 Delete a client in keycloak
-### Parameter
+### Parameters
 - realm: String, optional
 - clientId: String, not optional,
 ### Example
