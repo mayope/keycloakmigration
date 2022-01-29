@@ -16,7 +16,7 @@ class UpdateRoleAction(
     realm: String? = null,
     private val name: String,
     private val clientId: String? = null,
-    private val description: String = "",
+    private val description: String? = null,
     private val attributes: Map<String, List<String>>? = null,
     private val composite: Boolean? = null,
     private val clientRole: Boolean? = null,
@@ -28,7 +28,7 @@ class UpdateRoleAction(
     private fun updateRole() = Role(
         originalRole.id,
         originalRole.name,
-        description,
+        description ?: originalRole.description,
         composite ?: originalRole.composite,
         clientRole ?: originalRole.clientRole,
         containerId ?: originalRole.containerId,
