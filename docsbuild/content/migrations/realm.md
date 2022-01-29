@@ -16,12 +16,14 @@ adds a Realm, throws error if realm with that id already exists
 - id: String, optional, default=name
 
 ### Example
+```yaml
     id: add-realm
     author: klg71
     changes:
       - addRealm:
           name: integ-test
-          
+```
+
 ## deleteRealm
 deletes a Realm, throws error if realm with that id does not exists
 
@@ -29,12 +31,14 @@ deletes a Realm, throws error if realm with that id does not exists
 - id: String, not optional
 
 ### Example
+```yaml
     id: add-realm
     author: klg71
     changes:
       - deleteRealm:
           id: integ-test
-          
+```
+
 ## updateRealm
 updates a Realm, throws error if realm with that id does not exists
 
@@ -147,9 +151,11 @@ updates a Realm, throws error if realm with that id does not exists
 - loginTheme:String, optional
 
 ### Example
+```yaml
     id: update-realm
     author: klg71
     changes:
       - updateRealm:
           id: integ-test
           displayName: UpdatedRealm
+```

@@ -45,7 +45,7 @@ Tested with OpenJdk 12 and Keycloak 8.0.2
      compile group: 'de.klg71.keycloakmigration', name: 'keycloakmigration', version: 'x.x.x'
  ### Usage
  Kotlin
- 
+ ```kotlin
     class MyMigrationArgs(private val adminUser: String,
                           private val adminPassword: String,
                           private val migrationFile: String,
@@ -75,7 +75,7 @@ Tested with OpenJdk 12 and Keycloak 8.0.2
         }
 
     }
-
+```
 ## TODOS
 - Add more commands
 - Add sophisticated unit and integration Tests

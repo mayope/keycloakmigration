@@ -16,12 +16,14 @@ Adds a new group to keycloak. Fails if the group already exists.
 - parent: String, default=empty
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
     - addGroup:
         realm: master
         name: testGroup
+```
 
 ## deleteGroup
 Removes a group from keycloak. Fails if the group does not exist.
@@ -31,12 +33,14 @@ Removes a group from keycloak. Fails if the group does not exist.
 - name: String, not optional
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
     - deleteGroup:
         realm: master
         name: testUser
+```
 
 ## updateGroup
 Updates a group from keycloak. Fails if the group does not exist.
@@ -49,6 +53,7 @@ Updates a group from keycloak. Fails if the group does not exist.
 - clientRoles: Map< String,List< String>>, optional, default=existing client roles, Key of the map is the clientId and the value is a List of roleNames to attach
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
@@ -58,7 +63,8 @@ Updates a group from keycloak. Fails if the group does not exist.
           attributes:
             lkz:
               - "1234"
-              
+```
+
 ## assignRoleToGroup
 Assigns a role to a group in keycloak. Fails if the group or the role does not exist.
 
@@ -69,6 +75,7 @@ Assigns a role to a group in keycloak. Fails if the group or the role does not e
 - clientId: String, optional, default=realmRole
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
@@ -76,7 +83,8 @@ Assigns a role to a group in keycloak. Fails if the group or the role does not e
           realm: integ-test
           role: parent
           group: test3
-          
+```
+
 ## revokeRoleFromGroup
 Revokes a role from a group in keycloak. Fails if the group or the role does not exist or the role is not assigned to the group.
 
@@ -87,6 +95,7 @@ Revokes a role from a group in keycloak. Fails if the group or the role does not
 - clientId: String, optional, default=realmRole
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
@@ -94,3 +103,4 @@ Revokes a role from a group in keycloak. Fails if the group or the role does not
           realm: integ-test
           group: parent
           role: test3
+```

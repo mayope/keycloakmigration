@@ -19,12 +19,14 @@ Simple command to add a client to keycloak, TODO: add more fields
 - publicClient: Boolean, optional, default=true
 - redirectUris: List< String>, optional, default=empty
 ### Example
+```yaml
     id: add-simple-client
     author: klg71
     changes:
     - addSimpleClient:
         realm: master
         clientId: test
+```
 
 ## deleteClient
 Delete a client in keycloak
@@ -32,12 +34,14 @@ Delete a client in keycloak
 - realm: String, optional
 - clientId: String, not optional,
 ### Example
+```yaml
     id: delete-client
     author: klg71
     changes:
     - deleteClient:
         realm: master
         clientId: test
+```
 
 ## importClient
 Imports a client using the json representation.
@@ -48,6 +52,7 @@ Imports a client using the json representation.
 - relativeToFile: Boolean, optional, default=true
 
 ### Example
+```yaml
     id: import-client
     author: klg71
     changes:
@@ -55,6 +60,7 @@ Imports a client using the json representation.
           realm: master
           clientRepresentationJsonFilename: client.json
           relativeToFile: true
+```
 
 ## updateClient
 Update a client
@@ -81,6 +87,7 @@ Update a client
 - fullScopeAllowed: Boolean, optional, default=no change
 
 ### Example
+```yaml
     id: update-client
     author: klg71
     changes:
@@ -90,6 +97,7 @@ Update a client
         redirectUris: 
             - http://localhost:8080
             - https://www.example.com
+```
 
 ## assignRoleToClient
 Assigns a realm- or client-role(if roleClientId is set) to a service account of a client.
@@ -101,6 +109,7 @@ Assigns a realm- or client-role(if roleClientId is set) to a service account of 
 - roleClientId: String, optional, default = realmRole
 
 ### Example
+```yaml
     id: add-client-roles
     author: klg71
     realm: integ-test
@@ -115,6 +124,7 @@ Assigns a realm- or client-role(if roleClientId is set) to a service account of 
           clientId: testClientRoles
           role: query-users
           roleClientId: realm-management
+```
 
 ## addRoleScopeMapping
 Adds a realm- or client-role(if roleClientId is set) to the cope mappings of a client.
@@ -128,6 +138,7 @@ See https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings
 - roleClientId: String, optional, default = realmRole
 
 ### Example
+```yaml
     id: add-client-role-mapping
     author: klg71
     realm: integ-test
@@ -146,6 +157,7 @@ See https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings
           clientId: testClientRoleScopeMappings
           role: query-users
           roleClientId: realm-management
+```
 
 ## addClientMapper
 adds a full configurable clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
@@ -161,6 +173,7 @@ adds a full configurable clientmapper, throws error if client or realm doesn't e
 - protocol: String, optional, default="openid-connect"
 
 ### Example:
+```yaml
     id: add-client-mappers
     author: klg71
     realm: integ-test
@@ -178,6 +191,7 @@ adds a full configurable clientmapper, throws error if client or realm doesn't e
             claim.name: customPropertyMapper
             jsonType.label: String
             user.attribute: UserModel.getEmail()
+```
 
 ## deleteClientMapper
 deletes a client mapper
@@ -188,6 +202,7 @@ deletes a client mapper
 - name: String, not optional
 
 ### Example:
+```yaml
     id: add-client-mappers
     author: klg71
     realm: integ-test
@@ -208,6 +223,7 @@ deletes a client mapper
       - deleteClientMapper:
           clientId: testMappers
           name: testPropertyMapper
+```
 
 ## addClientAudienceMapper
 adds a audience clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
@@ -222,6 +238,7 @@ adds a audience clientmapper, throws error if client or realm doesn't exist or m
 - customAudience: String, optional, default = ""
 
 ### Example:
+```yaml
     id: add-client-mappers
     author: klg71
     realm: integ-test
@@ -234,6 +251,7 @@ adds a audience clientmapper, throws error if client or realm doesn't exist or m
           addToIdToken: false
           clientAudience: testMappers
           customAudience: completlyCustom
+```
 
 ## addClientGroupMembershipMapper
 adds a group-membership clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
@@ -249,6 +267,7 @@ adds a group-membership clientmapper, throws error if client or realm doesn't ex
 - claimName: String?, optional, default = << name parameter>>
 
 ### Example:
+```yaml
     id: add-client-mappers
     author: klg71
     realm: integ-test
@@ -260,6 +279,7 @@ adds a group-membership clientmapper, throws error if client or realm doesn't ex
           name: groupMembership
           addToAccessToken: false
           claimName: groupClaim
+```
 
 ## addClientUserAttributeMapper
 adds a user-attribute clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
@@ -277,6 +297,7 @@ adds a user-attribute clientmapper, throws error if client or realm doesn't exis
 - aggregateAttributeValues: Boolean, optional, default = true
 
 ### Example:
+```yaml
     id: add-client-mappers
     author: klg71
     realm: integ-test
@@ -288,6 +309,7 @@ adds a user-attribute clientmapper, throws error if client or realm doesn't exis
           name: userAttribute
           userAttribute: testAttribute
           addToUserInfo: false
+```
 
 ## addClientUserRealmRoleMapper
 adds a user-realm-role clientmapper, throws error if client or realm doesn't exist or mapper with same name already exists
@@ -303,6 +325,7 @@ adds a user-realm-role clientmapper, throws error if client or realm doesn't exi
 - prefix: String, optional, default = ""
 
 ### Example:
+```yaml
     id: add-client-mappers
     author: klg71
     realm: integ-test
@@ -313,3 +336,4 @@ adds a user-realm-role clientmapper, throws error if client or realm doesn't exi
           clientId: testMappers
           name: userRealmRole
           prefix: rolePrefix
+```

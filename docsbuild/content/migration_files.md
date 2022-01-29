@@ -16,12 +16,13 @@ Migrations are controlled through the changelog. It contains the changeSets used
     - relativeToFile: Boolean, optional, default=true, whether the file should be searched from the working dir or relative to the keycloak changelog file.
 
 #### Example
+```yaml
     includes:
       - path: 01_initial.yml
       - path: 02_second.yml
       - path: changes/03_third.yml
         relativeToFile: true
-
+```
 
 ### ChangeSet
 The changeSet contains the actual changes as a list of migrations (see [Supported Migrations]({{<ref "migrations" >}}))

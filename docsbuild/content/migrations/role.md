@@ -25,6 +25,7 @@ Add a role to keycloak, fails if the role already exists
 - clientId: String, optional
 
 ### Example
+```yaml
     id: add-role
     author: klg71
     changes:
@@ -35,6 +36,8 @@ Add a role to keycloak, fails if the role already exists
           role:
           - value1
           - value2
+```
+
 ## deleteRole
 Delete a role from keycloak, fails if the role does not exist
 ### Parameters
@@ -42,6 +45,7 @@ Delete a role from keycloak, fails if the role does not exist
 - name: String, not optional,
 - clientId: String, optional, default=realmRole
 ### Example
+```yaml
     id: delete-role
     author: klg71
     changes:
@@ -49,3 +53,4 @@ Delete a role from keycloak, fails if the role does not exist
         realm: master
         name: test4
         clientId: test
+```

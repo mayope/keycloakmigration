@@ -70,6 +70,7 @@ or if a mapper with this name already exists in this ad
 - writeOnly: Boolean, optional, default = false
                 
 ### Example
+```yaml
     id: add-ad-ldap-full-name-mapper
     author: klg71
     realm: integ-test
@@ -78,7 +79,7 @@ or if a mapper with this name already exists in this ad
           name: testFullNamemapper
           adName: testLdap
           ldapFullNameAttribute: fullName
-          
+```    
 ## AddAdLdapGroupMapper
 Adds a group mapper to an active directory ldap, throws an error if the ad doesn't exists
 or if a mapper with this name already exists in this ad
@@ -103,6 +104,7 @@ or if a mapper with this name already exists in this ad
 - dropNonExistingGroupsDuringSync: Boolean, optional, default = false
                 
 ### Example
+```yaml
     id: add-ad-ldap-group-mapper
     author: klg71
     realm: integ-test
@@ -111,7 +113,8 @@ or if a mapper with this name already exists in this ad
           name: testGroupMapper
           adName: testLdap
           groupsDn: groupsDn
-          
+```
+
 ## AddAdLdapHardcodedRoleMapper
 Adds a hardcoded role mapper to an active directory ldap, throws an error if the ad doesn't exists
 or if a mapper with this name already exists in this ad. If the given role doesn't exists this command throws an exception.
@@ -123,6 +126,7 @@ or if a mapper with this name already exists in this ad. If the given role doesn
 - role: String, not optional
                 
 ### Example
+```yaml
     id: add-ad-ldap-hardcoded-role-mapper
     author: klg71
     realm: integ-test
@@ -133,7 +137,8 @@ or if a mapper with this name already exists in this ad. If the given role doesn
           name: testHardcodedRoleMapper
           adName: testLdap
           role: testMapperRole
-          
+```
+
 ## AddAdLdapUserControlMapperMapper
 Adds a user account control mapper to an active directory ldap, throws an error if the ad doesn't exists
 or if a mapper with this name already exists in this ad. 
@@ -144,6 +149,7 @@ or if a mapper with this name already exists in this ad.
 - adName: String, not optional
                 
 ### Example
+```yaml
     id: add-ad-ldap-user-account-control-mapper
     author: klg71
     realm: integ-test
@@ -151,7 +157,7 @@ or if a mapper with this name already exists in this ad.
       - addAdLdapUserAccountControlMapper:
           name: testUserAccountControl
           adName: testLdap
-          
+```          
 ## AddAdLdapUserAttributeMapperMapper
 Adds a user account attribute mapper to an active directory ldap, throws an error if the ad doesn't exists
 or if a mapper with this name already exists in this ad. 
@@ -167,6 +173,7 @@ or if a mapper with this name already exists in this ad.
 - isMandatoryInLdap: Boolean, optional, default = false
                 
 ### Example
+```yaml
     id: add-ad-ldap-user-attribute-mapper
     author: klg71
     realm: integ-test
@@ -176,7 +183,8 @@ or if a mapper with this name already exists in this ad.
           adName: testLdap
           userModelAttribute: userModelAttribute
           ldapAttribute: ldapAttribute
-          
+```
+
 ## AddAdLdapMapperMapper
 Adds a custom mapper to an active directory ldap, throws an error if the ad doesn't exists
 or if a mapper with this name already exists in this ad. 
@@ -193,6 +201,7 @@ or if a mapper with this name already exists in this ad.
 - config: Map<String,String>, not optional
                 
 ### Example
+```yaml
     id: add-ad-ldap-user-attribute-mapper
     author: klg71
     realm: integ-test
@@ -212,7 +221,8 @@ or if a mapper with this name already exists in this ad.
               roles.dn: "rolesDn"
               use.realm.roles.mapping: "true"
               user.roles.retrieve.strategy: "LOAD_ROLES_BY_MEMBERSHIP_ATTRIBUTE"
-          
+```
+
 ## AddUserFederation
 Adds a user federation to the realm
 
@@ -243,9 +253,11 @@ Deletes an userFederation from the realm, throws an exception if it doesn't exis
 - name: String, not optional
                 
 ### Example
+```yaml
     id: delete-ad-ldap
     author: klg71
     changes:
       - deleteUserFederation:
           realm: integ-test
           name: testLdap
+```

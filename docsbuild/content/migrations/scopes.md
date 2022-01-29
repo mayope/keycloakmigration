@@ -103,6 +103,7 @@ adds a full configurable client scope mapper, throws error if client or realm do
 - protocol: String, optional, default="openid-connect"
 
 ### Example:
+```yaml
     id: add-client-scope-mappers
     author: klg71
     realm: integ-test
@@ -120,7 +121,7 @@ adds a full configurable client scope mapper, throws error if client or realm do
             claim.name: customPropertyMapper
             jsonType.label: String
             user.attribute: UserModel.getEmail()
-
+```
 ## deleteClientScopeMapper
 deletes a client scope mapper
 
@@ -130,6 +131,7 @@ deletes a client scope mapper
 - name: String, not optional
 
 ### Example:
+```yaml
     id: add-client-scope-mappers
     author: klg71
     realm: integ-test
@@ -150,6 +152,7 @@ deletes a client scope mapper
       - deleteClientScopeMapper:
           clientScopeName: testMappers
           name: testPropertyMapper
+```
 
 ## addClientScopeAudienceMapper
 adds an audience client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
@@ -164,6 +167,7 @@ adds an audience client scope mapper, throws error if client or realm doesn't ex
 - customAudience: String, optional, default = ""
 
 ### Example:
+```yaml
     id: add-client-scope-mappers
     author: klg71
     realm: integ-test
@@ -176,6 +180,7 @@ adds an audience client scope mapper, throws error if client or realm doesn't ex
           addToIdToken: false
           clientAudience: testMappers
           customAudience: completlyCustom
+```
 
 ## addClientScopeGroupMembershipMapper
 adds a group-membership client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
@@ -191,6 +196,7 @@ adds a group-membership client scope mapper, throws error if client or realm doe
 - claimName: String?, optional, default = << name parameter>>
 
 ### Example:
+```yaml
     id: add-client-scope-mappers
     author: klg71
     realm: integ-test
@@ -202,6 +208,7 @@ adds a group-membership client scope mapper, throws error if client or realm doe
           name: groupMembership
           addToAccessToken: false
           claimName: groupClaim
+```
 
 ## addClientScopeUserAttributeMapper
 adds a user-attribute client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
@@ -219,6 +226,7 @@ adds a user-attribute client scope mapper, throws error if client or realm doesn
 - aggregateAttributeValues: Boolean, optional, default = true
 
 ### Example:
+```yaml
     id: add-client-scope-mappers
     author: klg71
     realm: integ-test
@@ -230,6 +238,7 @@ adds a user-attribute client scope mapper, throws error if client or realm doesn
           name: userAttribute
           userAttribute: testAttribute
           addToUserInfo: false
+```
 
 ## addClientScopeUserRealmRoleMapper
 adds a user-realm-role client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
@@ -245,6 +254,7 @@ adds a user-realm-role client scope mapper, throws error if client or realm does
 - prefix: String, optional, default = ""
 
 ### Example:
+```yaml
     id: add-client-scope-mappers
     author: klg71
     realm: integ-test
@@ -255,3 +265,4 @@ adds a user-realm-role client scope mapper, throws error if client or realm does
           clientScopeName: testMappers
           name: userRealmRole
           prefix: rolePrefix
+```
