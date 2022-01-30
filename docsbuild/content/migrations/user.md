@@ -28,6 +28,7 @@ ClientRole Parameters:
 - role: Rolename, String, not optional
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
@@ -48,7 +49,7 @@ ClientRole Parameters:
           clientRoles:
             - client: testClient
               role: testClientRole
-
+```
 ## deleteUser
 
 Removes a user from keycloak. Fails if a user with that name does not exists.
@@ -58,14 +59,15 @@ Removes a user from keycloak. Fails if a user with that name does not exists.
 - name: String, not optional
 
 ### Example
-
+```yaml
     id: test
     author: klg71
     changes:
     - deleteUser:
         realm: master
         name: test
-        
+```
+
 ## updateUser
 
 Updates an exiting user in keycloak. Fails if no user with given name exists.
@@ -96,7 +98,7 @@ Updates an exiting user in keycloak. Fails if no user with given name exists.
     - config1: Map<String, String>, optional, default = emptyMap() (See keycloak documentation)
     
 ### Example
-
+```yaml
     id: test
     author: klg71
     changes:
@@ -105,7 +107,7 @@ Updates an exiting user in keycloak. Fails if no user with given name exists.
         name: test
         enabled: false
         lastName: Lukas
-        
+```        
 ### Example to update Password
 
 > If you don't want to hash and generate the salt by youself you can use the [updateUserPassword](#updateuserpassword) method listed below.
@@ -113,7 +115,7 @@ Updates an exiting user in keycloak. Fails if no user with given name exists.
 > This method gives more control over the credential entry in keycloak including hashIterations, algorithms used, digits and additional configs.
 >
 > Updating the credential can not be rolled back!
-
+```yaml
     id: update-password
     author: klg71
     changes:
@@ -123,7 +125,7 @@ Updates an exiting user in keycloak. Fails if no user with given name exists.
           credentials:
             - hashedSaltedValue: 1tWf95Drz6t8/9kKE3tiJXPywCzG/C0KDnmCIFXEDdFQMPB6iVWWxjLO9HJI3YwTfWZa78N+hcmYHcT1tkavcA==
               salt: dGVzdB==
-              
+```
 #### Script to generate salt and hash:
 
 ```kotlin
@@ -176,6 +178,7 @@ The password is hashed with 27500 hash_iterations and a key_byte_length of 64 by
 - salt: String, optional, default = Random 15 letter alphanumeric String
 
 ### Example
+```yaml
     id: test
     author: klg71
     realm: integ-test
@@ -185,6 +188,7 @@ The password is hashed with 27500 hash_iterations and a key_byte_length of 64 by
       - updateUserPassword:
           name: testPasswordUser
           password: "testPassword"
+```
 
 ## addUserAttribute
 Adds an attribute to an existing user. Throws an error if the user does not exist.
@@ -198,6 +202,7 @@ User attributes can't be set deterministic with the updateUser action.
 - override: Boolean, default=false
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
@@ -208,7 +213,7 @@ User attributes can't be set deterministic with the updateUser action.
         attributeValues:
         - value1
         - value2
-
+```
 ## deleteUserAttribute
 Deletes an attribute to an existing user. Throws an error if the user does not exist.
 ### Parameters
@@ -218,6 +223,7 @@ Deletes an attribute to an existing user. Throws an error if the user does not e
 - failOnMissing: Boolean, default=true
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
@@ -225,7 +231,7 @@ Deletes an attribute to an existing user. Throws an error if the user does not e
         realm: master
         name: test
         attributeName: test1
-
+```
 ## assignRole
 Assigns a role to the given user. Fails if the user or the role doesn't exist.
 ### Parameters
@@ -234,6 +240,7 @@ Assigns a role to the given user. Fails if the user or the role doesn't exist.
 - role: String, not optional
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
@@ -241,6 +248,7 @@ Assigns a role to the given user. Fails if the user or the role doesn't exist.
         realm: master
         user: testUser
         role: testRole
+```
 
 ## revokeRole
 Revokes a role from the given user. Fails if the user or the role doesn't exist or the user does not have the role assigned.
@@ -251,6 +259,7 @@ Revokes a role from the given user. Fails if the user or the role doesn't exist 
 - role: String, not optional
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
@@ -258,7 +267,8 @@ Revokes a role from the given user. Fails if the user or the role doesn't exist 
         realm: master
         user: testUser
         role: testRole
-        
+```
+
 ## assignGroup
 Assigns a group to the given user. Fails if the user or the group doesn't exist.
 ### Parameters
@@ -267,6 +277,7 @@ Assigns a group to the given user. Fails if the user or the group doesn't exist.
 - group: String, not optional
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
@@ -274,7 +285,7 @@ Assigns a group to the given user. Fails if the user or the group doesn't exist.
         realm: master
         user: testUser
         group: testGroup
-        
+```
 ## revokeGroup
 Revokes a group from the given user. Fails if the user or the group doesn't exist or the user doesnt have the group assigned .
 ### Parameters
@@ -283,6 +294,7 @@ Revokes a group from the given user. Fails if the user or the group doesn't exis
 - group: String, not optional
 
 ### Example
+```yaml
     id: test
     author: klg71
     changes:
@@ -290,3 +302,4 @@ Revokes a group from the given user. Fails if the user or the group doesn't exis
         realm: master
         user: testUser
         group: testGroup
+```

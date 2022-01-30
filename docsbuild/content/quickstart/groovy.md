@@ -18,7 +18,8 @@ plugins {
 repositories { 
   jcenter()
 }
-
+```
+```groovy
 task keycloakMigrateLocal(type: KeycloakMigrationTask) {
       group = "keycloak"
       description = "Migrate the keycloak instance"

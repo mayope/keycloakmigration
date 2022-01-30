@@ -18,7 +18,7 @@ If you want to contribute to this project please visit the [issues](https://gith
      compile group: 'de.klg71.keycloakmigration', name: 'keycloakmigration', version: 'x.x.x'
  ### Usage
  Kotlin
- 
+```kotlin
     class MyMigrationArgs(private val adminUser: String,
                           private val adminPassword: String,
                           private val migrationFile: String,
@@ -48,3 +48,4 @@ If you want to contribute to this project please visit the [issues](https://gith
         }
 
     }
+```

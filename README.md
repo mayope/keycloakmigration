@@ -19,6 +19,7 @@ plugins {
 
 Use the Tasks to execute the migration:
 #### Groovy
+```groovy
     task keycloakMigrateLocal(type: KeycloakMigrationTask) {
       group = "keycloak"
       description = "Migrate the keycloak instance"
@@ -34,8 +35,10 @@ Use the Tasks to execute the migration:
       failOnUndefinedVariables = false
       warnOnUndefinedVariables = true
     }
-    
+```
+
 ### Kotlin
+```kotlin
     register<KeycloakMigrationTask>("keycloakMigrateLocal") {
         group = "keycloak"
         description = "Migrate the keycloak instance"
@@ -54,7 +57,7 @@ Use the Tasks to execute the migration:
         failOnUndefinedVariables = false
         warnOnUndefinedVariables = true
     }
-    
+```
    To correct existing hashes please use the `KeycloakMigrationCorrectHashesTask`.
    
 ### Using the fatjar

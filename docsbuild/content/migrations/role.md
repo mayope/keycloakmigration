@@ -9,7 +9,7 @@ permalink: /migrations/role/
 All migrations referring to the role resource.
 ## addRole
 Add a role to keycloak, fails if the role already exists
-### Parameter
+### Parameters
 - realm: String, optional
 - name: String, not optional,
 - clientId: String, optional, default=realmRole,
@@ -25,6 +25,7 @@ Add a role to keycloak, fails if the role already exists
 - clientId: String, optional
 
 ### Example
+```yaml
     id: add-role
     author: klg71
     changes:
@@ -35,6 +36,7 @@ Add a role to keycloak, fails if the role already exists
           role:
           - value1
           - value2
+```
 
 ## updateRole
 Update an existing realm- or client-role in keycloak.
@@ -70,13 +72,15 @@ Update an existing realm- or client-role in keycloak.
           - value1
           - value2
 ```
+  
 ## deleteRole
 Delete a role from keycloak, fails if the role does not exist
-### Parameter
+### Parameters
 - realm: String, optional
 - name: String, not optional,
 - clientId: String, optional, default=realmRole
 ### Example
+```yaml
     id: delete-role
     author: klg71
     changes:
@@ -84,3 +88,4 @@ Delete a role from keycloak, fails if the role does not exist
         realm: master
         name: test4
         clientId: test
+```
