@@ -38,6 +38,41 @@ Add a role to keycloak, fails if the role already exists
           - value2
 ```
 
+## updateRole
+Update an existing realm- or client-role in keycloak.
+### Parameters
+- realm: String, optional
+- name: String, not optional,
+- clientId: String, optional, default=realmRole,
+- description: String, optional, default=""
+- attributes: Map< String,List< String>>, optional
+- composite: Boolean, optional, must be true if compositeChildRoles is specified
+- clientRole: Boolean, optional
+- containerId: String, optional
+- compositeChildRoles: List<RoleSelector>, optional
+
+#### subclass RoleSelector
+- name: String, mandatory
+- clientId: String, optional
+
+### Example
+```yaml
+    id: add-role
+    author: klg71
+    changes:
+    - addRole:
+        realm: master
+        name: test3
+    - updateRole:
+        realm: master
+        name: test3
+        description: I am a test role
+        attributes:
+          role:
+          - value1
+          - value2
+```
+  
 ## deleteRole
 Delete a role from keycloak, fails if the role does not exist
 ### Parameters

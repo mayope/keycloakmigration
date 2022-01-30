@@ -51,6 +51,7 @@ import de.klg71.keycloakmigration.changeControl.actions.requiredactions.DeleteRe
 import de.klg71.keycloakmigration.changeControl.actions.requiredactions.UpdateRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
+import de.klg71.keycloakmigration.changeControl.actions.role.UpdateRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAction
 import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAttributeAction
 import de.klg71.keycloakmigration.changeControl.actions.user.AssignGroupAction
@@ -95,6 +96,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "revokeRole" -> objectMapper.readValue<RevokeRoleAction>(actionJson)
 
             "addRole" -> objectMapper.readValue<AddRoleAction>(actionJson)
+            "updateRole" -> objectMapper.readValue<UpdateRoleAction>(actionJson)
             "deleteRole" -> objectMapper.readValue<DeleteRoleAction>(actionJson)
 
             "addSimpleClient" -> objectMapper.readValue<AddSimpleClientAction>(actionJson)
