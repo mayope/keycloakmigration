@@ -6,20 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="ClientScope Migrations#All migrations referring to the ClientScope resource.
 addClientScope#Adds a clientScope to keycloak, fails if a clientScope with that name already exists
-Parameter# realm: String, optional name: String, not optional description: String, optional, default = null protocol: String, optional, default = &ldquo;openid-connect&rdquo; protocolMappers: List&lt; ProtocolMapper &gt;, optional, default = empty list consentScreenText: String, optional, default = null displayOnConsentScreen: Boolean, optional, default = false guiOrder: Int, optional, default = null includeInTokenScope: Boolean, optional, default = true  subclass ProtocolMapper# name: String, mandatory protocol: String, mandatory, default = null protocolMapper: String, mandatory consentRequired: Boolean, optional config: Map&lt;String, String&gt;, optional, default = empty  Example#id:add-client-scopesauthor:klg71realm:integ-testchanges:- addClientScope:name:apiassignDefaultClientScope#Assigns a default clientScope to a client, fails if the client or scope doesn&rsquo;t exist.">
+Parameters# realm: String, optional name: String, not optional description: String, optional, default = null protocol: String, optional, default = &ldquo;openid-connect&rdquo; protocolMappers: List&lt; ProtocolMapper &gt;, optional, default = empty list consentScreenText: String, optional, default = null displayOnConsentScreen: Boolean, optional, default = false guiOrder: Int, optional, default = null includeInTokenScope: Boolean, optional, default = true  subclass ProtocolMapper# name: String, mandatory protocol: String, mandatory, default = null protocolMapper: String, mandatory consentRequired: Boolean, optional config: Map&lt;String, String&gt;, optional, default = empty  Example#id:add-client-scopesauthor:klg71realm:integ-testchanges:- addClientScope:name:apiassignRoleToClientScope#Adds a realm- or client-role (if roleClientId is set) to a clientScope.">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="ClientScope Migrations" />
 <meta property="og:description" content="ClientScope Migrations#All migrations referring to the ClientScope resource.
 addClientScope#Adds a clientScope to keycloak, fails if a clientScope with that name already exists
-Parameter# realm: String, optional name: String, not optional description: String, optional, default = null protocol: String, optional, default = &ldquo;openid-connect&rdquo; protocolMappers: List&lt; ProtocolMapper &gt;, optional, default = empty list consentScreenText: String, optional, default = null displayOnConsentScreen: Boolean, optional, default = false guiOrder: Int, optional, default = null includeInTokenScope: Boolean, optional, default = true  subclass ProtocolMapper# name: String, mandatory protocol: String, mandatory, default = null protocolMapper: String, mandatory consentRequired: Boolean, optional config: Map&lt;String, String&gt;, optional, default = empty  Example#id:add-client-scopesauthor:klg71realm:integ-testchanges:- addClientScope:name:apiassignDefaultClientScope#Assigns a default clientScope to a client, fails if the client or scope doesn&rsquo;t exist." />
+Parameters# realm: String, optional name: String, not optional description: String, optional, default = null protocol: String, optional, default = &ldquo;openid-connect&rdquo; protocolMappers: List&lt; ProtocolMapper &gt;, optional, default = empty list consentScreenText: String, optional, default = null displayOnConsentScreen: Boolean, optional, default = false guiOrder: Int, optional, default = null includeInTokenScope: Boolean, optional, default = true  subclass ProtocolMapper# name: String, mandatory protocol: String, mandatory, default = null protocolMapper: String, mandatory consentRequired: Boolean, optional config: Map&lt;String, String&gt;, optional, default = empty  Example#id:add-client-scopesauthor:klg71realm:integ-testchanges:- addClientScope:name:apiassignRoleToClientScope#Adds a realm- or client-role (if roleClientId is set) to a clientScope." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mayope.github.io/keycloakmigration/migrations/scopes/" />
 <meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
-<meta property="article:modified_time" content="2021-07-12T23:23:19+02:00" />
+<meta property="article:modified_time" content="2022-01-29T15:08:10+01:00" />
 <title>ClientScope Migrations | Keycloakmigration</title>
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.a8f172e9514e766ee7562278ee2929cc668544eb977d0ee52069556d89261049.css" integrity="sha256-qPFy6VFOdm7nViJ47ikpzGaFROuXfQ7lIGlVbYkmEEk=">
-<script defer src="/keycloakmigration/en.search.min.01331f18be696282c2be6ec25972ac7a67e4384ca1c147d04503334eb851657b.js" integrity="sha256-ATMfGL5pYoLCvm7CWXKsemfkOEyhwUfQRQMzTrhRZXs="></script>
+<script defer src="/keycloakmigration/en.search.min.cf18c282db1c8e4f33ec7fec050bdfd702b4e9ba67caf732b0ebf1094ee5e322.js" integrity="sha256-zxjCgtscjk8z7H/sBQvf1wK06bpnyvcysOvxCU7l4yI="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -145,50 +145,56 @@ https://github.com/alex-shpak/hugo-book
   <ul>
     <li><a href="#addclientscope">addClientScope</a>
       <ul>
-        <li><a href="#parameter">Parameter</a></li>
+        <li><a href="#parameters">Parameters</a></li>
         <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#assignroletoclientscope">assignRoleToClientScope</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example</a></li>
       </ul>
     </li>
     <li><a href="#assigndefaultclientscope">assignDefaultClientScope</a>
       <ul>
-        <li><a href="#parameter-1">Parameter</a></li>
-        <li><a href="#example-1">Example</a></li>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example</a></li>
       </ul>
     </li>
     <li><a href="#addclientscopemapper">addClientScopeMapper</a>
       <ul>
-        <li><a href="#parameters">Parameters</a></li>
-        <li><a href="#example-2">Example:</a></li>
+        <li><a href="#parameters-3">Parameters</a></li>
+        <li><a href="#example-3">Example:</a></li>
       </ul>
     </li>
     <li><a href="#deleteclientscopemapper">deleteClientScopeMapper</a>
       <ul>
-        <li><a href="#parameters-1">Parameters</a></li>
-        <li><a href="#example-3">Example:</a></li>
+        <li><a href="#parameters-4">Parameters</a></li>
+        <li><a href="#example-4">Example:</a></li>
       </ul>
     </li>
     <li><a href="#addclientscopeaudiencemapper">addClientScopeAudienceMapper</a>
       <ul>
-        <li><a href="#parameters-2">Parameters</a></li>
-        <li><a href="#example-4">Example:</a></li>
+        <li><a href="#parameters-5">Parameters</a></li>
+        <li><a href="#example-5">Example:</a></li>
       </ul>
     </li>
     <li><a href="#addclientscopegroupmembershipmapper">addClientScopeGroupMembershipMapper</a>
       <ul>
-        <li><a href="#parameters-3">Parameters</a></li>
-        <li><a href="#example-5">Example:</a></li>
+        <li><a href="#parameters-6">Parameters</a></li>
+        <li><a href="#example-6">Example:</a></li>
       </ul>
     </li>
     <li><a href="#addclientscopeuserattributemapper">addClientScopeUserAttributeMapper</a>
       <ul>
-        <li><a href="#parameters-4">Parameters</a></li>
-        <li><a href="#example-6">Example:</a></li>
+        <li><a href="#parameters-7">Parameters</a></li>
+        <li><a href="#example-7">Example:</a></li>
       </ul>
     </li>
     <li><a href="#addclientscopeuserrealmrolemapper">addClientScopeUserRealmRoleMapper</a>
       <ul>
-        <li><a href="#parameters-5">Parameters</a></li>
-        <li><a href="#example-7">Example:</a></li>
+        <li><a href="#parameters-8">Parameters</a></li>
+        <li><a href="#example-8">Example:</a></li>
       </ul>
     </li>
   </ul>
@@ -212,9 +218,9 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#addclientscope">#</a>
 </h2>
 <p>Adds a clientScope to keycloak, fails if a clientScope with that name already exists</p>
-<h3 id="parameter">
-  Parameter
-  <a class="anchor" href="#parameter">#</a>
+<h3 id="parameters">
+  Parameters
+  <a class="anchor" href="#parameters">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -248,23 +254,57 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">  </span>- <span style="color:#a2f;font-weight:bold">addClientScope</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>api<span style="color:#bbb">
+</span></code></pre></div><h2 id="assignroletoclientscope">
+  assignRoleToClientScope
+  <a class="anchor" href="#assignroletoclientscope">#</a>
+</h2>
+<p>Adds a realm- or client-role (if roleClientId is set) to a clientScope.</p>
+<h3 id="parameters-1">
+  Parameters
+  <a class="anchor" href="#parameters-1">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional</li>
+<li>role: String, not optional</li>
+<li>roleClientId: String, optional, default = realmRole</li>
+</ul>
+<h3 id="example-1">
+  Example
+  <a class="anchor" href="#example-1">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-role-to-clientscope<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>- <span style="color:#a2f;font-weight:bold">addClientScope</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testClientScope<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>- <span style="color:#a2f;font-weight:bold">addSimpleClient</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">clientId</span>:<span style="color:#bbb"> </span>testClient<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>- <span style="color:#a2f;font-weight:bold">addRole</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>test-role<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">clientId</span>:<span style="color:#bbb"> </span>testClientScope<span style="color:#bbb">
+</span><span style="color:#bbb"> </span>- <span style="color:#a2f;font-weight:bold">assignRoleToClientScope</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testClientScope<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">role</span>:<span style="color:#bbb"> </span>test-role<span style="color:#bbb">
+</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">roleClientId</span>:<span style="color:#bbb"> </span>testClient<span style="color:#bbb">
 </span></code></pre></div><h2 id="assigndefaultclientscope">
   assignDefaultClientScope
   <a class="anchor" href="#assigndefaultclientscope">#</a>
 </h2>
 <p>Assigns a default clientScope to a client, fails if the client or scope doesn&rsquo;t exist.</p>
-<h3 id="parameter-1">
-  Parameter
-  <a class="anchor" href="#parameter-1">#</a>
+<h3 id="parameters-2">
+  Parameters
+  <a class="anchor" href="#parameters-2">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
 <li>clientScopeName: String</li>
 <li>clientId: String</li>
 </ul>
-<h3 id="example-1">
+<h3 id="example-2">
   Example
-  <a class="anchor" href="#example-1">#</a>
+  <a class="anchor" href="#example-2">#</a>
 </h3>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-scopes<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
@@ -285,9 +325,9 @@ https://github.com/alex-shpak/hugo-book
 <blockquote>
 <p>Only use this action if you can&rsquo;t find a convenient method to add the mapper below</p>
 </blockquote>
-<h3 id="parameters">
+<h3 id="parameters-3">
   Parameters
-  <a class="anchor" href="#parameters">#</a>
+  <a class="anchor" href="#parameters-3">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -297,75 +337,73 @@ https://github.com/alex-shpak/hugo-book
 <li>protocolMapper: String, not optional</li>
 <li>protocol: String, optional, default=&quot;openid-connect&rdquo;</li>
 </ul>
-<h3 id="example-2">
+<h3 id="example-3">
   Example:
-  <a class="anchor" href="#example-2">#</a>
+  <a class="anchor" href="#example-3">#</a>
 </h3>
-<pre><code>id: add-client-scope-mappers
-author: klg71
-realm: integ-test
-changes:
-  - addClientScope:
-      name: testMappers
-  - addClientScopeMapper:
-      clientScopeName: testMappers
-      name: testPropertyMapper
-      protocolMapper: oidc-usermodel-property-mapper
-      config:
-        access.token.claim: true
-        id.token.claim: false
-        userinfo.token.claim: false
-        claim.name: customPropertyMapper
-        jsonType.label: String
-        user.attribute: UserModel.getEmail()
-</code></pre>
-<h2 id="deleteclientscopemapper">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-scope-mappers<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScope</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScopeMapper</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientScopeName</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testPropertyMapper<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">protocolMapper</span>:<span style="color:#bbb"> </span>oidc-usermodel-property-mapper<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">config</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">access.token.claim</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">id.token.claim</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">userinfo.token.claim</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">claim.name</span>:<span style="color:#bbb"> </span>customPropertyMapper<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">jsonType.label</span>:<span style="color:#bbb"> </span>String<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">user.attribute</span>:<span style="color:#bbb"> </span>UserModel.getEmail()<span style="color:#bbb">
+</span></code></pre></div><h2 id="deleteclientscopemapper">
   deleteClientScopeMapper
   <a class="anchor" href="#deleteclientscopemapper">#</a>
 </h2>
 <p>deletes a client scope mapper</p>
-<h3 id="parameters-1">
+<h3 id="parameters-4">
   Parameters
-  <a class="anchor" href="#parameters-1">#</a>
+  <a class="anchor" href="#parameters-4">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
 <li>clientScopeName: String, not optional</li>
 <li>name: String, not optional</li>
 </ul>
-<h3 id="example-3">
+<h3 id="example-4">
   Example:
-  <a class="anchor" href="#example-3">#</a>
+  <a class="anchor" href="#example-4">#</a>
 </h3>
-<pre><code>id: add-client-scope-mappers
-author: klg71
-realm: integ-test
-changes:
-  - addClientScope:
-      name: testMappers
-  - addClientScopeMapper:
-      clientScopeName: testMappers
-      name: testPropertyMapper
-      protocolMapper: oidc-usermodel-property-mapper
-      config:
-        access.token.claim: true
-        id.token.claim: false
-        userinfo.token.claim: false
-        claim.name: customPropertyMapper
-        jsonType.label: String
-        user.attribute: UserModel.getEmail()
-  - deleteClientScopeMapper:
-      clientScopeName: testMappers
-      name: testPropertyMapper
-</code></pre>
-<h2 id="addclientscopeaudiencemapper">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-scope-mappers<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScope</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScopeMapper</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientScopeName</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testPropertyMapper<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">protocolMapper</span>:<span style="color:#bbb"> </span>oidc-usermodel-property-mapper<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">config</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">access.token.claim</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">id.token.claim</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">userinfo.token.claim</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">claim.name</span>:<span style="color:#bbb"> </span>customPropertyMapper<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">jsonType.label</span>:<span style="color:#bbb"> </span>String<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">user.attribute</span>:<span style="color:#bbb"> </span>UserModel.getEmail()<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">deleteClientScopeMapper</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientScopeName</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testPropertyMapper<span style="color:#bbb">
+</span></code></pre></div><h2 id="addclientscopeaudiencemapper">
   addClientScopeAudienceMapper
   <a class="anchor" href="#addclientscopeaudiencemapper">#</a>
 </h2>
 <p>adds an audience client scope mapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-2">
+<h3 id="parameters-5">
   Parameters
-  <a class="anchor" href="#parameters-2">#</a>
+  <a class="anchor" href="#parameters-5">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -376,31 +414,30 @@ changes:
 <li>clientAudience: String, optional, default = &ldquo;&rdquo;,</li>
 <li>customAudience: String, optional, default = &quot;&rdquo;</li>
 </ul>
-<h3 id="example-4">
+<h3 id="example-5">
   Example:
-  <a class="anchor" href="#example-4">#</a>
+  <a class="anchor" href="#example-5">#</a>
 </h3>
-<pre><code>id: add-client-scope-mappers
-author: klg71
-realm: integ-test
-changes:
-  - addClientScope:
-      name: testMappers
-  - addClientScopeAudienceMapper:
-      clientScopeName: testMappers
-      name: audienceMapper
-      addToIdToken: false
-      clientAudience: testMappers
-      customAudience: completlyCustom
-</code></pre>
-<h2 id="addclientscopegroupmembershipmapper">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-scope-mappers<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScope</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScopeAudienceMapper</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientScopeName</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>audienceMapper<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">addToIdToken</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientAudience</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">customAudience</span>:<span style="color:#bbb"> </span>completlyCustom<span style="color:#bbb">
+</span></code></pre></div><h2 id="addclientscopegroupmembershipmapper">
   addClientScopeGroupMembershipMapper
   <a class="anchor" href="#addclientscopegroupmembershipmapper">#</a>
 </h2>
 <p>adds a group-membership client scope mapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-3">
+<h3 id="parameters-6">
   Parameters
-  <a class="anchor" href="#parameters-3">#</a>
+  <a class="anchor" href="#parameters-6">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -412,30 +449,29 @@ changes:
 <li>fullGroupPath: Boolean, optional, default = true,</li>
 <li>claimName: String?, optional, default = &laquo; name parameter&raquo;</li>
 </ul>
-<h3 id="example-5">
+<h3 id="example-6">
   Example:
-  <a class="anchor" href="#example-5">#</a>
+  <a class="anchor" href="#example-6">#</a>
 </h3>
-<pre><code>id: add-client-scope-mappers
-author: klg71
-realm: integ-test
-changes:
-  - addClientScope:
-      name: testMappers
-  - addClientScopeGroupMembershipMapper:
-      clientScopeName: testMappers
-      name: groupMembership
-      addToAccessToken: false
-      claimName: groupClaim
-</code></pre>
-<h2 id="addclientscopeuserattributemapper">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-scope-mappers<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScope</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScopeGroupMembershipMapper</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientScopeName</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>groupMembership<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">addToAccessToken</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">claimName</span>:<span style="color:#bbb"> </span>groupClaim<span style="color:#bbb">
+</span></code></pre></div><h2 id="addclientscopeuserattributemapper">
   addClientScopeUserAttributeMapper
   <a class="anchor" href="#addclientscopeuserattributemapper">#</a>
 </h2>
 <p>adds a user-attribute client scope mapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-4">
+<h3 id="parameters-7">
   Parameters
-  <a class="anchor" href="#parameters-4">#</a>
+  <a class="anchor" href="#parameters-7">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -449,30 +485,29 @@ changes:
 <li>multivalued: Boolean, optional, default = false,</li>
 <li>aggregateAttributeValues: Boolean, optional, default = true</li>
 </ul>
-<h3 id="example-6">
+<h3 id="example-7">
   Example:
-  <a class="anchor" href="#example-6">#</a>
+  <a class="anchor" href="#example-7">#</a>
 </h3>
-<pre><code>id: add-client-scope-mappers
-author: klg71
-realm: integ-test
-changes:
-  - addClientScope:
-      name: testMappers
-  - addClientScopeUserAttributeMapper:
-      clientScopeName: testMappers
-      name: userAttribute
-      userAttribute: testAttribute
-      addToUserInfo: false
-</code></pre>
-<h2 id="addclientscopeuserrealmrolemapper">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-scope-mappers<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScope</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScopeUserAttributeMapper</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientScopeName</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>userAttribute<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">userAttribute</span>:<span style="color:#bbb"> </span>testAttribute<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">addToUserInfo</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span></code></pre></div><h2 id="addclientscopeuserrealmrolemapper">
   addClientScopeUserRealmRoleMapper
   <a class="anchor" href="#addclientscopeuserrealmrolemapper">#</a>
 </h2>
 <p>adds a user-realm-role client scope mapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-5">
+<h3 id="parameters-8">
   Parameters
-  <a class="anchor" href="#parameters-5">#</a>
+  <a class="anchor" href="#parameters-8">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -484,22 +519,21 @@ changes:
 <li>claimName: String?, optional, default = &laquo; name parameter&raquo;</li>
 <li>prefix: String, optional, default = &quot;&rdquo;</li>
 </ul>
-<h3 id="example-7">
+<h3 id="example-8">
   Example:
-  <a class="anchor" href="#example-7">#</a>
+  <a class="anchor" href="#example-8">#</a>
 </h3>
-<pre><code>id: add-client-scope-mappers
-author: klg71
-realm: integ-test
-changes:
-  - addClientScope:
-      name: testMappers
-  - addClientScopeUserRealmRoleMapper:
-      clientScopeName: testMappers
-      name: userRealmRole
-      prefix: rolePrefix
-</code></pre>
-</article>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-scope-mappers<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScope</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addClientScopeUserRealmRoleMapper</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientScopeName</span>:<span style="color:#bbb"> </span>testMappers<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>userRealmRole<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">prefix</span>:<span style="color:#bbb"> </span>rolePrefix<span style="color:#bbb">
+</span></code></pre></div></article>
  
       
 
@@ -535,50 +569,56 @@ changes:
   <ul>
     <li><a href="#addclientscope">addClientScope</a>
       <ul>
-        <li><a href="#parameter">Parameter</a></li>
+        <li><a href="#parameters">Parameters</a></li>
         <li><a href="#example">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#assignroletoclientscope">assignRoleToClientScope</a>
+      <ul>
+        <li><a href="#parameters-1">Parameters</a></li>
+        <li><a href="#example-1">Example</a></li>
       </ul>
     </li>
     <li><a href="#assigndefaultclientscope">assignDefaultClientScope</a>
       <ul>
-        <li><a href="#parameter-1">Parameter</a></li>
-        <li><a href="#example-1">Example</a></li>
+        <li><a href="#parameters-2">Parameters</a></li>
+        <li><a href="#example-2">Example</a></li>
       </ul>
     </li>
     <li><a href="#addclientscopemapper">addClientScopeMapper</a>
       <ul>
-        <li><a href="#parameters">Parameters</a></li>
-        <li><a href="#example-2">Example:</a></li>
+        <li><a href="#parameters-3">Parameters</a></li>
+        <li><a href="#example-3">Example:</a></li>
       </ul>
     </li>
     <li><a href="#deleteclientscopemapper">deleteClientScopeMapper</a>
       <ul>
-        <li><a href="#parameters-1">Parameters</a></li>
-        <li><a href="#example-3">Example:</a></li>
+        <li><a href="#parameters-4">Parameters</a></li>
+        <li><a href="#example-4">Example:</a></li>
       </ul>
     </li>
     <li><a href="#addclientscopeaudiencemapper">addClientScopeAudienceMapper</a>
       <ul>
-        <li><a href="#parameters-2">Parameters</a></li>
-        <li><a href="#example-4">Example:</a></li>
+        <li><a href="#parameters-5">Parameters</a></li>
+        <li><a href="#example-5">Example:</a></li>
       </ul>
     </li>
     <li><a href="#addclientscopegroupmembershipmapper">addClientScopeGroupMembershipMapper</a>
       <ul>
-        <li><a href="#parameters-3">Parameters</a></li>
-        <li><a href="#example-5">Example:</a></li>
+        <li><a href="#parameters-6">Parameters</a></li>
+        <li><a href="#example-6">Example:</a></li>
       </ul>
     </li>
     <li><a href="#addclientscopeuserattributemapper">addClientScopeUserAttributeMapper</a>
       <ul>
-        <li><a href="#parameters-4">Parameters</a></li>
-        <li><a href="#example-6">Example:</a></li>
+        <li><a href="#parameters-7">Parameters</a></li>
+        <li><a href="#example-7">Example:</a></li>
       </ul>
     </li>
     <li><a href="#addclientscopeuserrealmrolemapper">addClientScopeUserRealmRoleMapper</a>
       <ul>
-        <li><a href="#parameters-5">Parameters</a></li>
-        <li><a href="#example-7">Example:</a></li>
+        <li><a href="#parameters-8">Parameters</a></li>
+        <li><a href="#example-8">Example:</a></li>
       </ul>
     </li>
   </ul>

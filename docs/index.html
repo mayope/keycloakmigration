@@ -9,7 +9,7 @@
 This projects aims to automate the configuration of the keycloak authentication provider. It is inspired by the database migration tool liquibase. The goal is to provide a similar mechanism for Keycloak.
 Usage#Gradle#Apply the current version of the Plugin:
 plugins { id &#34;de.klg71.keycloakmigrationplugin&#34; version &#34;x.x.x&#34; } Use the Tasks to execute the migration:
-Groovy#task keycloakMigrateLocal(type: KeycloakMigrationTask) {group = &quot;keycloak&quot;description = &quot;Migrate the keycloak instance&quot;migrationFile = &quot;migration/keycloak-changelog.">
+Groovy#task keycloakMigrateLocal(type: KeycloakMigrationTask) { group = &#34;keycloak&#34; description = &#34;Migrate the keycloak instance&#34; migrationFile = &#34;migration/keycloak-changelog.">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Keycloakmigration" />
 <meta property="og:description" content="" />
 <meta property="og:type" content="website" />
@@ -19,7 +19,7 @@ Groovy#task keycloakMigrateLocal(type: KeycloakMigrationTask) {group = &quot
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.a8f172e9514e766ee7562278ee2929cc668544eb977d0ee52069556d89261049.css" integrity="sha256-qPFy6VFOdm7nViJ47ikpzGaFROuXfQ7lIGlVbYkmEEk=">
-<script defer src="/keycloakmigration/en.search.min.01331f18be696282c2be6ec25972ac7a67e4384ca1c147d04503334eb851657b.js" integrity="sha256-ATMfGL5pYoLCvm7CWXKsemfkOEyhwUfQRQMzTrhRZXs="></script>
+<script defer src="/keycloakmigration/en.search.min.cf18c282db1c8e4f33ec7fec050bdfd702b4e9ba67caf732b0ebf1094ee5e322.js" integrity="sha256-zxjCgtscjk8z7H/sBQvf1wK06bpnyvcysOvxCU7l4yI="></script>
 <link rel="alternate" type="application/rss+xml" href="https://mayope.github.io/keycloakmigration/index.xml" title="Keycloakmigration" />
 <!--
 Made with Book Theme
@@ -187,46 +187,45 @@ The goal is to provide a similar mechanism for Keycloak.</p>
   Groovy
   <a class="anchor" href="#groovy">#</a>
 </h4>
-<pre><code>task keycloakMigrateLocal(type: KeycloakMigrationTask) {
-  group = &quot;keycloak&quot;
-  description = &quot;Migrate the keycloak instance&quot;
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-groovy" data-lang="groovy">
+    task <span style="color:#00a000">keycloakMigrateLocal</span><span style="color:#666">(</span><span style="color:#a0a000">type:</span> KeycloakMigrationTask<span style="color:#666">)</span> <span style="color:#666">{</span>
+      group <span style="color:#666">=</span> <span style="color:#b44">&#34;keycloak&#34;</span>
+      description <span style="color:#666">=</span> <span style="color:#b44">&#34;Migrate the keycloak instance&#34;</span>
 
-  migrationFile = &quot;migration/keycloak-changelog.yml&quot;
-  adminUser = &quot;admin&quot;
-  adminPassword = &quot;admin&quot;
-  baseUrl = &quot;http://localhost:8080&quot;
-  realm = &quot;master&quot;
-  parameters = [USERNAME: &quot;testUser&quot;, PASSWORD: &quot;testPassword&quot;]
-  waitForKeycloak = false
-  waitForKeycloakTimeout = 0L // infinit wait time
-  failOnUndefinedVariables = false
-  warnOnUndefinedVariables = true
-}
-</code></pre>
-<h3 id="kotlin">
+      migrationFile <span style="color:#666">=</span> <span style="color:#b44">&#34;migration/keycloak-changelog.yml&#34;</span>
+      adminUser <span style="color:#666">=</span> <span style="color:#b44">&#34;admin&#34;</span>
+      adminPassword <span style="color:#666">=</span> <span style="color:#b44">&#34;admin&#34;</span>
+      baseUrl <span style="color:#666">=</span> <span style="color:#b44">&#34;http://localhost:8080&#34;</span>
+      realm <span style="color:#666">=</span> <span style="color:#b44">&#34;master&#34;</span>
+      parameters <span style="color:#666">=</span> <span style="color:#666">[</span><span style="color:#a0a000">USERNAME:</span> <span style="color:#b44">&#34;testUser&#34;</span><span style="color:#666">,</span> <span style="color:#a0a000">PASSWORD:</span> <span style="color:#b44">&#34;testPassword&#34;</span><span style="color:#666">]</span>
+      waitForKeycloak <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">false</span>
+      waitForKeycloakTimeout <span style="color:#666">=</span> <span style="color:#666">0L</span> <span style="color:#080;font-style:italic">// infinit wait time
+</span><span style="color:#080;font-style:italic"></span>      failOnUndefinedVariables <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">false</span>
+      warnOnUndefinedVariables <span style="color:#666">=</span> <span style="color:#a2f;font-weight:bold">true</span>
+    <span style="color:#666">}</span>
+</code></pre></div><h3 id="kotlin">
   Kotlin
   <a class="anchor" href="#kotlin">#</a>
 </h3>
-<pre><code>register&lt;KeycloakMigrationTask&gt;(&quot;keycloakMigrateLocal&quot;) {
-    group = &quot;keycloak&quot;
-    description = &quot;Migrate the keycloak instance&quot;
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-kotlin" data-lang="kotlin">    register&lt;KeycloakMigrationTask&gt;(<span style="color:#b44">&#34;keycloakMigrateLocal&#34;</span>) {
+        group = <span style="color:#b44">&#34;keycloak&#34;</span>
+        description = <span style="color:#b44">&#34;Migrate the keycloak instance&#34;</span>
 
-    migrationFile = &quot;migration/keycloak-changelog.yml&quot;
-    adminUser = &quot;admin&quot;
-    adminPassword = &quot;admin&quot;
-    baseUrl = &quot;http://localhost:8080/auth&quot;
-    realm = &quot;master&quot;
-    parameters = mapOf(
-            &quot;USER_NAME&quot; to &quot;testUser&quot;,
-            &quot;PASSWORD&quot; to &quot;password&quot;
-    )
-    waitForKeycloak = false
-    waitForKeycloakTimeout = 0L // infinit wait time
-    failOnUndefinedVariables = false
-    warnOnUndefinedVariables = true
-}
-</code></pre>
-<p>To correct existing hashes please use the <code>KeycloakMigrationCorrectHashesTask</code>.</p>
+        migrationFile = <span style="color:#b44">&#34;migration/keycloak-changelog.yml&#34;</span>
+        adminUser = <span style="color:#b44">&#34;admin&#34;</span>
+        adminPassword = <span style="color:#b44">&#34;admin&#34;</span>
+        baseUrl = <span style="color:#b44">&#34;http://localhost:8080/auth&#34;</span>
+        realm = <span style="color:#b44">&#34;master&#34;</span>
+        parameters = mapOf(
+                <span style="color:#b44">&#34;USER_NAME&#34;</span> to <span style="color:#b44">&#34;testUser&#34;</span>,
+                <span style="color:#b44">&#34;PASSWORD&#34;</span> to <span style="color:#b44">&#34;password&#34;</span>
+        )
+        waitForKeycloak = <span style="color:#a2f;font-weight:bold">false</span>
+        waitForKeycloakTimeout = <span style="color:#666">0L</span> <span style="color:#080;font-style:italic">// infinit wait time
+</span><span style="color:#080;font-style:italic"></span>        failOnUndefinedVariables = <span style="color:#a2f;font-weight:bold">false</span>
+        warnOnUndefinedVariables = <span style="color:#a2f;font-weight:bold">true</span>
+    }
+</code></pre></div><p>To correct existing hashes please use the <code>KeycloakMigrationCorrectHashesTask</code>.</p>
 <h3 id="using-the-fatjar">
   Using the fatjar
   <a class="anchor" href="#using-the-fatjar">#</a>

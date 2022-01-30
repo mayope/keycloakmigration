@@ -14,12 +14,12 @@ Parameters# realm: String, optional name: String, not optional enabled: Boole
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mayope.github.io/keycloakmigration/migrations/user/" />
 <meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
-<meta property="article:modified_time" content="2020-07-04T10:17:11+02:00" />
+<meta property="article:modified_time" content="2022-01-29T15:08:10+01:00" />
 <title>User Migrations | Keycloakmigration</title>
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.a8f172e9514e766ee7562278ee2929cc668544eb977d0ee52069556d89261049.css" integrity="sha256-qPFy6VFOdm7nViJ47ikpzGaFROuXfQ7lIGlVbYkmEEk=">
-<script defer src="/keycloakmigration/en.search.min.01331f18be696282c2be6ec25972ac7a67e4384ca1c147d04503334eb851657b.js" integrity="sha256-ATMfGL5pYoLCvm7CWXKsemfkOEyhwUfQRQMzTrhRZXs="></script>
+<script defer src="/keycloakmigration/en.search.min.cf18c282db1c8e4f33ec7fec050bdfd702b4e9ba67caf732b0ebf1094ee5e322.js" integrity="sha256-zxjCgtscjk8z7H/sBQvf1wK06bpnyvcysOvxCU7l4yI="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -251,28 +251,27 @@ https://github.com/alex-shpak/hugo-book
   Example
   <a class="anchor" href="#example">#</a>
 </h3>
-<pre><code>id: test
-author: klg71
-changes:
-- addUser:
-    realm: master
-    name: test
-    enabled: true
-    email: test@example.de
-    emailVerified: true
-    attributes:
-      test:
-      - test
-      - test2
-      groups:
-        - testGroup
-      realmRoles:
-        - testRealmRole
-      clientRoles:
-        - client: testClient
-          role: testClientRole
-</code></pre>
-<h2 id="deleteuser">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#a2f;font-weight:bold">addUser</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">enabled</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">email</span>:<span style="color:#bbb"> </span>test@example.de<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">emailVerified</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">true</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">attributes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">test</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>- test<span style="color:#bbb">
+</span><span style="color:#bbb">          </span>- test2<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">groups</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>- testGroup<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">realmRoles</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>- testRealmRole<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientRoles</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>- <span style="color:#a2f;font-weight:bold">client</span>:<span style="color:#bbb"> </span>testClient<span style="color:#bbb">
+</span><span style="color:#bbb">              </span><span style="color:#a2f;font-weight:bold">role</span>:<span style="color:#bbb"> </span>testClientRole<span style="color:#bbb">
+</span></code></pre></div><h2 id="deleteuser">
   deleteUser
   <a class="anchor" href="#deleteuser">#</a>
 </h2>
@@ -289,14 +288,13 @@ changes:
   Example
   <a class="anchor" href="#example-1">#</a>
 </h3>
-<pre><code>id: test
-author: klg71
-changes:
-- deleteUser:
-    realm: master
-    name: test
-</code></pre>
-<h2 id="updateuser">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#a2f;font-weight:bold">deleteUser</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span></code></pre></div><h2 id="updateuser">
   updateUser
   <a class="anchor" href="#updateuser">#</a>
 </h2>
@@ -337,16 +335,15 @@ changes:
   Example
   <a class="anchor" href="#example-2">#</a>
 </h3>
-<pre><code>id: test
-author: klg71
-changes:
-- updateUser:
-    realm: master
-    name: test
-    enabled: false
-    lastName: Lukas
-</code></pre>
-<h3 id="example-to-update-password">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#a2f;font-weight:bold">updateUser</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">enabled</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">lastName</span>:<span style="color:#bbb"> </span>Lukas<span style="color:#bbb">
+</span></code></pre></div><h3 id="example-to-update-password">
   Example to update Password
   <a class="anchor" href="#example-to-update-password">#</a>
 </h3>
@@ -355,17 +352,16 @@ changes:
 <p>This method gives more control over the credential entry in keycloak including hashIterations, algorithms used, digits and additional configs.</p>
 <p>Updating the credential can not be rolled back!</p>
 </blockquote>
-<pre><code>id: update-password
-author: klg71
-changes:
-  - updateUser:
-      realm: integ-test
-      name: test
-      credentials:
-        - hashedSaltedValue: 1tWf95Drz6t8/9kKE3tiJXPywCzG/C0KDnmCIFXEDdFQMPB6iVWWxjLO9HJI3YwTfWZa78N+hcmYHcT1tkavcA==
-          salt: dGVzdB==
-</code></pre>
-<h4 id="script-to-generate-salt-and-hash">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>update-password<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">updateUser</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">credentials</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>- <span style="color:#a2f;font-weight:bold">hashedSaltedValue</span>:<span style="color:#bbb"> </span>1tWf95Drz6t8/9kKE3tiJXPywCzG/C0KDnmCIFXEDdFQMPB6iVWWxjLO9HJI3YwTfWZa78N+hcmYHcT1tkavcA==<span style="color:#bbb">
+</span><span style="color:#bbb">              </span><span style="color:#a2f;font-weight:bold">salt</span>:<span style="color:#bbb"> </span>dGVzdB==<span style="color:#bbb">
+</span></code></pre></div><h4 id="script-to-generate-salt-and-hash">
   Script to generate salt and hash:
   <a class="anchor" href="#script-to-generate-salt-and-hash">#</a>
 </h4>
@@ -425,17 +421,16 @@ changes:
   Example
   <a class="anchor" href="#example-3">#</a>
 </h3>
-<pre><code>id: test
-author: klg71
-realm: integ-test
-changes:
-  - addUser:
-      name: testPasswordUser
-  - updateUserPassword:
-      name: testPasswordUser
-      password: &quot;testPassword&quot;
-</code></pre>
-<h2 id="adduserattribute">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addUser</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testPasswordUser<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">updateUserPassword</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>testPasswordUser<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">password</span>:<span style="color:#bbb"> </span><span style="color:#b44">&#34;testPassword&#34;</span><span style="color:#bbb">
+</span></code></pre></div><h2 id="adduserattribute">
   addUserAttribute
   <a class="anchor" href="#adduserattribute">#</a>
 </h2>
@@ -456,18 +451,17 @@ changes:
   Example
   <a class="anchor" href="#example-4">#</a>
 </h3>
-<pre><code>id: test
-author: klg71
-changes:
-- addUserAttribute:
-    realm: master
-    name: test
-    attributeName: test1
-    attributeValues:
-    - value1
-    - value2
-</code></pre>
-<h2 id="deleteuserattribute">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#a2f;font-weight:bold">addUserAttribute</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">attributeName</span>:<span style="color:#bbb"> </span>test1<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">attributeValues</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- value1<span style="color:#bbb">
+</span><span style="color:#bbb">        </span>- value2<span style="color:#bbb">
+</span></code></pre></div><h2 id="deleteuserattribute">
   deleteUserAttribute
   <a class="anchor" href="#deleteuserattribute">#</a>
 </h2>
@@ -486,15 +480,14 @@ changes:
   Example
   <a class="anchor" href="#example-5">#</a>
 </h3>
-<pre><code>id: test
-author: klg71
-changes:
-- deleteUserAttribute:
-    realm: master
-    name: test
-    attributeName: test1
-</code></pre>
-<h2 id="assignrole">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#a2f;font-weight:bold">deleteUserAttribute</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">attributeName</span>:<span style="color:#bbb"> </span>test1<span style="color:#bbb">
+</span></code></pre></div><h2 id="assignrole">
   assignRole
   <a class="anchor" href="#assignrole">#</a>
 </h2>
@@ -512,15 +505,14 @@ changes:
   Example
   <a class="anchor" href="#example-6">#</a>
 </h3>
-<pre><code>id: test
-author: klg71
-changes:
-- assignRole:
-    realm: master
-    user: testUser
-    role: testRole
-</code></pre>
-<h2 id="revokerole">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#a2f;font-weight:bold">assignRole</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">user</span>:<span style="color:#bbb"> </span>testUser<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">role</span>:<span style="color:#bbb"> </span>testRole<span style="color:#bbb">
+</span></code></pre></div><h2 id="revokerole">
   revokeRole
   <a class="anchor" href="#revokerole">#</a>
 </h2>
@@ -538,15 +530,14 @@ changes:
   Example
   <a class="anchor" href="#example-7">#</a>
 </h3>
-<pre><code>id: test
-author: klg71
-changes:
-- revokeRole:
-    realm: master
-    user: testUser
-    role: testRole
-</code></pre>
-<h2 id="assigngroup">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#a2f;font-weight:bold">revokeRole</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">user</span>:<span style="color:#bbb"> </span>testUser<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">role</span>:<span style="color:#bbb"> </span>testRole<span style="color:#bbb">
+</span></code></pre></div><h2 id="assigngroup">
   assignGroup
   <a class="anchor" href="#assigngroup">#</a>
 </h2>
@@ -564,15 +555,14 @@ changes:
   Example
   <a class="anchor" href="#example-8">#</a>
 </h3>
-<pre><code>id: test
-author: klg71
-changes:
-- assignGroup:
-    realm: master
-    user: testUser
-    group: testGroup
-</code></pre>
-<h2 id="revokegroup">
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#a2f;font-weight:bold">assignGroup</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">user</span>:<span style="color:#bbb"> </span>testUser<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">group</span>:<span style="color:#bbb"> </span>testGroup<span style="color:#bbb">
+</span></code></pre></div><h2 id="revokegroup">
   revokeGroup
   <a class="anchor" href="#revokegroup">#</a>
 </h2>
@@ -590,15 +580,14 @@ changes:
   Example
   <a class="anchor" href="#example-9">#</a>
 </h3>
-<pre><code>id: test
-author: klg71
-changes:
-- revokeGroup:
-    realm: master
-    user: testUser
-    group: testGroup
-</code></pre>
-</article>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">    </span>- <span style="color:#a2f;font-weight:bold">revokeGroup</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">user</span>:<span style="color:#bbb"> </span>testUser<span style="color:#bbb">
+</span><span style="color:#bbb">        </span><span style="color:#a2f;font-weight:bold">group</span>:<span style="color:#bbb"> </span>testGroup<span style="color:#bbb">
+</span></code></pre></div></article>
  
       
 
