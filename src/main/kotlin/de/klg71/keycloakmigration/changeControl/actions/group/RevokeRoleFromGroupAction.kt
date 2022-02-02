@@ -28,8 +28,7 @@ class RevokeRoleFromGroupAction(
             }
         } else {
             if (!client.existsClientRole(role, realm(), clientId)) {
-                throw MigrationException(
-                        "Role with name: $role in client: $clientId does not exist in realm: ${realm()}!")
+                throw MigrationException("Role with name: $role in client: $clientId does not exist in realm: ${realm()}!")
             }
         }
 
