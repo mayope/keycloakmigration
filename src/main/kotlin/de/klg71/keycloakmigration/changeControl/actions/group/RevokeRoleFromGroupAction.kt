@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.clientRoleByName
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
 import de.klg71.keycloakmigration.keycloakapi.existsGroup
 import de.klg71.keycloakmigration.keycloakapi.existsRole
+import de.klg71.keycloakmigration.keycloakapi.existsClientRole
 import de.klg71.keycloakmigration.keycloakapi.groupUUID
 import java.util.Objects.isNull
 
