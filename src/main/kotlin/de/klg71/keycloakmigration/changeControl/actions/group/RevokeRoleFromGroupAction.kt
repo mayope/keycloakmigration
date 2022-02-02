@@ -18,9 +18,10 @@ class RevokeRoleFromGroupAction(
         private val clientId: String? = null) : Action(realm) {
 
     override fun execute() {
-       if (!client.existsGroup(group, realm())) {
+        if (!client.existsGroup(group, realm())) {
             throw MigrationException("Group with name: $group does not exist in realm: ${realm()}!")
         }
+        
         if (clientId == null) {
             if (!client.existsRole(role, realm())) {
                 throw MigrationException("Role with name: $role does not exist in realm: ${realm()}!")
