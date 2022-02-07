@@ -33,6 +33,12 @@ class RevokeRoleFromGroupAction(
             }
         }
 
+        client.groupRoles(realm(), client.groupUUID(group, realm())).run {
+            if (!map { it.name }.contains(role)) {
+                throw MigrationException("Group with name: $group in realm: ${realm()} does not have role: $role!")
+            }
+        }
+
         findRole().run {
             assignRole()
         }.let {
