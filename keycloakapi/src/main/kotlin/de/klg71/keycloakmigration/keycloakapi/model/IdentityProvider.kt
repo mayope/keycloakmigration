@@ -13,7 +13,7 @@ data class IdentityProvider(
     val storeToken: Boolean,
     val linkOnly: Boolean,
     val firstBrokerLoginFlowAlias: String="",
-val postBrokerLoginFlowAlias: String="",
+    val postBrokerLoginFlowAlias: String="",
     val updateProfileFirstLoginMode: String
 )
 
