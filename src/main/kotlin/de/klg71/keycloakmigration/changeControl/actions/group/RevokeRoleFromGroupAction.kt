@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.clientRoleByName
 import de.klg71.keycloakmigration.keycloakapi.clientUUID
 import de.klg71.keycloakmigration.keycloakapi.existsGroup
 import de.klg71.keycloakmigration.keycloakapi.existsRole
+import de.klg71.keycloakmigration.keycloakapi.existsClientRole
 import de.klg71.keycloakmigration.keycloakapi.groupUUID
 import java.util.Objects.isNull
 
@@ -21,8 +22,15 @@ class RevokeRoleFromGroupAction(
         if (!client.existsGroup(group, realm())) {
             throw MigrationException("Group with name: $group does not exist in realm: ${realm()}!")
         }
-        if (!client.existsRole(role, realm())) {
-            throw MigrationException("Role with name: $role does not exist in realm: ${realm()}!")
+        
+        if (clientId == null) {
+            if (!client.existsRole(role, realm())) {
+                throw MigrationException("Role with name: $role does not exist in realm: ${realm()}!")
+            }
+        } else {
+            if (!client.existsClientRole(role, realm(), clientId)) {
+                throw MigrationException("Role with name: $role in client: $clientId does not exist in realm: ${realm()}!")
+            }
         }
 
         client.groupRoles(realm(), client.groupUUID(group, realm())).run {
