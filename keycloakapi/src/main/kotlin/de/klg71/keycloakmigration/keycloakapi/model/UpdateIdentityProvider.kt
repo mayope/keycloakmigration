@@ -6,7 +6,7 @@ data class UpdateIdentityProvider(
     val internalId: UUID,
     val providerId: String,
     val alias: String,
-    val displayName: String,
+    val displayName: String? = null,
     val enabled: Boolean,
     val config: Map<String, String>,
     val trustEmail: Boolean,
