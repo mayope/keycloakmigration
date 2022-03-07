@@ -155,7 +155,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     var smtpServer: Map<String, String> = existingRealm.smtpServer
     var eventsEnabled: Boolean = existingRealm.eventsEnabled
     var eventsListeners: List<String> = existingRealm.eventsListeners
-    val eventsExpiration: Int = existingRealm.eventsExpiration,
+    val eventsExpiration: Int = existingRealm.eventsExpiration
     var enabledEventTypes: List<String> = existingRealm.enabledEventTypes
     var identityProviders: List<IdentityProviderItem> = existingRealm.identityProviders
     var adminEventsEnabled: Boolean = existingRealm.adminEventsEnabled
