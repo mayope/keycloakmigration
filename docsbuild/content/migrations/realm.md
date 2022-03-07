@@ -103,6 +103,7 @@ updates a Realm, throws error if realm with that id does not exists
 - smtpServer:Map<String,String>, optional
 - eventsEnabled:Boolean, optional
 - eventsListeners:List< String>, optional
+- eventsExpiration:Int, optional
 - enabledEventTypes:List< String>, optional
 - adminEventsEnabled:Boolean, optional
 - adminEventsDetailsEnabled:Boolean, optional
