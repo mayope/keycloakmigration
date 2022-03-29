@@ -20,7 +20,7 @@ class WithdrawOptionalClientScopeIntegTest : AbstractIntegrationTest() {
     fun testWithdrawOptionalClientScope() {
         AddClientScopeAction(testRealm, scopeName).executeIt()
         AddSimpleClientAction(testRealm, clientId).executeIt()
-        AssignDefaultClientScopeAction(testRealm, scopeName, clientId).executeIt()
+        AssignOptionalClientScopeAction(testRealm, scopeName, clientId).executeIt()
         WithdrawOptionalClientScopeAction(testRealm, scopeName, clientId).executeIt()
 
         val scopes = client.optionalClientScopes(testRealm, client.clientUUID(clientId, testRealm))
