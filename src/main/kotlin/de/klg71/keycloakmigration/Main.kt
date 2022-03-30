@@ -15,6 +15,7 @@ import java.time.temporal.ChronoUnit
 
 val KOIN_LOGGER = LoggerFactory.getLogger("de.klg71.keycloakmigration.koinlogger")!!
 const val DEFAULT_WAIT_FOR_KEYCLOAK_PAUSE_TIME = 1000L
+private const val LOGGING_MODULO = 10
 
 internal fun main(args: Array<String>) = mainBody {
     val migrationArgs = ArgParser(args).parseInto(::CommandLineMigrationArgs)
@@ -23,27 +24,35 @@ internal fun main(args: Array<String>) = mainBody {
 
 internal fun waitForKeycloak(baseUrl: String, timeout: Long) {
     val waitTill = Instant.now().plus(timeout, ChronoUnit.SECONDS)
+    var logCounter = 1
     while (true) {
-        if (isKeycloakReady(baseUrl)) return
+        if (isKeycloakReady(baseUrl, logCounter % LOGGING_MODULO == 0)) return
         if (timeout > 0 && Instant.now().isAfter(waitTill)) {
             throw KeycloakNotReadyException()
         }
+        logCounter += 1
         println("Waiting for Keycloak to become ready")
         Thread.sleep(DEFAULT_WAIT_FOR_KEYCLOAK_PAUSE_TIME)
     }
 }
 
 @Suppress("SwallowedException")
-private fun isKeycloakReady(baseUrl: String): Boolean {
+private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
     try {
         if (URL(baseUrl).readBytes().isNotEmpty())
             return true
     } catch (e: IOException) {
-        // nothing to do
+        if (logError) {
+            println("Error: ${e.message}")
+        }
     } catch (e: ConnectException) {
-        // nothing to do
+        if (logError) {
+            println("Error: ${e.message}")
+        }
     } catch (e: SocketException) {
-        // nothing to do
+        if (logError) {
+            println("Error: ${e.message}")
+        }
     }
     return false
 }

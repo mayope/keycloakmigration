@@ -75,7 +75,7 @@ Assigns a default clientScope to a client, fails if the client or scope doesn't 
 
 ### Example
 ```yaml
-id: add-client-scopes
+id: assign-default-client-scopes
 author: klg71
 realm: integ-test
 changes:
@@ -88,6 +88,79 @@ changes:
       clientScopeName: api
 ```
 
+## withdrawDefaultClientScope
+Withdraws a default clientScope from a client, fails if the client or scope doesn't exist.
+
+### Parameters
+- realm: String, optional
+- clientScopeName: String, not optional
+- clientId: String, not optional
+
+### Example:
+```yaml
+id: withdraw-default-client-scopes
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testClientScope
+  - addClientScope:
+      name: api
+  - assignDefaultClientScope:
+      clientId: testClientScope
+      clientScopeName: api
+  - withdrawDefaultClientScope:
+      clientId: testClientScope
+      clientScopeName: api
+```
+
+## assignOptionalClientScope
+Assigns an optional clientScope to a client, fails if the client or scope doesn't exist.
+### Parameters
+- realm: String, optional
+- clientScopeName: String
+- clientId: String
+
+### Example
+```yaml
+id: assign-optional-client-scopes
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testClientScope
+  - addClientScope:
+      name: api
+  - assignOptionalClientScope:
+      clientId: testClientScope
+      clientScopeName: api
+```
+
+## withdrawOptionalClientScope
+Withdraws an optional clientScope from a client, fails if the client or scope doesn't exist.
+
+### Parameters
+- realm: String, optional
+- clientScopeName: String, not optional
+- clientId: String, not optional
+
+### Example:
+```yaml
+id: withdraw-optional-client-scopes
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testClientScope
+  - addClientScope:
+      name: api
+  - assignOptionalClientScope:
+      clientId: testClientScope
+      clientScopeName: api
+  - withdrawOptionalClientScope:
+      clientId: testClientScope
+      clientScopeName: api
+```
 
 ## addClientScopeMapper
 adds a full configurable client scope mapper, throws error if client or realm doesn't exist or mapper with same name already exists
