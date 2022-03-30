@@ -303,8 +303,21 @@ interface KeycloakClient {
     fun withdrawDefaultClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
         @Param("client-scope-id") clientScopeId: UUID): Response
 
+    @RequestLine("PUT /admin/realms/{realm}/clients/{client-id}/optional-client-scopes/{client-scope-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun assignOptionalClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
+                                 @Param("client-scope-id") clientScopeId: UUID,
+                                 assignClientScope: AssignClientScope): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/optional-client-scopes/{client-scope-id}")
+    fun withdrawOptionalClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
+                                   @Param("client-scope-id") clientScopeId: UUID): Response
+
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/default-client-scopes")
     fun defaultClientScopes(@Param("realm") realm: String, @Param("client-id") clientId: UUID): List<ClientScopeItem>
+
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/optional-client-scopes")
+    fun optionalClientScopes(@Param("realm") realm: String, @Param("client-id") clientId: UUID): List<ClientScopeItem>
 
     @RequestLine("GET /admin/realms/{realm}/components?parent={realm}&type=org.keycloak.storage.UserStorageProvider")
     fun userFederations(@Param("realm") realm: String): List<UserFederation>
