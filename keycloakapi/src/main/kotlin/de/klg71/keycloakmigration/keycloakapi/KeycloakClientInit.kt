@@ -2,16 +2,13 @@ package de.klg71.keycloakmigration.keycloakapi
 
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import feign.Feign
 import feign.Logger
-import feign.RetryableException
-import feign.Retryer
 import feign.form.FormEncoder
 import feign.jackson.JacksonDecoder
 import feign.jackson.JacksonEncoder
 import io.github.resilience4j.circuitbreaker.CallNotPermittedException
-import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry
 import io.github.resilience4j.core.IntervalFunction
 import io.github.resilience4j.feign.FeignDecorator
 import io.github.resilience4j.feign.FeignDecorators
@@ -63,6 +60,7 @@ private fun resilienceDecorator(): FeignDecorator {
         build()
     }
 }
+
 fun retryDefaultConfig(): RetryConfig {
     return RetryConfig.from<RetryConfig>(RetryConfig.ofDefaults()).run {
         retryOnException {
@@ -95,4 +93,6 @@ internal fun initKeycloakLoginClient(objectMapper: ObjectMapper,
     target(KeycloakLoginClient::class.java, baseUrl)
 }
 
-private fun initObjectMapper() = ObjectMapper().registerModule(KotlinModule())!!
+private fun initObjectMapper() = ObjectMapper().apply {
+    registerKotlinModule()
+}
