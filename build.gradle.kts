@@ -22,9 +22,9 @@ dependencies {
     implementation(kotlin("stdlib"))
     api(project("keycloakapi"))
 
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.3")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.10.3")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.10.3")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.2")
     implementation("io.insert-koin:koin-core:3.1.4")
     implementation("commons-codec:commons-codec:1.11")
     implementation("com.xenomachina:kotlin-argparser:2.0.7")
@@ -38,7 +38,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-core:2.17.1")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.17.1")
 
-    testImplementation("io.github.openfeign:feign-slf4j:10.1.0")
+    testImplementation("io.github.openfeign:feign-slf4j:11.8")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
     testImplementation("io.mockk:mockk:1.12.1")
