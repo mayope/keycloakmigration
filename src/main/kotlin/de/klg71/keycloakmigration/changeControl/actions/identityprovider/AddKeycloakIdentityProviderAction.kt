@@ -3,7 +3,7 @@ package de.klg71.keycloakmigration.changeControl.actions.identityprovider
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.identityProviderExistsByAlias
-import de.klg71.keycloakmigration.keycloakapi.identityProviders
+import de.klg71.keycloakmigration.keycloakapi.identityProviderItems
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.addKeycloakIdentityProvider
 
@@ -60,7 +60,7 @@ class AddKeycloakIdentityProviderAction(
         )
 
     override fun undo() {
-        client.identityProviders(realm()).find {
+        client.identityProviderItems(realm()).find {
             it.alias == alias
         }?.let {
             client.deleteIdentityProvider(realm(), it.alias)

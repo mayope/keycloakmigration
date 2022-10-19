@@ -43,6 +43,11 @@ import de.klg71.keycloakmigration.changeControl.actions.group.RevokeRoleFromGrou
 import de.klg71.keycloakmigration.changeControl.actions.group.UpdateGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddIdentityProviderAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddKeycloakIdentityProviderAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlEmailAddressAttributeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlGivenNameAttributeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlNameAttributeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlRoleMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlSurnameAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.DeleteIdentityProviderAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.UpdateIdentityProviderAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.UpdateKeycloakIdentityProviderAction
@@ -169,6 +174,12 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "deleteIdentityProvider" -> objectMapper.readValue<DeleteIdentityProviderAction>(actionJson)
             "updateIdentityProvider" -> objectMapper.readValue<UpdateIdentityProviderAction>(actionJson)
             "updateKeycloakIdentityProvider" -> objectMapper.readValue<UpdateKeycloakIdentityProviderAction>(actionJson)
+
+            "addSamlEmailAddressAttributeMapper" -> objectMapper.readValue<AddSamlEmailAddressAttributeMapperAction>(actionJson)
+            "addSamlNameAttributeMapper" -> objectMapper.readValue<AddSamlNameAttributeMapperAction>(actionJson)
+            "addSamlGivenNameAttributeMapper" -> objectMapper.readValue<AddSamlGivenNameAttributeMapperAction>(actionJson)
+            "addSamlSurnameAttributeMapper" -> objectMapper.readValue<AddSamlSurnameAttributeMapperAction>(actionJson)
+            "addSamlRoleMapper" -> objectMapper.readValue<AddSamlRoleMapperAction>(actionJson)
 
             "addFlow" -> objectMapper.readValue<AddFlowAction>(actionJson)
             "deleteFlow" -> objectMapper.readValue<DeleteFlowAction>(actionJson)

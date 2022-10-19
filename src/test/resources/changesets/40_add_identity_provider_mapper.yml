@@ -1,0 +1,39 @@
+id: add_identity_provider_mapper
+author: istrauch
+realm: integ-test
+changes:
+  - addIdentityProvider:
+      alias: testAlias2
+      providerId: saml
+      trustEmail: true
+      storeToken: true
+      config:
+        hideOnLoginPage: true
+        backchannelSupported: true
+        authorizationUrl: https://authUrl
+        tokenUrl: https://tokenUrl
+        clientId: clientId
+        clientSecret: clientSecret
+  - addSamlEmailAddressAttributeMapper:
+      identityProviderAlias: testAlias2
+      name: testEmailMapper
+      attributeName: email
+  - addSamlNameAttributeMapper:
+      identityProviderAlias: testAlias2
+      name: testNameMapper
+      attributeName: name
+  - addSamlGivenNameAttributeMapper:
+      identityProviderAlias: testAlias2
+      name: testGivenNameMapper
+      attributeName: givenName
+  - addSamlSurnameAttributeMapper:
+      identityProviderAlias: testAlias2
+      name: testSurnameMapper
+      attributeName: surname
+  - addSamlRoleMapper:
+      identityProviderAlias: testAlias2
+      name: testRoleMapper
+      attributeValue: sourceRole
+      role: targetRole
+  - deleteIdentityProvider:
+      alias: testAlias2

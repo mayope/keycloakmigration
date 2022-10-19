@@ -1,9 +1,17 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import java.util.UUID
+import java.util.*
 
 data class IdentityProviderItem(val alias: String, val displayName: String? = null, val internalId: UUID)
+
+data class IdentityProviderMapperItem(
+    val id: String,
+    val name: String,
+    val identityProviderAlias: String,
+    val identityProviderMapper: String,
+    val config: Map<String, String>
+)
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Realm(
@@ -71,6 +79,7 @@ data class Realm(
     val eventsExpiration: Int,
     val enabledEventTypes: List<String>,
     val identityProviders: List<IdentityProviderItem> = emptyList(),
+    val identityProviderMappers: List<IdentityProviderMapperItem> = emptyList(),
     val adminEventsEnabled: Boolean,
     val adminEventsDetailsEnabled: Boolean,
     val internationalizationEnabled: Boolean,
@@ -158,6 +167,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     val eventsExpiration: Int = existingRealm.eventsExpiration
     var enabledEventTypes: List<String> = existingRealm.enabledEventTypes
     var identityProviders: List<IdentityProviderItem> = existingRealm.identityProviders
+    var identityProviderMappers: List<IdentityProviderMapperItem> = existingRealm.identityProviderMappers
     var adminEventsEnabled: Boolean = existingRealm.adminEventsEnabled
     var adminEventsDetailsEnabled: Boolean = existingRealm.adminEventsDetailsEnabled
     var internationalizationEnabled: Boolean = existingRealm.internationalizationEnabled
@@ -242,6 +252,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
         eventsExpiration,
         enabledEventTypes,
         identityProviders,
+        identityProviderMappers,
         adminEventsEnabled,
         adminEventsDetailsEnabled,
         internationalizationEnabled,
