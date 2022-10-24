@@ -4,10 +4,16 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import java.util.UUID
 
 data class UserAccess(val impersonate: Boolean,
-                      val manage: Boolean,
-                      val manageGroupMembership: Boolean,
-                      val mapRoles: Boolean,
-                      val view: Boolean)
+    val manage: Boolean,
+    val manageGroupMembership: Boolean,
+    val mapRoles: Boolean,
+    val view: Boolean)
+
+data class ResetPassword(
+    val value: String,
+    val temporary: Boolean = false,
+    val type: String = "Password",
+)
 
 data class User(
     val id: UUID,

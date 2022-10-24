@@ -32,6 +32,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.RegisterRequiredActionProvider
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
+import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
@@ -86,6 +87,10 @@ interface KeycloakClient {
     @RequestLine("PUT /admin/realms/{realm}/users/{user-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun updateUser(@Param("user-id") userId: UUID, user: User, @Param("realm") realm: String)
+
+    @RequestLine("PUT /admin/realms/{realm}/users/{user-id}/reset-password")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateUserPassword(@Param("user-id") userId: UUID, resetPassword: ResetPassword, @Param("realm") realm: String)
 
     @RequestLine("POST /admin/realms/{realm}/users/{user-id}/role-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
@@ -285,7 +290,7 @@ interface KeycloakClient {
 
     @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/clients/{client-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun assignClientRoleToClientScope(roles: List<AssignRole>, @Param("realm") realm: String, 
+    fun assignClientRoleToClientScope(roles: List<AssignRole>, @Param("realm") realm: String,
         @Param("client-scope-id") clientScopeId: UUID, @Param("client-id") clientId: UUID): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/clients/{client-id}")

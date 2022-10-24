@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.user
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.TEST_BASE_URL
+import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.initKeycloakLoginClient
@@ -14,7 +15,7 @@ import org.koin.core.component.inject
 class UpdateUserPasswordIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
-    val loginClient = initKeycloakLoginClient(TEST_BASE_URL)
+    private val loginClient = initKeycloakLoginClient(TEST_BASE_URL)
 
     @Test
     fun testUpdateUserPassword() {
@@ -27,21 +28,10 @@ class UpdateUserPasswordIntegTest : AbstractIntegrationTest() {
     }
 
     @Test
-    fun testUpdateUserPasswordWithSalt() {
-        AddUserAction(testRealm, "testIntegration").executeIt()
-        val password = RandomStringUtils.randomAlphanumeric(15)
-        val salt = RandomStringUtils.randomAlphanumeric(15)
-        UpdateUserPasswordAction(testRealm, "testIntegration", password = password, salt = salt).executeIt()
-
-        val answer = loginClient.login(testRealm, "password", "admin-cli", "testIntegration", password, "")
-        assertThat(answer.accessToken).isNotEmpty()
-    }
-
-    @Test
     fun testUpdateUserPassword_userDoesNotExist() {
         assertThatThrownBy {
             UpdateUserPasswordAction(testRealm, "testIntegration", password = "testPassword").executeIt()
-        }.isInstanceOf(KeycloakApiException::class.java)
+        }.isInstanceOf(MigrationException::class.java)
             .hasMessage("User with name: testIntegration does not exist in realm: ${testRealm}!")
     }
 }

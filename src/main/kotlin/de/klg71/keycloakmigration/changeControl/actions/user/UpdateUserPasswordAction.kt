@@ -1,7 +1,11 @@
 package de.klg71.keycloakmigration.changeControl.actions.user
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.keycloakapi.updateUserPassword
+import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.keycloakapi.existsUser
+import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
+import de.klg71.keycloakmigration.keycloakapi.userByName
 
 
 /**
@@ -11,12 +15,16 @@ import de.klg71.keycloakmigration.keycloakapi.updateUserPassword
 internal class UpdateUserPasswordAction(
     realm: String? = null,
     private val name: String,
-    private val password: String,
-    private val salt: String? = null) : Action(realm) {
+    private val password: String) : Action(realm) {
 
 
     override fun execute() {
-        client.updateUserPassword(name, password, realm(), salt)
+        if (!client.existsUser(name, realm())) {
+            throw MigrationException("User with name: $name does not exist in realm: ${realm()}!")
+        }
+        val user = client.userByName(name, realm())
+
+        client.updateUserPassword(user.id, ResetPassword(password), realm())
     }
 
     override fun undo() {
