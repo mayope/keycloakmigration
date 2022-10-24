@@ -15,15 +15,7 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testUpdateRequiredAction() {
-        AddRequiredActionAction(
-            testRealm, "UPDATE_PASSWORD", "update_password", "Update password",
-            mapOf(
-                "foo" to "bar",
-                "foo1" to "bar1"
-            ), false, true, 123
-        ).executeIt()
-
-        val requiredAction = client.requiredAction(testRealm, "update_password")
+        val requiredAction = client.requiredAction(testRealm, "UPDATE_PASSWORD")
         UpdateRequiredActionAction(
             testRealm, requiredAction.alias, null, "update_password2", "Update password 2",
             mapOf(
@@ -52,15 +44,7 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testUpdateRequiredActions_Rollback() {
-        AddRequiredActionAction(
-            testRealm, "UPDATE_PASSWORD", "update_password", "Update password",
-            mapOf(
-                "foo" to "bar",
-                "foo1" to "bar1"
-            ), false, true, 123
-        ).executeIt()
-
-        val requiredAction = client.requiredAction(testRealm, "update_password")
+        val requiredAction = client.requiredAction(testRealm, "UPDATE_PASSWORD")
         val action = UpdateRequiredActionAction(
             testRealm, requiredAction.alias, null, "update_password2", "Update password 2",
             mapOf(
@@ -72,7 +56,7 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
         action.executeIt()
 
         Assertions.assertThatThrownBy {
-            client.requiredAction(testRealm, "update_password")
+            client.requiredAction(testRealm, "UPDATE_PASSWORD")
         }.isInstanceOf(FeignException::class.java).hasMessageContaining("404")
 
         val updatedRequiredAction = client.requiredAction(testRealm, "update_password2")
@@ -94,18 +78,15 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
             client.requiredAction(testRealm, "update_password2")
         }.isInstanceOf(FeignException::class.java).hasMessageContaining("404")
 
-        val revertedRequiredAction = client.requiredAction(testRealm, "update_password")
+        val revertedRequiredAction = client.requiredAction(testRealm, "UPDATE_PASSWORD")
         assertThat(revertedRequiredAction).isNotNull()
-        assertThat(revertedRequiredAction.alias).isEqualTo("update_password")
+        assertThat(revertedRequiredAction.alias).isEqualTo("UPDATE_PASSWORD")
         assertThat(revertedRequiredAction.providerId).isEqualTo("UPDATE_PASSWORD")
-        assertThat(revertedRequiredAction.name).isEqualTo("Update password")
-        assertThat(revertedRequiredAction.config).containsExactly(
-            AbstractMap.SimpleEntry("foo", "bar"),
-            AbstractMap.SimpleEntry("foo1", "bar1")
-        )
+        assertThat(revertedRequiredAction.name).isEqualTo("Update Password")
+        assertThat(revertedRequiredAction.config).isEmpty()
         assertThat(revertedRequiredAction.defaultAction).isEqualTo(false)
         assertThat(revertedRequiredAction.enabled).isEqualTo(true)
-        assertThat(revertedRequiredAction.priority).isEqualTo(123)
+        assertThat(revertedRequiredAction.priority).isEqualTo(30)
     }
 
 }

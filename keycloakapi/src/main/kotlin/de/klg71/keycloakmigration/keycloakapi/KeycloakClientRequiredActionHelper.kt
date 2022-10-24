@@ -12,12 +12,6 @@ fun KeycloakClient.importRequiredAction(realm: String, requiredActionProviderIte
         )
     }
 
-    registerRequiredAction(
-        realm, RegisterRequiredActionProvider(
-            requiredActionProviderItem.providerId, requiredActionProviderItem.name
-        )
-    )
-
     val createdAction = requiredActions(realm).first { it.name == requiredActionProviderItem.name }
 
     updateRequiredAction(

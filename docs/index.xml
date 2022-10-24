@@ -130,7 +130,7 @@ Parameters# realm: String, optional name: String, not optional enabled: Boole
       <guid>https://mayope.github.io/keycloakmigration/contributing/</guid>
       <description>Contributing#To start developing on this project you can use the gradle tasks.
 To start the local development keycloak you can just use the task startLocalKeycloak
-Tested with OpenJdk 12 and Keycloak 10.0.2
+Tested with OpenJdk 12 and Keycloak 19.0.0
 If you want to contribute to this project please visit the issues page and maybe you can find something interesting :)
 Use keycloakmigration through maven dependency#Gradle dependency# // https://mvnrepository.com/artifact/de.klg71.keycloakmigration/keycloakmigrationcompile group: &#39;de.</description>
     </item>

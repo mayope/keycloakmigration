@@ -1,7 +1,21 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
-import java.net.ConnectException
 import org.apache.tools.ant.taskdefs.condition.Os
+import java.io.ByteArrayOutputStream
+import java.net.ConnectException
+
+fun Project.command(cmd: List<String>, workingDirectory: String = ".", environment: Map<String, String> = emptyMap()) =
+    ByteArrayOutputStream().also { stream ->
+        logger.info("Running command $cmd")
+        exec {
+            environment(environment)
+            commandLine = cmd
+            standardOutput = stream
+            workingDir = File(workingDirectory)
+        }
+    }.run {
+        toString().trim()
+    }
 
 plugins {
     kotlin("jvm") version "1.5.32"
@@ -55,7 +69,7 @@ repositories {
 }
 
 tasks {
-    val keycloakVersion = "14.0.0"
+    val keycloakVersion = "19.0.0"
 
     named("build") {
         dependsOn("buildDocker", ":docsbuild:buildDocs")
@@ -68,8 +82,10 @@ tasks {
         }
         from(sourceSets.main.get().output)
         from(project(":keycloakapi").sourceSets.main.get().output)
-        configurations = mutableListOf(project.configurations.compileClasspath.get(),
-            project.configurations.runtimeClasspath.get())
+        configurations = mutableListOf(
+            project.configurations.compileClasspath.get(),
+            project.configurations.runtimeClasspath.get()
+        )
         project.configurations.compileClasspath.allDependencies.forEach {
             println(it)
         }
@@ -77,7 +93,8 @@ tasks {
 
 
     "afterReleaseBuild"{
-        dependsOn("publishMavenJavaPublicationToMavenRepository",
+        dependsOn(
+            "publishMavenJavaPublicationToMavenRepository",
             "publishMavenJavaPublicationToGitHubPackagesRepository",
             "plugin:publishPlugins",
             "keycloakapi:publishMavenJavaPublicationToMavenRepository",
@@ -116,32 +133,16 @@ tasks {
     }
 
     register("startWindowsKeycloak") {
-        dependsOn("addWindowsAdminUser")
         finalizedBy("execWindowsKeycloak")
     }
     register("startLinuxKeycloak") {
-        dependsOn("addLinuxAdminUser")
         finalizedBy("execLinuxKeycloak")
-    }
-    register<Exec>("addLinuxAdminUser") {
-        workingDir("keycloak/keycloak-$keycloakVersion/bin")
-        commandLine("sh", "add-user-keycloak.sh", "-r", "master", "-u", "admin", "-p", "admin")
-        isIgnoreExitValue = true
-        standardOutput = System.out
-    }
-
-    register<Exec>("addWindowsAdminUser") {
-        workingDir("keycloak/keycloak-$keycloakVersion/bin")
-        commandLine("cmd", "/c", "add-user-keycloak.bat", "-r", "master", "-u", "admin", "-p", "admin")
-        environment("NOPAUSE", "true")
-        isIgnoreExitValue = true
-        standardOutput = System.out
     }
 
     fun waitForKeycloak() {
         while (true) {
             try {
-                if (uri("http://localhost:18080/auth/").toURL().readBytes().isNotEmpty())
+                if (uri("http://localhost:18080/auth").toURL().readBytes().isNotEmpty())
                     return
             } catch (e: ConnectException) {
             }
@@ -152,11 +153,15 @@ tasks {
 
     register("execWindowsKeycloak") {
         doLast {
-            ProcessBuilder("cmd", "/c", "standalone.bat", "-Djboss.socket.binding.port-offset=10000", ">",
-                "output.txt").run {
+            ProcessBuilder(
+                "cmd", "/c", "kc.bat", "start-dev", "--http-port=18080", "--hostname-strict=false","--http-relative-path=/auth", ">",
+                "output.txt"
+            ).run {
                 directory(File("keycloak/keycloak-$keycloakVersion/bin"))
                 println("Starting local Keycloak on windows")
                 environment()["NOPAUSE"] = "true"
+                environment()["KEYCLOAK_ADMIN"] = "admin"
+                environment()["KEYCLOAK_ADMIN_PASSWORD"] = "admin"
                 start()
                 waitForKeycloak()
             }
@@ -164,9 +169,13 @@ tasks {
     }
     register("execLinuxKeycloak") {
         doLast {
-            ProcessBuilder("keycloak/keycloak-$keycloakVersion/bin/standalone.sh",
-                "-Djboss.socket.binding.port-offset=10000").run {
+            ProcessBuilder(
+                "keycloak/keycloak-$keycloakVersion/bin/standalone.sh",
+                "-Djboss.socket.binding.port-offset=10000"
+            ).run {
                 println("Starting local Keycloak on linux")
+                environment()["KEYCLOAK_ADMIN"] = "admin"
+                environment()["KEYCLOAK_ADMIN_PASSWORD"] = "admin"
                 start()
                 waitForKeycloak()
             }
@@ -181,12 +190,16 @@ tasks {
             finalizedBy("stopLinuxKeycloak")
         }
     }
-    register<Exec>("stopWindowsKeycloak") {
-        // Use jboss cli to shutdown local server
-        workingDir("keycloak/keycloak-$keycloakVersion/bin")
-        commandLine("cmd", "/c", "jboss-cli.bat", "--connect", "--command=:shutdown", "--controller=127.0.0.1:19990")
-        environment("NOPAUSE", "true")
-        standardOutput = System.out
+    register("stopWindowsKeycloak") {
+        doFirst {
+            val pid = command(listOf("netstat", "-aon")).lines().firstOrNull {
+                it.contains("TCP") && it.contains("0.0.0.0:18080") && it.contains("LISTENING")
+            }?.split(" ")?.last()?.toLong()
+            if (pid != null) {
+                println("Killing process: $pid")
+                command(listOf("taskkill", "/F", "/PID", pid.toString()))
+            }
+        }
     }
 
     register<Exec>("stopLinuxKeycloak") {
@@ -227,8 +240,10 @@ tasks {
         doLast {
             exec {
                 workingDir(dockerBuildWorkingDirectory)
-                commandLine("docker", "build", ".", "-t", tag, "--build-arg",
-                    "jar_file=${fatJar.outputs.files.first().name}")
+                commandLine(
+                    "docker", "build", ".", "-t", tag, "--build-arg",
+                    "jar_file=${fatJar.outputs.files.first().name}"
+                )
             }
             exec {
                 commandLine("docker", "tag", tag, tagLatest)
@@ -279,7 +294,7 @@ publishing {
                 val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
                 password = ossrhPassword
                 if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
-                   logger.warn("Sonatype user and password are not set you won't be able to publish to maven central!")
+                    logger.warn("Sonatype user and password are not set you won't be able to publish to maven central!")
                 }
             }
         }

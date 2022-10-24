@@ -182,7 +182,9 @@ interface KeycloakClient {
 
     @RequestLine("POST /admin/realms/{realm}/roles-by-id/{role-id}/composites")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addCompositeToRole(roles: List<RoleListItem>, @Param("role-id") roleId: UUID, @Param("realm") realm: String): Response
+    fun addCompositeToRole(roles: List<RoleListItem>,
+        @Param("role-id") roleId: UUID,
+        @Param("realm") realm: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/roles-by-id/{role-id}/composites")
     fun getCompositeChildRoles(@Param("role-id") roleId: UUID, @Param("realm") realm: String): List<RoleListItem>
@@ -231,7 +233,9 @@ interface KeycloakClient {
 
     @Deprecated("Will be removed in a future release. Use deleteClientMapper action instead")
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models/{mapper-id}")
-    fun deleteMapper(@Param("client-id") clientId: UUID, @Param("mapper-id") mapperId: UUID, @Param("realm") realm: String)
+    fun deleteMapper(@Param("client-id") clientId: UUID,
+        @Param("mapper-id") mapperId: UUID,
+        @Param("realm") realm: String)
 
     @Deprecated("Will be removed in a future release. Use clientMappers action instead")
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models")
@@ -239,22 +243,30 @@ interface KeycloakClient {
 
     @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addClientMapper(@Param("client-id") clientId: UUID, addMapper: AddMapper, @Param("realm") realm: String): Response
+    fun addClientMapper(@Param("client-id") clientId: UUID,
+        addMapper: AddMapper,
+        @Param("realm") realm: String): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models/{mapper-id}")
-    fun deleteClientMapper(@Param("client-id") clientId: UUID, @Param("mapper-id") mapperId: UUID, @Param("realm") realm: String)
+    fun deleteClientMapper(@Param("client-id") clientId: UUID,
+        @Param("mapper-id") mapperId: UUID,
+        @Param("realm") realm: String)
 
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/protocol-mappers/models")
     fun clientMappers(@Param("client-id") clientId: UUID, @Param("realm") realm: String): List<Mapper>
 
     @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/protocol-mappers/models")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addClientScopeMapper(@Param("client-scope-id") clientScopeId: UUID, addMapper: AddMapper, @Param("realm") realm: String): Response
+    fun addClientScopeMapper(@Param("client-scope-id") clientScopeId: UUID,
+        addMapper: AddMapper,
+        @Param("realm") realm: String): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}/protocol-mappers/models/{mapper-id}")
-    fun deleteClientScopeMapper(@Param("client-scope-id") clientScopeId: UUID, @Param("mapper-id") mapperId: UUID, @Param(
-        "realm"
-    ) realm: String)
+    fun deleteClientScopeMapper(@Param("client-scope-id") clientScopeId: UUID,
+        @Param("mapper-id") mapperId: UUID,
+        @Param(
+            "realm"
+        ) realm: String)
 
     @RequestLine("GET /admin/realms/{realm}/client-scopes/{client-scope-id}/protocol-mappers/models")
     fun clientScopeMappers(@Param("client-scope-id") clientScopeId: UUID, @Param("realm") realm: String): List<Mapper>
@@ -271,12 +283,15 @@ interface KeycloakClient {
 
     @RequestLine("GET /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun clientScopeRealmRoles(@Param("realm") realm: String, @Param("client-scope-id") clientScopeId: UUID): List<RoleListItem>
+    fun clientScopeRealmRoles(@Param("realm") realm: String,
+        @Param("client-scope-id") clientScopeId: UUID): List<RoleListItem>
 
     @RequestLine("POST /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun assignRealmRoleToClientScope(roles: List<AssignRole>, @Param("realm") realm: String,
-        @Param("client-scope-id") clientScopeId: UUID,)
+    fun assignRealmRoleToClientScope(
+        roles: List<AssignRole>, @Param("realm") realm: String,
+        @Param("client-scope-id") clientScopeId: UUID,
+    )
 
     @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}/scope-mappings/realm")
     @Headers("Content-Type: application/json; charset=utf-8")
@@ -311,12 +326,12 @@ interface KeycloakClient {
     @RequestLine("PUT /admin/realms/{realm}/clients/{client-id}/optional-client-scopes/{client-scope-id}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun assignOptionalClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
-                                 @Param("client-scope-id") clientScopeId: UUID,
-                                 assignClientScope: AssignClientScope): Response
+        @Param("client-scope-id") clientScopeId: UUID,
+        assignClientScope: AssignClientScope): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/optional-client-scopes/{client-scope-id}")
     fun withdrawOptionalClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
-                                   @Param("client-scope-id") clientScopeId: UUID): Response
+        @Param("client-scope-id") clientScopeId: UUID): Response
 
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/default-client-scopes")
     fun defaultClientScopes(@Param("realm") realm: String, @Param("client-id") clientId: UUID): List<ClientScopeItem>
@@ -436,7 +451,9 @@ interface KeycloakClient {
 
     @RequestLine("PUT /admin/realms/{realm}/identity-provider/instances/{alias}")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun updateIdentityProvider(updateIdentityProvider: UpdateIdentityProvider, @Param("realm") realm: String, @Param("alias") alias: String): Response
+    fun updateIdentityProvider(updateIdentityProvider: UpdateIdentityProvider,
+        @Param("realm") realm: String,
+        @Param("alias") alias: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}")
     fun identityProvider(@Param("realm") realm: String, @Param("alias") alias: String): IdentityProvider
@@ -452,7 +469,7 @@ interface KeycloakClient {
     fun flows(@Param("realm") realm: String): List<Flow>
 
     @RequestLine("GET /admin/realms/{realm}/authentication/flows/{alias}/executions")
-    fun flowExecutions(@Param("realm") realm: String,@Param("alias") alias: String): List<AuthenticationExecution>
+    fun flowExecutions(@Param("realm") realm: String, @Param("alias") alias: String): List<AuthenticationExecution>
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("PUT /admin/realms/{realm}/authentication/flows/{id}")
@@ -476,37 +493,28 @@ interface KeycloakClient {
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/executions/{executionId}/config")
     fun updateFlowExecutionWithNewConfiguration(@Param("realm") realm: String,
-                                                @Param("executionId") executionId: String,
-                                                authenticatorConfig: AuthenticatorConfig): Response
+        @Param("executionId") executionId: String,
+        authenticatorConfig: AuthenticatorConfig): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("GET /admin/realms/{realm}/authentication/config/{configurationId}")
     fun getAuthenticatorConfiguration(@Param("realm") realm: String,
-                                      @Param("configurationId") configurationId: String): AuthenticatorConfig
+        @Param("configurationId") configurationId: String): AuthenticatorConfig
 
     @RequestLine("DELETE /admin/realms/{realm}/authentication/executions/{id}")
     fun deleteFlowExecution(@Param("realm") realm: String, @Param("id") executionId: UUID)
-
-    @Headers("Content-Type: application/json; charset=utf-8")
-    @RequestLine("POST /admin/realms/{realm}/authentication/register-required-action")
-    fun registerRequiredAction(@Param("realm") realm: String,
-                               registerRequiredActionProvider: RegisterRequiredActionProvider): Response
 
     @RequestLine("GET /admin/realms/{realm}/authentication/required-actions")
     fun requiredActions(@Param("realm") realm: String): List<RequiredActionProviderItem>
 
     @RequestLine("GET /admin/realms/{realm}/authentication/required-actions/{alias}")
     fun requiredAction(@Param("realm") realm: String,
-                       @Param("alias") alias: String): RequiredActionProviderItem
+        @Param("alias") alias: String): RequiredActionProviderItem
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("PUT /admin/realms/{realm}/authentication/required-actions/{alias}")
     fun updateRequiredAction(@Param("realm") realm: String,
-                             @Param("alias") alias: String,
-                             requiredActionProviderItem: RequiredActionProviderItem): Response
-
-    @RequestLine("DELETE /admin/realms/{realm}/authentication/required-actions/{alias}")
-    fun deleteRequiredAction(@Param("realm") realm: String,
-                             @Param("alias") alias: String): Response
+        @Param("alias") alias: String,
+        requiredActionProviderItem: RequiredActionProviderItem): Response
 }
 
