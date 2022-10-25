@@ -1,6 +1,8 @@
-package de.klg71.keycloakmigration.changeControl.actions.identityprovider
+package de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddIdentityProviderAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlRoleMapperAction
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.identityProviderByAlias
 import de.klg71.keycloakmigration.keycloakapi.identityProviderMapperByName
@@ -17,15 +19,15 @@ class AddSamlRoleMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddSamlEmailAddressMapper() {
         val identityProviderConfig = mapOf(
-                "authorizationUrl" to "https://testUrl",
-                "tokenUrl" to "https://testUrl",
-                "issuer" to "issuer",
-                "defaultScopes" to "scope1,scope2"
+            "authorizationUrl" to "https://testUrl",
+            "tokenUrl" to "https://testUrl",
+            "issuer" to "issuer",
+            "defaultScopes" to "scope1,scope2"
         )
         val identityProviderAlias = "test"
         AddIdentityProviderAction(
-                testRealm, identityProviderAlias, "keycloak-oidc", identityProviderConfig, displayName = "displayName", true, true, true, true,
-                "first broker login", ""
+            testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true, true, true,
+            "first broker login", ""
         ).executeIt()
 
         val createdIdentityProvider = client.identityProviderByAlias(identityProviderAlias, testRealm)
@@ -34,11 +36,11 @@ class AddSamlRoleMapperIntegTest : AbstractIntegrationTest() {
         val samlRoleValue = "sourceRole"
         val role = "targetRole"
         AddSamlRoleMapperAction(
-                testRealm,
-                createdIdentityProvider.alias,
-                mapperName,
-                samlRoleValue,
-                role
+            testRealm,
+            createdIdentityProvider.alias,
+            mapperName,
+            samlRoleValue,
+            role
         ).executeIt()
 
         val createdMapper = client.identityProviderMapperByName(identityProviderAlias, mapperName, testRealm)
@@ -47,13 +49,13 @@ class AddSamlRoleMapperIntegTest : AbstractIntegrationTest() {
             SAML_ROLE_IDP_MAPPER
         )
         Assertions.assertThat((createdMapper.config["attribute.value"] ?: error("test error"))).isEqualTo(
-                samlRoleValue
+            samlRoleValue
         )
         Assertions.assertThat((createdMapper.config["attribute.name"] ?: error("test error"))).isEqualTo(
-                SAML_ATTRIBUTE_ROLE
+            SAML_ATTRIBUTE_ROLE
         )
         Assertions.assertThat((createdMapper.config["role"] ?: error("test error"))).isEqualTo(
-                role
+            role
         )
 
     }

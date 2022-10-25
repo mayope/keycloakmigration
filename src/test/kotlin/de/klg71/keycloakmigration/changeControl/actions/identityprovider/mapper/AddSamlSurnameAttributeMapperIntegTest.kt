@@ -1,21 +1,23 @@
-package de.klg71.keycloakmigration.changeControl.actions.identityprovider
+package de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddIdentityProviderAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlSurnameAttributeMapperAction
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.identityProviderByAlias
 import de.klg71.keycloakmigration.keycloakapi.identityProviderMapperByName
-import de.klg71.keycloakmigration.keycloakapi.model.SAML_ATTRIBUTE_NAME
+import de.klg71.keycloakmigration.keycloakapi.model.SAML_ATTRIBUTE_SURNAME
 import de.klg71.keycloakmigration.keycloakapi.model.SAML_USER_ATTRIBUTE_IDP_MAPPER
 import org.assertj.core.api.Assertions
 import org.junit.Test
 import org.koin.core.component.inject
 
-class AddSamlNameAttributeMapperIntegTest : AbstractIntegrationTest() {
+class AddSamlSurnameAttributeMapperIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
 
     @Test
-    fun testAddSamlNameAttributeMapper() {
+    fun testAddSamlSurameAttributeMapper() {
         val identityProviderConfig = mapOf(
                 "authorizationUrl" to "https://testUrl",
                 "tokenUrl" to "https://testUrl",
@@ -24,19 +26,19 @@ class AddSamlNameAttributeMapperIntegTest : AbstractIntegrationTest() {
         )
         val identityProviderAlias = "test"
         AddIdentityProviderAction(
-                testRealm, identityProviderAlias, "keycloak-oidc", identityProviderConfig, displayName = "displayName", true, true, true, true,
+                testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true, true, true,
                 "first broker login", ""
         ).executeIt()
 
         val createdIdentityProvider = client.identityProviderByAlias(identityProviderAlias, testRealm)
 
         val mapperName = "mapperName"
-        val samlNameAttribute = "name"
-        AddSamlNameAttributeMapperAction(
+        val samlSurnameAttribute = "surname"
+        AddSamlSurnameAttributeMapperAction(
                 testRealm,
                 createdIdentityProvider.alias,
                 mapperName,
-                samlNameAttribute
+                samlSurnameAttribute
         ).executeIt()
 
         val createdMapper = client.identityProviderMapperByName(identityProviderAlias, mapperName, testRealm)
@@ -45,10 +47,10 @@ class AddSamlNameAttributeMapperIntegTest : AbstractIntegrationTest() {
             SAML_USER_ATTRIBUTE_IDP_MAPPER
         )
         Assertions.assertThat((createdMapper.config["user.attribute"] ?: error("test error"))).isEqualTo(
-                samlNameAttribute
+                samlSurnameAttribute
         )
         Assertions.assertThat((createdMapper.config["attribute.name"] ?: error("test error"))).isEqualTo(
-                SAML_ATTRIBUTE_NAME
+                SAML_ATTRIBUTE_SURNAME
         )
 
     }

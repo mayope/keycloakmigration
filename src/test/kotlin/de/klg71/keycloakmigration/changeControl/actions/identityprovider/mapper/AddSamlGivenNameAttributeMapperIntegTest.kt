@@ -1,42 +1,44 @@
-package de.klg71.keycloakmigration.changeControl.actions.identityprovider
+package de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddIdentityProviderAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlGivenNameAttributeMapperAction
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.identityProviderByAlias
 import de.klg71.keycloakmigration.keycloakapi.identityProviderMapperByName
-import de.klg71.keycloakmigration.keycloakapi.model.SAML_ATTRIBUTE_EMAILADDRESS
+import de.klg71.keycloakmigration.keycloakapi.model.SAML_ATTRIBUTE_GIVENNAME
 import de.klg71.keycloakmigration.keycloakapi.model.SAML_USER_ATTRIBUTE_IDP_MAPPER
 import org.assertj.core.api.Assertions
 import org.junit.Test
 import org.koin.core.component.inject
 
-class AddSamlEmailAddressAttributeMapperIntegTest : AbstractIntegrationTest() {
+class AddSamlGivenNameAttributeMapperIntegTest : AbstractIntegrationTest() {
 
     val client by inject<KeycloakClient>()
 
     @Test
-    fun testAddSamlEmailAddressAttributeMapper() {
+    fun testAddSamlGivenNameAttributeMapper() {
         val identityProviderConfig = mapOf(
-                "authorizationUrl" to "https://testUrl",
-                "tokenUrl" to "https://testUrl",
-                "issuer" to "issuer",
-                "defaultScopes" to "scope1,scope2"
+            "authorizationUrl" to "https://testUrl",
+            "tokenUrl" to "https://testUrl",
+            "issuer" to "issuer",
+            "defaultScopes" to "scope1,scope2"
         )
         val identityProviderAlias = "test"
         AddIdentityProviderAction(
-                testRealm, identityProviderAlias, "keycloak-oidc", identityProviderConfig, displayName = "displayName", true, true, true, true,
-                "first broker login", ""
+            testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true, true, true,
+            "first broker login", ""
         ).executeIt()
 
         val createdIdentityProvider = client.identityProviderByAlias(identityProviderAlias, testRealm)
 
         val mapperName = "mapperName"
-        val samlEmailAttribute = "email"
-        AddSamlEmailAddressAttributeMapperAction(
-                testRealm,
-                createdIdentityProvider.alias,
-                mapperName,
-                samlEmailAttribute
+        val samlGivenNameAttribute = "givenName"
+        AddSamlGivenNameAttributeMapperAction(
+            testRealm,
+            createdIdentityProvider.alias,
+            mapperName,
+            samlGivenNameAttribute
         ).executeIt()
 
         val createdMapper = client.identityProviderMapperByName(identityProviderAlias, mapperName, testRealm)
@@ -45,10 +47,10 @@ class AddSamlEmailAddressAttributeMapperIntegTest : AbstractIntegrationTest() {
             SAML_USER_ATTRIBUTE_IDP_MAPPER
         )
         Assertions.assertThat((createdMapper.config["user.attribute"] ?: error("test error"))).isEqualTo(
-                samlEmailAttribute
+            samlGivenNameAttribute
         )
         Assertions.assertThat((createdMapper.config["attribute.name"] ?: error("test error"))).isEqualTo(
-                SAML_ATTRIBUTE_EMAILADDRESS
+            SAML_ATTRIBUTE_GIVENNAME
         )
 
     }

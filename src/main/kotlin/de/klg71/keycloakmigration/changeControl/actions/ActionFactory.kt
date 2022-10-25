@@ -45,6 +45,7 @@ import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddIden
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddKeycloakIdentityProviderAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlEmailAddressAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlGivenNameAttributeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlNameAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlRoleMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddSamlSurnameAttributeMapperAction
@@ -175,6 +176,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "updateIdentityProvider" -> objectMapper.readValue<UpdateIdentityProviderAction>(actionJson)
             "updateKeycloakIdentityProvider" -> objectMapper.readValue<UpdateKeycloakIdentityProviderAction>(actionJson)
 
+            "addSamlMapper" -> objectMapper.readValue<AddSamlMapperAction>(actionJson)
             "addSamlEmailAddressAttributeMapper" -> objectMapper.readValue<AddSamlEmailAddressAttributeMapperAction>(actionJson)
             "addSamlNameAttributeMapper" -> objectMapper.readValue<AddSamlNameAttributeMapperAction>(actionJson)
             "addSamlGivenNameAttributeMapper" -> objectMapper.readValue<AddSamlGivenNameAttributeMapperAction>(actionJson)
