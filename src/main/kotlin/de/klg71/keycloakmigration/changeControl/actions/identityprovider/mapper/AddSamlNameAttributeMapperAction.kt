@@ -1,4 +1,4 @@
-package de.klg71.keycloakmigration.changeControl.actions.identityprovider
+package de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
@@ -29,7 +29,7 @@ internal class AddSamlNameAttributeMapperAction(
         client.identityProviderMappers(realm(), identityProviderAlias).find {
             it.name == name
         }?.let {
-            client.deleteIdentityProviderMapper(realm(), identityProviderAlias, name)
+            client.deleteIdentityProviderMapper(realm(), identityProviderAlias, it.id)
         }
     }
 
