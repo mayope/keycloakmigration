@@ -69,7 +69,7 @@ repositories {
 }
 
 tasks {
-    val keycloakVersion = "19.0.0"
+    val keycloakVersion = "18.0.2"
 
     named("build") {
         dependsOn("buildDocker", ":docsbuild:buildDocs")
