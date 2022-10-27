@@ -26,7 +26,8 @@ class AddSamlEmailAddressAttributeMapperIntegTest : AbstractIntegrationTest() {
         )
         val identityProviderAlias = "test"
         AddIdentityProviderAction(
-            testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true, true, true,
+            testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true,
+            true, true,
             "first broker login", ""
         ).executeIt()
 
@@ -65,7 +66,8 @@ class AddSamlEmailAddressAttributeMapperIntegTest : AbstractIntegrationTest() {
         )
         val identityProviderAlias = "test"
         AddIdentityProviderAction(
-            testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true, true, true,
+            testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true,
+            true, true,
             "first broker login", ""
         ).executeIt()
 
@@ -88,7 +90,9 @@ class AddSamlEmailAddressAttributeMapperIntegTest : AbstractIntegrationTest() {
 
         action.undoIt()
 
-        Assertions.assertThat(client.identityProviderMapperExistsByName(identityProviderAlias, mapperName, testRealm)).isFalse
+        Assertions.assertThat(
+            client.identityProviderMapperExistsByName(identityProviderAlias, mapperName, testRealm)
+        ).isFalse
 
     }
 }

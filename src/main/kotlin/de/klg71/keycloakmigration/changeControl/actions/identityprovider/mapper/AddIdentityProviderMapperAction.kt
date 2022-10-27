@@ -9,13 +9,17 @@ import de.klg71.keycloakmigration.keycloakapi.identityProviderMapperExistsByName
 import de.klg71.keycloakmigration.keycloakapi.isSuccessful
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProviderMapper
 
-internal fun assertIdentityProviderMapperIsCreatable(client: KeycloakClient, name: String, identityProviderAlias: String, realm: String) {
+internal fun assertIdentityProviderMapperIsCreatable(client: KeycloakClient,
+    name: String,
+    identityProviderAlias: String,
+    realm: String) {
     if (!client.identityProviderExistsByAlias(identityProviderAlias, realm)) {
         throw MigrationException("IdentityProvider with name: $identityProviderAlias does not exist in realm: $realm!")
     }
     if (client.identityProviderMapperExistsByName(identityProviderAlias, name, realm)) {
         throw MigrationException(
-            "Mapper with name: $name already exists in IdentityProvider with name: $identityProviderAlias in realm: $realm!"
+            "Mapper with name: $name already exists in IdentityProvider with name:" +
+                    " $identityProviderAlias in realm: $realm!"
         )
     }
 }

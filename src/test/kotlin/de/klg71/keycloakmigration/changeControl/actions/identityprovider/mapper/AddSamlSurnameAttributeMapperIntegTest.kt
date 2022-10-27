@@ -19,15 +19,16 @@ class AddSamlSurnameAttributeMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddSamlSurameAttributeMapper() {
         val identityProviderConfig = mapOf(
-                "authorizationUrl" to "https://testUrl",
-                "tokenUrl" to "https://testUrl",
-                "issuer" to "issuer",
-                "defaultScopes" to "scope1,scope2"
+            "authorizationUrl" to "https://testUrl",
+            "tokenUrl" to "https://testUrl",
+            "issuer" to "issuer",
+            "defaultScopes" to "scope1,scope2"
         )
         val identityProviderAlias = "test"
         AddIdentityProviderAction(
-                testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true, true, true,
-                "first broker login", ""
+            testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true,
+            true, true,
+            "first broker login", ""
         ).executeIt()
 
         val createdIdentityProvider = client.identityProviderByAlias(identityProviderAlias, testRealm)
@@ -35,10 +36,10 @@ class AddSamlSurnameAttributeMapperIntegTest : AbstractIntegrationTest() {
         val mapperName = "mapperName"
         val samlSurnameAttribute = "surname"
         AddSamlSurnameAttributeMapperAction(
-                testRealm,
-                createdIdentityProvider.alias,
-                mapperName,
-                samlSurnameAttribute
+            testRealm,
+            createdIdentityProvider.alias,
+            mapperName,
+            samlSurnameAttribute
         ).executeIt()
 
         val createdMapper = client.identityProviderMapperByName(identityProviderAlias, mapperName, testRealm)
@@ -47,10 +48,10 @@ class AddSamlSurnameAttributeMapperIntegTest : AbstractIntegrationTest() {
             SAML_USER_ATTRIBUTE_IDP_MAPPER
         )
         Assertions.assertThat((createdMapper.config["user.attribute"] ?: error("test error"))).isEqualTo(
-                samlSurnameAttribute
+            samlSurnameAttribute
         )
         Assertions.assertThat((createdMapper.config["attribute.name"] ?: error("test error"))).isEqualTo(
-                SAML_ATTRIBUTE_SURNAME
+            SAML_ATTRIBUTE_SURNAME
         )
 
     }
@@ -65,7 +66,8 @@ class AddSamlSurnameAttributeMapperIntegTest : AbstractIntegrationTest() {
         )
         val identityProviderAlias = "test"
         AddIdentityProviderAction(
-            testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true, true, true,
+            testRealm, identityProviderAlias, "saml", identityProviderConfig, displayName = "displayName", true, true,
+            true, true,
             "first broker login", ""
         ).executeIt()
 
@@ -87,6 +89,8 @@ class AddSamlSurnameAttributeMapperIntegTest : AbstractIntegrationTest() {
 
         action.undoIt()
 
-        Assertions.assertThat(client.identityProviderMapperExistsByName(identityProviderAlias, mapperName, testRealm)).isFalse
+        Assertions.assertThat(
+            client.identityProviderMapperExistsByName(identityProviderAlias, mapperName, testRealm)
+        ).isFalse
     }
 }

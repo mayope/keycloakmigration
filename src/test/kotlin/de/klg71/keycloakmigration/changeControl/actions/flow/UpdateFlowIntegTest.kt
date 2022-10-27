@@ -65,7 +65,6 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         )
         action.executeIt()
         val updatedFlow = client.flows(testRealm).first { it.alias == newAlias }
-        val executions = client.flowExecutions(testRealm, newAlias)
         assertThat(updatedFlow.description).isEqualTo(description)
         action.undoIt()
         val oldFlow = client.flows(testRealm).first { it.alias == alias }

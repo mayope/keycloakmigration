@@ -179,9 +179,13 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
 
             "addIdentityProviderMapper" -> objectMapper.readValue<AddIdentityProviderMapperAction>(actionJson)
             "addSamlMapper" -> objectMapper.readValue<AddSamlMapperAction>(actionJson)
-            "addSamlEmailAddressAttributeMapper" -> objectMapper.readValue<AddSamlEmailAddressAttributeMapperAction>(actionJson)
+            "addSamlEmailAddressAttributeMapper" -> objectMapper.readValue<AddSamlEmailAddressAttributeMapperAction>(
+                actionJson
+            )
             "addSamlNameAttributeMapper" -> objectMapper.readValue<AddSamlNameAttributeMapperAction>(actionJson)
-            "addSamlGivenNameAttributeMapper" -> objectMapper.readValue<AddSamlGivenNameAttributeMapperAction>(actionJson)
+            "addSamlGivenNameAttributeMapper" -> objectMapper.readValue<AddSamlGivenNameAttributeMapperAction>(
+                actionJson
+            )
             "addSamlSurnameAttributeMapper" -> objectMapper.readValue<AddSamlSurnameAttributeMapperAction>(actionJson)
             "addSamlRoleMapper" -> objectMapper.readValue<AddSamlRoleMapperAction>(actionJson)
 

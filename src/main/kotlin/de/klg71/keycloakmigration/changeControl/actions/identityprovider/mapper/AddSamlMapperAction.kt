@@ -8,12 +8,16 @@ import de.klg71.keycloakmigration.keycloakapi.identityProviderByAlias
 import de.klg71.keycloakmigration.keycloakapi.isSuccessful
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProviderMapper
 
-internal fun assertSamlMapperIsCreatable(client: KeycloakClient, name: String, identityProviderAlias: String, realm: String) {
+internal fun assertSamlMapperIsCreatable(client: KeycloakClient,
+    name: String,
+    identityProviderAlias: String,
+    realm: String) {
     assertIdentityProviderMapperIsCreatable(client, name, identityProviderAlias, realm)
     val identityProvider = client.identityProviderByAlias(identityProviderAlias, realm)
     if (identityProvider.providerId != "saml") {
         throw MigrationException(
-            "Unsupported type: ${identityProvider.providerId} of IdentityProvider with name: $identityProviderAlias in: $realm for ${object {}.javaClass.enclosingClass.simpleName}!"
+            "Unsupported type: ${identityProvider.providerId} of IdentityProvider with name:" +
+                    " $identityProviderAlias in: $realm for ${object {}.javaClass.enclosingClass.simpleName}!"
         )
     }
 }
