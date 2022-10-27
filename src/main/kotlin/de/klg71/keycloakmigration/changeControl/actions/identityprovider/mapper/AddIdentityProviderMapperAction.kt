@@ -4,21 +4,23 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
-import de.klg71.keycloakmigration.keycloakapi.identityProviderByAlias
+import de.klg71.keycloakmigration.keycloakapi.identityProviderExistsByAlias
+import de.klg71.keycloakmigration.keycloakapi.identityProviderMapperExistsByName
 import de.klg71.keycloakmigration.keycloakapi.isSuccessful
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProviderMapper
 
-internal fun assertSamlMapperIsCreatable(client: KeycloakClient, name: String, identityProviderAlias: String, realm: String) {
-    assertIdentityProviderMapperIsCreatable(client, name, identityProviderAlias, realm)
-    val identityProvider = client.identityProviderByAlias(identityProviderAlias, realm)
-    if (identityProvider.providerId != "saml") {
+internal fun assertIdentityProviderMapperIsCreatable(client: KeycloakClient, name: String, identityProviderAlias: String, realm: String) {
+    if (!client.identityProviderExistsByAlias(identityProviderAlias, realm)) {
+        throw MigrationException("IdentityProvider with name: $identityProviderAlias does not exist in realm: $realm!")
+    }
+    if (client.identityProviderMapperExistsByName(identityProviderAlias, name, realm)) {
         throw MigrationException(
-            "Unsupported type: ${identityProvider.providerId} of IdentityProvider with name: $identityProviderAlias in: $realm for ${object {}.javaClass.enclosingClass.simpleName}!"
+            "Mapper with name: $name already exists in IdentityProvider with name: $identityProviderAlias in realm: $realm!"
         )
     }
 }
 
-internal class AddSamlMapperAction(
+internal class AddIdentityProviderMapperAction(
     realm: String? = null,
     val config: Map<String, String>,
     val identityProviderAlias: String,
@@ -27,7 +29,7 @@ internal class AddSamlMapperAction(
 ) : Action(realm) {
 
     override fun execute() {
-        assertSamlMapperIsCreatable(client, name, identityProviderAlias, realm())
+        assertIdentityProviderMapperIsCreatable(client, name, identityProviderAlias, realm())
         client.addIdentityProviderMapper(addIdentityProviderMapper(), realm(), identityProviderAlias).apply {
             if (!isSuccessful()) {
                 throw KeycloakApiException(this.body().asReader().readText())
@@ -46,6 +48,6 @@ internal class AddSamlMapperAction(
         }
     }
 
-    override fun name() = "AddSamlMapper $name"
+    override fun name() = "AddIdentityProviderMapper $name"
 
 }

@@ -14,9 +14,16 @@ changes:
         tokenUrl: https://tokenUrl
         clientId: clientId
         clientSecret: clientSecret
-  - addSamlMapper:
+  - addIdentityProviderMapper:
       identityProviderAlias: testAlias2
       name: testGenericMapper
+      identityProviderMapper: saml-user-attribute-idp-mapper
+      config:
+        "attribute.name": http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name
+        "user.attribute": nameAttributeInSaml
+  - addSamlMapper:
+      identityProviderAlias: testAlias2
+      name: testGenericMapperWithCheckOfUnderlyingIdpType
       identityProviderMapper: saml-user-attribute-idp-mapper
       config:
         "attribute.name": http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name

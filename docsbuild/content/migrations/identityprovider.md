@@ -254,8 +254,39 @@ changes:
         clientId: newClientId
 ```
 
+## AddIdentityProviderMapper
+Adds a mapper to an identity provider.
+This is a generic mapper action where you need to reverse-engineer the correct properties and values.
+Throws an error if the IDP doesn't exist or if a mapper with this name already exists in this IDP.
+
+### Parameters
+- realm: String, optional
+- name: String, not optional
+- identityProviderAlias: String, not optional
+- identityProviderMapper: String, not optional
+
+  possible values vary with the type of the IDP (e.g. "keycloak-oidc" or "saml")
+- config: Map<String, String>, not optional
+
+  configuration properties depend on the IDP and mapper types
+
+### Example
+```yaml
+id: add-saml-mapper
+author: klg71
+realm: integ-test
+changes:
+  - addIdentityProviderMapper:
+      identityProviderAlias: idpAlias
+      name: surnameMapper
+      identityProviderMapper: saml-user-attribute-idp-mapper
+      config:
+        "attribute.name": http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname
+        "user.attribute": lastName
+```    
+
 ## AddSamlMapper
-Adds a mapper to an identity provider of type "saml" (IDP property `providerId`).
+Adds a mapper to an identity provider of type "saml" (IDP property `providerId`), i.e. is basically the same as `AddIdentityProviderMapper` but on creation checks that the IDP has the correct type.
 This is a generic mapper action where you need to reverse-engineer the correct properties and values.
 Throws an error if the IDP doesn't exist, is not of type "saml" or if a mapper with this name already exists in this IDP.
 
@@ -294,7 +325,7 @@ changes:
 
 Other SAML specific values can be found at the [org.keycloak.broker.saml.mappers.* sections](https://www.keycloak.org/docs-api/19.0.3/javadocs/constant-values.html) in the keycloak docs.
 
-For more specific mapper actions, see the following entries.
+For more specific SAML mapper actions, see the following entries.
 
 ## AddSamlEmailAddressAttributeMapper
 Adds a mapper for the email attribute from SAML.

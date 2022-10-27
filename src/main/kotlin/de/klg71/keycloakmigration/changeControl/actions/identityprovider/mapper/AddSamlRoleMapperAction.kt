@@ -15,7 +15,7 @@ internal class AddSamlRoleMapperAction(
 ) : Action(realm) {
 
     override fun execute() {
-        assertMapperIsCreatable(client, name, identityProviderAlias, realm())
+        assertSamlMapperIsCreatable(client, name, identityProviderAlias, realm())
         client.addIdentityProviderMapper(addIdentityProviderMapper(), realm(), identityProviderAlias).apply {
             if (!isSuccessful()) {
                 throw KeycloakApiException(this.body().asReader().readText())
