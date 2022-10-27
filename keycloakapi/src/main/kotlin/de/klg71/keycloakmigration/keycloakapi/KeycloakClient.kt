@@ -6,6 +6,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
+import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
 import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
 import de.klg71.keycloakmigration.keycloakapi.model.AddRole
@@ -27,10 +28,10 @@ import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.Group
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProvider
+import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
-import de.klg71.keycloakmigration.keycloakapi.model.RegisterRequiredActionProvider
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
 import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
 import de.klg71.keycloakmigration.keycloakapi.model.Role
@@ -47,7 +48,7 @@ import feign.Headers
 import feign.Param
 import feign.RequestLine
 import feign.Response
-import java.util.UUID
+import java.util.*
 
 data class RealmName(val realm: String)
 
@@ -445,6 +446,9 @@ interface KeycloakClient {
     fun sendEmail(actions: List<EmailActions>, @Param("realm") realm: String, @Param("user-id") userId: UUID,
         @Param("lifespan") lifespan: Int = 43200)
 
+    @RequestLine("GET /admin/realms/{realm}/identity-provider/instances")
+    fun identityProviders(@Param("realm") realm: String): List<IdentityProvider>
+
     @RequestLine("POST /admin/realms/{realm}/identity-provider/instances")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addIdentityProvider(addIdentityProvider: AddIdentityProvider, @Param("realm") realm: String): Response
@@ -460,6 +464,19 @@ interface KeycloakClient {
 
     @RequestLine("DELETE /admin/realms/{realm}/identity-provider/instances/{alias}")
     fun deleteIdentityProvider(@Param("realm") realm: String, @Param("alias") alias: String)
+
+    @RequestLine("POST /admin/realms/{realm}/identity-provider/instances/{alias}/mappers")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun addIdentityProviderMapper(addIdentityProviderMapper: AddIdentityProviderMapper, @Param("realm") realm: String, @Param("alias") alias: String): Response
+
+    @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}/mappers/{name}")
+    fun identityProviderMapper(@Param("realm") realm: String, @Param("alias") alias: String, @Param("name") name: String): IdentityProviderMapper
+
+    @RequestLine("DELETE /admin/realms/{realm}/identity-provider/instances/{alias}/mappers/{id}")
+    fun deleteIdentityProviderMapper(@Param("realm") realm: String, @Param("alias") alias: String, @Param("id") id: String)
+
+    @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}/mappers")
+    fun identityProviderMappers(@Param("realm") realm: String, @Param("alias") alias: String): List<IdentityProviderMapper>
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/flows")

@@ -7,7 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import feign.Response
-import java.util.UUID
+import java.util.*
 
 /**
  * File contains a lot of convenience functions when interacting with the keycloak client
@@ -207,7 +207,7 @@ fun KeycloakClient.userFederationExistsByName(name: String, realm: String) =
     userFederations(realm).any { it.name == name }
 
 fun KeycloakClient.identityProviderExistsByAlias(alias: String, realm: String) =
-    identityProviders(realm).any { it.alias == alias }
+    identityProviderItems(realm).any { it.alias == alias }
 
 fun KeycloakClient.clientMapperExistsByName(clientId: String, mapperName: String, realm: String) =
     clientMappers(clientUUID(clientId, realm), realm).any { it.name == mapperName }
@@ -226,4 +226,20 @@ fun KeycloakClient.ldapMapperByName(ldapName: String, name: String, realm: Strin
 fun KeycloakClient.ldapMapperExistsByName(ldapName: String, name: String, realm: String) =
     ldapMappers(realm, userFederationByName(ldapName, realm).id).any { it.name == name }
 
-fun KeycloakClient.identityProviders(realm: String) = realmById(realm).identityProviders
+fun KeycloakClient.identityProviderItems(realm: String) = realmById(realm).identityProviders
+
+fun KeycloakClient.identityProviderByAlias(alias: String, realm: String) =
+        identityProviders(realm).firstOrNull { it.alias == alias }
+                .let {
+                    it ?: throw KeycloakApiException("IdentityProvider with alias: $alias does not exist in $realm!")
+                }
+
+fun KeycloakClient.identityProviderMapperByName(identityProviderAlias: String, name: String, realm: String) =
+        identityProviderMappers(realm, identityProviderAlias).firstOrNull { it.name == name }
+                .let {
+                    it ?: throw KeycloakApiException(
+                            "IdentityProviderMapper with name: $name does not exist in $identityProviderAlias in $realm!"
+                    )
+                }
+fun KeycloakClient.identityProviderMapperExistsByName(identityProviderAlias: String, name: String, realm: String) =
+    identityProviderMappers(realm, identityProviderAlias).any { it.name == name }
