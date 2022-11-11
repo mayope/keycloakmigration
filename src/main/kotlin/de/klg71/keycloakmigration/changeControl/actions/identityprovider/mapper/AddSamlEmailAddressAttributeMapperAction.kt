@@ -33,6 +33,6 @@ internal class AddSamlEmailAddressAttributeMapperAction(
         }
     }
 
-    override fun name() = "AddSamlEmailAddressAttributeMapper $name"
+    override fun name() = "AddSamlEmailAddressAttributeMapper $name to $identityProviderAlias"
 
 }

@@ -69,6 +69,6 @@ internal class AddIdentityProviderMapperAction(
         }
     }
 
-    override fun name() = "AddIdentityProviderMapper $name"
+    override fun name() = "AddIdentityProviderMapper $name to $identityProviderAlias"
 
 }
