@@ -5,7 +5,17 @@ data class AddIdentityProviderMapper(
     val identityProviderAlias: String,
     val identityProviderMapper: String,
     val name: String
-)
+) {
+    companion object {
+        @JvmStatic
+        fun from(mapper: IdentityProviderMapper) = AddIdentityProviderMapper(
+            mapper.config,
+            mapper.identityProviderAlias,
+            mapper.identityProviderMapper,
+            mapper.name
+        )
+    }
+}
 
 const val SAML_USER_ATTRIBUTE_IDP_MAPPER = "saml-user-attribute-idp-mapper"
 const val SAML_ROLE_IDP_MAPPER = "saml-role-idp-mapper"

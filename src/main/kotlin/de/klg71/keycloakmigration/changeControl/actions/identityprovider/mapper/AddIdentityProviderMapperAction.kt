@@ -9,10 +9,12 @@ import de.klg71.keycloakmigration.keycloakapi.identityProviderMapperExistsByName
 import de.klg71.keycloakmigration.keycloakapi.isSuccessful
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProviderMapper
 
-internal fun assertIdentityProviderMapperIsCreatable(client: KeycloakClient,
+internal fun assertIdentityProviderMapperIsCreatable(
+    client: KeycloakClient,
     name: String,
     identityProviderAlias: String,
-    realm: String) {
+    realm: String
+) {
     if (!client.identityProviderExistsByAlias(identityProviderAlias, realm)) {
         throw MigrationException("IdentityProvider with name: $identityProviderAlias does not exist in realm: $realm!")
     }
@@ -22,6 +24,17 @@ internal fun assertIdentityProviderMapperIsCreatable(client: KeycloakClient,
                     " $identityProviderAlias in realm: $realm!"
         )
     }
+}
+
+internal fun addIdentityProviderMapper(
+    client: KeycloakClient,
+    mapper: AddIdentityProviderMapper,
+    identityProviderAlias: String,
+    name: String,
+    realm: String
+) {
+    assertIdentityProviderMapperIsCreatable(client, name, identityProviderAlias, realm)
+    client.addIdentityProviderMapper(mapper, realm, identityProviderAlias)
 }
 
 internal class AddIdentityProviderMapperAction(
@@ -34,7 +47,11 @@ internal class AddIdentityProviderMapperAction(
 
     override fun execute() {
         assertIdentityProviderMapperIsCreatable(client, name, identityProviderAlias, realm())
-        client.addIdentityProviderMapper(addIdentityProviderMapper(), realm(), identityProviderAlias).apply {
+        client.addIdentityProviderMapper(
+            addIdentityProviderMapper(),
+            realm(),
+            identityProviderAlias
+        ).apply {
             if (!isSuccessful()) {
                 throw KeycloakApiException(this.body().asReader().readText())
             }

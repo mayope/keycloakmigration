@@ -1,0 +1,27 @@
+id: delete_identity_provider_mappers
+author: istrauch
+realm: integ-test
+changes:
+  - deleteIdentityProviderMapper:
+      identityProviderAlias: testAlias2
+      name: testGenericMapper
+  - deleteIdentityProviderMapper:
+      identityProviderAlias: testAlias2
+      name: testGenericMapperWithCheckOfUnderlyingIdpType
+  - deleteIdentityProviderMapper:
+      identityProviderAlias: testAlias2
+      name: testEmailMapper
+  - deleteIdentityProviderMapper:
+      identityProviderAlias: testAlias2
+      name: testNameMapper
+  - deleteIdentityProviderMapper:
+      identityProviderAlias: testAlias2
+      name: testGivenNameMapper
+  - deleteIdentityProviderMapper:
+      identityProviderAlias: testAlias2
+      name: testSurnameMapper
+  - deleteIdentityProviderMapper:
+      identityProviderAlias: testAlias2
+      name: testRoleMapper
+  - deleteIdentityProvider:
+      alias: testAlias2
