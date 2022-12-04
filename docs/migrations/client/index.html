@@ -19,7 +19,7 @@ Parameters# realm: String, optional clientId: String, not optional, enabled: 
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.a8f172e9514e766ee7562278ee2929cc668544eb977d0ee52069556d89261049.css" integrity="sha256-qPFy6VFOdm7nViJ47ikpzGaFROuXfQ7lIGlVbYkmEEk=">
-<script defer src="/keycloakmigration/en.search.min.65d74a6ea031bd2ead16fa3dfebace9cd0d90084caecdae64c63cc502bb045f0.js" integrity="sha256-ZddKbqAxvS6tFvo9/rrOnNDZAITK7NrmTGPMUCuwRfA="></script>
+<script defer src="/keycloakmigration/en.search.min.600056863520969791d9b31ebc78e5f508258ce6ebc0a1d7fcb82f5c55ad28ea.js" integrity="sha256-YABWhjUglpeR2bMevHjl9QgljObrwKHX/LgvXFWtKOo="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -179,40 +179,46 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#example-5">Example</a></li>
       </ul>
     </li>
-    <li><a href="#addclientmapper">addClientMapper</a>
+    <li><a href="#deleterolescopemapping">deleteRoleScopeMapping</a>
       <ul>
         <li><a href="#parameters-6">Parameters</a></li>
-        <li><a href="#example-6">Example:</a></li>
+        <li><a href="#example-6">Example</a></li>
       </ul>
     </li>
-    <li><a href="#deleteclientmapper">deleteClientMapper</a>
+    <li><a href="#addclientmapper">addClientMapper</a>
       <ul>
         <li><a href="#parameters-7">Parameters</a></li>
         <li><a href="#example-7">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addclientaudiencemapper">addClientAudienceMapper</a>
+    <li><a href="#deleteclientmapper">deleteClientMapper</a>
       <ul>
         <li><a href="#parameters-8">Parameters</a></li>
         <li><a href="#example-8">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addclientgroupmembershipmapper">addClientGroupMembershipMapper</a>
+    <li><a href="#addclientaudiencemapper">addClientAudienceMapper</a>
       <ul>
         <li><a href="#parameters-9">Parameters</a></li>
         <li><a href="#example-9">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addclientuserattributemapper">addClientUserAttributeMapper</a>
+    <li><a href="#addclientgroupmembershipmapper">addClientGroupMembershipMapper</a>
       <ul>
         <li><a href="#parameters-10">Parameters</a></li>
         <li><a href="#example-10">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addclientuserrealmrolemapper">addClientUserRealmRoleMapper</a>
+    <li><a href="#addclientuserattributemapper">addClientUserAttributeMapper</a>
       <ul>
         <li><a href="#parameters-11">Parameters</a></li>
         <li><a href="#example-11">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#addclientuserrealmrolemapper">addClientUserRealmRoleMapper</a>
+      <ul>
+        <li><a href="#parameters-12">Parameters</a></li>
+        <li><a href="#example-12">Example:</a></li>
       </ul>
     </li>
   </ul>
@@ -388,7 +394,7 @@ https://github.com/alex-shpak/hugo-book
   addRoleScopeMapping
   <a class="anchor" href="#addrolescopemapping">#</a>
 </h2>
-<p>Adds a realm- or client-role(if roleClientId is set) to the cope mappings of a client.</p>
+<p>Adds a realm- or client-role(if roleClientId is set) to the scope mappings of a client.</p>
 <p>See <a href="https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings">https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings</a></p>
 <h3 id="parameters-5">
   Parameters
@@ -422,6 +428,45 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientId</span>:<span style="color:#bbb"> </span>testClientRoleScopeMappings<span style="color:#bbb">
 </span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">role</span>:<span style="color:#bbb"> </span>query-users<span style="color:#bbb">
 </span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">roleClientId</span>:<span style="color:#bbb"> </span>realm-management<span style="color:#bbb">
+</span></code></pre></div><h2 id="deleterolescopemapping">
+  deleteRoleScopeMapping
+  <a class="anchor" href="#deleterolescopemapping">#</a>
+</h2>
+<p>Deletes a realm- or client-role(if roleClientId is set) from the scope mappings of a client.</p>
+<p>See <a href="https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings">https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings</a></p>
+<h3 id="parameters-6">
+  Parameters
+  <a class="anchor" href="#parameters-6">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>role: String, not optional</li>
+<li>clientId: String, not optional</li>
+<li>roleClientId: String, optional, default = realmRole</li>
+</ul>
+<h3 id="example-6">
+  Example
+  <a class="anchor" href="#example-6">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-role-mapping<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addSimpleClient</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientId</span>:<span style="color:#bbb"> </span>testClientRoleScopeMappings<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addRole</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>scope-mapping-role<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">updateClient</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientId</span>:<span style="color:#bbb"> </span>testClientRoleScopeMappings<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">fullScopeAllowed</span>:<span style="color:#bbb"> </span><span style="color:#a2f;font-weight:bold">false</span><span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addRoleScopeMapping</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientId</span>:<span style="color:#bbb"> </span>testClientRoleScopeMappings<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">role</span>:<span style="color:#bbb"> </span>query-users<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">roleClientId</span>:<span style="color:#bbb"> </span>realm-management<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">deleteRoleScopeMapping</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">clientId</span>:<span style="color:#bbb"> </span>testClientRoleScopeMappings<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">role</span>:<span style="color:#bbb"> </span>query-users<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">roleClientId</span>:<span style="color:#bbb"> </span>realm-management<span style="color:#bbb">
 </span></code></pre></div><h2 id="addclientmapper">
   addClientMapper
   <a class="anchor" href="#addclientmapper">#</a>
@@ -430,9 +475,9 @@ https://github.com/alex-shpak/hugo-book
 <blockquote>
 <p>Only use this action if you can&rsquo;t find a convenient method to add the mapper below</p>
 </blockquote>
-<h3 id="parameters-6">
+<h3 id="parameters-7">
   Parameters
-  <a class="anchor" href="#parameters-6">#</a>
+  <a class="anchor" href="#parameters-7">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -442,9 +487,9 @@ https://github.com/alex-shpak/hugo-book
 <li>protocolMapper: String, not optional</li>
 <li>protocol: String, optional, default=&quot;openid-connect&rdquo;</li>
 </ul>
-<h3 id="example-6">
+<h3 id="example-7">
   Example:
-  <a class="anchor" href="#example-6">#</a>
+  <a class="anchor" href="#example-7">#</a>
 </h3>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-mappers<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
@@ -468,18 +513,18 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#deleteclientmapper">#</a>
 </h2>
 <p>deletes a client mapper</p>
-<h3 id="parameters-7">
+<h3 id="parameters-8">
   Parameters
-  <a class="anchor" href="#parameters-7">#</a>
+  <a class="anchor" href="#parameters-8">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
 <li>clientId: String, not optional</li>
 <li>name: String, not optional</li>
 </ul>
-<h3 id="example-7">
+<h3 id="example-8">
   Example:
-  <a class="anchor" href="#example-7">#</a>
+  <a class="anchor" href="#example-8">#</a>
 </h3>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-mappers<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
@@ -506,9 +551,9 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#addclientaudiencemapper">#</a>
 </h2>
 <p>adds a audience clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-8">
+<h3 id="parameters-9">
   Parameters
-  <a class="anchor" href="#parameters-8">#</a>
+  <a class="anchor" href="#parameters-9">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -519,9 +564,9 @@ https://github.com/alex-shpak/hugo-book
 <li>clientAudience: String, optional, default = &ldquo;&rdquo;,</li>
 <li>customAudience: String, optional, default = &quot;&rdquo;</li>
 </ul>
-<h3 id="example-8">
+<h3 id="example-9">
   Example:
-  <a class="anchor" href="#example-8">#</a>
+  <a class="anchor" href="#example-9">#</a>
 </h3>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-mappers<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
@@ -540,9 +585,9 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#addclientgroupmembershipmapper">#</a>
 </h2>
 <p>adds a group-membership clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-9">
+<h3 id="parameters-10">
   Parameters
-  <a class="anchor" href="#parameters-9">#</a>
+  <a class="anchor" href="#parameters-10">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -554,9 +599,9 @@ https://github.com/alex-shpak/hugo-book
 <li>fullGroupPath: Boolean, optional, default = true,</li>
 <li>claimName: String?, optional, default = &laquo; name parameter&raquo;</li>
 </ul>
-<h3 id="example-9">
+<h3 id="example-10">
   Example:
-  <a class="anchor" href="#example-9">#</a>
+  <a class="anchor" href="#example-10">#</a>
 </h3>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-mappers<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
@@ -574,9 +619,9 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#addclientuserattributemapper">#</a>
 </h2>
 <p>adds a user-attribute clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-10">
+<h3 id="parameters-11">
   Parameters
-  <a class="anchor" href="#parameters-10">#</a>
+  <a class="anchor" href="#parameters-11">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -590,9 +635,9 @@ https://github.com/alex-shpak/hugo-book
 <li>multivalued: Boolean, optional, default = false,</li>
 <li>aggregateAttributeValues: Boolean, optional, default = true</li>
 </ul>
-<h3 id="example-10">
+<h3 id="example-11">
   Example:
-  <a class="anchor" href="#example-10">#</a>
+  <a class="anchor" href="#example-11">#</a>
 </h3>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-mappers<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
@@ -610,9 +655,9 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#addclientuserrealmrolemapper">#</a>
 </h2>
 <p>adds a user-realm-role clientmapper, throws error if client or realm doesn&rsquo;t exist or mapper with same name already exists</p>
-<h3 id="parameters-11">
+<h3 id="parameters-12">
   Parameters
-  <a class="anchor" href="#parameters-11">#</a>
+  <a class="anchor" href="#parameters-12">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -624,9 +669,9 @@ https://github.com/alex-shpak/hugo-book
 <li>claimName: String?, optional, default = &laquo; name parameter&raquo;</li>
 <li>prefix: String, optional, default = &quot;&rdquo;</li>
 </ul>
-<h3 id="example-11">
+<h3 id="example-12">
   Example:
-  <a class="anchor" href="#example-11">#</a>
+  <a class="anchor" href="#example-12">#</a>
 </h3>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-client-mappers<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
@@ -708,40 +753,46 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#example-5">Example</a></li>
       </ul>
     </li>
-    <li><a href="#addclientmapper">addClientMapper</a>
+    <li><a href="#deleterolescopemapping">deleteRoleScopeMapping</a>
       <ul>
         <li><a href="#parameters-6">Parameters</a></li>
-        <li><a href="#example-6">Example:</a></li>
+        <li><a href="#example-6">Example</a></li>
       </ul>
     </li>
-    <li><a href="#deleteclientmapper">deleteClientMapper</a>
+    <li><a href="#addclientmapper">addClientMapper</a>
       <ul>
         <li><a href="#parameters-7">Parameters</a></li>
         <li><a href="#example-7">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addclientaudiencemapper">addClientAudienceMapper</a>
+    <li><a href="#deleteclientmapper">deleteClientMapper</a>
       <ul>
         <li><a href="#parameters-8">Parameters</a></li>
         <li><a href="#example-8">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addclientgroupmembershipmapper">addClientGroupMembershipMapper</a>
+    <li><a href="#addclientaudiencemapper">addClientAudienceMapper</a>
       <ul>
         <li><a href="#parameters-9">Parameters</a></li>
         <li><a href="#example-9">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addclientuserattributemapper">addClientUserAttributeMapper</a>
+    <li><a href="#addclientgroupmembershipmapper">addClientGroupMembershipMapper</a>
       <ul>
         <li><a href="#parameters-10">Parameters</a></li>
         <li><a href="#example-10">Example:</a></li>
       </ul>
     </li>
-    <li><a href="#addclientuserrealmrolemapper">addClientUserRealmRoleMapper</a>
+    <li><a href="#addclientuserattributemapper">addClientUserAttributeMapper</a>
       <ul>
         <li><a href="#parameters-11">Parameters</a></li>
         <li><a href="#example-11">Example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#addclientuserrealmrolemapper">addClientUserRealmRoleMapper</a>
+      <ul>
+        <li><a href="#parameters-12">Parameters</a></li>
+        <li><a href="#example-12">Example:</a></li>
       </ul>
     </li>
   </ul>

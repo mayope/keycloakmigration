@@ -127,7 +127,7 @@ Assigns a realm- or client-role(if roleClientId is set) to a service account of 
 ```
 
 ## addRoleScopeMapping
-Adds a realm- or client-role(if roleClientId is set) to the cope mappings of a client.
+Adds a realm- or client-role(if roleClientId is set) to the scope mappings of a client.
 
 See https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings
 
@@ -154,6 +154,40 @@ See https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings
           clientId: testClientRoleScopeMappings
           role: scope-mapping-role
       - addRoleScopeMapping:
+          clientId: testClientRoleScopeMappings
+          role: query-users
+          roleClientId: realm-management
+```
+
+## deleteRoleScopeMapping
+Deletes a realm- or client-role(if roleClientId is set) from the scope mappings of a client.
+
+See https://www.keycloak.org/docs/latest/server_admin/#_role_scope_mappings
+
+### Parameters
+- realm: String, optional
+- role: String, not optional
+- clientId: String, not optional
+- roleClientId: String, optional, default = realmRole
+
+### Example
+```yaml
+    id: add-client-role-mapping
+    author: klg71
+    realm: integ-test
+    changes:
+      - addSimpleClient:
+          clientId: testClientRoleScopeMappings
+      - addRole:
+          name: scope-mapping-role
+      - updateClient:
+          clientId: testClientRoleScopeMappings
+          fullScopeAllowed: false
+      - addRoleScopeMapping:
+          clientId: testClientRoleScopeMappings
+          role: query-users
+          roleClientId: realm-management
+      - deleteRoleScopeMapping:
           clientId: testClientRoleScopeMappings
           role: query-users
           roleClientId: realm-management
