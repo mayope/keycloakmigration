@@ -33,6 +33,6 @@ internal class AddSamlNameAttributeMapperAction(
         }
     }
 
-    override fun name() = "AddSamlNameAttributeMapper $name"
+    override fun name() = "AddSamlNameAttributeMapper $name to $identityProviderAlias"
 
 }

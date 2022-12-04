@@ -53,6 +53,7 @@ import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.AddSamlNameAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.AddSamlRoleMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.AddSamlSurnameAttributeMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.DeleteIdentityProviderMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
@@ -188,6 +189,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             )
             "addSamlSurnameAttributeMapper" -> objectMapper.readValue<AddSamlSurnameAttributeMapperAction>(actionJson)
             "addSamlRoleMapper" -> objectMapper.readValue<AddSamlRoleMapperAction>(actionJson)
+            "deleteIdentityProviderMapper" -> objectMapper.readValue<DeleteIdentityProviderMapperAction>(actionJson)
 
             "addFlow" -> objectMapper.readValue<AddFlowAction>(actionJson)
             "deleteFlow" -> objectMapper.readValue<DeleteFlowAction>(actionJson)

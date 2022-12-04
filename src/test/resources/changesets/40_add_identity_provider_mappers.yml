@@ -1,4 +1,4 @@
-id: add_identity_provider_mapper
+id: add_identity_provider_mappers
 author: istrauch
 realm: integ-test
 changes:
@@ -49,5 +49,3 @@ changes:
       name: testRoleMapper
       attributeValue: sourceRole
       role: targetRole
-  - deleteIdentityProvider:
-      alias: testAlias2

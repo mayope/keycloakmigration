@@ -466,3 +466,23 @@ changes:
       attributeValue: sourceRoleA
       role: targetRoleB
 ```    
+
+## DeleteIdentityProviderMapper
+Deletes a mapper from an identity provider.
+
+### Parameters
+- realm: String, optional
+- name: String, not optional
+- identityProviderAlias: String, not optional
+
+### Example
+```yaml
+id: delete-identity-provider-mapper
+author: klg71
+realm: integ-test
+changes:
+  - deleteIdentityProviderMapper:
+      identityProviderAlias: idpAlias
+      name: surnameMapper
+```    
+

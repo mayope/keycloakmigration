@@ -34,6 +34,6 @@ internal class AddSamlRoleMapperAction(
         }
     }
 
-    override fun name() = "AddSamlRoleMapper $name"
+    override fun name() = "AddSamlRoleMapper $name to $identityProviderAlias"
 
 }

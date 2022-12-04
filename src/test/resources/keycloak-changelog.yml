@@ -36,4 +36,5 @@ includes:
 - path: changesets/37_delete_client_scope_mappers.yml
 - path: changesets/38_update_keycloak_provider.yml
 - path: changesets/39_update_identity_provider.yml
-- path: changesets/40_add_identity_provider_mapper.yml
+- path: changesets/40_add_identity_provider_mappers.yml
+- path: changesets/41_delete_identity_provider_mappers.yml
