@@ -20,8 +20,8 @@ class RevokeRoleIntegTest : AbstractIntegrationTest() {
     fun testRevokeRole() {
         AddUserAction(testRealm, "testIntegration").executeIt()
         AddRoleAction(testRealm, "testRole").executeIt()
-        AssignRoleAction(testRealm, "testRole", "test").executeIt()
-        RevokeRoleAction(testRealm, "testRole", "test").executeIt()
+        AssignRoleAction(testRealm, "testRole", "testIntegration").executeIt()
+        RevokeRoleAction(testRealm, "testRole", "testIntegration").executeIt()
 
         val testRole = RoleListItem(UUID.randomUUID(), "testRole", null, false, false, testRealm)
 
@@ -55,6 +55,6 @@ class RevokeRoleIntegTest : AbstractIntegrationTest() {
         assertThatThrownBy {
             RevokeRoleAction(testRealm, "testRole", "testIntegration").executeIt()
         }.isInstanceOf(MigrationException::class.java)
-            .hasMessage("User with name: testIntegration in realm: ${testRealm} does not have role: testRole!")
+            .hasMessage("User with name: testIntegration in realm: $testRealm does not have role: testRole!")
     }
 }

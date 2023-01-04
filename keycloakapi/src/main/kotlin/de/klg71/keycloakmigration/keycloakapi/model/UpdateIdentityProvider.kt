@@ -165,22 +165,22 @@ private fun patchKeycloakIdpConfig(
 
     acceptsPromptNoneForwardFromClient?.let { config.put("acceptsPromptNoneForwardFromClient", it) }
     authorizationUrl?.let { config.put("authorizationUrl", it) }
-    backchannelSupported?.let { config.put("backchannelSupported", it.toString().toLowerCase()) }
+    backchannelSupported?.let { config.put("backchannelSupported", it.toString().lowercase()) }
     clientAuthMethod?.let { config.put("clientAuthMethod", it) }
     clientId?.let { config.put("clientId", it) }
     clientSecret?.let { config.put("clientSecret", it) }
     defaultScopes?.let { config.put("defaultScope", it.joinToString(",")) }
-    disableUserInfo?.let { config.put("disableUserInfo", it.toString().toLowerCase()) }
+    disableUserInfo?.let { config.put("disableUserInfo", it.toString().lowercase()) }
     forwardParameters?.let { config.put("forwardParameters", it.joinToString(",")) }
     guiOrder?.let { config.put("guiOrder", it) }
-    hideOnLoginPage?.let { config.put("hideOnLoginPage", it.toString().toLowerCase()) }
+    hideOnLoginPage?.let { config.put("hideOnLoginPage", it.toString().lowercase()) }
     issuer?.let { config.put("issuer", it) }
-    loginHint?.let { config.put("loginHint", it.toString().toLowerCase()) }
+    loginHint?.let { config.put("loginHint", it.toString().lowercase()) }
     logoutUrl?.let { config.put("logoutUrl", it) }
     syncMode?.let { config.put("syncMode", it) }
     tokenUrl?.let { config.put("tokenUrl", it) }
-    uiLocales?.let { config.put("uiLocales", it.toString().toLowerCase()) }
-    useJwksUrl?.let { config.put("useJwksUrl", it.toString().toLowerCase()) }
+    uiLocales?.let { config.put("uiLocales", it.toString().lowercase()) }
+    useJwksUrl?.let { config.put("useJwksUrl", it.toString().lowercase()) }
     userInfoUrl?.let { config.put("userInfoUrl", it) }
     validateSignature?.let { config.put("validateSignature", it) }
 

@@ -7,7 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import feign.Response
-import java.util.*
+import java.util.UUID
 
 /**
  * File contains a lot of convenience functions when interacting with the keycloak client
@@ -15,6 +15,7 @@ import java.util.*
 
 fun KeycloakClient.userByName(name: String, realm: String) =
     searchByUsername(name, realm)
+        .filter { it.username.lowercase() == name.lowercase() }
         .run {
             if (isEmpty()) {
                 throw KeycloakApiException("User with name: $name does not exist in $realm!")
@@ -229,17 +230,18 @@ fun KeycloakClient.ldapMapperExistsByName(ldapName: String, name: String, realm:
 fun KeycloakClient.identityProviderItems(realm: String) = realmById(realm).identityProviders
 
 fun KeycloakClient.identityProviderByAlias(alias: String, realm: String) =
-        identityProviders(realm).firstOrNull { it.alias == alias }
-                .let {
-                    it ?: throw KeycloakApiException("IdentityProvider with alias: $alias does not exist in $realm!")
-                }
+    identityProviders(realm).firstOrNull { it.alias == alias }
+        .let {
+            it ?: throw KeycloakApiException("IdentityProvider with alias: $alias does not exist in $realm!")
+        }
 
 fun KeycloakClient.identityProviderMapperByName(identityProviderAlias: String, name: String, realm: String) =
-        identityProviderMappers(realm, identityProviderAlias).firstOrNull { it.name == name }
-                .let {
-                    it ?: throw KeycloakApiException(
-                            "IdentityProviderMapper with name: $name does not exist in $identityProviderAlias in $realm!"
-                    )
-                }
+    identityProviderMappers(realm, identityProviderAlias).firstOrNull { it.name == name }
+        .let {
+            it ?: throw KeycloakApiException(
+                "IdentityProviderMapper with name: $name does not exist in $identityProviderAlias in $realm!"
+            )
+        }
+
 fun KeycloakClient.identityProviderMapperExistsByName(identityProviderAlias: String, name: String, realm: String) =
     identityProviderMappers(realm, identityProviderAlias).any { it.name == name }

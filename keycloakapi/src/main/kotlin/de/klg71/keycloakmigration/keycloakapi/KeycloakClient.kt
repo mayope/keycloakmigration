@@ -48,7 +48,7 @@ import feign.Headers
 import feign.Param
 import feign.RequestLine
 import feign.Response
-import java.util.*
+import java.util.UUID
 
 data class RealmName(val realm: String)
 
@@ -63,14 +63,18 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms")
     fun realmNames(): List<RealmName>
 
-    @RequestLine("GET /admin/realms/{realm}/users")
-    fun users(@Param("realm") realm: String): List<User>
+    @RequestLine("GET /admin/realms/{realm}/users?max={max}")
+    fun users(@Param("realm") realm: String, @Param("max") max: Int = 100): List<User>
 
-    @RequestLine("GET /admin/realms/{realm}/users?username={username}")
-    fun searchByUsername(@Param("username") username: String, @Param("realm") realm: String): List<User>
+    @RequestLine("GET /admin/realms/{realm}/users?username={username}&max={max}")
+    fun searchByUsername(@Param("username") username: String,
+        @Param("realm") realm: String,
+        @Param("max") max: Int = 100): List<User>
 
-    @RequestLine("GET /admin/realms/{realm}/users?search={search}")
-    fun searchUser(@Param("search") search: String, @Param("realm") realm: String): List<User>
+    @RequestLine("GET /admin/realms/{realm}/users?search={search}&max={max}")
+    fun searchUser(@Param("search") search: String,
+        @Param("realm") realm: String,
+        @Param("max") max: Int = 100): List<User>
 
     @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}")
     fun deleteUser(@Param("user-id") userId: UUID, @Param("realm") realm: String)
@@ -467,16 +471,23 @@ interface KeycloakClient {
 
     @RequestLine("POST /admin/realms/{realm}/identity-provider/instances/{alias}/mappers")
     @Headers("Content-Type: application/json; charset=utf-8")
-    fun addIdentityProviderMapper(addIdentityProviderMapper: AddIdentityProviderMapper, @Param("realm") realm: String, @Param("alias") alias: String): Response
+    fun addIdentityProviderMapper(addIdentityProviderMapper: AddIdentityProviderMapper,
+        @Param("realm") realm: String,
+        @Param("alias") alias: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}/mappers/{name}")
-    fun identityProviderMapper(@Param("realm") realm: String, @Param("alias") alias: String, @Param("name") name: String): IdentityProviderMapper
+    fun identityProviderMapper(@Param("realm") realm: String,
+        @Param("alias") alias: String,
+        @Param("name") name: String): IdentityProviderMapper
 
     @RequestLine("DELETE /admin/realms/{realm}/identity-provider/instances/{alias}/mappers/{id}")
-    fun deleteIdentityProviderMapper(@Param("realm") realm: String, @Param("alias") alias: String, @Param("id") id: String)
+    fun deleteIdentityProviderMapper(@Param("realm") realm: String,
+        @Param("alias") alias: String,
+        @Param("id") id: String)
 
     @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}/mappers")
-    fun identityProviderMappers(@Param("realm") realm: String, @Param("alias") alias: String): List<IdentityProviderMapper>
+    fun identityProviderMappers(@Param("realm") realm: String,
+        @Param("alias") alias: String): List<IdentityProviderMapper>
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/flows")
