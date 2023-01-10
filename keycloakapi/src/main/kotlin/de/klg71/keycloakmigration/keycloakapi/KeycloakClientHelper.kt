@@ -14,7 +14,7 @@ import java.util.UUID
  */
 
 fun KeycloakClient.userByName(name: String, realm: String) =
-    searchByUsername(name, realm)
+    searchByUsername(name, realm, exact = true)
         .filter { it.username.lowercase() == name.lowercase() }
         .run {
             if (isEmpty()) {

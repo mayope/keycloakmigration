@@ -66,9 +66,11 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/users?max={max}")
     fun users(@Param("realm") realm: String, @Param("max") max: Int = 100): List<User>
 
-    @RequestLine("GET /admin/realms/{realm}/users?username={username}&max={max}")
+    @RequestLine("GET /admin/realms/{realm}/users?username={username}&max={max}&exact={exact}&from={from}")
     fun searchByUsername(@Param("username") username: String,
         @Param("realm") realm: String,
+        @Param("exact") exact: Boolean = false,
+        @Param("from") from: Int = 0,
         @Param("max") max: Int = 100): List<User>
 
     @RequestLine("GET /admin/realms/{realm}/users?search={search}&max={max}")
