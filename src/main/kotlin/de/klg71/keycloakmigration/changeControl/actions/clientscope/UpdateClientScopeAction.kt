@@ -4,15 +4,15 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.clientScopeByName
 import de.klg71.keycloakmigration.keycloakapi.existsClientScope
-import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
+import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.ProtocolMapper
-import de.klg71.keycloakmigration.keycloakapi.model.addClientScope
-import java.util.UUID
+import de.klg71.keycloakmigration.keycloakapi.model.updateClientScope
 
 @Suppress("LongParameterList")
-class AddClientScopeAction(
+class UpdateClientScopeAction(
         realm: String?,
         private val name: String,
+        private val newName: String? = null,
         private val description: String? = null,
         private val protocol: String = "openid-connect",
         private val protocolMappers: List<ProtocolMapper>? = listOf(),
@@ -23,24 +23,23 @@ class AddClientScopeAction(
         private val config: Map<String, String>? = null
 ) : Action(realm) {
 
-    private lateinit var scopeUUID: UUID
+    private lateinit var existingScope: ClientScope
 
     override fun execute() {
-        if (client.existsClientScope(name, realm())) {
-            throw MigrationException("ClientScope with name: $name already exists in realm: ${realm()}!")
+        if (!client.existsClientScope(name, realm())) {
+            throw MigrationException("ClientScope with name: $name doesn't exist in realm: ${realm()}!")
         }
-        client.addClientScope(realm(), addClientScope(name, description, protocol, protocolMappers, consentScreenText,
-                displayOnConsentScreen, guiOrder, includeInTokenScope, config)).run {
-            scopeUUID = extractLocationUUID()
-        }
+        existingScope = client.clientScopeByName(name, realm())
+
+        client.updateClientScope(realm(), existingScope.id, updateClientScope(newName, description, protocol, protocolMappers, consentScreenText,
+                displayOnConsentScreen, guiOrder, includeInTokenScope, config))
     }
 
     override fun undo() {
-        client.clientScopeByName(name, realm()).run {
-            client.deleteClientScope(realm(), id)
-        }
+        client.updateClientScope(realm(), existingScope.id, updateClientScope(existingScope.name, existingScope.description,
+                existingScope.protocol, existingScope.protocolMappers, config=existingScope.attributes))
     }
 
-    override fun name() = "AddClientScope $name"
+    override fun name() = "UpdateClientScope $name"
 
 }
