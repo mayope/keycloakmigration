@@ -37,6 +37,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
 import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
@@ -285,6 +286,10 @@ interface KeycloakClient {
     @RequestLine("POST /admin/realms/{realm}/client-scopes")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addClientScope(@Param("realm") realm: String, addClientScope: AddClientScope): Response
+
+    @RequestLine("PUT /admin/realms/{realm}/client-scopes/{client-scope-id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateClientScope(@Param("realm") realm: String, @Param("client-scope-id") clientScopeId: UUID, updateClientScope: UpdateClientScope): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/client-scopes/{client-scope-id}")
     fun deleteClientScope(@Param("realm") realm: String, @Param("client-scope-id") clientScopeId: UUID): Response

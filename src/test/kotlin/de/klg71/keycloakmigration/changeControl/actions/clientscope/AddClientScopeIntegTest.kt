@@ -30,6 +30,15 @@ class AddClientScopeIntegTest : AbstractIntegrationTest() {
                         "jsonType.label" to "String"
                     )
                 )
+            ),
+            description = "testName",
+            consentScreenText = "text for screen",
+            displayOnConsentScreen = true,
+            guiOrder = 3,
+            includeInTokenScope = false,
+            config = mapOf(
+                "test.attribute" to "false",
+                "another.test.attribute" to "12321"
             )
         ).executeIt()
 
@@ -48,6 +57,15 @@ class AddClientScopeIntegTest : AbstractIntegrationTest() {
             AbstractMap.SimpleEntry("access.token.claim", "true"),
             AbstractMap.SimpleEntry("claim.name", "preferred_username"),
             AbstractMap.SimpleEntry("jsonType.label", "String"),
+        )
+        assertThat(theScope.description).isEqualTo("testName")
+        assertThat(theScope.attributes).contains(
+                AbstractMap.SimpleEntry("test.attribute", "false"),
+                AbstractMap.SimpleEntry("another.test.attribute", "12321"),
+                AbstractMap.SimpleEntry("consent.screen.text", "text for screen"),
+                AbstractMap.SimpleEntry("display.on.screen.consent", "true"),
+                AbstractMap.SimpleEntry("gui.order", "3"),
+                AbstractMap.SimpleEntry("include.in.token.scope", "false"),
         )
     }
 

@@ -1,7 +1,7 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
-data class AddClientScope(
-        val name: String,
+data class UpdateClientScope(
+        val name: String? = null,
         val description: String? = null,
         val protocol: String,
         val attributes: Map<String, String>,
@@ -9,11 +9,11 @@ data class AddClientScope(
 
 
 
-fun addClientScope(name: String, description: String? = null, protocol: String = "openid-connect",
+fun updateClientScope(name: String?, description: String? = null, protocol: String = "openid-connect",
                    protocolMappers: List<ProtocolMapper>? = null,
                    consentScreenText: String? = null, displayOnConsentScreen: Boolean = false,
                    guiOrder: Int? = null, includeInTokenScope: Boolean = true,
-                   config: Map<String, String>? = null): AddClientScope {
+                   config: Map<String, String>? = null): UpdateClientScope {
     val attributes = mutableMapOf<String, String>()
     consentScreenText?.let {
         attributes["consent.screen.text"] = it
@@ -26,5 +26,5 @@ fun addClientScope(name: String, description: String? = null, protocol: String =
     config?.let {
         attributes.putAll(it)
     }
-    return AddClientScope(name, description, protocol, attributes, protocolMappers)
+    return UpdateClientScope(name, description, protocol, attributes, protocolMappers)
 }
