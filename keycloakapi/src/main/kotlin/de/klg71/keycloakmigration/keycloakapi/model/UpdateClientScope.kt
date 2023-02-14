@@ -1,7 +1,7 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
 data class UpdateClientScope(
-        val name: String? = null,
+        val name: String,
         val description: String? = null,
         val protocol: String,
         val attributes: Map<String, String>,
@@ -9,7 +9,7 @@ data class UpdateClientScope(
 
 
 
-fun updateClientScope(name: String?, description: String? = null, protocol: String = "openid-connect",
+fun updateClientScope(name: String, description: String? = null, protocol: String = "openid-connect",
                    protocolMappers: List<ProtocolMapper>? = null,
                    consentScreenText: String? = null, displayOnConsentScreen: Boolean = false,
                    guiOrder: Int? = null, includeInTokenScope: Boolean = true,
