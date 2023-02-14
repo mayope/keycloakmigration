@@ -23,6 +23,7 @@ import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteClie
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AddClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.UpdateClientScopeAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.DeleteClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignDefaultClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignOptionalClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignRoleToClientScopeAction
@@ -59,6 +60,7 @@ import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.requiredactions.UpdateRequiredActionAction
+import de.klg71.keycloakmigration.changeControl.actions.requiredactions.RegisterRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.UpdateRoleAction
@@ -117,8 +119,10 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addRoleScopeMapping" -> objectMapper.readValue<AddRoleScopeMappingAction>(actionJson)
             "deleteRoleScopeMapping" -> objectMapper.readValue<DeleteRoleScopeMappingAction>(actionJson)
 
+            "registerRequiredAction" -> objectMapper.readValue<RegisterRequiredActionAction>(actionJson)
             "addClientScope" -> objectMapper.readValue<AddClientScopeAction>(actionJson)
             "updateClientScope" -> objectMapper.readValue<UpdateClientScopeAction>(actionJson)
+            "deleteClientScope" -> objectMapper.readValue<DeleteClientScopeAction>(actionJson)
             "assignDefaultClientScope" -> objectMapper.readValue<AssignDefaultClientScopeAction>(actionJson)
             "withdrawDefaultClientScope" -> objectMapper.readValue<WithdrawDefaultClientScopeAction>(actionJson)
             "assignOptionalClientScope" -> objectMapper.readValue<AssignOptionalClientScopeAction>(actionJson)

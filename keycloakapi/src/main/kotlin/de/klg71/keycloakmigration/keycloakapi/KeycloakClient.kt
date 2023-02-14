@@ -33,6 +33,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
+import de.klg71.keycloakmigration.keycloakapi.model.RegisterRequiredActionProvider
 import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
@@ -551,5 +552,10 @@ interface KeycloakClient {
     fun updateRequiredAction(@Param("realm") realm: String,
         @Param("alias") alias: String,
         requiredActionProviderItem: RequiredActionProviderItem): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/authentication/register-required-action")
+    fun registerRequiredAction(@Param("realm") realm: String,
+                               requiredActionProviderItem: RegisterRequiredActionProvider): Response
 }
 

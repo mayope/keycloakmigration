@@ -12,7 +12,6 @@ import de.klg71.keycloakmigration.keycloakapi.model.updateClientScope
 class UpdateClientScopeAction(
         realm: String?,
         private val name: String,
-        private val newName: String? = null,
         private val description: String? = null,
         private val protocol: String = "openid-connect",
         private val protocolMappers: List<ProtocolMapper>? = listOf(),
@@ -31,7 +30,7 @@ class UpdateClientScopeAction(
         }
         existingScope = client.clientScopeByName(name, realm())
 
-        client.updateClientScope(realm(), existingScope.id, updateClientScope(newName, description, protocol, protocolMappers, consentScreenText,
+        client.updateClientScope(realm(), existingScope.id, updateClientScope(name, description, protocol, protocolMappers, consentScreenText,
                 displayOnConsentScreen, guiOrder, includeInTokenScope, config))
     }
 
