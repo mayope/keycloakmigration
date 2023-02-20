@@ -30,7 +30,7 @@ class AddIdentityProviderAction(
         }
         client.addIdentityProvider(addIdentityProvider(), realm()).apply {
             if (!isSuccessful()) {
-                throw KeycloakApiException(this.body().asReader().readText())
+                throw KeycloakApiException(this.body().asReader().readText(),status())
             }
         }
     }

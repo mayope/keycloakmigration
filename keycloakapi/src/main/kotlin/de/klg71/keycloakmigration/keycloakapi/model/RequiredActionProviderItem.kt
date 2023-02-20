@@ -9,5 +9,5 @@ data class RequiredActionProviderItem(
         val priority: Int?,
         val providerId: String)
 
-data class RegisterRequiredActionProvider(val providerId: String,
+data class RegisterRequiredActionRequest(val providerId: String,
                                           val name: String)

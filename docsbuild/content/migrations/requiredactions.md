@@ -7,32 +7,26 @@ permalink: /migrations/requiredactions/
 ---
 # Required Actions
 All migrations referring to the Required Actions resource in Authentication.
-## AddRequiredAction
-Adds a required action.
+
+## RegisterRequiredAction
+Registers a required action
 
 ### Parameters
 - realm: String, optional
-- providerId: String, mandatory
-- alias: String, mandatory
 - name: String, mandatory
-- config: Map<String,String>, optional, default = emptyMap
-- defaultAction: Boolean, optional, default = false
-- enabled: Boolean, optional, default = true
-- priority: Boolean, optional, default = preset through keycloak
+- providerId: String, mandatory
 
 ### Example
 ```yaml
-id: add-required-action
+id: register-required-action
 author: klg71
 realm: integ-test
 changes:
-  - addRequiredAction:
+  - registerRequiredAction:
       providerId: verify-email
-      alias: VERIFY_EMAIL
       name: Verify Email
-      defaultAction: true
-      enabled: true
 ```
+
 ## UpdateRequiredAction
 Updates a required action.
 Only updates provided values.
@@ -55,37 +49,12 @@ id: add-required-action
 author: klg71
 realm: integ-test
 changes:
-  - addRequiredAction:
+  - registerRequiredAction:
       providerId: verify-email
-      alias: VERIFY_EMAIL
       name: Verify Email
-      defaultAction: true
-      enabled: true
   - updateRequiredAction:
       providerId: verify-email
       alias: VERIFY_EMAIL
       name: Verify Email 2
-```
-## DeleteRequiredAction
-Deletes a required action, if one with this alias exists
-
-### Parameters
-- realm: String, optional
-- alias: String, mandatory
-
-### Example
-```yaml
-id: delete-required-action
-author: klg71
-realm: integ-test
-changes:
-  - addRequiredAction:
-      providerId: verify-email
-      alias: VERIFY_EMAIL
-      name: Verify Email
-      defaultAction: true
-      enabled: true
-  - deleteRequiredAction:
-      alias: VERIFY_EMAIL
 ```
 

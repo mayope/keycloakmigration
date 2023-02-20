@@ -169,7 +169,7 @@ fun Response.isSuccessful() = when (status()) {
 
 fun Response.extractLocationUUID(): UUID {
     if (!isSuccessful()) {
-        throw KeycloakApiException(this.body().asReader().readText())
+        throw KeycloakApiException(this.body().asReader().readText(), statusCode = status())
     }
     return headers()["location"]!!.first()
         .run {

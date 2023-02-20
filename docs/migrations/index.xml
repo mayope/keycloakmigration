@@ -18,8 +18,9 @@
       
       <guid>https://mayope.github.io/keycloakmigration/migrations/requiredactions/</guid>
       <description>Required Actions#All migrations referring to the Required Actions resource in Authentication.
-AddRequiredAction#Adds a required action.
-Parameters# realm: String, optional providerId: String, mandatory alias: String, mandatory name: String, mandatory config: Map&amp;lt;String,String&amp;gt;, optional, default = emptyMap defaultAction: Boolean, optional, default = false enabled: Boolean, optional, default = true priority: Boolean, optional, default = preset through keycloak  Example#id:add-required-actionauthor:klg71realm:integ-testchanges:- addRequiredAction:providerId:verify-emailalias:VERIFY_EMAILname:VerifyEmaildefaultAction:trueenabled:trueUpdateRequiredAction#Updates a required action.</description>
+RegisterRequiredAction#Registers a required action
+Parameters# realm: String, optional name: String, mandatory providerId: String, mandatory  Example#id:register-required-actionauthor:klg71realm:integ-testchanges:- registerRequiredAction:providerId:verify-emailname:VerifyEmailUpdateRequiredAction#Updates a required action. Only updates provided values. For an update of the required action alias use the oldAlias as alias and the newAlias in newAlias.
+Parameters# realm: String, optional providerId: String, optional, default = no update, alias: String, mandatory newAlias: String, optional, default = no update name: String, optional, default = no update config: Map&amp;lt;String,String&amp;gt;, optional, default = no update defaultAction: Boolean, optional, default = no update enabled: Boolean, optional, default = no update priority: Boolean, optional, default = no update  Example#id:add-required-actionauthor:klg71realm:integ-testchanges:- registerRequiredAction:providerId:verify-emailname:VerifyEmail- updateRequiredAction:providerId:verify-emailalias:VERIFY_EMAILname:VerifyEmail2</description>
     </item>
     
     <item>

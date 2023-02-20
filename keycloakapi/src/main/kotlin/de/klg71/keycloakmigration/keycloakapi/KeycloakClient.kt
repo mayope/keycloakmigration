@@ -32,8 +32,8 @@ import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
+import de.klg71.keycloakmigration.keycloakapi.model.RegisterRequiredActionRequest
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
-import de.klg71.keycloakmigration.keycloakapi.model.RegisterRequiredActionProvider
 import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
@@ -556,6 +556,11 @@ interface KeycloakClient {
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/register-required-action")
     fun registerRequiredAction(@Param("realm") realm: String,
-                               requiredActionProviderItem: RegisterRequiredActionProvider): Response
+        requiredActionRequest: RegisterRequiredActionRequest): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("DELETE /admin/realms/{realm}/authentication/required-actions/{alias}")
+    fun deleteRequiredAction(@Param("realm") realm: String,
+        @Param("alias") alias: String): Response
 }
 

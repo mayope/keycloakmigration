@@ -30,7 +30,6 @@ includes:
 - path: changesets/31_add_identity_provider.yml
 - path: changesets/32_add_flow.yml
 - path: changesets/33_update_flow.yml
-- path: changesets/34_add_required_action.yml
 - path: changesets/35_update_required_action.yml
 - path: changesets/36_add_client_scope_mappers.yml
 - path: changesets/37_delete_client_scope_mappers.yml
@@ -38,3 +37,4 @@ includes:
 - path: changesets/39_update_identity_provider.yml
 - path: changesets/40_add_identity_provider_mappers.yml
 - path: changesets/41_delete_identity_provider_mappers.yml
+- path: changesets/42_register_required_action.yml

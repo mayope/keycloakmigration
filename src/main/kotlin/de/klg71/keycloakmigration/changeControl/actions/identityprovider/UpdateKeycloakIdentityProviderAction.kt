@@ -52,7 +52,7 @@ class UpdateKeycloakIdentityProviderAction(
             client.updateIdentityProvider(updateKeycloakIdentityProvider(identityProvider), realm(), alias)
                 .apply {
                     if (!isSuccessful()) {
-                        throw KeycloakApiException(this.body().asReader().readText())
+                        throw KeycloakApiException(this.body().asReader().readText(),status())
                     }
                 }
         } else {
