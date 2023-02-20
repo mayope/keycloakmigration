@@ -61,7 +61,6 @@ import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.requiredactions.RegisterRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.requiredactions.UpdateRequiredActionAction
-import de.klg71.keycloakmigration.changeControl.actions.requiredactions.RegisterRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.UpdateRoleAction
@@ -203,7 +202,6 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "updateFlow" -> objectMapper.readValue<UpdateFlowAction>(actionJson)
 
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
-            "registerRequiredAction" -> objectMapper.readValue<RegisterRequiredActionAction>(actionJson)
 
             else -> throw ParseException(
                 "Unknown Change type: $actionName"
