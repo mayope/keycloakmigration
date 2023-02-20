@@ -32,8 +32,8 @@ import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
+import de.klg71.keycloakmigration.keycloakapi.model.RegisterRequiredActionRequest
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
-import de.klg71.keycloakmigration.keycloakapi.model.RegisterRequiredActionProvider
 import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
