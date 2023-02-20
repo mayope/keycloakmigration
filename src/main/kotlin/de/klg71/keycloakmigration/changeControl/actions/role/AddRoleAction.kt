@@ -55,7 +55,7 @@ class AddRoleAction(
             val roleItems = compositeChildRoles.map(this::findRoleAsRoleListItem)
             val response = client.addCompositeToRole(roleItems, role.id, realm())
             if (response.status() != HTTP_NO_CONTENT) {
-                throw KeycloakApiException("addCompositeToRole failed. response: $response")
+                throw KeycloakApiException("addCompositeToRole failed. response: $response", response.status())
             }
         }
     }
