@@ -84,7 +84,7 @@ data class Realm(
     val adminEventsDetailsEnabled: Boolean,
     val internationalizationEnabled: Boolean,
     val supportedLocales: List<String>,
-    val defaultLocale: String = "English",
+    val defaultLocale: String = "en",
     val browserFlow: String,
     val registrationFlow: String,
     val directGrantFlow: String,

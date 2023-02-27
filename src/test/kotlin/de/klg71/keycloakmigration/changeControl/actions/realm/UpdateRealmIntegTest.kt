@@ -74,4 +74,25 @@ class UpdateRealmIntegTest : AbstractIntegrationTest() {
         assertThat(client.realmById("testRealm").loginTheme).isEqualTo("keycloak")
         DeleteRealmAction("testRealm").executeIt()
     }
+
+    @Test
+    fun testUpdateRealmLocales() {
+        AddRealmAction("testRealm", id = "testRealm").executeIt()
+
+        assertThat(client.realmById("testRealm").supportedLocales).hasSize(0);
+        assertThat(client.realmById("testRealm").defaultLocale).isEqualTo("en");
+
+        UpdateRealmAction(
+            "testRealm",
+            supportedLocales = listOf("es", "de"),
+            defaultLocale = "de",
+        ).executeIt()
+
+        assertThat(client.realmById("testRealm").supportedLocales).hasSize(2);
+        assertThat(client.realmById("testRealm").supportedLocales).contains("es");
+        assertThat(client.realmById("testRealm").supportedLocales).contains("de");
+        assertThat(client.realmById("testRealm").defaultLocale).isEqualTo("de");
+        DeleteRealmAction("testRealm").executeIt()
+    }
+
 }
