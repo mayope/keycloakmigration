@@ -109,6 +109,7 @@ updates a Realm, throws error if realm with that id does not exists
 - adminEventsDetailsEnabled:Boolean, optional
 - internationalizationEnabled:Boolean, optional
 - supportedLocales:List< String>, optional
+- defaultLocale: String, optional
 - browserFlow:String, optional
 - registrationFlow:String, optional
 - directGrantFlow:String, optional
