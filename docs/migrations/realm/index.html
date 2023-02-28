@@ -21,7 +21,7 @@ Parameters# id: String, not optional  Example#id:add-realmauthor:klg71chan
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.a8f172e9514e766ee7562278ee2929cc668544eb977d0ee52069556d89261049.css" integrity="sha256-qPFy6VFOdm7nViJ47ikpzGaFROuXfQ7lIGlVbYkmEEk=">
-<script defer src="/keycloakmigration/en.search.min.671afbf443a5071d51a9d1fdc33320866e90f10f4dd4833e363c5fa340461adb.js" integrity="sha256-Zxr79EOlBx1RqdH9wzMghm6Q8Q9N1IM&#43;Njxfo0BGGts="></script>
+<script defer src="/keycloakmigration/en.search.min.a5ba6c3cd68942d819a837912bedc18d9542ee893398abaa4af47f26d5972617.js" integrity="sha256-pbpsPNaJQtgZqDeRK&#43;3BjZVC7okzmKuqSvR/JtWXJhc="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -272,6 +272,7 @@ https://github.com/alex-shpak/hugo-book
 <li>maxDeltaTimeSeconds:Int, optional</li>
 <li>failureFactor:Int, optional</li>
 <li>requiredCredentials:List&lt; String&gt;, optional</li>
+<li>passwordPolicy:Map&lt; String, String&gt;, optional (see below for explanation)</li>
 <li>otpPolicyType:String, optional</li>
 <li>otpPolicyAlgorithm:String, optional</li>
 <li>otpPolicyInitialCounter:Int, optional</li>
@@ -345,6 +346,35 @@ https://github.com/alex-shpak/hugo-book
 <li>emailTheme:String, optional</li>
 <li>loginTheme:String, optional</li>
 </ul>
+<h4 id="password-policy">
+  Password Policy
+  <a class="anchor" href="#password-policy">#</a>
+</h4>
+<p>Supported policies:</p>
+<ul>
+<li>expirePassword</li>
+<li>forceExpiredPasswordChange</li>
+<li>hashingIterations</li>
+<li>hashIterations</li>
+<li>notRecentlyUsed</li>
+<li>passwordHistory</li>
+<li>minLength</li>
+<li>maxLength</li>
+<li>uppercaseCharacters</li>
+<li>uppercase</li>
+<li>lowercaseCharacters</li>
+<li>lowercase</li>
+<li>specialCharacters</li>
+<li>specialChars</li>
+<li>regularExpression</li>
+<li>regexPattern</li>
+<li>passwordBlacklist</li>
+<li>hashingAlgorithm</li>
+<li>hashAlgorithm</li>
+<li>notUsername</li>
+<li>notEmail</li>
+</ul>
+<p>See example below</p>
 <h3 id="example-2">
   Example
   <a class="anchor" href="#example-2">#</a>
@@ -355,6 +385,9 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">updateRealm</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
 </span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">displayName</span>:<span style="color:#bbb"> </span>UpdatedRealm<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">passwordPolicy</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>- <span style="color:#a2f;font-weight:bold">notUsername</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">            </span>- <span style="color:#a2f;font-weight:bold">minLength</span>:<span style="color:#bbb"> </span><span style="color:#666">8</span><span style="color:#bbb">
 </span></code></pre></div></article>
  
       

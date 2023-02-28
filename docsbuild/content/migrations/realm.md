@@ -82,6 +82,7 @@ updates a Realm, throws error if realm with that id does not exists
 - maxDeltaTimeSeconds:Int, optional
 - failureFactor:Int, optional
 - requiredCredentials:List< String>, optional
+- passwordPolicy:Map< String, String>, optional (see below for explanation)
 - otpPolicyType:String, optional
 - otpPolicyAlgorithm:String, optional
 - otpPolicyInitialCounter:Int, optional
@@ -152,6 +153,32 @@ updates a Realm, throws error if realm with that id does not exists
 - emailTheme:String, optional
 - loginTheme:String, optional
 
+#### Password Policy
+Supported policies:
+ - expirePassword
+ - forceExpiredPasswordChange
+ - hashingIterations
+ - hashIterations
+ - notRecentlyUsed
+ - passwordHistory
+ - minLength
+ - maxLength
+ - uppercaseCharacters
+ - uppercase
+ - lowercaseCharacters
+ - lowercase
+ - specialCharacters
+ - specialChars
+ - regularExpression
+ - regexPattern
+ - passwordBlacklist
+ - hashingAlgorithm
+ - hashAlgorithm
+ - notUsername
+ - notEmail
+
+See example below
+
 ### Example
 ```yaml
     id: update-realm
@@ -160,4 +187,7 @@ updates a Realm, throws error if realm with that id does not exists
       - updateRealm:
           id: integ-test
           displayName: UpdatedRealm
+          passwordPolicy:
+            - notUsername: test
+            - minLength: 8
 ```

@@ -6,3 +6,6 @@ changes:
       id: testAdd
       rememberMe: true
       ssoSessionIdleTimeout: 3600
+      passwordPolicy:
+        notUsername: "this value is not used"
+        minLength: 8

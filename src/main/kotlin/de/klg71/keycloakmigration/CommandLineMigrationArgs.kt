@@ -20,25 +20,25 @@ const val DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES = false
 internal class CommandLineMigrationArgs(parser: ArgParser) :
     MigrationArgs {
     private val adminUser by parser.storing(
-        names = *arrayOf("-u", "--user"),
+        names = arrayOf("-u", "--user"),
         help = "Username for the migration user, defaulting to $DEFAULT_ADMIN_USER."
     )
         .default(DEFAULT_ADMIN_USER)
 
     private val adminPassword by parser.storing(
-        names = *arrayOf("-p", "--password"),
+        names = arrayOf("-p", "--password"),
         help = "Password for the migration user, defaulting to $DEFAULT_ADMIN_PASSWORD."
     )
         .default(DEFAULT_ADMIN_PASSWORD)
 
     private val adminTotp by parser.storing(
-        names = *arrayOf("-t", "--totp"),
+        names = arrayOf("-t", "--totp"),
         help = "Time based one time password for the migration user, empty per default"
     )
         .default(DEFAULT_ADMIN_PASSWORD)
 
     private val baseUrl by parser.storing(
-        names = *arrayOf("-b", "--baseurl"),
+        names = arrayOf("-b", "--baseurl"),
         help = "Base url of keycloak server, defaulting to $DEFAULT_KEYCLOAK_SERVER."
     )
         .default(DEFAULT_KEYCLOAK_SERVER)
@@ -49,19 +49,19 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
     )
 
     private val realm by parser.storing(
-        names = *arrayOf("-r", "--realm"),
+        names = arrayOf("-r", "--realm"),
         help = "Realm to use for migration, defaulting to $DEFAULT_REALM"
     )
         .default(DEFAULT_REALM)
 
     private val clientId by parser.storing(
-        names = *arrayOf("-c", "--client"),
+        names = arrayOf("-c", "--client"),
         help = "Client to use for migration, defaulting to $DEFAULT_CLIENTID"
     )
         .default(DEFAULT_CLIENTID)
 
     private val correctHashes by parser.flagging(
-        names = *arrayOf("--correct-hashes"),
+        names = arrayOf("--correct-hashes"),
         help = "Correct hashes to most recent version, defaulting to $DEFAULT_CORRECT_HASHES \r\n" +
                 "Just choose this option if you didn't change anything" +
                 " in the changelog since the last migration! \n" +
@@ -73,27 +73,27 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
     )
 
     private val parameters by parser.adding(
-        names = *arrayOf("-k", "--parameter"),
+        names = arrayOf("-k", "--parameter"),
         help = "Parameters to substitute in changelog," +
                 " syntax is: -k param1=value1 will replace \${param1} with value1 in changelog"
     )
         .default(emptyList<String>())
 
     private val waitForKeycloak by parser.flagging(
-        names = *arrayOf("--wait-for-keycloak"),
+        names = arrayOf("--wait-for-keycloak"),
         help = "Wait for Keycloak to become ready, defaulting to $DEFAULT_WAIT_FOR_KEYCLOAK."
     ).default(
         DEFAULT_WAIT_FOR_KEYCLOAK
     )
 
     private val waitForKeycloakTimout by parser.storing(
-        names = *arrayOf("--wait-for-keycloak-timeout"),
+        names = arrayOf("--wait-for-keycloak-timeout"),
         help = "Wait for Keycloak to become ready timeout in seconds (defaulting to 0=infinit)."
     )
         .default(DEFAULT_WAIT_FOR_KEYCLOAK_TIMEOUT)
 
     private val failOnUndefinedVariables by parser.flagging(
-        names = *arrayOf("--fail-on-undefined-variables"),
+        names = arrayOf("--fail-on-undefined-variables"),
         help = "Fail if variables could not be replaced, defaulting to $DEFAULT_FAIL_ON_UNDEFINED_VARIABLES."
     )
         .default(
@@ -102,7 +102,7 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
 
     private val disableWarnOnUndefinedVariables
             by parser.flagging(
-                names = *arrayOf("--disable-warn-on-undefined-variables"),
+                names = arrayOf("--disable-warn-on-undefined-variables"),
                 help = "Disables warning if variables could not be replaced," +
                         " defaulting to $DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES."
             )
