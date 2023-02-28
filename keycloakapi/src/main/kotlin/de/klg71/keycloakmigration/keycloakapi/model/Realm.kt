@@ -85,6 +85,7 @@ data class Realm(
     val adminEventsDetailsEnabled: Boolean,
     val internationalizationEnabled: Boolean,
     val supportedLocales: List<String>,
+    val defaultLocale: String = "en",
     val browserFlow: String,
     val registrationFlow: String,
     val directGrantFlow: String,
@@ -174,6 +175,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     var adminEventsDetailsEnabled: Boolean = existingRealm.adminEventsDetailsEnabled
     var internationalizationEnabled: Boolean = existingRealm.internationalizationEnabled
     var supportedLocales: List<String> = existingRealm.supportedLocales
+    var defaultLocale: String = existingRealm.defaultLocale
     var browserFlow: String = existingRealm.browserFlow
     var registrationFlow: String = existingRealm.registrationFlow
     var directGrantFlow: String = existingRealm.directGrantFlow
@@ -260,6 +262,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
         adminEventsDetailsEnabled,
         internationalizationEnabled,
         supportedLocales,
+        defaultLocale,
         browserFlow,
         registrationFlow,
         directGrantFlow,
