@@ -55,6 +55,7 @@ data class Realm(
     val maxDeltaTimeSeconds: Int,
     val failureFactor: Int,
     val requiredCredentials: List<String>,
+    val passwordPolicy: String = "",
     val otpPolicyType: String,
     val otpPolicyAlgorithm: String,
     val otpPolicyInitialCounter: Int,
@@ -142,6 +143,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     var maxDeltaTimeSeconds: Int = existingRealm.maxDeltaTimeSeconds
     var failureFactor: Int = existingRealm.failureFactor
     var requiredCredentials: List<String> = existingRealm.requiredCredentials
+    var passwordPolicy: String = existingRealm.passwordPolicy
     var otpPolicyType: String = existingRealm.otpPolicyType
     var otpPolicyAlgorithm: String = existingRealm.otpPolicyAlgorithm
     var otpPolicyInitialCounter: Int = existingRealm.otpPolicyInitialCounter
@@ -230,6 +232,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
         maxDeltaTimeSeconds,
         failureFactor,
         requiredCredentials,
+        passwordPolicy,
         otpPolicyType,
         otpPolicyAlgorithm,
         otpPolicyInitialCounter,

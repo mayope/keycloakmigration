@@ -95,4 +95,27 @@ class UpdateRealmIntegTest : AbstractIntegrationTest() {
         DeleteRealmAction("testRealm").executeIt()
     }
 
+    @Test
+    fun testUpdateRealmPasswordPolicy() {
+        AddRealmAction("testRealm", id = "testRealm").executeIt()
+
+        assertThat(client.realmById("testRealm").passwordPolicy).isEqualTo("")
+        UpdateRealmAction(
+            "testRealm",
+            passwordPolicy = mapOf("maxLength" to "40", "notemail" to "dumdidum", "regularExpression" to "pat/d")
+        ).executeIt()
+
+        assertThat(client.realmById("testRealm").passwordPolicy).contains("maxLength(40)")
+            .contains("notEmail(undefined)")
+            .contains("regexPattern(pat/d)")
+
+        UpdateRealmAction(
+            "testRealm",
+            passwordPolicy = mapOf()
+        ).executeIt()
+
+        assertThat(client.realmById("testRealm").passwordPolicy).contains("")
+
+        DeleteRealmAction("testRealm").executeIt()
+    }
 }
