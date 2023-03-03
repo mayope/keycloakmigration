@@ -54,4 +54,71 @@ class UpdateClientIntegTest : AbstractIntegrationTest() {
         val testClient = client.clientById("simpleClient", testRealm)
         assertThat(testClient.webOrigins).isEqualTo(webOrigins)
     }
+
+    @Test
+    fun testUpdateClient_frontchannelLogout() {
+        AddSimpleClientAction(testRealm, "simpleClient").executeIt()
+        val clientBefore = client.clientById("simpleClient", testRealm)
+        assertThat(clientBefore.frontchannelLogout).isFalse
+
+        UpdateClientAction(testRealm, "simpleClient", frontchannelLogout = true).executeIt()
+        val clientAfter = client.clientById("simpleClient", testRealm)
+        assertThat(clientAfter.frontchannelLogout).isTrue
+    }
+
+    @Test
+    fun testUpdateClient_consentRequired() {
+        AddSimpleClientAction(testRealm, "simpleClient").executeIt()
+        val clientBefore = client.clientById("simpleClient", testRealm)
+        assertThat(clientBefore.consentRequired).isFalse
+
+        UpdateClientAction(testRealm, "simpleClient", consentRequired = true).executeIt()
+        val clientAfter = client.clientById("simpleClient", testRealm)
+        assertThat(clientAfter.consentRequired).isTrue
+    }
+
+    @Test
+    fun testUpdateClient_alwaysDisplayInConsole() {
+        AddSimpleClientAction(testRealm, "simpleClient").executeIt()
+        val clientBefore = client.clientById("simpleClient", testRealm)
+        assertThat(clientBefore.alwaysDisplayInConsole).isFalse
+
+        UpdateClientAction(testRealm, "simpleClient", alwaysDisplayInConsole = true).executeIt()
+        val clientAfter = client.clientById("simpleClient", testRealm)
+        assertThat(clientAfter.alwaysDisplayInConsole).isTrue
+    }
+
+    @Test
+    fun testUpdateClient_notBefore() {
+        AddSimpleClientAction(testRealm, "simpleClient").executeIt()
+        val clientBefore = client.clientById("simpleClient", testRealm)
+        assertThat(clientBefore.notBefore).isEqualTo(0)
+
+        UpdateClientAction(testRealm, "simpleClient", notBefore = 1677893081).executeIt()
+        val clientAfter = client.clientById("simpleClient", testRealm)
+        assertThat(clientAfter.notBefore).isEqualTo(1677893081)
+    }
+
+    @Test
+    fun testUpdateClient_nodeReRegistrationTimeout() {
+        AddSimpleClientAction(testRealm, "simpleClient").executeIt()
+        val clientBefore = client.clientById("simpleClient", testRealm)
+        assertThat(clientBefore.nodeReRegistrationTimeout).isEqualTo(-1)
+
+        UpdateClientAction(testRealm, "simpleClient", nodeReRegistrationTimeout = 1677880000).executeIt()
+        val clientAfter = client.clientById("simpleClient", testRealm)
+        assertThat(clientAfter.nodeReRegistrationTimeout).isEqualTo(1677880000)
+    }
+
+    @Test
+    fun testUpdateClient_surrogateAuthRequired() {
+        AddSimpleClientAction(testRealm, "simpleClient").executeIt()
+        val clientBefore = client.clientById("simpleClient", testRealm)
+        assertThat(clientBefore.surrogateAuthRequired).isFalse
+
+        UpdateClientAction(testRealm, "simpleClient", surrogateAuthRequired = true).executeIt()
+        val clientAfter = client.clientById("simpleClient", testRealm)
+        assertThat(clientAfter.surrogateAuthRequired).isTrue
+    }
+
 }
