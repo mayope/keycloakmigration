@@ -17,7 +17,7 @@ internal class AddSamlGivenNameAttributeMapperAction(
         assertSamlMapperIsCreatable(client, name, identityProviderAlias, realm())
         client.addIdentityProviderMapper(addIdentityProviderMapper(), realm(), identityProviderAlias).apply {
             if (!isSuccessful()) {
-                throw KeycloakApiException(this.body().asReader().readText())
+                throw KeycloakApiException(this.body().asReader().readText(),status())
             }
         }
     }

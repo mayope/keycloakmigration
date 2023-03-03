@@ -242,7 +242,10 @@ tasks {
                 workingDir(dockerBuildWorkingDirectory)
                 commandLine(
                     "docker", "build", ".", "-t", tag, "--build-arg",
-                    "jar_file=${fatJar.outputs.files.first().name}"
+                    "jar_file=${fatJar.outputs.files.first().name}",
+                    "--label","\"org.opencontainers.image.url=https://github.com/mayope/keycloakmigration.git\"",
+                    "--label","\"org.opencontainers.image.source=https://github.com/mayope/keycloakmigration.git\"",
+                    "--label","\"org.opencontainers.image.version=$version\"",
                 )
             }
             exec {

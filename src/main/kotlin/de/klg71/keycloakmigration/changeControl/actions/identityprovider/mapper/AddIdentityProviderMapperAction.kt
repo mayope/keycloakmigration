@@ -53,7 +53,7 @@ internal class AddIdentityProviderMapperAction(
             identityProviderAlias
         ).apply {
             if (!isSuccessful()) {
-                throw KeycloakApiException(this.body().asReader().readText())
+                throw KeycloakApiException(body().asReader().readText(),status())
             }
         }
     }
