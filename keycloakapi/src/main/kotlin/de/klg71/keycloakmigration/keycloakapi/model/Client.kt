@@ -11,6 +11,7 @@ data class Client(
     val description: String?,
     val surrogateAuthRequired: Boolean,
     val enabled: Boolean,
+    val alwaysDisplayInConsole: Boolean = false,
     val clientAuthenticatorType: String,
     val redirectUris: List<String>,
     val webOrigins: List<String>,
@@ -46,6 +47,7 @@ class UpdateClientBuilder(private val existingClient: Client) {
     var description: String? = existingClient.description
     var surrogateAuthRequired: Boolean = existingClient.surrogateAuthRequired
     var enabled: Boolean = existingClient.enabled
+    var alwaysDisplayInConsole: Boolean = existingClient.alwaysDisplayInConsole
     var clientAuthenticatorType: String = existingClient.clientAuthenticatorType
     var redirectUris: List<String> = existingClient.redirectUris
     var webOrigins: List<String> = existingClient.webOrigins
@@ -79,6 +81,7 @@ class UpdateClientBuilder(private val existingClient: Client) {
         description,
         surrogateAuthRequired,
         enabled,
+        alwaysDisplayInConsole,
         clientAuthenticatorType,
         redirectUris,
         webOrigins,
