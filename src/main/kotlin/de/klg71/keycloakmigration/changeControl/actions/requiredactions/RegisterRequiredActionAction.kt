@@ -23,7 +23,7 @@ class RegisterRequiredActionAction(
                         it.body().asReader(
                             Charset.defaultCharset()
                         ).readText()
-                    } status: ${it.status()}"
+                    }"
                 )
             }
         }
