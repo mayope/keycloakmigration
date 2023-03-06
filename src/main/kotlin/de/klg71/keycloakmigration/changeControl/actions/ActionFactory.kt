@@ -22,6 +22,7 @@ import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserRea
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteClientMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AddClientScopeAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.DeleteClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignDefaultClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignOptionalClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignRoleToClientScopeAction
@@ -117,7 +118,9 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addRoleScopeMapping" -> objectMapper.readValue<AddRoleScopeMappingAction>(actionJson)
             "deleteRoleScopeMapping" -> objectMapper.readValue<DeleteRoleScopeMappingAction>(actionJson)
 
+            "registerRequiredAction" -> objectMapper.readValue<RegisterRequiredActionAction>(actionJson)
             "addClientScope" -> objectMapper.readValue<AddClientScopeAction>(actionJson)
+            "deleteClientScope" -> objectMapper.readValue<DeleteClientScopeAction>(actionJson)
             "assignDefaultClientScope" -> objectMapper.readValue<AssignDefaultClientScopeAction>(actionJson)
             "withdrawDefaultClientScope" -> objectMapper.readValue<WithdrawDefaultClientScopeAction>(actionJson)
             "assignOptionalClientScope" -> objectMapper.readValue<AssignOptionalClientScopeAction>(actionJson)
@@ -197,7 +200,6 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "updateFlow" -> objectMapper.readValue<UpdateFlowAction>(actionJson)
 
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
-            "registerRequiredAction" -> objectMapper.readValue<RegisterRequiredActionAction>(actionJson)
 
             else -> throw ParseException(
                 "Unknown Change type: $actionName"

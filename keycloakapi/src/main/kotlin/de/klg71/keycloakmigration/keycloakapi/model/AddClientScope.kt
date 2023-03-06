@@ -12,7 +12,8 @@ data class AddClientScope(
 fun addClientScope(name: String, description: String? = null, protocol: String = "openid-connect",
                    protocolMappers: List<ProtocolMapper>? = null,
                    consentScreenText: String? = null, displayOnConsentScreen: Boolean = false,
-                   guiOrder: Int? = null, includeInTokenScope: Boolean = true): AddClientScope {
+                   guiOrder: Int? = null, includeInTokenScope: Boolean = true,
+                   config: Map<String, String>? = null): AddClientScope {
     val attributes = mutableMapOf<String, String>()
     consentScreenText?.let {
         attributes["consent.screen.text"] = it
@@ -22,5 +23,8 @@ fun addClientScope(name: String, description: String? = null, protocol: String =
         attributes["gui.order"] = it.toString()
     }
     attributes["include.in.token.scope"] = includeInTokenScope.toString()
+    config?.let {
+        attributes.putAll(it)
+    }
     return AddClientScope(name, description, protocol, attributes, protocolMappers)
 }

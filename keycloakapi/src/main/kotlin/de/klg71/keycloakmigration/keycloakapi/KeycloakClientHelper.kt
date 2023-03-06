@@ -179,13 +179,16 @@ fun Response.extractLocationUUID(): UUID {
         }
 }
 
+// realm's id is located in id field or realm field.
+// only id field can't be used as a realm's id because there are cases
+// where this field is a generic uuid, for example, Keycloak 20.0.3 initial master realm
 fun KeycloakClient.realmById(id: String) =
-    realms().firstOrNull { it.id == id } ?: throw KeycloakApiException("Realm with id: $id does not exist!")
+    realms().firstOrNull { it.id == id || it.realm == id } ?: throw KeycloakApiException("Realm with id: $id does not exist!")
 
 @Suppress("TooGenericExceptionCaught")
 fun KeycloakClient.realmExistsById(id: String) =
     try {
-        realms().any { it.id == id }
+        realms().any { it.id == id || it.realm == id }
     } catch (e: Throwable) {
         // If you don't have the right permissions you will only get the realmnames back
         realmNames().map { it.realm }.contains(id)

@@ -19,7 +19,8 @@ class AddClientScopeAction(
         private val consentScreenText: String? = null,
         private val displayOnConsentScreen: Boolean = false,
         private val guiOrder: Int? = null,
-        private val includeInTokenScope: Boolean = true
+        private val includeInTokenScope: Boolean = true,
+        private val config: Map<String, String>? = null
 ) : Action(realm) {
 
     private lateinit var scopeUUID: UUID
@@ -29,7 +30,7 @@ class AddClientScopeAction(
             throw MigrationException("ClientScope with name: $name already exists in realm: ${realm()}!")
         }
         client.addClientScope(realm(), addClientScope(name, description, protocol, protocolMappers, consentScreenText,
-                displayOnConsentScreen, guiOrder, includeInTokenScope)).run {
+                displayOnConsentScreen, guiOrder, includeInTokenScope, config)).run {
             scopeUUID = extractLocationUUID()
         }
     }
