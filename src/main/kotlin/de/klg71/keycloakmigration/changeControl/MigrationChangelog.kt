@@ -110,7 +110,7 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
 
     private fun List<String>.replaceString(oldHash: String, newHash: String): List<String> {
         return map {
-            if (it == oldHash) {
+            if (it.contains(oldHash)) {
                 newHash
             } else {
                 it
