@@ -94,7 +94,18 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
         client.user(migrationUserId, realm).run {
             userAttributes().run {
                 toMutableMap().apply {
-                    put(migrationAttributeName, migrations().replaceString(oldHash, newHash))
+                    put(migrationAttributeName, parse(migrationHashAttributes())
+                            .map {
+                                if (it.hash == oldHash) {
+                                    MigrationEntity(it.version, it.order, parse(newHash).hash)
+                                } else {
+                                    it
+                                }
+                            }
+                            .map {
+                                formatHashV2(it.order, it.hash)
+                            }
+                    )
                 }
             }.let {
                 client.updateUser(
@@ -104,16 +115,6 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
                         lastName, null
                     ), realm
                 )
-            }
-        }
-    }
-
-    private fun List<String>.replaceString(oldHash: String, newHash: String): List<String> {
-        return map {
-            if (it.contains(oldHash)) {
-                newHash
-            } else {
-                it
             }
         }
     }
@@ -148,14 +149,18 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
 
     private fun parse(hashAttributes: List<String>): List<MigrationEntity> {
         return hashAttributes.map {
-            val (version, order, hash) = it.split("/")
-            if (version != CURRENT_CHANGELOG_VERSION) {
-                throw MigrationException(
-                    "Unknown changelog version: $version detected, expected version: $CURRENT_CHANGELOG_VERSION."
-                )
-            }
-            MigrationEntity(version, order.toInt(), hash)
+            parse(it)
         }
+    }
+
+    private fun parse(hashAttribute: String): MigrationEntity {
+        val (version, order, hash) = hashAttribute.split("/")
+        if (version != CURRENT_CHANGELOG_VERSION) {
+            throw MigrationException(
+                    "Unknown changelog version: $version detected, expected version: $CURRENT_CHANGELOG_VERSION."
+            )
+        }
+        return MigrationEntity(version, order.toInt(), hash)
     }
 
     private data class MigrationEntity(val version: String, val order: Int, val hash: String)
