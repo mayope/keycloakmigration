@@ -22,7 +22,6 @@ import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserRea
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteClientMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AddClientScopeAction
-import de.klg71.keycloakmigration.changeControl.actions.clientscope.UpdateClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.DeleteClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignDefaultClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignOptionalClientScopeAction
@@ -121,7 +120,6 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
 
             "registerRequiredAction" -> objectMapper.readValue<RegisterRequiredActionAction>(actionJson)
             "addClientScope" -> objectMapper.readValue<AddClientScopeAction>(actionJson)
-            "updateClientScope" -> objectMapper.readValue<UpdateClientScopeAction>(actionJson)
             "deleteClientScope" -> objectMapper.readValue<DeleteClientScopeAction>(actionJson)
             "assignDefaultClientScope" -> objectMapper.readValue<AssignDefaultClientScopeAction>(actionJson)
             "withdrawDefaultClientScope" -> objectMapper.readValue<WithdrawDefaultClientScopeAction>(actionJson)

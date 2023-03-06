@@ -20,6 +20,7 @@ Adds a clientScope to keycloak, fails if a clientScope with that name already ex
 - displayOnConsentScreen: Boolean, optional, default = false
 - guiOrder: Int, optional, default = null
 - includeInTokenScope: Boolean, optional, default = true
+- config: Map<String,String>, optional, default = no update
 
 #### subclass ProtocolMapper
 - name: String, mandatory
