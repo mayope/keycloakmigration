@@ -4,16 +4,13 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.clientScopeByName
 import de.klg71.keycloakmigration.keycloakapi.existsClientScope
-import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
-import de.klg71.keycloakmigration.keycloakapi.model.ProtocolMapper
 import de.klg71.keycloakmigration.keycloakapi.model.addClientScope
-import de.klg71.keycloakmigration.keycloakapi.model.updateClientScope
 
 @Suppress("LongParameterList")
 class DeleteClientScopeAction(
-        realm: String?,
-        private val name: String
+    realm: String?,
+    private val name: String
 ) : Action(realm) {
 
     private lateinit var existingScope: ClientScope
@@ -31,8 +28,12 @@ class DeleteClientScopeAction(
 
     override fun undo() {
         if (!client.existsClientScope(name, realm())) {
-            client.addClientScope(realm(), addClientScope(existingScope.name, existingScope.description,
-                    existingScope.protocol, existingScope.protocolMappers, config=existingScope.attributes))
+            client.addClientScope(
+                realm(), addClientScope(
+                    existingScope.name, existingScope.description,
+                    existingScope.protocol, existingScope.protocolMappers, config = existingScope.attributes
+                )
+            )
         }
     }
 
