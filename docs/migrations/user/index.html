@@ -4,13 +4,31 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="User Migrations#All migrations referring to the user resource.
-addUser#Adds a user to keycloak. Fails if a user with that name already exists.
-Parameters# realm: String, optional name: String, not optional enabled: Boolean, default=true emailVerified: Boolean, default=true attributes: Map with Layout Map&lt;String, List&lt; String &raquo;, default=empty groups: List of groupnames to attach, List&lt; String &gt;, optional, default=empty realmRoles: List of realmroles to attach, List&lt; String &gt;, optional, default=empty clientRoles: List of ClientRoles to attach, List&lt; ClientRole &gt;, optional, default=empty email: String, optional, default=&rdquo;&rdquo; firstName: String, optional, default=&rdquo;&rdquo; lastName: String, optional, default=&rdquo;&rdquo;  ClientRole Parameters:">
+<meta name="description" content="User Migrations
+#
+
+All migrations referring to the user resource.
+addUser
+#
+
+Adds a user to keycloak. Fails if a user with that name already exists.
+Parameters
+#
+
+ realm: String, optional name: String, not optional enabled: Boolean, default=true emailVerified: Boolean, default=true attributes: Map with Layout Map&lt;String, List&lt; String &raquo;, default=empty groups: List of groupnames to attach, List&lt; String &gt;, optional, default=empty realmRoles: List of realmroles to attach, List&lt; String &gt;, optional, default=empty clientRoles: List of ClientRoles to attach, List&lt; ClientRole &gt;, optional, default=empty email: String, optional, default=&rdquo;&rdquo; firstName: String, optional, default=&rdquo;&rdquo; lastName: String, optional, default=&rdquo;&rdquo;  ClientRole Parameters:">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="User Migrations" />
-<meta property="og:description" content="User Migrations#All migrations referring to the user resource.
-addUser#Adds a user to keycloak. Fails if a user with that name already exists.
-Parameters# realm: String, optional name: String, not optional enabled: Boolean, default=true emailVerified: Boolean, default=true attributes: Map with Layout Map&lt;String, List&lt; String &raquo;, default=empty groups: List of groupnames to attach, List&lt; String &gt;, optional, default=empty realmRoles: List of realmroles to attach, List&lt; String &gt;, optional, default=empty clientRoles: List of ClientRoles to attach, List&lt; ClientRole &gt;, optional, default=empty email: String, optional, default=&rdquo;&rdquo; firstName: String, optional, default=&rdquo;&rdquo; lastName: String, optional, default=&rdquo;&rdquo;  ClientRole Parameters:" />
+<meta property="og:description" content="User Migrations
+#
+
+All migrations referring to the user resource.
+addUser
+#
+
+Adds a user to keycloak. Fails if a user with that name already exists.
+Parameters
+#
+
+ realm: String, optional name: String, not optional enabled: Boolean, default=true emailVerified: Boolean, default=true attributes: Map with Layout Map&lt;String, List&lt; String &raquo;, default=empty groups: List of groupnames to attach, List&lt; String &gt;, optional, default=empty realmRoles: List of realmroles to attach, List&lt; String &gt;, optional, default=empty clientRoles: List of ClientRoles to attach, List&lt; ClientRole &gt;, optional, default=empty email: String, optional, default=&rdquo;&rdquo; firstName: String, optional, default=&rdquo;&rdquo; lastName: String, optional, default=&rdquo;&rdquo;  ClientRole Parameters:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mayope.github.io/keycloakmigration/migrations/user/" />
 <meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
@@ -498,6 +516,7 @@ https://github.com/alex-shpak/hugo-book
 </h3>
 <ul>
 <li>realm: String, optional</li>
+<li>clientId: String, optional</li>
 <li>user: String, not optional</li>
 <li>role: String, not optional</li>
 </ul>
