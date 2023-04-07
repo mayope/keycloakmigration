@@ -238,6 +238,7 @@ Assigns a role to the given user. Fails if the user or the role doesn't exist.
 - realm: String, optional
 - user: String, not optional
 - role: String, not optional
+- clientId: String, optional, if not set realm role is assigned
 
 ### Example
 ```yaml
