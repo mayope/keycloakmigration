@@ -36,31 +36,31 @@ dependencies {
     implementation(kotlin("stdlib"))
     api(project("keycloakapi"))
 
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.2")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.2")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
     implementation("io.insert-koin:koin-core:3.2.2")
-    implementation("commons-codec:commons-codec:1.11")
+    implementation("commons-codec:commons-codec:1.15")
     implementation("com.xenomachina:kotlin-argparser:2.0.7")
 
     // Commons
-    implementation("org.apache.commons:commons-text:1.8")
-    implementation("org.apache.commons:commons-lang3:3.9")
+    implementation("org.apache.commons:commons-text:1.10.0")
+    implementation("org.apache.commons:commons-lang3:3.12.0")
 
     // Logging
-    implementation("org.slf4j:slf4j-api:1.7.30")
-    implementation("org.apache.logging.log4j:log4j-core:2.17.1")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.17.1")
+    implementation("org.slf4j:slf4j-api:1.7.36")
+    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.20.0")
 
-    testImplementation("io.github.openfeign:feign-slf4j:11.8")
+    testImplementation("io.github.openfeign:feign-slf4j:12.3")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-    testImplementation("io.mockk:mockk:1.12.1")
+    testImplementation("io.mockk:mockk:1.9")
 
-    testImplementation("org.assertj:assertj-core:3.11.1")
+    testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("io.insert-koin:koin-test:3.2.2")
-    testImplementation("org.assertj:assertj-core:3.11.1")
-    testImplementation("com.github.tomakehurst:wiremock-jre8:2.27.0")
+    testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
 }
 
 

@@ -12,35 +12,35 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
-    implementation("org.slf4j:slf4j-api:1.7.30")
-    api("io.github.openfeign:feign-core:11.8")
-    implementation("io.github.openfeign:feign-jackson:11.8")
-    implementation("io.github.openfeign:feign-httpclient:11.8")
+    implementation("org.slf4j:slf4j-api:1.7.36")
+    api("io.github.openfeign:feign-core:12.3")
+    implementation("io.github.openfeign:feign-jackson:12.3")
+    implementation("io.github.openfeign:feign-httpclient:12.3")
     implementation("io.github.openfeign.form:feign-form:3.8.0")
     implementation("io.github.resilience4j:resilience4j-feign:1.5.0")
     implementation("io.github.resilience4j:resilience4j-micrometer:1.5.0")
 
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.2")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.2")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
     implementation("io.insert-koin:koin-core:3.2.2")
-    implementation("commons-codec:commons-codec:1.11")
+    implementation("commons-codec:commons-codec:1.15")
     implementation("com.xenomachina:kotlin-argparser:2.0.7")
 
-    implementation("org.apache.commons:commons-text:1.8")
-    implementation("org.apache.commons:commons-lang3:3.9")
+    implementation("org.apache.commons:commons-text:1.10.0")
+    implementation("org.apache.commons:commons-lang3:3.12.0")
 
-    testImplementation("org.slf4j:slf4j-api:1.7.30")
-    testImplementation("org.apache.logging.log4j:log4j-core:2.17.1")
-    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.17.1")
+    testImplementation("org.slf4j:slf4j-api:1.7.36")
+    testImplementation("org.apache.logging.log4j:log4j-core:2.20.0")
+    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.20.0")
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
     testImplementation("io.mockk:mockk:1.9")
-    testImplementation("org.assertj:assertj-core:3.11.1")
+    testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("io.insert-koin:koin-test:3.2.2")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0")
-    testImplementation("org.assertj:assertj-core:3.11.1")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
+    testImplementation("org.assertj:assertj-core:3.24.2")
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
