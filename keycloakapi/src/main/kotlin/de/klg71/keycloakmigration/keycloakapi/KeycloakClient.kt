@@ -78,6 +78,12 @@ interface KeycloakClient {
     fun searchUser(@Param("search") search: String,
         @Param("realm") realm: String,
         @Param("max") max: Int = 100): List<User>
+    @RequestLine("GET /admin/realms/{realm}/users?q={query}&max={max}&from={from}")
+    fun searchUserByQuery(@Param("query") query: String,
+        @Param("realm") realm: String,
+        @Param("from") from: Int = 0,
+        @Param("max") max: Int = 100): List<User>
+
 
     @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}")
     fun deleteUser(@Param("user-id") userId: UUID, @Param("realm") realm: String)

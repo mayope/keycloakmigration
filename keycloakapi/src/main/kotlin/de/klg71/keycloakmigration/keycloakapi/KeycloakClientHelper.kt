@@ -96,10 +96,7 @@ fun KeycloakClient.existsGroup(name: String, realm: String): Boolean =
 fun KeycloakClient.existsUser(name: String, realm: String): Boolean =
     searchUser(name, realm)
         .run {
-            if (isEmpty()) {
-                return false
-            }
-            return true
+            return !isEmpty()
         }
 
 @Suppress("ReturnCount")
