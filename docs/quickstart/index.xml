@@ -53,7 +53,7 @@ default: /migration/keycloak-changelog.yml
 default: admin
   ADMIN_PASSWORD password of user to execute migration
 default: admin
-  ADMIN_CLIENT client to use for admin login</description>
+  ADMIN_TOTP totp of user to execute migration</description>
     </item>
     
   </channel>
