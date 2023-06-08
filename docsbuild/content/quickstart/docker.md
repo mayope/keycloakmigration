@@ -24,7 +24,11 @@ docker run --env BASEURL=http://localhost:8080 klg71/keycloakmigration
 - `ADMIN_PASSWORD` password of user to execute migration
 
    default: admin
-   
+
+- `ADMIN_TOTP` totp of user to execute migration
+
+   default: unset
+
 - `ADMIN_CLIENT` client to use for admin login
 
    default: admin-cli
