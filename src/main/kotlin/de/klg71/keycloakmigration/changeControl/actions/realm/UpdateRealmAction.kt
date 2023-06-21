@@ -208,6 +208,7 @@ class UpdateRealmAction(
         "hashiterations" -> "hashIterations"
         "notrecentlyused" -> "passwordHistory"
         "passwordhistory" -> "passwordHistory"
+        "digits" -> "digits"
         "minlength" -> "length"
         "maxlength" -> "maxLength"
         "uppercasecharacters" -> "upperCase"
