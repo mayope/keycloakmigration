@@ -91,7 +91,7 @@ fun KeycloakClient.existsGroup(name: String, realm: String): Boolean =
             find { it.name == name }?.let {
                 return true
             }
-            return true
+            return false
         }
 
 fun KeycloakClient.existsUser(name: String, realm: String): Boolean =
