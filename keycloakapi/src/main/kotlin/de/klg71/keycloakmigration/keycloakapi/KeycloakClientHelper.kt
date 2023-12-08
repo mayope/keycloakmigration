@@ -75,9 +75,10 @@ fun KeycloakClient.groupByName(name: String, realm: String) =
             if (isEmpty()) {
                 throw KeycloakApiException("Group with name: $name does not exist in realm: $realm!")
             }
-            searchByName(name) ?: throw KeycloakApiException("Group with name: $name does not exist in $realm")
-        }.run {
-            group(realm, id)
+            first()
+        }
+        .let {
+            group(realm, it.id)
         }
 
 @Suppress("ReturnCount")
@@ -87,8 +88,8 @@ fun KeycloakClient.existsGroup(name: String, realm: String): Boolean =
             if (isEmpty()) {
                 return false
             }
-            if (searchByName(name) == null) {
-                return false
+            find { it.name == name }?.let {
+                return true
             }
             return true
         }
@@ -125,10 +126,6 @@ fun KeycloakClient.existsClientRole(name: String, realm: String, clientId: Strin
     clientRoles(realm, clientUUID(clientId, realm)).any {
         it.name == name
     }
-
-private fun List<GroupListItem>.searchByName(name: String): GroupListItem? {
-    return firstOrNull { it.name == name } ?: mapNotNull { it.subGroups.searchByName(name) }.firstOrNull()
-}
 
 fun KeycloakClient.clientRoleByName(name: String, clientId: String, realm: String): Role =
     clientById(clientId, realm)
