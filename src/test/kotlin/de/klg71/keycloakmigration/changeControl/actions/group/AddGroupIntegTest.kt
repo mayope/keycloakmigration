@@ -18,7 +18,7 @@ class AddGroupIntegTest : AbstractIntegrationTest() {
     fun testAddGroup() {
         AddGroupAction(testRealm, "integrationTest").executeIt()
 
-        GroupListItem(UUID.randomUUID(), "integrationTest", "integrationTest", listOf()).let {
+        GroupListItem(UUID.randomUUID(), "integrationTest", "integrationTest", 1).let {
             assertThat(client.searchGroup("integrationTest", testRealm)).hasSize(1)
                 .usingElementComparatorOnFields("name").contains(it)
         }
