@@ -5,23 +5,21 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Required Actions#All migrations referring to the Required Actions resource in Authentication.
-RegisterRequiredAction#Registers a required action
-Parameters# realm: String, optional name: String, mandatory providerId: String, mandatory  Example#id:register-required-actionauthor:klg71realm:integ-testchanges:- registerRequiredAction:providerId:verify-emailname:VerifyEmailUpdateRequiredAction#Updates a required action. Only updates provided values. For an update of the required action alias use the oldAlias as alias and the newAlias in newAlias.
+UpdateRequiredAction#Updates a required action. Only updates provided values. For an update of the required action alias use the oldAlias as alias and the newAlias in newAlias.
 Parameters# realm: String, optional providerId: String, optional, default = no update, alias: String, mandatory newAlias: String, optional, default = no update name: String, optional, default = no update config: Map&lt;String,String&gt;, optional, default = no update defaultAction: Boolean, optional, default = no update enabled: Boolean, optional, default = no update priority: Boolean, optional, default = no update  Example#id:add-required-actionauthor:klg71realm:integ-testchanges:- registerRequiredAction:providerId:verify-emailname:VerifyEmail- updateRequiredAction:providerId:verify-emailalias:VERIFY_EMAILname:VerifyEmail2">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Required Actions" />
 <meta property="og:description" content="Required Actions#All migrations referring to the Required Actions resource in Authentication.
-RegisterRequiredAction#Registers a required action
-Parameters# realm: String, optional name: String, mandatory providerId: String, mandatory  Example#id:register-required-actionauthor:klg71realm:integ-testchanges:- registerRequiredAction:providerId:verify-emailname:VerifyEmailUpdateRequiredAction#Updates a required action. Only updates provided values. For an update of the required action alias use the oldAlias as alias and the newAlias in newAlias.
+UpdateRequiredAction#Updates a required action. Only updates provided values. For an update of the required action alias use the oldAlias as alias and the newAlias in newAlias.
 Parameters# realm: String, optional providerId: String, optional, default = no update, alias: String, mandatory newAlias: String, optional, default = no update name: String, optional, default = no update config: Map&lt;String,String&gt;, optional, default = no update defaultAction: Boolean, optional, default = no update enabled: Boolean, optional, default = no update priority: Boolean, optional, default = no update  Example#id:add-required-actionauthor:klg71realm:integ-testchanges:- registerRequiredAction:providerId:verify-emailname:VerifyEmail- updateRequiredAction:providerId:verify-emailalias:VERIFY_EMAILname:VerifyEmail2" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mayope.github.io/keycloakmigration/migrations/requiredactions/" />
 <meta property="article:published_time" content="2021-07-08T12:22:20+02:00" />
-<meta property="article:modified_time" content="2023-02-20T10:08:53+01:00" />
+<meta property="article:modified_time" content="2024-05-03T23:39:25+02:00" />
 <title>Required Actions | Keycloakmigration</title>
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.a8f172e9514e766ee7562278ee2929cc668544eb977d0ee52069556d89261049.css" integrity="sha256-qPFy6VFOdm7nViJ47ikpzGaFROuXfQ7lIGlVbYkmEEk=">
-<script defer src="/keycloakmigration/en.search.min.304e4e935dfcab8aeae691f0290c89d8724c4af08b8015de4adc4c6a3f464a42.js" integrity="sha256-ME5Ok138q4rq5pHwKQyJ2HJMSvCLgBXeStxMaj9GSkI="></script>
+<script defer src="/keycloakmigration/en.search.min.2acce2d47a24ac154856615d3350eb789a8473b61f38801612e6570441cbc05b.js" integrity="sha256-Kszi1HokrBVIVmFdM1DreJqEc7YfOIAWEuZXBEHLwFs="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -145,16 +143,10 @@ https://github.com/alex-shpak/hugo-book
       
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#registerrequiredaction">RegisterRequiredAction</a>
+    <li><a href="#updaterequiredaction">UpdateRequiredAction</a>
       <ul>
         <li><a href="#parameters">Parameters</a></li>
         <li><a href="#example">Example</a></li>
-      </ul>
-    </li>
-    <li><a href="#updaterequiredaction">UpdateRequiredAction</a>
-      <ul>
-        <li><a href="#parameters-1">Parameters</a></li>
-        <li><a href="#example-1">Example</a></li>
       </ul>
     </li>
   </ul>
@@ -173,41 +165,16 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#required-actions">#</a>
 </h1>
 <p>All migrations referring to the Required Actions resource in Authentication.</p>
-<h2 id="registerrequiredaction">
-  RegisterRequiredAction
-  <a class="anchor" href="#registerrequiredaction">#</a>
-</h2>
-<p>Registers a required action</p>
-<h3 id="parameters">
-  Parameters
-  <a class="anchor" href="#parameters">#</a>
-</h3>
-<ul>
-<li>realm: String, optional</li>
-<li>name: String, mandatory</li>
-<li>providerId: String, mandatory</li>
-</ul>
-<h3 id="example">
-  Example
-  <a class="anchor" href="#example">#</a>
-</h3>
-<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>register-required-action<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">  </span>- <span style="color:#a2f;font-weight:bold">registerRequiredAction</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">providerId</span>:<span style="color:#bbb"> </span>verify-email<span style="color:#bbb">
-</span><span style="color:#bbb">      </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>Verify<span style="color:#bbb"> </span>Email<span style="color:#bbb">
-</span></code></pre></div><h2 id="updaterequiredaction">
+<h2 id="updaterequiredaction">
   UpdateRequiredAction
   <a class="anchor" href="#updaterequiredaction">#</a>
 </h2>
 <p>Updates a required action.
 Only updates provided values.
 For an update of the required action <code>alias</code> use the oldAlias as <code>alias</code> and the newAlias in <code>newAlias</code>.</p>
-<h3 id="parameters-1">
+<h3 id="parameters">
   Parameters
-  <a class="anchor" href="#parameters-1">#</a>
+  <a class="anchor" href="#parameters">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
@@ -220,9 +187,9 @@ For an update of the required action <code>alias</code> use the oldAlias as <cod
 <li>enabled: Boolean, optional, default = no update</li>
 <li>priority: Boolean, optional, default = no update</li>
 </ul>
-<h3 id="example-1">
+<h3 id="example">
   Example
-  <a class="anchor" href="#example-1">#</a>
+  <a class="anchor" href="#example">#</a>
 </h3>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-required-action<span style="color:#bbb">
 </span><span style="color:#bbb"></span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
@@ -269,16 +236,10 @@ For an update of the required action <code>alias</code> use the oldAlias as <cod
       
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#registerrequiredaction">RegisterRequiredAction</a>
+    <li><a href="#updaterequiredaction">UpdateRequiredAction</a>
       <ul>
         <li><a href="#parameters">Parameters</a></li>
         <li><a href="#example">Example</a></li>
-      </ul>
-    </li>
-    <li><a href="#updaterequiredaction">UpdateRequiredAction</a>
-      <ul>
-        <li><a href="#parameters-1">Parameters</a></li>
-        <li><a href="#example-1">Example</a></li>
       </ul>
     </li>
   </ul>
