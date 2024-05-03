@@ -17,4 +17,4 @@ changes:
         - requirement: ALTERNATIVE
           providerId: idp-create-user-if-unique
         - requirement: REQUIRED
-          providerId: console-username-password
+          providerId: http-basic-authenticator

@@ -8,25 +8,6 @@ permalink: /migrations/requiredactions/
 # Required Actions
 All migrations referring to the Required Actions resource in Authentication.
 
-## RegisterRequiredAction
-Registers a required action
-
-### Parameters
-- realm: String, optional
-- name: String, mandatory
-- providerId: String, mandatory
-
-### Example
-```yaml
-id: register-required-action
-author: klg71
-realm: integ-test
-changes:
-  - registerRequiredAction:
-      providerId: verify-email
-      name: Verify Email
-```
-
 ## UpdateRequiredAction
 Updates a required action.
 Only updates provided values.

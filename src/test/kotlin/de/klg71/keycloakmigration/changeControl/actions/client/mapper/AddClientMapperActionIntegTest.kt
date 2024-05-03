@@ -19,6 +19,7 @@ class AddClientMapperActionIntegTest : AbstractIntegrationTest() {
         "id.token.claim" to "true",
         "jsonType.label" to "String",
         "user.attribute" to "UserModel.getEmail()",
+        "introspection.token.claim" to "true",
         "userinfo.token.claim" to "true"
     )
     val mapperName = "testMapper"

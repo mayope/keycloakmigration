@@ -18,6 +18,7 @@ class AddClientScopeMapperActionIntegTest : AbstractIntegrationTest() {
         "userinfo.token.claim" to "true",
         "user.attribute" to "title",
         "id.token.claim" to "false",
+        "introspection.token.claim" to "true",
         "access.token.claim" to "true",
         "claim.name" to "title",
         "jsonType.label" to "String"

@@ -1,7 +1,7 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import java.util.*
+import java.util.UUID
 
 data class IdentityProviderItem(val alias: String, val displayName: String? = null, val internalId: UUID)
 
@@ -11,6 +11,21 @@ data class IdentityProviderMapperItem(
     val identityProviderAlias: String,
     val identityProviderMapper: String,
     val config: Map<String, String>
+)
+
+
+data class RealmAttribute(
+    val name: String,
+    val displayName: String?,
+    val validations: Map<String, Map<String, Int>>,
+    val permissions: Map<String, List<String>>,
+    val multivalued: Boolean
+)
+
+data class RealmProfile(
+    val attributes: List<RealmAttribute>,
+    val groups: List<Map<String, String>>,
+    var unmanagedAttributePolicy: String? = null
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -92,13 +107,17 @@ data class Realm(
     val resetCredentialsFlow: String,
     val clientAuthenticationFlow: String,
     val dockerAuthenticationFlow: String,
+    val firstBrokerLoginFlow: String,
     val attributes: Map<String, String>,
     val userManagedAccessAllowed: Boolean,
     val accountTheme: String? = null,
     val adminTheme: String? = null,
     val emailTheme: String? = null,
     val loginTheme: String? = null,
-    val requiredActions: List<RequiredActionProviderItem>? = null
+    val requiredActions: List<RequiredActionProviderItem>? = null,
+    val upConfig: RealmProfile? = null,
+    val clientProfiles:Map<String,List<String>> = mapOf("profiles" to emptyList()),
+    val clientPolicies:Map<String,List<String>> = mapOf("policies" to emptyList()),
 )
 
 
@@ -182,6 +201,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     var resetCredentialsFlow: String = existingRealm.resetCredentialsFlow
     var clientAuthenticationFlow: String = existingRealm.clientAuthenticationFlow
     var dockerAuthenticationFlow: String = existingRealm.dockerAuthenticationFlow
+    var firstBrokerLoginFlow: String = existingRealm.firstBrokerLoginFlow
     var attributes: Map<String, String> = existingRealm.attributes
     var userManagedAccessAllowed: Boolean = existingRealm.userManagedAccessAllowed
     var accountTheme: String? = existingRealm.accountTheme
@@ -269,6 +289,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
         resetCredentialsFlow,
         clientAuthenticationFlow,
         dockerAuthenticationFlow,
+        firstBrokerLoginFlow,
         attributes,
         userManagedAccessAllowed,
         accountTheme,

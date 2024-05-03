@@ -58,7 +58,6 @@ import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
-import de.klg71.keycloakmigration.changeControl.actions.requiredactions.RegisterRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.requiredactions.UpdateRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
@@ -118,7 +117,6 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addRoleScopeMapping" -> objectMapper.readValue<AddRoleScopeMappingAction>(actionJson)
             "deleteRoleScopeMapping" -> objectMapper.readValue<DeleteRoleScopeMappingAction>(actionJson)
 
-            "registerRequiredAction" -> objectMapper.readValue<RegisterRequiredActionAction>(actionJson)
             "addClientScope" -> objectMapper.readValue<AddClientScopeAction>(actionJson)
             "deleteClientScope" -> objectMapper.readValue<DeleteClientScopeAction>(actionJson)
             "assignDefaultClientScope" -> objectMapper.readValue<AssignDefaultClientScopeAction>(actionJson)

@@ -8,6 +8,3 @@ data class RequiredActionProviderItem(
         val name: String,
         val priority: Int?,
         val providerId: String)
-
-data class RegisterRequiredActionRequest(val providerId: String,
-                                          val name: String)

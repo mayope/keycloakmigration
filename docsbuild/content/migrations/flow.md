@@ -29,7 +29,6 @@ Adds an authentication flow.
 #### Known Flow providers on Release (09.04.2021)
 - no-cookie-redirect,Browser Redirect/Refresh,Perform a 302 redirect to get user agent's current URI on authenticate path with an auth_session_id query parameter.  This is for client's that do not support cookies.
 - auth-cookie,Cookie,Validates the SSO cookie set by the auth server.
-- console-username-password,Username Password Challenge,Proprietary challenge protocol for CLI clients that queries for username password
 - reset-credentials-choose-user,Choose User,Choose a user to reset credentials for
 - direct-grant-validate-password,Password,Validates the password supplied as a 'password' form parameter in direct grant request
 - webauthn-authenticator,WebAuthn Authenticator,Authenticator for WebAuthn. Usually used for WebAuthn two-factor authentication

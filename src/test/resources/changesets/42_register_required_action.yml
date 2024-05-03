@@ -2,9 +2,6 @@ id: register-required-action
 author: klg71
 realm: integ-test
 changes:
-  - registerRequiredAction:
-      name: "Webauthn Register"
-      providerId: "webauthn-register"
   - updateRequiredAction:
       alias: "webauthn-register"
       defaultAction: true

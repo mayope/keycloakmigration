@@ -4,6 +4,9 @@ realm: integ-test
 changes:
   - addRealm:
       name: integ-test
+  - updateRealm:
+      id: integ-test
+      unmanagedAttributePolicy: "ADMIN_EDIT"
   - addUser:
       name: test
       enabled: true

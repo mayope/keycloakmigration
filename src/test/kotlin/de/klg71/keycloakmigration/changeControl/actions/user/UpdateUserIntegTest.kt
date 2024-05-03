@@ -19,10 +19,10 @@ class UpdateUserIntegTest : AbstractIntegrationTest() {
     @Test
     fun testUpdateUser() {
         AddUserAction(testRealm, "testIntegration").executeIt()
-        UpdateUserAction(testRealm, "testIntegration", email = "testemail").executeIt()
+        UpdateUserAction(testRealm, "testIntegration", email = "test@mayope.net").executeIt()
 
         client.userByName("testIntegration", testRealm).let {
-            assertThat(it.email).isEqualTo("testemail")
+            assertThat(it.email).isEqualTo("test@mayope.net")
         }
 
     }
@@ -30,7 +30,7 @@ class UpdateUserIntegTest : AbstractIntegrationTest() {
     @Test
     fun testUpdateUser_userDoesNotExist() {
         assertThatThrownBy {
-            UpdateUserAction(testRealm, "testIntegration", email = "testEmail").executeIt()
+            UpdateUserAction(testRealm, "testIntegration", email = "test@mayope.net").executeIt()
         }.isInstanceOf(MigrationException::class.java)
             .hasMessage("User with name: testIntegration does not exist in realm: ${testRealm}!")
 

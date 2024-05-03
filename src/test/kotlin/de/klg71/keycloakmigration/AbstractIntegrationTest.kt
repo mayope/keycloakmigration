@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration
 
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
 import feign.slf4j.Slf4jLogger
 import org.junit.After
 import org.junit.Before
@@ -44,6 +45,7 @@ abstract class AbstractIntegrationTest : KoinComponent {
     @Before
     fun setup() {
         AddRealmAction(testRealm).executeIt()
+        UpdateRealmAction(testRealm, unmanagedAttributePolicy = "ENABLED").executeIt()
     }
 
     @After

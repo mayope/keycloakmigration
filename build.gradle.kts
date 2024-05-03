@@ -69,7 +69,7 @@ repositories {
 }
 
 tasks {
-    val keycloakVersion = "18.0.2"
+    val keycloakVersion = "24.0.2"
 
     named("build") {
         dependsOn("buildDocker", ":docsbuild:buildDocs")
@@ -154,7 +154,7 @@ tasks {
     register("execWindowsKeycloak") {
         doLast {
             ProcessBuilder(
-                "cmd", "/c", "kc.bat", "start-dev", "--http-port=18080", "--hostname-strict=false","--http-relative-path=/auth", ">",
+                "cmd", "/c", "kc.bat", "start-dev", "--http-port=18080", "--hostname-strict=false","--http-relative-path=/auth","--log-level=info", ">",
                 "output.txt"
             ).run {
                 directory(File("keycloak/keycloak-$keycloakVersion/bin"))

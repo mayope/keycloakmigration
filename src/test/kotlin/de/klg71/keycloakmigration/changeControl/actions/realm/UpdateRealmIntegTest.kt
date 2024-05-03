@@ -102,7 +102,7 @@ class UpdateRealmIntegTest : AbstractIntegrationTest() {
         assertThat(client.realmById("testRealm").passwordPolicy).isEqualTo("")
         UpdateRealmAction(
             "testRealm",
-            passwordPolicy = mapOf("maxLength" to "40", "notemail" to "dumdidum", "regularExpression" to "pat/d")
+            passwordPolicy = mapOf("maxLength" to "40", "notemail" to "undefined", "regularExpression" to "pat/d")
         ).executeIt()
 
         assertThat(client.realmById("testRealm").passwordPolicy).contains("maxLength(40)")

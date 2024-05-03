@@ -32,7 +32,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
-import de.klg71.keycloakmigration.keycloakapi.model.RegisterRequiredActionRequest
+import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
 import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
 import de.klg71.keycloakmigration.keycloakapi.model.Role
@@ -60,6 +60,9 @@ data class RealmName(val realm: String)
 interface KeycloakClient {
     @RequestLine("GET /admin/realms")
     fun realms(): List<Realm>
+
+    @RequestLine("GET /admin/realms/{realm}/users/profile")
+    fun realmUserProfile(@Param("realm") realm: String): RealmProfile
 
     @RequestLine("GET /admin/realms")
     fun realmNames(): List<RealmName>
@@ -405,7 +408,7 @@ interface KeycloakClient {
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addRealm(addRealm: AddRealm)
 
-    @RequestLine("PUT /admin/realms/{id}")
+    @RequestLine("PUT /admin/realms/{id}/ui-ext")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun updateRealm(@Param("id") realmId: String, realm: Realm)
 
@@ -553,11 +556,6 @@ interface KeycloakClient {
     fun updateRequiredAction(@Param("realm") realm: String,
         @Param("alias") alias: String,
         requiredActionProviderItem: RequiredActionProviderItem): Response
-
-    @Headers("Content-Type: application/json; charset=utf-8")
-    @RequestLine("POST /admin/realms/{realm}/authentication/register-required-action")
-    fun registerRequiredAction(@Param("realm") realm: String,
-        requiredActionRequest: RegisterRequiredActionRequest): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("DELETE /admin/realms/{realm}/authentication/required-actions/{alias}")
