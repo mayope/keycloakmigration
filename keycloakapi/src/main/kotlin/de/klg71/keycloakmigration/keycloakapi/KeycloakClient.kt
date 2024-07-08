@@ -424,6 +424,10 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/groups/{group-id}/role-mappings/realm/composite")
     fun groupRoles(@Param("realm") realm: String, @Param("group-id") id: UUID): List<RoleListItem>
 
+    @RequestLine("GET /admin/realms/{realm}/groups/{group-id}/role-mappings/clients/{client-id}/composite")
+    fun groupClientRoles(@Param("realm") realm: String, @Param("group-id") id: UUID,
+         @Param("client-id") clientId: UUID): List<RoleListItem>
+
     @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/scope-mappings/realm")
     fun realmRoleScopeMappingsOfClient(@Param("realm") realm: String, @Param("client-id") id: UUID): List<RoleListItem>
 
