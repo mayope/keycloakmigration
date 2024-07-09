@@ -45,7 +45,12 @@ abstract class AbstractIntegrationTest : KoinComponent {
     @Before
     fun setup() {
         AddRealmAction(testRealm).executeIt()
-        UpdateRealmAction(testRealm, unmanagedAttributePolicy = "ENABLED").executeIt()
+        try {
+            UpdateRealmAction(testRealm, unmanagedAttributePolicy = "ENABLED").executeIt()
+        } catch (e: Exception) {
+            println("Not needed for Keycloak <24, ignore this exception")
+            println("Could not update realm for unmanaged attributes: ${e.message}")
+        }
     }
 
     @After

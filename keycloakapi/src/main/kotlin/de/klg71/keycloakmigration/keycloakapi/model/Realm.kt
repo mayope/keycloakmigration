@@ -107,7 +107,7 @@ data class Realm(
     val resetCredentialsFlow: String,
     val clientAuthenticationFlow: String,
     val dockerAuthenticationFlow: String,
-    val firstBrokerLoginFlow: String,
+    val firstBrokerLoginFlow: String?=null,
     val attributes: Map<String, String>,
     val userManagedAccessAllowed: Boolean,
     val accountTheme: String? = null,
@@ -201,7 +201,7 @@ class RealmUpdateBuilder(private val existingRealm: Realm) {
     var resetCredentialsFlow: String = existingRealm.resetCredentialsFlow
     var clientAuthenticationFlow: String = existingRealm.clientAuthenticationFlow
     var dockerAuthenticationFlow: String = existingRealm.dockerAuthenticationFlow
-    var firstBrokerLoginFlow: String = existingRealm.firstBrokerLoginFlow
+    var firstBrokerLoginFlow: String? = existingRealm.firstBrokerLoginFlow
     var attributes: Map<String, String> = existingRealm.attributes
     var userManagedAccessAllowed: Boolean = existingRealm.userManagedAccessAllowed
     var accountTheme: String? = existingRealm.accountTheme
