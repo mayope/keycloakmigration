@@ -296,6 +296,7 @@ publishing {
                 username = ossrhUser
                 val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
                 password = ossrhPassword
+                println(ossrhUser+" "+ossrhPassword)
                 if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
                     logger.warn("Sonatype user and password are not set you won't be able to publish to maven central!")
                 }
