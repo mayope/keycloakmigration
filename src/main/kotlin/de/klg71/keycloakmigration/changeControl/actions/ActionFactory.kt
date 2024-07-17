@@ -40,6 +40,7 @@ import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AssignRoleToGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.DeleteGroupAction
+import de.klg71.keycloakmigration.changeControl.actions.group.RenameGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.RevokeRoleFromGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.UpdateGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddIdentityProviderAction
@@ -128,6 +129,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addGroup" -> objectMapper.readValue<AddGroupAction>(actionJson)
             "deleteGroup" -> objectMapper.readValue<DeleteGroupAction>(actionJson)
             "updateGroup" -> objectMapper.readValue<UpdateGroupAction>(actionJson)
+            "renameGroup" -> objectMapper.readValue<RenameGroupAction>(actionJson)
             "assignRoleToGroup" -> objectMapper.readValue<AssignRoleToGroupAction>(actionJson)
             "revokeRoleFromGroup" -> objectMapper.readValue<RevokeRoleFromGroupAction>(actionJson)
 
