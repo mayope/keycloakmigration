@@ -16,12 +16,12 @@ Parameters# realm: String, optional name: String, not optional  Example#id
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mayope.github.io/keycloakmigration/migrations/group/" />
 <meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
-<meta property="article:modified_time" content="2022-01-29T15:08:10+01:00" />
+<meta property="article:modified_time" content="2024-07-17T16:00:44+02:00" />
 <title>Group Migrations | Keycloakmigration</title>
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.a8f172e9514e766ee7562278ee2929cc668544eb977d0ee52069556d89261049.css" integrity="sha256-qPFy6VFOdm7nViJ47ikpzGaFROuXfQ7lIGlVbYkmEEk=">
-<script defer src="/keycloakmigration/en.search.min.2acce2d47a24ac154856615d3350eb789a8473b61f38801612e6570441cbc05b.js" integrity="sha256-Kszi1HokrBVIVmFdM1DreJqEc7YfOIAWEuZXBEHLwFs="></script>
+<script defer src="/keycloakmigration/en.search.min.707b75a505e43946ca5d3d037426c76b29c33b01b8518af54774cccb7dbea442.js" integrity="sha256-cHt1pQXkOUbKXT0DdCbHaynDOwG4UYr1R3TMy32&#43;pEI="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -163,16 +163,22 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#example-2">Example</a></li>
       </ul>
     </li>
-    <li><a href="#assignroletogroup">assignRoleToGroup</a>
+    <li><a href="#renamegroup">renameGroup</a>
       <ul>
         <li><a href="#parameters-3">Parameters</a></li>
         <li><a href="#example-3">Example</a></li>
       </ul>
     </li>
-    <li><a href="#revokerolefromgroup">revokeRoleFromGroup</a>
+    <li><a href="#assignroletogroup">assignRoleToGroup</a>
       <ul>
         <li><a href="#parameters-4">Parameters</a></li>
         <li><a href="#example-4">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#revokerolefromgroup">revokeRoleFromGroup</a>
+      <ul>
+        <li><a href="#parameters-5">Parameters</a></li>
+        <li><a href="#example-5">Example</a></li>
       </ul>
     </li>
   </ul>
@@ -267,20 +273,19 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">attributes</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">lkz</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">              </span>- <span style="color:#b44">&#34;1234&#34;</span><span style="color:#bbb">
-</span></code></pre></div><h2 id="assignroletogroup">
-  assignRoleToGroup
-  <a class="anchor" href="#assignroletogroup">#</a>
+</span></code></pre></div><h2 id="renamegroup">
+  renameGroup
+  <a class="anchor" href="#renamegroup">#</a>
 </h2>
-<p>Assigns a role to a group in keycloak. Fails if the group or the role does not exist.</p>
+<p>Renames a group from keycloak. Fails if the group does not exist.</p>
 <h3 id="parameters-3">
   Parameters
   <a class="anchor" href="#parameters-3">#</a>
 </h3>
 <ul>
 <li>realm: String, optional</li>
-<li>role: String, not optional</li>
-<li>group: String, not optional</li>
-<li>clientId: String, optional, default=realmRole</li>
+<li>name: String, not optional</li>
+<li>newName: String, not optional</li>
 </ul>
 <h3 id="example-3">
   Example
@@ -289,15 +294,15 @@ https://github.com/alex-shpak/hugo-book
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">assignRoleToGroup</span>:<span style="color:#bbb">
-</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
-</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">role</span>:<span style="color:#bbb"> </span>parent<span style="color:#bbb">
-</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">group</span>:<span style="color:#bbb"> </span>test3<span style="color:#bbb">
-</span></code></pre></div><h2 id="revokerolefromgroup">
-  revokeRoleFromGroup
-  <a class="anchor" href="#revokerolefromgroup">#</a>
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">updateGroup</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>master<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>child1<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">newName</span>:<span style="color:#bbb"> </span>child2<span style="color:#bbb">
+</span></code></pre></div><h2 id="assignroletogroup">
+  assignRoleToGroup
+  <a class="anchor" href="#assignroletogroup">#</a>
 </h2>
-<p>Revokes a role from a group in keycloak. Fails if the group or the role does not exist or the role is not assigned to the group.</p>
+<p>Assigns a role to a group in keycloak. Fails if the group or the role does not exist.</p>
 <h3 id="parameters-4">
   Parameters
   <a class="anchor" href="#parameters-4">#</a>
@@ -311,6 +316,32 @@ https://github.com/alex-shpak/hugo-book
 <h3 id="example-4">
   Example
   <a class="anchor" href="#example-4">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">assignRoleToGroup</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">realm</span>:<span style="color:#bbb"> </span>integ-test<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">role</span>:<span style="color:#bbb"> </span>parent<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">group</span>:<span style="color:#bbb"> </span>test3<span style="color:#bbb">
+</span></code></pre></div><h2 id="revokerolefromgroup">
+  revokeRoleFromGroup
+  <a class="anchor" href="#revokerolefromgroup">#</a>
+</h2>
+<p>Revokes a role from a group in keycloak. Fails if the group or the role does not exist or the role is not assigned to the group.</p>
+<h3 id="parameters-5">
+  Parameters
+  <a class="anchor" href="#parameters-5">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>role: String, not optional</li>
+<li>group: String, not optional</li>
+<li>clientId: String, optional, default=realmRole</li>
+</ul>
+<h3 id="example-5">
+  Example
+  <a class="anchor" href="#example-5">#</a>
 </h3>
 <div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
 </span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>klg71<span style="color:#bbb">
@@ -371,16 +402,22 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#example-2">Example</a></li>
       </ul>
     </li>
-    <li><a href="#assignroletogroup">assignRoleToGroup</a>
+    <li><a href="#renamegroup">renameGroup</a>
       <ul>
         <li><a href="#parameters-3">Parameters</a></li>
         <li><a href="#example-3">Example</a></li>
       </ul>
     </li>
-    <li><a href="#revokerolefromgroup">revokeRoleFromGroup</a>
+    <li><a href="#assignroletogroup">assignRoleToGroup</a>
       <ul>
         <li><a href="#parameters-4">Parameters</a></li>
         <li><a href="#example-4">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#revokerolefromgroup">revokeRoleFromGroup</a>
+      <ul>
+        <li><a href="#parameters-5">Parameters</a></li>
+        <li><a href="#example-5">Example</a></li>
       </ul>
     </li>
   </ul>
