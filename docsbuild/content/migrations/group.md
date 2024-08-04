@@ -65,6 +65,25 @@ Updates a group from keycloak. Fails if the group does not exist.
               - "1234"
 ```
 
+## renameGroup
+Renames a group from keycloak. Fails if the group does not exist.
+
+### Parameters
+- realm: String, optional
+- name: String, not optional
+- newName: String, not optional
+
+### Example
+```yaml
+    id: test
+    author: klg71
+    changes:
+      - updateGroup:
+          realm: master
+          name: child1
+          newName: child2
+```
+
 ## assignRoleToGroup
 Assigns a role to a group in keycloak. Fails if the group or the role does not exist.
 
