@@ -13,13 +13,23 @@ data class IdentityProviderMapperItem(
     val config: Map<String, String>
 )
 
+data class RealmAttributePermissions(
+    val view: Set<String>,
+    val edit: Set<String>
+)
+
+data class RealmAttributeRequired(
+    val roles: Set<String>?,
+    val scopes: Set<String>?
+)
 
 data class RealmAttribute(
     val name: String,
     val displayName: String?,
     val annotations: Map<String, Any>?,
     val validations: Map<String, Map<String, Any>>,
-    val permissions: Map<String, List<String>>,
+    val permissions: RealmAttributePermissions,
+    val required: RealmAttributeRequired?,
     val multivalued: Boolean
 )
 

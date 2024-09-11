@@ -4,9 +4,20 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.model.RealmAttribute
+import de.klg71.keycloakmigration.keycloakapi.model.RealmAttributePermissions
+import de.klg71.keycloakmigration.keycloakapi.model.RealmAttributeRequired
 import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
 
+data class AddRealmProfileAttributePermissions(
+    val view: Set<String>?,
+    val edit: Set<String>?
+)
+
+data class AddRealmProfileAttributeRequired(
+    val roles: Set<String>?,
+    val scopes: Set<String>?
+)
 
 @Suppress("LongParameterList")
 class AddRealmProfileAttributeAction(
@@ -15,7 +26,8 @@ class AddRealmProfileAttributeAction(
     private val displayName: String?,
     private val annotations: Map<String, Any>?,
     private val validations: Map<String, Map<String, Any>>?,
-    private val permissions: Map<String, List<String>>?,
+    private val permissions: AddRealmProfileAttributePermissions?,
+    private val required: AddRealmProfileAttributeRequired?,
     private val multivalued: Boolean?
 ) : Action(realm) {
 
@@ -37,7 +49,8 @@ class AddRealmProfileAttributeAction(
                 displayName,
                 annotations ?: emptyMap(),
                 validations ?: emptyMap(),
-                permissions ?: emptyMap(),
+                RealmAttributePermissions(permissions?.view ?: emptySet(), permissions?.edit ?: emptySet()),
+                RealmAttributeRequired(required?.roles ?: emptySet(), required?.scopes ?: emptySet()),
                 multivalued ?: false
             )
         )
