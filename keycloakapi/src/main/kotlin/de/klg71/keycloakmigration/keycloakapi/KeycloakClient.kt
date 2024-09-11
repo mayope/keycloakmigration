@@ -565,5 +565,10 @@ interface KeycloakClient {
     @RequestLine("DELETE /admin/realms/{realm}/authentication/required-actions/{alias}")
     fun deleteRequiredAction(@Param("realm") realm: String,
         @Param("alias") alias: String): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("PUT /admin/realms/{realm}/users/profile")
+    fun updateRealmProfile(@Param("realm") realm: String,
+                          profile: RealmProfile): Response
 }
 

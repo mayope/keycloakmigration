@@ -17,13 +17,14 @@ data class IdentityProviderMapperItem(
 data class RealmAttribute(
     val name: String,
     val displayName: String?,
-    val validations: Map<String, Map<String, Int>>,
+    val annotations: Map<String, Any>?,
+    val validations: Map<String, Map<String, Any>>,
     val permissions: Map<String, List<String>>,
     val multivalued: Boolean
 )
 
 data class RealmProfile(
-    val attributes: List<RealmAttribute>,
+    val attributes: ArrayList<RealmAttribute>,
     val groups: List<Map<String, String>>,
     var unmanagedAttributePolicy: String? = null
 )
