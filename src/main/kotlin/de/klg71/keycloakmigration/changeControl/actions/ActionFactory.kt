@@ -59,7 +59,10 @@ import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
-import de.klg71.keycloakmigration.changeControl.actions.realmprofile.AddRealmProfileAttributeAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.localization.AddLocalizationEntryAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.localization.DeleteLocalizationEntryAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.localization.UpdateLocalizationEntryAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.profile.AddRealmProfileAttributeAction
 import de.klg71.keycloakmigration.changeControl.actions.requiredactions.UpdateRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
@@ -203,6 +206,10 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
 
             "addRealmProfileAttribute" -> objectMapper.readValue<AddRealmProfileAttributeAction>(actionJson)
+
+            "addLocalizationEntry" -> objectMapper.readValue<AddLocalizationEntryAction>(actionJson)
+            "updateLocalizationEntry" -> objectMapper.readValue<UpdateLocalizationEntryAction>(actionJson)
+            "deleteLocalizationEntry" -> objectMapper.readValue<DeleteLocalizationEntryAction>(actionJson)
 
             else -> throw ParseException(
                 "Unknown Change type: $actionName"

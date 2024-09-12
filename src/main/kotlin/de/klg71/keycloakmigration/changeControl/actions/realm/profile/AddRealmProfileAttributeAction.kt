@@ -1,4 +1,4 @@
-package de.klg71.keycloakmigration.changeControl.actions.realmprofile
+package de.klg71.keycloakmigration.changeControl.actions.realm.profile
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.klg71.keycloakmigration.changeControl.actions.Action
@@ -19,7 +19,6 @@ data class AddRealmProfileAttributeRequired(
     val scopes: Set<String>?
 )
 
-@Suppress("LongParameterList")
 class AddRealmProfileAttributeAction(
     realm: String?,
     private val name: String,

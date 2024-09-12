@@ -568,7 +568,33 @@ interface KeycloakClient {
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("PUT /admin/realms/{realm}/users/profile")
-    fun updateRealmProfile(@Param("realm") realm: String,
-                          profile: RealmProfile): Response
+    fun updateRealmProfile(
+        @Param("realm") realm: String,
+        profile: RealmProfile
+    ): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("GET /admin/realms/{realm}/localization/{locale}")
+    fun getLocalizationEntries(
+        @Param("realm") realm: String,
+        @Param("locale") locale: String,
+    ): Map<String, String>
+
+    @Headers("Content-Type: text/plain; charset=utf-8")
+    @RequestLine("PUT /admin/realms/{realm}/localization/{locale}/{key}")
+    fun updateLocalizationEntry(
+        @Param("realm") realm: String,
+        @Param("locale") locale: String,
+        @Param("key") key: String,
+        text: String
+    ): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("DELETE /admin/realms/{realm}/localization/{locale}/{key}")
+    fun deleteLocalizationEntry(
+        @Param("realm") realm: String,
+        @Param("locale") locale: String,
+        @Param("key") key: String
+    ): Response
 }
 
