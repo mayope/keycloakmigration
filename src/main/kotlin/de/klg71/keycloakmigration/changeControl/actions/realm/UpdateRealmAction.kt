@@ -90,8 +90,8 @@ class UpdateRealmAction(
     private val adminTheme: String? = null,
     private val emailTheme: String? = null,
     private val loginTheme: String? = null,
+    private val organizationsEnabled: Boolean? = false,
     private val unmanagedAttributePolicy: String? = null) : Action() {
-
 
     lateinit var oldRealm: Realm
 
@@ -181,7 +181,8 @@ class UpdateRealmAction(
         emailTheme ?: oldRealm.emailTheme,
         loginTheme ?: oldRealm.loginTheme,
         null,
-        realmProfile
+        realmProfile,
+        organizationsEnabled ?: oldRealm.organizationsEnabled
     )
 
     private fun concatenatePasswordPolicyString(): String {
