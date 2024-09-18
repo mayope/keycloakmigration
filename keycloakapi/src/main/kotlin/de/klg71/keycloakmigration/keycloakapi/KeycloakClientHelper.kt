@@ -6,6 +6,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Role
+import de.klg71.keycloakmigration.keycloakapi.model.Organization
 import feign.Response
 import java.util.UUID
 
@@ -245,3 +246,13 @@ fun KeycloakClient.identityProviderMapperByName(identityProviderAlias: String, n
 
 fun KeycloakClient.identityProviderMapperExistsByName(identityProviderAlias: String, name: String, realm: String) =
     identityProviderMappers(realm, identityProviderAlias).any { it.name == name }
+
+fun KeycloakClient.organizationByName(name: String, realm: String): Organization = organizations(realm).run {
+        if (isEmpty()) {
+            throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
+        }
+        find { it.name == name }?.let {
+            return it
+        }
+        throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
+    }
