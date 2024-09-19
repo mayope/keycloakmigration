@@ -154,7 +154,7 @@ tasks {
     register("execWindowsKeycloak") {
         doLast {
             ProcessBuilder(
-                "cmd", "/c", "kc.bat", "start-dev", "--http-port=18080", "--hostname-strict=false","--http-relative-path=/auth","--log-level=info", ">",
+                "cmd", "/c", "kc.bat", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false","--http-relative-path=/auth","--log-level=info", ">",
                 "output.txt"
             ).run {
                 directory(File("keycloak/keycloak-$keycloakVersion/bin"))
