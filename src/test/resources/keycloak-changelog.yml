@@ -38,3 +38,4 @@ includes:
 - path: changesets/40_add_identity_provider_mappers.yml
 - path: changesets/41_delete_identity_provider_mappers.yml
 - path: changesets/42_register_required_action.yml
+- path: changesets/43_update_client_clientauthenticatortype.yml

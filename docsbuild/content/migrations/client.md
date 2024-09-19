@@ -73,6 +73,7 @@ Update a client
 - surrogateAuthRequired: Boolean, optional, default=no change
 - enabled: Boolean, optional, default=no change
 - alwaysDisplayInConsole: Boolean, optional, default=no change
+- clientAuthenticatorType: String, optional, default=no change
 - attributes: Map<String, String>, optional, default=no change
 - protocol: String, optional, default=no change
 - redirectUris: List< String>, optional, default=no change

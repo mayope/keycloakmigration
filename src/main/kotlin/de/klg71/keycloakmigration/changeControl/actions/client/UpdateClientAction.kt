@@ -15,6 +15,7 @@ class UpdateClientAction(
     private val surrogateAuthRequired: Boolean? = null,
     private val enabled: Boolean? = null,
     private val alwaysDisplayInConsole: Boolean? = null,
+    private val clientAuthenticatorType: String? = null,
     private val attributes: Map<String, String>? = null,
     private val protocol: String? = null,
     private val redirectUris: List<String>? = null,
@@ -34,6 +35,13 @@ class UpdateClientAction(
     private val fullScopeAllowed: Boolean? = null,
     private val nodeReRegistrationTimeout: Int ?= null) : Action(realm) {
 
+    companion object {
+      @JvmStatic
+      val supportedClientAuthenticatorTypes = listOf(
+          "client-jwt", "client-secret", "client-secret-jwt", "client-x509"
+      )
+    }
+
     private lateinit var oldClient: Client
 
     @Suppress("ComplexMethod")
@@ -45,7 +53,7 @@ class UpdateClientAction(
         surrogateAuthRequired ?: oldClient.surrogateAuthRequired,
         enabled ?: oldClient.enabled,
         alwaysDisplayInConsole ?: oldClient.alwaysDisplayInConsole,
-        oldClient.clientAuthenticatorType,
+        clientAuthenticatorType ?: oldClient.clientAuthenticatorType,
         redirectUris ?: oldClient.redirectUris,
         webOrigins ?: oldClient.webOrigins,
         notBefore ?: oldClient.notBefore,
@@ -73,6 +81,13 @@ class UpdateClientAction(
     )
 
     override fun execute() {
+        if (clientAuthenticatorType != null && clientAuthenticatorType !in supportedClientAuthenticatorTypes) {
+            throw MigrationException(
+                "Client authenticator type '$clientAuthenticatorType' is not supported. " +
+                "Use one of: ${supportedClientAuthenticatorTypes.joinToString(", ")}"
+            )
+        }
+
         if (!client.existsClient(clientId, realm())) {
             throw MigrationException("Client with id: $clientId does not exist in realm: $realm!")
         }
