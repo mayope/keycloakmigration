@@ -38,7 +38,7 @@ fun initKeycloakClient(baseUrl: String, adminUser: String, adminPassword: String
 internal fun initKeycloakClientWithTokenHolder(baseUrl: String, logger: Logger? = null, tokenHolder: TokenHolder) =
     Resilience4jFeign.builder(resilienceDecorator()).run {
         val objectMapper = initObjectMapper()
-        encoder(JacksonEncoder(objectMapper))
+        encoder(ContentTypeEncoder(objectMapper))
         decoder(JacksonDecoder(objectMapper.apply {
             configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         }))
