@@ -14,6 +14,7 @@ class KoinLogger(private val log: org.slf4j.Logger) : Logger() {
             Level.DEBUG -> log.debug(msg)
             Level.ERROR -> log.error(msg)
             Level.INFO -> log.info(msg)
+          Level.NONE -> TODO()
         }
     }
 

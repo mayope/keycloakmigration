@@ -18,18 +18,18 @@ fun Project.command(cmd: List<String>, workingDirectory: String = ".", environme
     }
 
 plugins {
-    kotlin("jvm") version "1.5.32"
+    kotlin("jvm") version "2.0.20"
     id("maven-publish")
     id("signing")
-    id("de.undercouch.download") version ("3.4.3")
-    id("net.researchgate.release") version ("2.8.0")
+    id("de.undercouch.download") version "5.5.0"
+    id("net.researchgate.release") version "3.0.2"
 
     // Security check for dependencies by task
-    id("org.owasp.dependencycheck") version "5.3.0"
+    id("org.owasp.dependencycheck") version "10.0.4"
     // static code analysis
-    id("io.gitlab.arturbosch.detekt") version "1.19.0-RC1"
+    id("io.gitlab.arturbosch.detekt") version "1.23.7"
 
-    id("com.github.johnrengelman.shadow") version "6.0.0" apply (false)
+    id("com.github.johnrengelman.shadow") version "8.1.1" apply (false)
 }
 
 dependencies {
@@ -81,12 +81,12 @@ tasks {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
         }
         from(sourceSets.main.get().output)
-        from(project(":keycloakapi").sourceSets.main.get().output)
-        configurations = mutableListOf(
+        from(project("keycloakapi").sourceSets.main.get().output)
+        configurations = listOf(
             project.configurations.compileClasspath.get(),
             project.configurations.runtimeClasspath.get()
         )
-        project.configurations.compileClasspath.allDependencies.forEach {
+        project.configurations.compileClasspath.get().allDependencies.forEach {
             println(it)
         }
     }
