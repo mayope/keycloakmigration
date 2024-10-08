@@ -34,10 +34,7 @@ import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddCl
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeUserAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeUserRealmRoleMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.DeleteClientScopeMapperAction
-import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowAction
-import de.klg71.keycloakmigration.changeControl.actions.flow.CopyFlowAction
-import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowAction
-import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateFlowAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.*
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AssignRoleToGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.DeleteGroupAction
@@ -205,6 +202,8 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "deleteFlow" -> objectMapper.readValue<DeleteFlowAction>(actionJson)
             "updateFlow" -> objectMapper.readValue<UpdateFlowAction>(actionJson)
             "copyFlow" -> objectMapper.readValue<CopyFlowAction>(actionJson)
+
+            "addFlowExecution" -> objectMapper.readValue<AddFlowExecutionAction>(actionJson)
 
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
 
