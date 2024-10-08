@@ -525,6 +525,10 @@ interface KeycloakClient {
     fun deleteFlow(@Param("realm") realm: String, @Param("id") flowId: UUID)
 
     @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/authentication/flows/{flowAlias}/copy")
+    fun copyFlow(@Param("realm") realm: String, @Param flowAlias: String): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/flows/{alias}/executions/execution")
     fun addFlowExecution(@Param("realm") realm: String,
         @Param("alias") alias: String,

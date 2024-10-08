@@ -21,6 +21,10 @@ fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
     }
 }
 
+fun KeycloakClient.copyAuthFlow(realm: String, flowAlias: String): UUID {
+    return copyFlow(realm, flowAlias).extractLocationUUID()
+}
+
 fun KeycloakClient.updateFlowInPlace(realm: String, alias: String, updateFlow: UpdateFlowInPlace) {
     if (flows(realm).none { it.alias == alias }) {
         throw KeycloakApiException("Update Flow failed, Flow: $alias does not exist")
