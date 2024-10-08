@@ -526,7 +526,7 @@ interface KeycloakClient {
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/flows/{flowAlias}/copy")
-    fun copyFlow(@Param("realm") realm: String, @Param flowAlias: String): Response
+    fun copyFlow(@Param("realm") realm: String, @Param("flowAlias") flowAlias: String): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/flows/{alias}/executions/execution")

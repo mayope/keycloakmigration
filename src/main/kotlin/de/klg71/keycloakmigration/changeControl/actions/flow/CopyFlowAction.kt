@@ -9,14 +9,12 @@ class CopyFlowAction(
     private val flowAlias: String
 ) : Action(realm) {
 
-    private lateinit var flowUuid: UUID
-
     override fun execute() {
-        flowUuid = client.copyAuthFlow(realm(), flowAlias)
+        client.copyAuthFlow(realm(), flowAlias)
     }
 
     override fun undo() {
-        client.deleteFlow(realm(), flowUuid)
+//        client.deleteFlow(realm(), flowUuid)
     }
 
     override fun name() = "CopyFlow $flowAlias"
