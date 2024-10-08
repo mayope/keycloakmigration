@@ -80,6 +80,8 @@ data class UpdateFlowExecution(val id: UUID,
     val index: Int,
     val providerId: String)
 
+data class CopyFlowExecution(val newName: String)
+
 data class AuthenticatorConfig(val alias: String? = null,
     val config: Map<String, String>,
     val id: UUID? = null)

@@ -2,14 +2,7 @@
 
 package de.klg71.keycloakmigration.keycloakapi
 
-import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
-import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
-import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowInPlace
+import de.klg71.keycloakmigration.keycloakapi.model.*
 import java.util.*
 
 fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
@@ -22,8 +15,7 @@ fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
 }
 
 fun KeycloakClient.copyAuthFlow(realm: String, flowAlias: String, newName: String) {
-    val body = "{newName: $newName}"
-    copyFlow(realm, flowAlias, body)
+    copyFlow(realm, flowAlias, CopyFlowExecution(newName))
 }
 
 fun KeycloakClient.updateFlowInPlace(realm: String, alias: String, updateFlow: UpdateFlowInPlace) {
