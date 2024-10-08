@@ -15,8 +15,7 @@ fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
 }
 
 fun KeycloakClient.copyAuthFlow(realm: String, flowAlias: String, newName: String) {
-    var response = copyFlow(realm, flowAlias, CopyFlowExecution(newName))
-    return
+    copyFlow(realm, flowAlias, CopyFlowExecution(newName))
 }
 
 fun KeycloakClient.updateFlowInPlace(realm: String, alias: String, updateFlow: UpdateFlowInPlace) {
