@@ -10,7 +10,8 @@ class AddFlowExecutionAction(
 ) : Action(realm) {
 
     override fun execute() {
-        client.addFlowExecution(realm(), flowAlias, AddFlowExecution(provider))
+        var response = client.addFlowExecution(realm(), flowAlias, AddFlowExecution(provider))
+        return
     }
 
     override fun undo() {
