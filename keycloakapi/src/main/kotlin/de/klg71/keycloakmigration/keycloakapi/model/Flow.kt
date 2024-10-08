@@ -2,13 +2,15 @@ package de.klg71.keycloakmigration.keycloakapi.model
 
 import java.util.UUID
 
-data class Flow(val id: UUID,
+data class Flow(
+    val id: UUID,
     val alias: String,
     val description: String,
     val providerId: String,
     val topLevel: Boolean,
     val builtIn: Boolean,
-    val authenticationExecutions: List<AuthenticationExecution>) {
+    val authenticationExecutions: List<AuthenticationExecution>
+) {
     enum class Requirement {
         ALTERNATIVE, DISABLED, REQUIRED, CONDITIONAL, OPTIONAL
     }
@@ -20,7 +22,8 @@ data class Flow(val id: UUID,
         val userSetupAllowed: Boolean,
         // This looks very weird but they seem to have this in their codebase, i will assume it means authenticatorFlow
         @Suppress("SpellCheckingInspection")
-        val autheticatorFlow: Boolean)
+        val autheticatorFlow: Boolean
+    )
 }
 
 data class AuthenticationExecution(
@@ -32,13 +35,16 @@ data class AuthenticationExecution(
     val providerId: String,
     val level: Int,
     val index: Int,
-    val authenticationConfig: String? = null)
+    val authenticationConfig: String? = null
+)
 
-data class AddFlow(val alias: String,
+data class AddFlow(
+    val alias: String,
     val builtIn: Boolean,
     val description: String,
     val providerId: String,
-    val topLevel: Boolean)
+    val topLevel: Boolean
+)
 
 data class UpdateFlow(
     val id: UUID,
@@ -53,7 +59,8 @@ data class AuthenticationExecutionImport(
     val providerId: String,
     val level: Int,
     val index: Int,
-    val config: Map<String, String> = emptyMap())
+    val config: Map<String, String> = emptyMap()
+)
 
 data class ImportFlow(
     val alias: String,
@@ -72,17 +79,23 @@ data class UpdateFlowInPlace(
     val authenticationExecutions: List<AuthenticationExecutionImport>
 )
 
+data class AddFlowExecution(
+    val provider: String,
+    val config: Map<String, String> = emptyMap()
+)
 
-data class AddFlowExecution(val provider: String)
-
-data class UpdateFlowExecution(val id: UUID,
+data class UpdateFlowExecution(
+    val id: UUID,
     val requirement: Flow.Requirement,
     val level: Int,
     val index: Int,
-    val providerId: String)
+    val providerId: String
+)
 
 data class CopyFlowExecution(val newName: String)
 
-data class AuthenticatorConfig(val alias: String? = null,
+data class AuthenticatorConfig(
+    val alias: String? = null,
     val config: Map<String, String>,
-    val id: UUID? = null)
+    val id: UUID? = null
+)
