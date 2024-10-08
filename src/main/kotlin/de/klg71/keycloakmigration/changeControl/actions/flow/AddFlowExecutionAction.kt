@@ -6,12 +6,11 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
 class AddFlowExecutionAction(
     realm: String,
     private val flowAlias: String,
-    private val provider: String,
-    private val config: Map<String, String> = emptyMap()
+    private val provider: String
 ) : Action(realm) {
 
     override fun execute() {
-        client.addFlowExecution(realm(), flowAlias, AddFlowExecution(provider, config))
+        client.addFlowExecution(realm(), flowAlias, AddFlowExecution(provider))
     }
 
     override fun undo() {
