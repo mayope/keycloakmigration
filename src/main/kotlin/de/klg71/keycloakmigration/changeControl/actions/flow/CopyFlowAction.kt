@@ -6,11 +6,12 @@ import java.util.UUID
 
 class CopyFlowAction(
     realm: String,
-    private val flowAlias: String
+    private val flowAlias: String,
+    private val newName: String
 ) : Action(realm) {
 
     override fun execute() {
-        client.copyAuthFlow(realm(), flowAlias)
+        client.copyAuthFlow(realm(), flowAlias, newName)
     }
 
     override fun undo() {
