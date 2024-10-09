@@ -1,11 +1,58 @@
 package de.klg71.keycloakmigration.keycloakapi
 
-import de.klg71.keycloakmigration.keycloakapi.model.*
+import de.klg71.keycloakmigration.keycloakapi.model.AddClient
+import de.klg71.keycloakmigration.keycloakapi.model.AddClientScope
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
+import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
+import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
+import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProviderMapper
+import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
+import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
+import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
+import de.klg71.keycloakmigration.keycloakapi.model.AddRole
+import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
+import de.klg71.keycloakmigration.keycloakapi.model.AddUser
+import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederation
+import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederationMapper
+import de.klg71.keycloakmigration.keycloakapi.model.AssignClientScope
+import de.klg71.keycloakmigration.keycloakapi.model.AssignGroup
+import de.klg71.keycloakmigration.keycloakapi.model.AssignRole
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
+import de.klg71.keycloakmigration.keycloakapi.model.Client
+import de.klg71.keycloakmigration.keycloakapi.model.ClientListItem
+import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
+import de.klg71.keycloakmigration.keycloakapi.model.ClientScopeItem
+import de.klg71.keycloakmigration.keycloakapi.model.ClientSecret
+import de.klg71.keycloakmigration.keycloakapi.model.CopyFlowExecution
+import de.klg71.keycloakmigration.keycloakapi.model.Flow
+import de.klg71.keycloakmigration.keycloakapi.model.Group
+import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
+import de.klg71.keycloakmigration.keycloakapi.model.IdentityProvider
+import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderMapper
+import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
+import de.klg71.keycloakmigration.keycloakapi.model.Mapper
+import de.klg71.keycloakmigration.keycloakapi.model.Organization
+import de.klg71.keycloakmigration.keycloakapi.model.Realm
+import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
+import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
+import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
+import de.klg71.keycloakmigration.keycloakapi.model.Role
+import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateIdentityProvider
+import de.klg71.keycloakmigration.keycloakapi.model.User
+import de.klg71.keycloakmigration.keycloakapi.model.UserFederation
+import de.klg71.keycloakmigration.keycloakapi.model.UserFederationMapper
+import de.klg71.keycloakmigration.keycloakapi.model.UserGroupListItem
 import feign.Headers
 import feign.Param
 import feign.RequestLine
 import feign.Response
-import java.util.UUID
+import java.util.*
 
 data class RealmName(val realm: String)
 
@@ -290,7 +337,8 @@ interface KeycloakClient {
     @Headers("Content-Type: application/json; charset=utf-8")
     fun assignDefaultClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
         @Param("client-scope-id") clientScopeId: UUID,
-        assignClientScope: AssignClientScope): Response
+        assignClientScope: AssignClientScope
+    ): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/default-client-scopes/{client-scope-id}")
     fun withdrawDefaultClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
@@ -432,8 +480,8 @@ interface KeycloakClient {
     @RequestLine("PUT /admin/realms/{realm}/identity-provider/instances/{alias}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun updateIdentityProvider(updateIdentityProvider: UpdateIdentityProvider,
-        @Param("realm") realm: String,
-        @Param("alias") alias: String): Response
+                               @Param("realm") realm: String,
+                               @Param("alias") alias: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}")
     fun identityProvider(@Param("realm") realm: String, @Param("alias") alias: String): IdentityProvider
@@ -444,8 +492,8 @@ interface KeycloakClient {
     @RequestLine("POST /admin/realms/{realm}/identity-provider/instances/{alias}/mappers")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addIdentityProviderMapper(addIdentityProviderMapper: AddIdentityProviderMapper,
-        @Param("realm") realm: String,
-        @Param("alias") alias: String): Response
+                                  @Param("realm") realm: String,
+                                  @Param("alias") alias: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}/mappers/{name}")
     fun identityProviderMapper(@Param("realm") realm: String,
@@ -486,19 +534,22 @@ interface KeycloakClient {
     @RequestLine("POST /admin/realms/{realm}/authentication/flows/{alias}/executions/execution")
     fun addFlowExecution(@Param("realm") realm: String,
         @Param("alias") alias: String,
-        addFlowExecution: AddFlowExecution): Response
+        addFlowExecution: AddFlowExecution
+    ): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("PUT /admin/realms/{realm}/authentication/flows/{alias}/executions")
     fun updateFlowExecution(@Param("realm") realm: String,
         @Param("alias") alias: String,
-        updateFlowExecution: UpdateFlowExecution): Response
+        updateFlowExecution: UpdateFlowExecution
+    ): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/executions/{executionId}/config")
     fun updateFlowExecutionWithNewConfiguration(@Param("realm") realm: String,
         @Param("executionId") executionId: String,
-        authenticatorConfig: AuthenticatorConfig): Response
+        authenticatorConfig: AuthenticatorConfig
+    ): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("GET /admin/realms/{realm}/authentication/config/{configurationId}")
