@@ -52,7 +52,7 @@ import feign.Headers
 import feign.Param
 import feign.RequestLine
 import feign.Response
-import java.util.*
+import java.util.UUID
 
 data class RealmName(val realm: String)
 
