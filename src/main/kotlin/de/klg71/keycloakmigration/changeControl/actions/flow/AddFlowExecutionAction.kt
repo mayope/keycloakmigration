@@ -4,7 +4,7 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
 import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
-import java.util.*
+import java.util.UUID
 
 class AddFlowExecutionAction(
   realm: String,
