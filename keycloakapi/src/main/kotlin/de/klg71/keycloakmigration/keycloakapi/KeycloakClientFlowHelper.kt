@@ -2,7 +2,15 @@
 
 package de.klg71.keycloakmigration.keycloakapi
 
-import de.klg71.keycloakmigration.keycloakapi.model.*
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
+import de.klg71.keycloakmigration.keycloakapi.model.CopyFlowExecution
+import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowInPlace
 import java.util.*
 
 fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
@@ -48,7 +56,8 @@ private fun KeycloakClient.configureAuthExecutors(importFlow: ImportFlow, realm:
 
 private fun KeycloakClient.addExecution(realm: String,
     flowAlias: String,
-    executionImport: AuthenticationExecutionImport) {
+    executionImport: AuthenticationExecutionImport
+) {
     val executionId =
         addFlowExecution(realm, flowAlias, AddFlowExecution(executionImport.providerId)).extractLocationUUID()
     updateFlowExecution(
