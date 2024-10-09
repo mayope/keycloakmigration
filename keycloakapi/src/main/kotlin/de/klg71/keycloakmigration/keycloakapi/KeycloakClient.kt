@@ -337,8 +337,7 @@ interface KeycloakClient {
     @Headers("Content-Type: application/json; charset=utf-8")
     fun assignDefaultClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
         @Param("client-scope-id") clientScopeId: UUID,
-        assignClientScope: AssignClientScope
-    ): Response
+        assignClientScope: AssignClientScope): Response
 
     @RequestLine("DELETE /admin/realms/{realm}/clients/{client-id}/default-client-scopes/{client-scope-id}")
     fun withdrawDefaultClientScope(@Param("realm") realm: String, @Param("client-id") clientId: UUID,
