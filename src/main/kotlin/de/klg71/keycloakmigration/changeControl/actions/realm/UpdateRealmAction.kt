@@ -90,7 +90,7 @@ class UpdateRealmAction(
     private val adminTheme: String? = null,
     private val emailTheme: String? = null,
     private val loginTheme: String? = null,
-    private val organizationsEnabled: Boolean? = null,
+    private val organizationsEnabled: Boolean? = false,
     private val unmanagedAttributePolicy: String? = null) : Action() {
 
     lateinit var oldRealm: Realm
