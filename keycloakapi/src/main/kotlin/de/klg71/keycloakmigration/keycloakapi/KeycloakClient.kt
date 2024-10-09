@@ -480,8 +480,8 @@ interface KeycloakClient {
     @RequestLine("PUT /admin/realms/{realm}/identity-provider/instances/{alias}")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun updateIdentityProvider(updateIdentityProvider: UpdateIdentityProvider,
-                               @Param("realm") realm: String,
-                               @Param("alias") alias: String): Response
+        @Param("realm") realm: String,
+        @Param("alias") alias: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}")
     fun identityProvider(@Param("realm") realm: String, @Param("alias") alias: String): IdentityProvider
@@ -492,8 +492,8 @@ interface KeycloakClient {
     @RequestLine("POST /admin/realms/{realm}/identity-provider/instances/{alias}/mappers")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addIdentityProviderMapper(addIdentityProviderMapper: AddIdentityProviderMapper,
-                                  @Param("realm") realm: String,
-                                  @Param("alias") alias: String): Response
+        @Param("realm") realm: String,
+        @Param("alias") alias: String): Response
 
     @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}/mappers/{name}")
     fun identityProviderMapper(@Param("realm") realm: String,
@@ -534,22 +534,19 @@ interface KeycloakClient {
     @RequestLine("POST /admin/realms/{realm}/authentication/flows/{alias}/executions/execution")
     fun addFlowExecution(@Param("realm") realm: String,
         @Param("alias") alias: String,
-        addFlowExecution: AddFlowExecution
-    ): Response
+        addFlowExecution: AddFlowExecution): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("PUT /admin/realms/{realm}/authentication/flows/{alias}/executions")
     fun updateFlowExecution(@Param("realm") realm: String,
         @Param("alias") alias: String,
-        updateFlowExecution: UpdateFlowExecution
-    ): Response
+        updateFlowExecution: UpdateFlowExecution): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/executions/{executionId}/config")
     fun updateFlowExecutionWithNewConfiguration(@Param("realm") realm: String,
         @Param("executionId") executionId: String,
-        authenticatorConfig: AuthenticatorConfig
-    ): Response
+        authenticatorConfig: AuthenticatorConfig): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("GET /admin/realms/{realm}/authentication/config/{configurationId}")
