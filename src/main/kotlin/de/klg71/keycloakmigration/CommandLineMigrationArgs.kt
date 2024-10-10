@@ -7,6 +7,8 @@ import com.xenomachina.argparser.default
 const val DEFAULT_CHANGELOGFILE = "keycloak-changelog.yml"
 const val DEFAULT_ADMIN_USER = "admin"
 const val DEFAULT_ADMIN_PASSWORD = "admin"
+const val DEFAULT_ADMIN_USE_OAUTH = false
+const val DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT = 8081
 const val DEFAULT_KEYCLOAK_SERVER = "http://localhost:8080/auth"
 const val DEFAULT_REALM = "master"
 const val DEFAULT_CLIENTID = "admin-cli"
@@ -36,6 +38,18 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
         help = "Time based one time password for the migration user, empty per default"
     )
         .default(DEFAULT_ADMIN_PASSWORD)
+
+    private val adminUseOauth by parser.flagging(
+        names = arrayOf("-o", "--use-oauth"),
+        help = "Use OAuth2 for login instead of user/pass/(totp), defaulting to $DEFAULT_ADMIN_USE_OAUTH."
+    )
+        .default(DEFAULT_ADMIN_USE_OAUTH)
+
+    private val adminUseOauthLocalPort by parser.counting(
+        names = arrayOf("-P", "--use-oauth-local-port"),
+        help = "Which port to listen for the auth code callback, defaulting to $DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT."
+    )
+        .default(DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT)
 
     private val baseUrl by parser.storing(
         names = arrayOf("-b", "--baseurl"),
@@ -112,6 +126,8 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
 
     override fun adminPassword() = adminPassword
     override fun adminTotp() = adminTotp
+    override fun adminUseOauth() = adminUseOauth
+    override fun adminUseOauthLocalPort() = adminUseOauthLocalPort
 
     override fun migrationFile() = migrationFile.firstOrNull() ?: DEFAULT_CHANGELOGFILE
 

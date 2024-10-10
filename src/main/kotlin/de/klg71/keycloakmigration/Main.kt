@@ -67,7 +67,9 @@ fun migrate(migrationArgs: MigrationArgs) {
                 logger(KoinLogger(KOIN_LOGGER))
                 modules(
                     myModule(
-                        adminUser(), adminPassword(), adminTotp(), baseUrl(), realm(), clientId(), parameters(),
+                        adminUser(), adminPassword(), adminTotp(),
+                        adminUseOauth(), adminUseOauthLocalPort(),
+                        baseUrl(), realm(), clientId(), parameters(),
                         failOnUndefinedVariables(), warnOnUndefinedVariables()
                     )
                 )
