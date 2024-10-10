@@ -25,6 +25,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ClientListItem
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScopeItem
 import de.klg71.keycloakmigration.keycloakapi.model.ClientSecret
+import de.klg71.keycloakmigration.keycloakapi.model.CopyFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.Group
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
@@ -523,6 +524,10 @@ interface KeycloakClient {
 
     @RequestLine("DELETE /admin/realms/{realm}/authentication/flows/{id}")
     fun deleteFlow(@Param("realm") realm: String, @Param("id") flowId: UUID)
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/authentication/flows/{flowAlias}/copy")
+    fun copyFlow(@Param("realm") realm: String, @Param("flowAlias") flowAlias: String, copyFlowExecution: CopyFlowExecution):Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/flows/{alias}/executions/execution")

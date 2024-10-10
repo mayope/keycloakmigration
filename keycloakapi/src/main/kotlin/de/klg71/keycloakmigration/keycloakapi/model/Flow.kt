@@ -74,11 +74,14 @@ data class UpdateFlowInPlace(
 
 
 data class AddFlowExecution(val provider: String)
+
 data class UpdateFlowExecution(val id: UUID,
     val requirement: Flow.Requirement,
     val level: Int,
     val index: Int,
     val providerId: String)
+
+data class CopyFlowExecution(val newName: String)
 
 data class AuthenticatorConfig(val alias: String? = null,
     val config: Map<String, String>,
