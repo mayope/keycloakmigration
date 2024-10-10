@@ -25,11 +25,15 @@ import java.time.Duration
  * @param realm Realm to use for the login of the user
  * @param clientId id of the client to use for the login of the user
  */
-fun initKeycloakClient(baseUrl: String, adminUser: String, adminPassword: String, realm: String,
+fun initKeycloakClient(baseUrl: String, adminUser: String, adminPassword: String,
+                       adminUseOauth: Boolean, adminUseOauthLocalPort: Int,
+                       realm: String,
     clientId: String, logger: Logger? = null, totp: String = "", tokenOffsetMs: Long = 1000) = initObjectMapper().let {
     TokenHolder(
         initKeycloakLoginClient(baseUrl, logger),
-        adminUser, adminPassword, realm, clientId, totp, tokenOffsetMs
+        adminUser, adminPassword,
+        adminUseOauth, adminUseOauthLocalPort, baseUrl,
+        realm, clientId, totp, tokenOffsetMs
     ).let {
         initKeycloakClientWithTokenHolder(baseUrl, logger, it)
     }
