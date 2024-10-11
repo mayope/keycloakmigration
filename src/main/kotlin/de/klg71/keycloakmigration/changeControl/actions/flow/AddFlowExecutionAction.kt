@@ -7,7 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
 import java.util.UUID
 
 class AddFlowExecutionAction(
-  realm: String?,
+  realm: String,
   private val flowAlias: String,
   private val provider: String,
   private val executionAlias: String,

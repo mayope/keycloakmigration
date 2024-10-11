@@ -5,7 +5,7 @@ import de.klg71.keycloakmigration.keycloakapi.copyAuthFlow
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
 
 class CopyFlowAction(
-  realm: String?,
+  realm: String,
   private val flowAlias: String,
   private val newName: String
 ) : Action(realm) {
