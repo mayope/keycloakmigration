@@ -64,6 +64,7 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
     }
 
     private fun loginWithOauth(): AccessToken {
+        var server: HttpServer? = null
         try {
             lateinit var redirectedUri: URI
             val authUrl = "$baseUrl/realms/$realm/protocol/openid-connect/auth"
@@ -73,7 +74,7 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
 
             if (Desktop.isDesktopSupported()) {
                 val latch = CountDownLatch(1)
-                val server = HttpServer.create(InetSocketAddress(adminUseOauthLocalPort), 0)
+                server = HttpServer.create(InetSocketAddress(adminUseOauthLocalPort), 0)
 
                 server.createContext("/auth_callback") { exchange: HttpExchange ->
                     redirectedUri = exchange.requestURI
@@ -91,8 +92,11 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
 
                 println("Attempting to automatically authorize via $authRequestUri in your default browser.")
                 println("If the browser does no open, open the URL above manually.")
-                latch.await(2, TimeUnit.MINUTES)
-                server.stop(0)
+                val success = latch.await(2, TimeUnit.MINUTES)
+
+                if (!success) {
+                    throw RuntimeException("Authentication via default browser didn't complete in time. Aborting...")
+                }
             } else {
                 println("Open the following URL in your browser: $authRequestUri")
                 println("Once the login has completed, enter the URL from the browser address bar here.")
@@ -119,6 +123,8 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
             throw RuntimeException(e)
         } catch (e: InterruptedException) {
             throw RuntimeException(e)
+        } finally {
+            server?.stop(0)
         }
     }
 }
