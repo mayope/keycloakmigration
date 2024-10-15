@@ -65,51 +65,56 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
 
     private fun loginWithOauth(): AccessToken {
         try {
-            val latch = CountDownLatch(1)
-            val server = HttpServer.create(InetSocketAddress(adminUseOauthLocalPort), 0)
-
+            lateinit var redirectedUri: URI
             val authUrl = "$baseUrl/realms/$realm/protocol/openid-connect/auth"
             val redirectUri = "http://localhost:${adminUseOauthLocalPort}/auth_callback"
-            val authRequestUri = "$authUrl?response_type=code&client_id=$clientId&redirect_uri=$redirectUri"
-
-            var accessToken: AccessToken? = null
-            server.createContext("/auth_callback") { exchange: HttpExchange ->
-                val code =
-                    exchange.requestURI.query.split("&")
-                        .first { it.startsWith("code=") }
-                        .substringAfter("=")
-
-                accessToken = client.login(
-                    realm = realm,
-                    grantType = "authorization_code",
-                    code = code,
-                    clientId = clientId,
-                    redirectUri = redirectUri
-                )
-
-                val response =
-                    "Success! Authentication completed. You can close this browser tab and return to the terminal window."
-
-                exchange.sendResponseHeaders(200, response.length.toLong())
-                exchange.responseBody.write(response.toByteArray(StandardCharsets.UTF_8))
-                latch.countDown()
-            }
-            server.start()
+            val authRequestUri =
+                "$authUrl?response_type=code&client_id=$clientId&redirect_uri=$redirectUri"
 
             if (Desktop.isDesktopSupported()) {
+                val latch = CountDownLatch(1)
+                val server = HttpServer.create(InetSocketAddress(adminUseOauthLocalPort), 0)
+
+                server.createContext("/auth_callback") { exchange: HttpExchange ->
+                    redirectedUri = exchange.requestURI
+
+                    val response =
+                        "Success! Authentication completed. You can close this browser tab and return to the terminal window."
+
+                    exchange.sendResponseHeaders(200, response.length.toLong())
+                    exchange.responseBody.write(response.toByteArray(StandardCharsets.UTF_8))
+                    latch.countDown()
+                }
+                server.start()
+
                 Desktop.getDesktop().browse(URI(authRequestUri))
+
+                println("Attempting to automatically authorize via $authRequestUri in your default browser.")
+                println("If the browser does no open, open the URL above manually.")
+                latch.await(2, TimeUnit.MINUTES)
+                server.stop(0)
             } else {
-                println("Please open the following URL in your browser: $authRequestUri")
+                println("Open the following URL in your browser: $authRequestUri")
+                println("Once the login has completed, enter the URL from the browser address bar here.")
+                println("It should start with ${redirectUri}?... (enter everything including the text after the '?'")
+                redirectedUri = URI.create(readln())
             }
 
-            println("Waiting for redirect URI...")
-            latch.await(2, TimeUnit.MINUTES)
-            server.stop(0)
+            val code = redirectedUri.query
+                .split("&")
+                .first { it.startsWith("code=") }
+                .substringAfter("=")
 
-            accessToken?.let {
-                println("Success! You are now authenticated!")
-                return it
-            } ?: throw RuntimeException("Login via browser failed or took too long")
+            val accessToken = client.login(
+                realm = realm,
+                grantType = "authorization_code",
+                code = code,
+                clientId = clientId,
+                redirectUri = redirectUri
+            )
+
+            LOG.info("Success! You are now authenticated!")
+            return accessToken
         } catch (e: IOException) {
             throw RuntimeException(e)
         } catch (e: InterruptedException) {
