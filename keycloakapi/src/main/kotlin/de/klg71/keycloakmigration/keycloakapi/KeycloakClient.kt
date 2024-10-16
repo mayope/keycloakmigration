@@ -19,6 +19,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AssignClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.AssignGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AssignRole
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionInfo
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
 import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientListItem
@@ -516,7 +517,7 @@ interface KeycloakClient {
     fun flows(@Param("realm") realm: String): List<Flow>
 
     @RequestLine("GET /admin/realms/{realm}/authentication/flows/{alias}/executions")
-    fun flowExecutions(@Param("realm") realm: String, @Param("alias") alias: String): List<AuthenticationExecution>
+    fun flowExecutions(@Param("realm") realm: String, @Param("alias") alias: String): List<AuthenticationExecutionInfo>
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("PUT /admin/realms/{realm}/authentication/flows/{id}")
