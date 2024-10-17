@@ -2,7 +2,6 @@ package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionInfo
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 
@@ -13,7 +12,7 @@ class UpdateSubFlowAction(
   private val requirement: Flow.Requirement
 ) : Action(realm) {
 
-  private lateinit var original: AuthenticationExecutionInfo
+  private lateinit var original: AuthenticationExecution
 
   override fun execute() {
 

@@ -29,22 +29,11 @@ data class AuthenticationExecution(
     val displayName: String,
     val requirementChoices: List<Flow.Requirement>,
     val configurable: Boolean,
-    val providerId: String,
+    val providerId: String?,
     val level: Int,
     val index: Int,
-    val authenticationConfig: String? = null)
-
-data class AuthenticationExecutionInfo(
-  val id: UUID,
-  val requirement: Flow.Requirement,
-  val displayName: String,
-  val requirementChoices: List<Flow.Requirement>,
-  val configurable: Boolean,
-  val providerId: String?,
-  val level: Int,
-  val index: Int,
-  val authenticationConfig: String? = null,
-  val authenticationFlow: Boolean
+    val authenticationConfig: String? = null,
+    val authenticationFlow: Boolean
 )
 
 data class AddFlow(val alias: String,
