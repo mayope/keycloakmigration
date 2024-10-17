@@ -18,7 +18,7 @@ class UpdateSubFlowAction(
   override fun execute() {
 
     original = client.flowExecutions(realm(), topLevelFlow)
-      .first { it.displayName == subFlow && it.authenticationFlow}
+      .first { it.displayName == subFlow && it.authenticationFlow }
 
     val updateFlowExecution = UpdateFlowExecution(
       original.id,
