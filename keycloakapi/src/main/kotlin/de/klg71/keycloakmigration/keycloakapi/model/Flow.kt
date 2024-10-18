@@ -29,10 +29,12 @@ data class AuthenticationExecution(
     val displayName: String,
     val requirementChoices: List<Flow.Requirement>,
     val configurable: Boolean,
-    val providerId: String,
+    val providerId: String?,
     val level: Int,
     val index: Int,
-    val authenticationConfig: String? = null)
+    val authenticationConfig: String? = null,
+    val authenticationFlow: Boolean
+)
 
 data class AddFlow(val alias: String,
     val builtIn: Boolean,
@@ -50,7 +52,7 @@ data class UpdateFlow(
 
 data class AuthenticationExecutionImport(
     val requirement: Flow.Requirement,
-    val providerId: String,
+    val providerId: String?,
     val level: Int,
     val index: Int,
     val config: Map<String, String> = emptyMap())
@@ -72,14 +74,13 @@ data class UpdateFlowInPlace(
     val authenticationExecutions: List<AuthenticationExecutionImport>
 )
 
-
-data class AddFlowExecution(val provider: String)
+data class AddFlowExecution(val provider: String?)
 
 data class UpdateFlowExecution(val id: UUID,
     val requirement: Flow.Requirement,
     val level: Int,
     val index: Int,
-    val providerId: String)
+    val providerId: String?)
 
 data class CopyFlowExecution(val newName: String)
 
