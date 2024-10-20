@@ -18,7 +18,7 @@ fun Project.command(cmd: List<String>, workingDirectory: String = ".", environme
     }
 
 plugins {
-    kotlin("jvm") version "1.5.32"
+    kotlin("jvm") version "1.6.21"
     id("maven-publish")
     id("signing")
     id("de.undercouch.download") version ("3.4.3")

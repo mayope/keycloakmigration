@@ -16,6 +16,12 @@ open class KeycloakMigrationCorrectHashesTask : DefaultTask() {
     var adminTotp = ""
 
     @Input
+    var adminUseOauth = false
+
+    @Input
+    var adminUseOauthLocalPort = 8081
+
+    @Input
     var migrationFile = "keycloak-changelog.yml"
 
     @Input
@@ -46,6 +52,7 @@ open class KeycloakMigrationCorrectHashesTask : DefaultTask() {
     @TaskAction
     fun migrate() {
         GradleMigrationArgs(adminUser, adminPassword,adminTotp,
+                adminUseOauth, adminUseOauthLocalPort,
                 Paths.get(project.projectDir.toString(), migrationFile).toString(),
                 baseUrl, realm, clientId, true,
                 parameters, waitForKeycloak, waitForKeycloakTimeout, failOnUndefinedVariables, warnOnUndefinedVariables)
