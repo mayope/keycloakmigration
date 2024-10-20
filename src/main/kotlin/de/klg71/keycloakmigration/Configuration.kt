@@ -25,9 +25,9 @@ import org.koin.dsl.module
 @Suppress("LongParameterList")
 fun myModule(adminUser: String,
     adminPassword: String,
-    adminTotp:String,
-    adminUseOauth:Boolean,
-    adminUseOauthLocalPort:Int,
+    adminTotp: String,
+    adminUseOauth: Boolean,
+    adminUseOauthLocalPort: Int,
     baseUrl: String,
     realm: String,
     clientId: String,
@@ -38,7 +38,11 @@ fun myModule(adminUser: String,
     single { StringEnvSubstitutor(failOnUndefinedVariabled, warnOnUndefinedVariables) }
     single(named("yamlObjectMapper")) { initYamlObjectMapper() }
     single(named("parameters")) { parameters }
-    single { initKeycloakClient(baseUrl, adminUser, adminPassword, adminUseOauth, adminUseOauthLocalPort, realm, clientId, logger,adminTotp) }
+    single {
+        initKeycloakClient(
+            baseUrl, adminUser, adminPassword, adminUseOauth, adminUseOauthLocalPort, realm, clientId, logger, adminTotp
+        )
+    }
     single(named("migrationUserId")) { loadCurrentUser(get(), adminUser, realm) }
     single { RealmChecker() }
 }
@@ -50,14 +54,12 @@ private fun kotlinObjectMapper() = ObjectMapper(YAMLFactory()).apply {
     propertyNamingStrategy = PropertyNamingStrategy.LOWER_CAMEL_CASE
 }
 
-private fun initYamlObjectMapper(): ObjectMapper = ObjectMapper(YAMLFactory())
-    .registerModule(actionModule(initActionFactory(kotlinObjectMapper())))
-    .registerModule(KotlinModule())!!
+private fun initYamlObjectMapper(): ObjectMapper =
+    ObjectMapper(YAMLFactory()).registerModule(actionModule(initActionFactory(kotlinObjectMapper())))
+        .registerModule(KotlinModule())!!
 
-private fun actionModule(actionFactory: ActionFactory) = SimpleModule()
-    .addDeserializer(
-        Action::class.java,
-        ActionDeserializer(actionFactory)
+private fun actionModule(actionFactory: ActionFactory) = SimpleModule().addDeserializer(
+        Action::class.java, ActionDeserializer(actionFactory)
     )!!
 
 private fun initActionFactory(objectMapper: ObjectMapper) = ActionFactory(
@@ -65,6 +67,5 @@ private fun initActionFactory(objectMapper: ObjectMapper) = ActionFactory(
 )
 
 private fun loadCurrentUser(client: KeycloakClient, userName: String, realm: String) = client.userByName(
-    userName,
-    realm
+    userName, realm
 ).id
