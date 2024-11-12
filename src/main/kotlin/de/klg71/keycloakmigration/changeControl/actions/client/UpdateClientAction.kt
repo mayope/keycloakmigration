@@ -18,6 +18,7 @@ class UpdateClientAction(
     private val clientAuthenticatorType: String? = null,
     private val attributes: Map<String, String>? = null,
     private val protocol: String? = null,
+    private val secret: String? = null,
     private val redirectUris: List<String>? = null,
     private val notBefore: Int? = null,
     private val bearerOnly: Boolean? = null,
@@ -76,7 +77,7 @@ class UpdateClientAction(
         oldClient.access,
         baseUrl ?: oldClient.baseUrl,
         adminUrl ?: oldClient.adminUrl,
-        oldClient.secret,
+        secret ?: oldClient.secret,
         rootUrl ?: oldClient.rootUrl
     )
 

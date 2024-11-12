@@ -121,4 +121,15 @@ class UpdateClientIntegTest : AbstractIntegrationTest() {
         assertThat(clientAfter.surrogateAuthRequired).isTrue
     }
 
+    @Test
+    fun testUpdateClient_secret() {
+        AddSimpleClientAction(testRealm, "simpleClient").executeIt()
+        val clientBefore = client.clientById("simpleClient", testRealm)
+        assertThat(clientBefore.secret).isNullOrEmpty()
+
+        UpdateClientAction(testRealm, "simpleClient", publicClient = false, secret = "secret").executeIt()
+        val clientAfter = client.clientById("simpleClient", testRealm)
+        assertThat(clientAfter.secret).isEqualTo("secret")
+    }
+
 }
