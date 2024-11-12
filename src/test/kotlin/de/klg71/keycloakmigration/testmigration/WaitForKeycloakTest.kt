@@ -10,6 +10,7 @@ import de.klg71.keycloakmigration.DEFAULT_ADMIN_USER
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_USE_OAUTH
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT
 import de.klg71.keycloakmigration.DEFAULT_CLIENTID
+import de.klg71.keycloakmigration.DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT
 import de.klg71.keycloakmigration.DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
 import de.klg71.keycloakmigration.DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
 import de.klg71.keycloakmigration.DEFAULT_REALM
@@ -44,6 +45,7 @@ class WaitForKeycloakTest {
         override fun failOnUndefinedVariables() = DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
         override fun warnOnUndefinedVariables() = DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
         override fun adminTotp() = ""
+        override fun disableSetUnmanagedAttributesToAdminEdit()= DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT
     }
 
     @Test(timeout = 12 * 60 * 1000)

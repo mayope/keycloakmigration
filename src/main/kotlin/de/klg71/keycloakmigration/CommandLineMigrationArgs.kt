@@ -17,6 +17,7 @@ const val DEFAULT_WAIT_FOR_KEYCLOAK = false
 const val DEFAULT_WAIT_FOR_KEYCLOAK_TIMEOUT = "0"
 const val DEFAULT_FAIL_ON_UNDEFINED_VARIABLES = false
 const val DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES = false
+const val DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT = false
 
 @Suppress("SpreadOperator", "TooManyFunctions")
 internal class CommandLineMigrationArgs(parser: ArgParser) :
@@ -122,6 +123,14 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
             )
                 .default(DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES)
 
+    private val disableSetRealmToAdminEdit
+            by parser.flagging(
+                names = arrayOf("--disable-set-realm-to-admin-edit"),
+                help = "Disables setting the unmanagedAttributesPolicy to ADMIN_EDIT before any migrations are tried." +
+                        " defaulting to $DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT."
+            )
+                .default(DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT)
+
     override fun adminUser() = adminUser
 
     override fun adminPassword() = adminPassword
@@ -159,4 +168,5 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
     override fun failOnUndefinedVariables() = failOnUndefinedVariables
 
     override fun warnOnUndefinedVariables() = !disableWarnOnUndefinedVariables
+    override fun disableSetUnmanagedAttributesToAdminEdit() = disableSetRealmToAdminEdit
 }

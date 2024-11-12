@@ -2,7 +2,8 @@ package de.klg71.keycloakmigrationplugin
 
 import de.klg71.keycloakmigration.MigrationArgs
 
-open class GradleMigrationArgs(private val adminUser: String,
+open class GradleMigrationArgs(
+    private val adminUser: String,
     private val adminPassword: String,
     private val adminTotp: String,
     private val adminUseOauth: Boolean,
@@ -14,7 +15,8 @@ open class GradleMigrationArgs(private val adminUser: String,
     private val waitForKeycloak: Boolean,
     private val waitForKeycloakTimeout: Long,
     private val failOnUndefinedVariables: Boolean,
-    private val warnOnUndefinedVariables: Boolean
+    private val warnOnUndefinedVariables: Boolean,
+    private val disableSetUnmanagedAttributesToAdminEdit: Boolean,
 ) : MigrationArgs {
     override fun adminUser() = adminUser
     override fun adminPassword() = adminPassword
@@ -32,4 +34,5 @@ open class GradleMigrationArgs(private val adminUser: String,
     override fun waitForKeycloakTimeout() = waitForKeycloakTimeout
     override fun failOnUndefinedVariables() = failOnUndefinedVariables
     override fun warnOnUndefinedVariables() = warnOnUndefinedVariables
+    override fun disableSetUnmanagedAttributesToAdminEdit() = disableSetUnmanagedAttributesToAdminEdit
 }

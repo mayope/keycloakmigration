@@ -48,17 +48,23 @@ open class KeycloakMigrationCorrectHashesTask : DefaultTask() {
     @Input
     var warnOnUndefinedVariables = true
 
+    @Input
+    var disableSetUnmanagedAttributesToAdminEdit = false
+
     @Suppress("unused")
     @TaskAction
     fun migrate() {
-        GradleMigrationArgs(adminUser, adminPassword,adminTotp,
-                adminUseOauth, adminUseOauthLocalPort,
-                Paths.get(project.projectDir.toString(), migrationFile).toString(),
-                baseUrl, realm, clientId, true,
-                parameters, waitForKeycloak, waitForKeycloakTimeout, failOnUndefinedVariables, warnOnUndefinedVariables)
-                .let {
-                    de.klg71.keycloakmigration.migrate(it)
-                }
+        GradleMigrationArgs(
+            adminUser, adminPassword, adminTotp,
+            adminUseOauth, adminUseOauthLocalPort,
+            Paths.get(project.projectDir.toString(), migrationFile).toString(),
+            baseUrl, realm, clientId, true,
+            parameters, waitForKeycloak, waitForKeycloakTimeout, failOnUndefinedVariables, warnOnUndefinedVariables,
+            disableSetUnmanagedAttributesToAdminEdit
+        )
+            .let {
+                de.klg71.keycloakmigration.migrate(it)
+            }
     }
 
 }

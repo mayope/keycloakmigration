@@ -73,7 +73,9 @@ fun migrate(migrationArgs: MigrationArgs) {
                         failOnUndefinedVariables(), warnOnUndefinedVariables()
                     )
                 )
-                KeycloakMigration(migrationFile(), realm(), correctHashes()).execute()
+                KeycloakMigration(
+                    migrationFile(), realm(), correctHashes(), disableSetUnmanagedAttributesToAdminEdit()
+                ).execute()
             }
         } finally {
             stopKoin()

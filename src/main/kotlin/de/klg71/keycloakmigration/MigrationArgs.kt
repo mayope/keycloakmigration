@@ -17,4 +17,5 @@ interface MigrationArgs {
     fun waitForKeycloakTimeout(): Long
     fun failOnUndefinedVariables(): Boolean
     fun warnOnUndefinedVariables(): Boolean
+    fun disableSetUnmanagedAttributesToAdminEdit(): Boolean
 }

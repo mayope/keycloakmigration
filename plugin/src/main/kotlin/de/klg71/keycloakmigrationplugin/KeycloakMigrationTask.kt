@@ -48,6 +48,9 @@ open class KeycloakMigrationTask : DefaultTask() {
     @Input
     var warnOnUndefinedVariables = true
 
+    @Input
+    var disableSetUnmanagedAttributesToAdminEdit = false
+
     @Suppress("unused")
     @TaskAction
     fun migrate() {
@@ -56,7 +59,8 @@ open class KeycloakMigrationTask : DefaultTask() {
             adminUseOauth, adminUseOauthLocalPort,
             Paths.get(project.projectDir.toString(), migrationFile).toString(),
             baseUrl, realm, clientId, false,
-            parameters, waitForKeycloak, waitForKeycloakTimeout, failOnUndefinedVariables, warnOnUndefinedVariables
+            parameters, waitForKeycloak, waitForKeycloakTimeout, failOnUndefinedVariables, warnOnUndefinedVariables,
+            disableSetUnmanagedAttributesToAdminEdit
         )
             .let {
                 de.klg71.keycloakmigration.migrate(it)
