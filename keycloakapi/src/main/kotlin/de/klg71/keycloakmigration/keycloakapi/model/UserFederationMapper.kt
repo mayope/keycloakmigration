@@ -6,7 +6,7 @@ data class UserFederationMapper(
         val id: UUID,
         val name: String,
         val config: Map<String, List<String>>,
-        val parentId: UUID,
+        val parentId: String,
         val providerId: String,
         val providerType: String
 )
