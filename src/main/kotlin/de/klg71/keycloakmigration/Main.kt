@@ -67,11 +67,15 @@ fun migrate(migrationArgs: MigrationArgs) {
                 logger(KoinLogger(KOIN_LOGGER))
                 modules(
                     myModule(
-                        adminUser(), adminPassword(), adminTotp(), baseUrl(), realm(), clientId(), parameters(),
+                        adminUser(), adminPassword(), adminTotp(),
+                        adminUseOauth(), adminUseOauthLocalPort(),
+                        baseUrl(), realm(), clientId(), parameters(),
                         failOnUndefinedVariables(), warnOnUndefinedVariables()
                     )
                 )
-                KeycloakMigration(migrationFile(), realm(), correctHashes()).execute()
+                KeycloakMigration(
+                    migrationFile(), realm(), correctHashes(), disableSetUnmanagedAttributesToAdminEdit()
+                ).execute()
             }
         } finally {
             stopKoin()

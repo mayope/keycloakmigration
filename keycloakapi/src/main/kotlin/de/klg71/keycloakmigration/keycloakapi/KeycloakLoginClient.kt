@@ -25,5 +25,16 @@ interface KeycloakLoginClient {
     fun login(@Param("realm") realm: String,
         @Param("grant_type") grantType: String,
         @Param("refresh_token") refreshToken: String,
-        @Param("client_id") clientId: String): AccessToken
+        @Param("client_id") clientId: String)
+    : AccessToken
+
+    @RequestLine("POST /realms/{realm}/protocol/openid-connect/token")
+    @Headers("Content-Type: application/x-www-form-urlencoded; charset=UTF-8")
+    fun login(@Param("realm") realm: String,
+        @Param("grant_type") grantType: String,
+        @Param("code") code: String,
+        @Param("client_id") clientId: String,
+        @Param("redirect_uri") redirectUri: String
+    ): AccessToken
+
 }

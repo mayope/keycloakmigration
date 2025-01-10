@@ -24,7 +24,7 @@ abstract class AbstractIntegrationTest : KoinComponent {
         startKoin {
             modules(
                 myModule(
-                    adminUser, adminPass, "", TEST_BASE_URL, realm, clientId, emptyMap(),
+                    adminUser, adminPass, "", false, 8081, TEST_BASE_URL, realm, clientId, emptyMap(),
                     failOnUndefinedVariabled = true, warnOnUndefinedVariables = true, Slf4jLogger()
                 )
             )
@@ -35,7 +35,7 @@ abstract class AbstractIntegrationTest : KoinComponent {
         startKoin {
             modules(
                 myModule(
-                    adminUser, adminPass, "", TEST_BASE_URL, realm, clientId, parameters,
+                    adminUser, adminPass, "", false, 8081, TEST_BASE_URL, realm, clientId, parameters,
                     failOnUndefinedVariabled = true, warnOnUndefinedVariables = true
                 )
             )

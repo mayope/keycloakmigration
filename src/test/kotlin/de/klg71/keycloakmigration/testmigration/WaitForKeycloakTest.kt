@@ -7,19 +7,20 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import com.github.tomakehurst.wiremock.matching.UrlPattern
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_PASSWORD
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_USER
+import de.klg71.keycloakmigration.DEFAULT_ADMIN_USE_OAUTH
+import de.klg71.keycloakmigration.DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT
 import de.klg71.keycloakmigration.DEFAULT_CLIENTID
+import de.klg71.keycloakmigration.DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT
 import de.klg71.keycloakmigration.DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
 import de.klg71.keycloakmigration.DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
 import de.klg71.keycloakmigration.DEFAULT_REALM
 import de.klg71.keycloakmigration.KeycloakNotReadyException
 import de.klg71.keycloakmigration.MigrationArgs
 import de.klg71.keycloakmigration.migrate
-import feign.FeignException
 import org.apache.logging.log4j.core.config.Configurator
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.error.InstanceCreationException
-import java.io.FileNotFoundException
 import java.nio.file.Paths
 
 
@@ -28,6 +29,8 @@ class WaitForKeycloakTest {
     object TestMigrationArgs : MigrationArgs {
         override fun adminUser() = DEFAULT_ADMIN_USER
         override fun adminPassword() = DEFAULT_ADMIN_PASSWORD
+        override fun adminUseOauth() = DEFAULT_ADMIN_USE_OAUTH
+        override fun adminUseOauthLocalPort() = DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT
         override fun baseUrl() = "http://localhost:8888/auth" // wiremock server
         override fun migrationFile() = "src/test/resources/keycloak-changelog.yml"
         override fun realm() = DEFAULT_REALM
@@ -42,6 +45,7 @@ class WaitForKeycloakTest {
         override fun failOnUndefinedVariables() = DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
         override fun warnOnUndefinedVariables() = DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
         override fun adminTotp() = ""
+        override fun disableSetUnmanagedAttributesToAdminEdit()= DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT
     }
 
     @Test(timeout = 12 * 60 * 1000)
