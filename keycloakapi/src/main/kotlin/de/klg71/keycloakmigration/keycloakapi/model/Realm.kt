@@ -24,13 +24,13 @@ data class RealmAttributeRequired(
 )
 
 data class RealmAttribute(
-    val name: String,
-    val displayName: String?,
-    val annotations: Map<String, Any>?,
-    val validations: Map<String, Map<String, Any>>,
-    val permissions: RealmAttributePermissions,
-    val required: RealmAttributeRequired?,
-    val multivalued: Boolean
+    var name: String,
+    var displayName: String?,
+    var annotations: Map<String, Any>?,
+    var validations: Map<String, Map<String, Any>>,
+    var permissions: RealmAttributePermissions,
+    var required: RealmAttributeRequired?,
+    var multivalued: Boolean
 )
 
 data class RealmProfile(

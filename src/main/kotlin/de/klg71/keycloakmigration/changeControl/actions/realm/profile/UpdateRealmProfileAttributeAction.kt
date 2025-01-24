@@ -9,7 +9,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.RealmAttributeRequired
 import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
 
-class AddRealmProfileAttributeAction(
+class UpdateRealmProfileAttributeAction(
     realm: String?,
     private val name: String,
     private val displayName: String?,
@@ -20,7 +20,7 @@ class AddRealmProfileAttributeAction(
     private val multivalued: Boolean?
 ) : Action(realm) {
 
-    private var oldRealmProfile: RealmProfile? = null
+    private lateinit var oldRealmProfile: RealmProfile
 
     override fun execute() {
         if (!client.realmExistsById(realm())) {
@@ -32,25 +32,26 @@ class AddRealmProfileAttributeAction(
         val mapper = jacksonObjectMapper()
         oldRealmProfile = mapper.readValue(mapper.writeValueAsString(realmProfile), RealmProfile::class.java)
 
-        realmProfile.attributes.add(
-            RealmAttribute(
-                name,
-                displayName,
-                annotations ?: emptyMap(),
-                validations ?: emptyMap(),
-                RealmAttributePermissions(permissions?.view ?: emptySet(), permissions?.edit ?: emptySet()),
-                RealmAttributeRequired(required?.roles ?: emptySet(), required?.scopes ?: emptySet()),
-                multivalued ?: false
-            )
-        )
+        val realmAttribute: RealmAttribute? = realmProfile.attributes.find { it.name == name }
+
+        if (realmAttribute == null) throw MigrationException("Realm attribute with name: $name does not exist!")
+
+        realmAttribute.let {
+            it.name = name
+            it.displayName = displayName ?: realmAttribute.displayName
+            it.annotations = annotations ?: realmAttribute.annotations
+            it.validations = validations ?: realmAttribute.validations
+            it.permissions = permissions ?: realmAttribute.permissions
+            it.required = required ?: realmAttribute.required
+            it.multivalued = multivalued ?: realmAttribute.multivalued
+        }
 
         client.updateRealmProfile(realm(), realmProfile)
     }
 
     override fun undo() {
-        val realmProfile = oldRealmProfile ?: error("undo called but oldRealmProfile is null")
-        client.updateRealmProfile(realm(), realmProfile)
+        client.updateRealmProfile(realm(), oldRealmProfile)
     }
 
-    override fun name() = "AddRealmProfileAttributeAction $name"
+    override fun name() = "UpdateRealmProfileAttributeAction $name"
 }
