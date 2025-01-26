@@ -1,6 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.ByteArrayOutputStream
 import java.net.ConnectException
 
@@ -18,18 +19,18 @@ fun Project.command(cmd: List<String>, workingDirectory: String = ".", environme
     }
 
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "2.1.0"
     id("maven-publish")
     id("signing")
-    id("de.undercouch.download") version ("3.4.3")
-    id("net.researchgate.release") version ("2.8.0")
+    id("de.undercouch.download") version "5.5.0"
+    id("net.researchgate.release") version "3.0.2"
 
     // Security check for dependencies by task
-    id("org.owasp.dependencycheck") version "5.3.0"
+    id("org.owasp.dependencycheck") version "10.0.4"
     // static code analysis
-    id("io.gitlab.arturbosch.detekt") version "1.19.0-RC1"
+    id("io.gitlab.arturbosch.detekt") version "1.23.7"
 
-    id("com.github.johnrengelman.shadow") version "6.0.0" apply (false)
+    id("com.github.johnrengelman.shadow") version "8.1.1" apply (false)
 }
 
 dependencies {
@@ -63,7 +64,6 @@ dependencies {
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
 }
 
-
 repositories {
     mavenCentral()
 }
@@ -72,7 +72,7 @@ tasks {
     val keycloakVersion = "25.0.5"
 
     named("build") {
-        dependsOn("buildDocker", ":docsbuild:buildDocs")
+        dependsOn("buildDocker", "docsbuild:buildDocs")
     }
 
     register<ShadowJar>("shadowJar") {
@@ -81,12 +81,12 @@ tasks {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
         }
         from(sourceSets.main.get().output)
-        from(project(":keycloakapi").sourceSets.main.get().output)
-        configurations = mutableListOf(
+        from(project("keycloakapi").sourceSets.main.get().output)
+        configurations = listOf(
             project.configurations.compileClasspath.get(),
             project.configurations.runtimeClasspath.get()
         )
-        project.configurations.compileClasspath.allDependencies.forEach {
+        project.configurations.compileClasspath.get().allDependencies.forEach {
             println(it)
         }
     }
@@ -371,11 +371,12 @@ dependencyCheck {
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
     }
 }
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }

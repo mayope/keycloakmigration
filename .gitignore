@@ -6,3 +6,4 @@ build
 *.swp
 logs
 bin
+*.iml
