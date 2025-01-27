@@ -1,6 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.ByteArrayOutputStream
 import java.net.ConnectException
 
@@ -18,7 +19,7 @@ fun Project.command(cmd: List<String>, workingDirectory: String = ".", environme
     }
 
 plugins {
-    kotlin("jvm") version "2.0.20"
+    kotlin("jvm") version "2.1.0"
     id("maven-publish")
     id("signing")
     id("de.undercouch.download") version "5.5.0"
@@ -63,7 +64,6 @@ dependencies {
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
 }
 
-
 repositories {
     mavenCentral()
 }
@@ -72,7 +72,7 @@ tasks {
     val keycloakVersion = "25.0.5"
 
     named("build") {
-        dependsOn("buildDocker", ":docsbuild:buildDocs")
+        dependsOn("buildDocker", "docsbuild:buildDocs")
     }
 
     register<ShadowJar>("shadowJar") {
@@ -371,11 +371,12 @@ dependencyCheck {
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
     }
 }
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }

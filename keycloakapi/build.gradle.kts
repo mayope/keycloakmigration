@@ -1,8 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     kotlin("jvm")
     id("maven-publish")
     id("signing")
-    id("org.jetbrains.dokka") version "1.6.0"
+    id("org.jetbrains.dokka") version "2.0.0"
 }
 
 repositories {
@@ -43,17 +45,17 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.24.2")
 }
 
-val sourcesJar by tasks.creating(Jar::class) {
-    dependsOn.add(tasks.javadoc)
-    archiveClassifier.set("sources")
-    from(sourceSets.main.get().allSource)
-}
+val sourcesJar by tasks.registering(Jar::class, fun Jar.() {
+  dependsOn.add(tasks.javadoc)
+  archiveClassifier.set("sources")
+  from(sourceSets.main.get().allSource)
+})
 
-val javadocJar by tasks.creating(Jar::class) {
-    dependsOn.add(tasks.javadoc)
-    archiveClassifier.set("javadoc")
-    from(tasks.javadoc)
-}
+val javadocJar by tasks.registering(Jar::class, fun Jar.() {
+  dependsOn.add(tasks.javadoc)
+  archiveClassifier.set("javadoc")
+  from(tasks.javadoc)
+})
 
 publishing {
     publications {
@@ -74,8 +76,7 @@ publishing {
                 val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
                 password = ossrhPassword
                 if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
-                    org.jetbrains.kotlin.org.jline.utils.Log.warn(
-                            "Sonatype user and password are not set you won't be able to publish to maven central!")
+                    logger.warn("Sonatype user and password are not set you won't be able to publish to maven central!")
                 }
             }
         }
@@ -88,8 +89,7 @@ publishing {
                 val githubAccessToken = project.findProperty("githubPublishKey") as String? ?: ""
                 password = githubAccessToken
                 if (githubUser.isBlank() || githubAccessToken.isBlank()) {
-                    org.jetbrains.kotlin.org.jline.utils.Log.warn(
-                            "Github user and password are not set you won't be able to publish to github!")
+                    logger.warn("Github user and password are not set you won't be able to publish to github!")
                 }
             }
         }
@@ -157,13 +157,13 @@ tasks {
 
 }
 
-
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+  compilerOptions {
+    jvmTarget.set(JvmTarget.JVM_11)
+  }
 }
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
