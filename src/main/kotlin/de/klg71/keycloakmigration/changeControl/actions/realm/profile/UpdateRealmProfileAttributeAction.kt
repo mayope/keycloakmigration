@@ -41,8 +41,18 @@ class UpdateRealmProfileAttributeAction(
             it.displayName = displayName ?: realmAttribute.displayName
             it.annotations = annotations ?: realmAttribute.annotations
             it.validations = validations ?: realmAttribute.validations
-            it.permissions = permissions ?: realmAttribute.permissions
-            it.required = required ?: realmAttribute.required
+            it.permissions = if (permissions == null) realmAttribute.permissions else {
+                RealmAttributePermissions(
+                    permissions.view ?: realmAttribute.permissions.view,
+                    permissions.edit ?: realmAttribute.permissions.edit
+                )
+            }
+            it.required = if (required == null) realmAttribute.required else {
+                RealmAttributeRequired(
+                    required.roles ?: realmAttribute.required?.roles,
+                    required.scopes ?: realmAttribute.required?.scopes
+                )
+            }
             it.multivalued = multivalued ?: realmAttribute.multivalued
         }
 

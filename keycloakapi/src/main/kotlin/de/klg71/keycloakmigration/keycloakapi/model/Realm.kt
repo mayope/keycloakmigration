@@ -14,8 +14,8 @@ data class IdentityProviderMapperItem(
 )
 
 data class RealmAttributePermissions(
-    val view: Set<String>,
-    val edit: Set<String>
+    val view: Set<String>?,
+    val edit: Set<String>?
 )
 
 data class RealmAttributeRequired(
