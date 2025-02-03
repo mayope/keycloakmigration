@@ -2,7 +2,6 @@ package de.klg71.keycloakmigration.changeControl.actions.identityprovider
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
-import de.klg71.keycloakmigration.keycloakapi.identityProviderItems
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.koin.core.component.inject
@@ -24,15 +23,15 @@ class DeleteIdentityProviderIntegTest : AbstractIntegrationTest() {
             "first broker login", ""
         ).executeIt()
 
-        assertThat(client.identityProviderItems(testRealm).size).isOne()
+        assertThat(client.identityProviders(testRealm).size).isOne()
         DeleteIdentityProviderAction(testRealm, "test").executeIt()
-        assertThat(client.identityProviderItems(testRealm).size).isZero()
+        assertThat(client.identityProviders(testRealm).size).isZero()
     }
 
     @Test
     fun testDeleteIdentityProvider_not_existing() {
-        assertThat(client.identityProviderItems(testRealm).size).isZero()
+        assertThat(client.identityProviders(testRealm).size).isZero()
         DeleteIdentityProviderAction(testRealm, "test").executeIt()
-        assertThat(client.identityProviderItems(testRealm).size).isZero()
+        assertThat(client.identityProviders(testRealm).size).isZero()
     }
 }
