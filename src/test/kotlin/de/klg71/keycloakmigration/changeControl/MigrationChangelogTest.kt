@@ -1,6 +1,5 @@
 package de.klg71.keycloakmigration.changeControl
 
-import de.klg71.keycloakmigration.KoinLogger
 import de.klg71.keycloakmigration.changeControl.MigrationChangelog.Companion.migrationAttributeName
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.changeControl.model.ChangeSet
@@ -19,13 +18,11 @@ import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
+import org.koin.logger.SLF4JLogger
 import org.koin.test.KoinTest
-import org.slf4j.LoggerFactory
 import java.util.UUID.randomUUID
 
 internal class MigrationChangelogTest : KoinTest {
-
-    private val LOG = LoggerFactory.getLogger(MigrationChangelogTest::class.java)
 
     private val client = mockk<KeycloakClient>(relaxed = true)
 
@@ -33,7 +30,7 @@ internal class MigrationChangelogTest : KoinTest {
     fun setup() {
         clearAllMocks()
         startKoin {
-            logger(KoinLogger(LOG))
+            logger(SLF4JLogger())
             modules(module {
                 single { client }
             })

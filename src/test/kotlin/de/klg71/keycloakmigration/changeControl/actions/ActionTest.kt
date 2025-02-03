@@ -1,6 +1,5 @@
 package de.klg71.keycloakmigration.changeControl.actions
 
-import de.klg71.keycloakmigration.KoinLogger
 import de.klg71.keycloakmigration.changeControl.RealmChecker
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
@@ -15,6 +14,7 @@ import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module
+import org.koin.logger.SLF4JLogger
 import org.koin.test.KoinTest
 import org.slf4j.LoggerFactory
 
@@ -55,7 +55,7 @@ class ActionTest : KoinTest {
     fun setup() {
         clearMocks(client, realmChecker)
         startKoin {
-            logger(KoinLogger(logger))
+            logger(SLF4JLogger())
             modules(module {
                 single { client }
                 single { realmChecker }

@@ -1,6 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.ByteArrayOutputStream
 import java.net.ConnectException
 
@@ -18,51 +19,51 @@ fun Project.command(cmd: List<String>, workingDirectory: String = ".", environme
     }
 
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "2.1.10"
     id("maven-publish")
     id("signing")
-    id("de.undercouch.download") version ("3.4.3")
-    id("net.researchgate.release") version ("2.8.0")
+    id("de.undercouch.download") version "5.6.0"
+    id("net.researchgate.release") version "3.1.0"
 
     // Security check for dependencies by task
-    id("org.owasp.dependencycheck") version "5.3.0"
+    id("org.owasp.dependencycheck") version "12.0.1"
     // static code analysis
-    id("io.gitlab.arturbosch.detekt") version "1.19.0-RC1"
+    id("io.gitlab.arturbosch.detekt") version "1.23.7"
 
-    id("com.github.johnrengelman.shadow") version "6.0.0" apply (false)
+    id("com.github.johnrengelman.shadow") version "8.1.1" apply (false)
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     api(project("keycloakapi"))
 
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.0")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
-    implementation("io.insert-koin:koin-core:3.2.2")
-    implementation("commons-codec:commons-codec:1.15")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
+    implementation("io.insert-koin:koin-core:4.0.2")
+    implementation("commons-codec:commons-codec:1.18.0")
     implementation("com.xenomachina:kotlin-argparser:2.0.7")
 
     // Commons
-    implementation("org.apache.commons:commons-text:1.10.0")
-    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("org.apache.commons:commons-text:1.13.0")
+    implementation("org.apache.commons:commons-lang3:3.17.0")
 
     // Logging
-    implementation("org.slf4j:slf4j-api:1.7.36")
-    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.20.0")
+    implementation("org.slf4j:slf4j-api:2.0.16")
+    implementation("io.insert-koin:koin-logger-slf4j:4.0.2")
+    implementation("org.apache.logging.log4j:log4j-core:2.24.3")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.24.3")
 
-    testImplementation("io.github.openfeign:feign-slf4j:12.3")
+    testImplementation("io.github.openfeign:feign-slf4j:13.5")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-    testImplementation("io.mockk:mockk:1.9")
+    testImplementation("io.mockk:mockk:1.13.16")
 
-    testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation("io.insert-koin:koin-test:3.2.2")
-    testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
+    testImplementation("org.assertj:assertj-core:3.27.3")
+    testImplementation("io.insert-koin:koin-test:4.0.2")
+    testImplementation("org.assertj:assertj-core:3.27.3")
+    testImplementation("com.github.tomakehurst:wiremock-jre8:3.0.1")
 }
-
 
 repositories {
     mavenCentral()
@@ -72,7 +73,7 @@ tasks {
     val keycloakVersion = "26.0.7"
 
     named("build") {
-        dependsOn("buildDocker", ":docsbuild:buildDocs")
+        dependsOn("buildDocker", "docsbuild:buildDocs")
     }
 
     register<ShadowJar>("shadowJar") {
@@ -81,12 +82,12 @@ tasks {
             attributes["Main-Class"] = "de.klg71.keycloakmigration.MainKt"
         }
         from(sourceSets.main.get().output)
-        from(project(":keycloakapi").sourceSets.main.get().output)
-        configurations = mutableListOf(
+        from(project("keycloakapi").sourceSets.main.get().output)
+        configurations = listOf(
             project.configurations.compileClasspath.get(),
             project.configurations.runtimeClasspath.get()
         )
-        project.configurations.compileClasspath.allDependencies.forEach {
+        project.configurations.compileClasspath.get().allDependencies.forEach {
             println(it)
         }
     }
@@ -371,11 +372,12 @@ dependencyCheck {
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }

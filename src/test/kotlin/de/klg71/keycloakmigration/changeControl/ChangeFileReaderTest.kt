@@ -2,7 +2,6 @@ package de.klg71.keycloakmigration.changeControl
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import de.klg71.keycloakmigration.KoinLogger
 import de.klg71.keycloakmigration.changeControl.model.ChangeLog
 import de.klg71.keycloakmigration.changeControl.model.ChangeSet
 import de.klg71.keycloakmigration.changeControl.model.ChangeSetEntry
@@ -19,15 +18,13 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import org.koin.logger.SLF4JLogger
 import org.koin.test.KoinTest
-import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
 
 class ChangeFileReaderTest : KoinTest {
-
-    private val LOG = LoggerFactory.getLogger(ChangeFileReaderTest::class.java)!!
 
     private val yamlObjectMapper = mockk<ObjectMapper> {}
     private val stringEnvSubstitutor = mockk<StringEnvSubstitutor> {}
@@ -37,7 +34,7 @@ class ChangeFileReaderTest : KoinTest {
         clearAllMocks()
         every { stringEnvSubstitutor.substituteParameters(any()) }.answers { firstArg() }
         startKoin {
-            logger(KoinLogger(LOG))
+            logger(SLF4JLogger())
             modules(module {
                 single(named("yamlObjectMapper")) {
                     yamlObjectMapper
