@@ -22,7 +22,6 @@ class UpdateFlowAction(
     private var oldFlow: Flow? = null
     private val oldExecutions: MutableList<AuthenticationExecutionImport> = mutableListOf()
 
-
     override fun execute() {
         client.flows(realm())
             .firstOrNull { it.alias == alias }?.also {

@@ -35,8 +35,11 @@ import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddCl
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeUserRealmRoleMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.DeleteClientScopeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowExecutionAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.CopyFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateFlowAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateSubFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AssignRoleToGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.group.DeleteGroupAction
@@ -56,9 +59,15 @@ import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.AddSamlRoleMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.AddSamlSurnameAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.DeleteIdentityProviderMapperAction
+import de.klg71.keycloakmigration.changeControl.actions.organization.AddOrganizationAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.localization.AddLocalizationEntryAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.localization.DeleteLocalizationEntryAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.localization.UpdateLocalizationEntryAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.profile.AddRealmProfileAttributeAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.profile.UpdateRealmProfileAttributeAction
 import de.klg71.keycloakmigration.changeControl.actions.requiredactions.UpdateRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
@@ -198,8 +207,21 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addFlow" -> objectMapper.readValue<AddFlowAction>(actionJson)
             "deleteFlow" -> objectMapper.readValue<DeleteFlowAction>(actionJson)
             "updateFlow" -> objectMapper.readValue<UpdateFlowAction>(actionJson)
+            "copyFlow" -> objectMapper.readValue<CopyFlowAction>(actionJson)
+
+            "addFlowExecution" -> objectMapper.readValue<AddFlowExecutionAction>(actionJson)
+            "updateSubFlow" -> objectMapper.readValue<UpdateSubFlowAction>(actionJson)
 
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
+
+            "addRealmProfileAttribute" -> objectMapper.readValue<AddRealmProfileAttributeAction>(actionJson)
+            "updateRealmProfileAttribute" -> objectMapper.readValue<UpdateRealmProfileAttributeAction>(actionJson)
+
+            "addLocalizationEntry" -> objectMapper.readValue<AddLocalizationEntryAction>(actionJson)
+            "updateLocalizationEntry" -> objectMapper.readValue<UpdateLocalizationEntryAction>(actionJson)
+            "deleteLocalizationEntry" -> objectMapper.readValue<DeleteLocalizationEntryAction>(actionJson)
+
+            "addOrganization" -> objectMapper.readValue<AddOrganizationAction>(actionJson)
 
             else -> throw ParseException(
                 "Unknown Change type: $actionName"

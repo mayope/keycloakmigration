@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
+import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
 import de.klg71.keycloakmigration.keycloakapi.model.AddRole
 import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
@@ -24,6 +25,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ClientListItem
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScopeItem
 import de.klg71.keycloakmigration.keycloakapi.model.ClientSecret
+import de.klg71.keycloakmigration.keycloakapi.model.CopyFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.Group
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
@@ -31,6 +33,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.IdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
+import de.klg71.keycloakmigration.keycloakapi.model.Organization
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
@@ -523,6 +526,10 @@ interface KeycloakClient {
     fun deleteFlow(@Param("realm") realm: String, @Param("id") flowId: UUID)
 
     @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/authentication/flows/{flowAlias}/copy")
+    fun copyFlow(@Param("realm") realm: String, @Param("flowAlias") flowAlias: String, copyFlowExecution: CopyFlowExecution): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/flows/{alias}/executions/execution")
     fun addFlowExecution(@Param("realm") realm: String,
         @Param("alias") alias: String,
@@ -565,5 +572,54 @@ interface KeycloakClient {
     @RequestLine("DELETE /admin/realms/{realm}/authentication/required-actions/{alias}")
     fun deleteRequiredAction(@Param("realm") realm: String,
         @Param("alias") alias: String): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("PUT /admin/realms/{realm}/users/profile")
+    fun updateRealmProfile(
+        @Param("realm") realm: String,
+        profile: RealmProfile
+    ): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("GET /admin/realms/{realm}/localization/{locale}")
+    fun getLocalizationEntries(
+        @Param("realm") realm: String,
+        @Param("locale") locale: String,
+    ): Map<String, String>
+
+    @Headers("Content-Type: text/plain; charset=utf-8")
+    @RequestLine("PUT /admin/realms/{realm}/localization/{locale}/{key}")
+    fun updateLocalizationEntry(
+        @Param("realm") realm: String,
+        @Param("locale") locale: String,
+        @Param("key") key: String,
+        text: String
+    ): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("DELETE /admin/realms/{realm}/localization/{locale}/{key}")
+    fun deleteLocalizationEntry(
+        @Param("realm") realm: String,
+        @Param("locale") locale: String,
+        @Param("key") key: String
+    ): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("GET /admin/realms/{realm}/organizations")
+    fun organizations(@Param("realm") realm: String): List<Organization>
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/organizations")
+    fun addOrganization(
+        @Param("realm") realm: String,
+        organization: AddOrganization
+    ): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("DELETE /admin/realms/{realm}/organizations/{id}")
+    fun deleteOrganization(
+        @Param("id") id: UUID,
+        @Param("realm") realm: String,
+    ): Response
 }
 
