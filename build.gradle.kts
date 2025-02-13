@@ -63,6 +63,7 @@ dependencies {
     testImplementation("io.insert-koin:koin-test:4.0.2")
     testImplementation("org.assertj:assertj-core:3.27.3")
     testImplementation("com.github.tomakehurst:wiremock-jre8:3.0.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 }
 
 repositories {

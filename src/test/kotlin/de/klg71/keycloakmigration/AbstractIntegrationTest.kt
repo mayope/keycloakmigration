@@ -10,10 +10,15 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 
+@Suppress("TopLevelPropertyNaming")
 private const val adminUser = "admin"
+@Suppress("TopLevelPropertyNaming")
 private const val adminPass = "admin"
+@Suppress("TopLevelPropertyNaming")
 const val TEST_BASE_URL = "http://localhost:18080/auth"
+@Suppress("TopLevelPropertyNaming")
 private const val realm = "master"
+@Suppress("TopLevelPropertyNaming")
 private const val clientId = "admin-cli"
 
 abstract class AbstractIntegrationTest : KoinComponent {
