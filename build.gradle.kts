@@ -1,5 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
+import net.researchgate.release.ReleaseExtension
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.ByteArrayOutputStream
@@ -351,6 +352,11 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
 
 signing {
     sign(publishing.publications["mavenJava"])
+}
+configure<ReleaseExtension>{
+    with(git){
+        requireBranch.set("master")
+    }
 }
 
 
