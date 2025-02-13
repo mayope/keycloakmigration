@@ -3,6 +3,7 @@ plugins {
     id("maven-publish")
     id("signing")
     id("java-gradle-plugin")
+    id("com.gradle.plugin-publish") version "1.2.1"
 }
 
 repositories {
