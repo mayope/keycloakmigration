@@ -49,14 +49,14 @@ fun myModule(adminUser: String,
 
 private fun kotlinObjectMapper() = ObjectMapper(YAMLFactory()).apply {
     enable(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES)
-    registerModule(KotlinModule())!!
+    registerModule(KotlinModule.Builder().build())!!
     enable(MapperFeature.ALLOW_EXPLICIT_PROPERTY_RENAMING)
     propertyNamingStrategy = PropertyNamingStrategy.LOWER_CAMEL_CASE
 }
 
 private fun initYamlObjectMapper(): ObjectMapper =
     ObjectMapper(YAMLFactory()).registerModule(actionModule(initActionFactory(kotlinObjectMapper())))
-        .registerModule(KotlinModule())!!
+        .registerModule(KotlinModule.Builder().build())!!
 
 private fun actionModule(actionFactory: ActionFactory) = SimpleModule().addDeserializer(
         Action::class.java, ActionDeserializer(actionFactory)
