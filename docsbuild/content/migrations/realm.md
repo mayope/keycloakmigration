@@ -175,6 +175,7 @@ Supported policies:
  - hashingAlgorithm
  - hashAlgorithm
  - notUsername
+ - notContainsUsername
  - notEmail
 
 See example below
