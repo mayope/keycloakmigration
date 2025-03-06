@@ -1,13 +1,13 @@
 plugins {
     kotlin("jvm")
-    id("com.gradle.plugin-publish") version "0.11.0"
-     `maven-publish`
+    id("maven-publish")
     id("signing")
     id("java-gradle-plugin")
+    id("com.gradle.plugin-publish") version "1.2.1"
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -19,20 +19,20 @@ dependencies {
     implementation(localGroovy())
 }
 
-pluginBundle {
+gradlePlugin {
     website = "https://mayope.net"
     vcsUrl = "https://github.com/mayope/keycloakmigration"
-    tags = listOf("keycloak", "migration")
 
     plugins {
         create("keycloakmigrationplugin") {
             id = "de.klg71.keycloakmigrationplugin"
+            implementationClass = "de.klg71.keycloakmigrationplugin.KeycloakMigrationPlugin"
             displayName = "keycloakmigration"
             description = "Plugin to provide liquibase like migrations for keycloak"
+            tags = listOf("keycloak", "migration")
         }
     }
 }
-
 
 publishing {
     publications {

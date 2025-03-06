@@ -209,7 +209,7 @@ fun KeycloakClient.userFederationExistsByName(name: String, realm: String) =
     userFederations(realm).any { it.name == name }
 
 fun KeycloakClient.identityProviderExistsByAlias(alias: String, realm: String) =
-    identityProviderItems(realm).any { it.alias == alias }
+    identityProviders(realm).any { it.alias == alias }
 
 fun KeycloakClient.clientMapperExistsByName(clientId: String, mapperName: String, realm: String) =
     clientMappers(clientUUID(clientId, realm), realm).any { it.name == mapperName }
@@ -227,8 +227,6 @@ fun KeycloakClient.ldapMapperByName(ldapName: String, name: String, realm: Strin
 
 fun KeycloakClient.ldapMapperExistsByName(ldapName: String, name: String, realm: String) =
     ldapMappers(realm, userFederationByName(ldapName, realm).id).any { it.name == name }
-
-fun KeycloakClient.identityProviderItems(realm: String) = realmById(realm).identityProviders
 
 fun KeycloakClient.identityProviderByAlias(alias: String, realm: String) =
     identityProviders(realm).firstOrNull { it.alias == alias }

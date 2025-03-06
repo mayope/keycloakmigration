@@ -5,7 +5,7 @@ import java.util.UUID
 data class AddUserFederationMapper(
         val name: String,
         val config: Map<String, List<String>>,
-        val parentId: UUID,
+        val parentId: String,
         val providerId: String,
         val providerType: String
 )
@@ -13,20 +13,20 @@ data class AddUserFederationMapper(
 const val LDAP_STORAGE_MAPPER = "org.keycloak.storage.ldap.mappers.LDAPStorageMapper"
 
 const val HARDCODED_LDAP_ROLE_MAPPER = "hardcoded-ldap-role-mapper"
-fun hardcodedRoleMapper(name: String, role: String, parentId: UUID): AddUserFederationMapper {
+fun hardcodedRoleMapper(name: String, role: String, parentId: String): AddUserFederationMapper {
     return AddUserFederationMapper(name, translateConfig(mapOf("role" to role)), parentId, HARDCODED_LDAP_ROLE_MAPPER,
             LDAP_STORAGE_MAPPER)
 }
 
 const val USER_ACCOUNT_CONTROL_MAPPER = "msad-user-account-control-mapper"
-fun userAccountControlMapper(name: String, parentId: UUID): AddUserFederationMapper {
+fun userAccountControlMapper(name: String, parentId: String): AddUserFederationMapper {
     return AddUserFederationMapper(name, translateConfig(emptyMap()), parentId, USER_ACCOUNT_CONTROL_MAPPER,
             LDAP_STORAGE_MAPPER)
 }
 
 const val USER_ATTRIBUTE_MAPPER = "user-attribute-ldap-mapper"
 @Suppress("LongParameterList")
-fun userAttributeMapper(name: String, parentId: UUID, userModelAttribute: String,
+fun userAttributeMapper(name: String, parentId: String, userModelAttribute: String,
                                  ldapAttribute: String, readOnly: Boolean, alwaysReadFromLdap: Boolean,
                                  isMandatoryInLdap: Boolean): AddUserFederationMapper {
     return AddUserFederationMapper(name, translateConfig(mapOf(
@@ -41,7 +41,7 @@ fun userAttributeMapper(name: String, parentId: UUID, userModelAttribute: String
 
 const val GROUP_MAPPER = "group-ldap-mapper"
 @Suppress("LongParameterList")
-fun groupMapper(name: String, parentId: UUID, groupNameLdapAttribute: String,
+fun groupMapper(name: String, parentId: String, groupNameLdapAttribute: String,
                          groupObjectClasses: List<String>, groupsDn: String, preserveGroupInheritance: Boolean,
                          membershipLdapAttribute: String, membershipAttributeType: String,
                          membershipUserLdapAttribute: String,
@@ -70,7 +70,7 @@ groupsPath:String): AddUserFederationMapper {
 }
 
 const val FULL_NAME_MAPPER = "full-name-ldap-mapper"
-fun fullNameMapper(name: String, parentId: UUID, ldapFullNameAttribute: String, readOnly: Boolean,
+fun fullNameMapper(name: String, parentId: String, ldapFullNameAttribute: String, readOnly: Boolean,
                             writeOnly: Boolean): AddUserFederationMapper {
     return AddUserFederationMapper(name, translateConfig(mapOf(
             "ldap.full.name.attribute" to ldapFullNameAttribute,
@@ -79,7 +79,7 @@ fun fullNameMapper(name: String, parentId: UUID, ldapFullNameAttribute: String, 
     )), parentId, FULL_NAME_MAPPER, LDAP_STORAGE_MAPPER)
 }
 
-fun ldapMapper(name: String, config: Map<String, String>, parentId: UUID, providerId: String) =
+fun ldapMapper(name: String, config: Map<String, String>, parentId: String, providerId: String) =
         AddUserFederationMapper(name, translateConfig(config), parentId, providerId, LDAP_STORAGE_MAPPER)
 
 fun translateConfig(config: Map<String, String>) =

@@ -5,7 +5,7 @@ import com.xenomachina.argparser.mainBody
 import de.klg71.keycloakmigration.changeControl.KeycloakMigration
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
-import org.slf4j.LoggerFactory
+import org.koin.logger.SLF4JLogger
 import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketException
@@ -13,7 +13,6 @@ import java.net.URL
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
-val KOIN_LOGGER = LoggerFactory.getLogger("de.klg71.keycloakmigration.koinlogger")!!
 const val DEFAULT_WAIT_FOR_KEYCLOAK_PAUSE_TIME = 1000L
 private const val LOGGING_MODULO = 10
 
@@ -64,14 +63,18 @@ fun migrate(migrationArgs: MigrationArgs) {
         }
         try {
             startKoin {
-                logger(KoinLogger(KOIN_LOGGER))
+                logger(SLF4JLogger())
                 modules(
                     myModule(
-                        adminUser(), adminPassword(), adminTotp(), baseUrl(), realm(), clientId(), parameters(),
+                        adminUser(), adminPassword(), adminTotp(),
+                        adminUseOauth(), adminUseOauthLocalPort(),
+                        baseUrl(), realm(), clientId(), parameters(),
                         failOnUndefinedVariables(), warnOnUndefinedVariables()
                     )
                 )
-                KeycloakMigration(migrationFile(), realm(), correctHashes()).execute()
+                KeycloakMigration(
+                    migrationFile(), realm(), correctHashes(), disableSetUnmanagedAttributesToAdminEdit()
+                ).execute()
             }
         } finally {
             stopKoin()

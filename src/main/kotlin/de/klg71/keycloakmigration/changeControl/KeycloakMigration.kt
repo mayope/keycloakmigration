@@ -1,6 +1,7 @@
 package de.klg71.keycloakmigration.changeControl
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
+import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
 import de.klg71.keycloakmigration.changeControl.model.ChangeSet
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -11,8 +12,9 @@ import java.util.UUID
 /**
  * Execute the keycloakmigration
  */
-internal class KeycloakMigration(private val migrationFile: String, realm: String,
-    private val correctHashes: Boolean) : KoinComponent {
+internal class KeycloakMigration(private val migrationFile: String, private val realm: String,
+    private val correctHashes: Boolean,
+    private val disableSetUnmanagedAttributesToAdminEdit: Boolean) : KoinComponent {
     private val migrationUserId by inject<UUID>(named("migrationUserId"))
     private val changeFileReader = ChangeFileReader()
     private val changelog = MigrationChangelog(migrationUserId, realm)
@@ -24,6 +26,9 @@ internal class KeycloakMigration(private val migrationFile: String, realm: Strin
     @Suppress("TooGenericExceptionCaught")
     internal fun execute() {
         try {
+            if (!disableSetUnmanagedAttributesToAdminEdit) {
+                UpdateRealmAction(realm, unmanagedAttributePolicy = "ADMIN_EDIT").executeIt()
+            }
             changeFileReader.changes(migrationFile).let {
                 changelog.changesTodo(it, correctHashes)
             }.forEach { change ->

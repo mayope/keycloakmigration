@@ -1,0 +1,10 @@
+id: update_client_clientauthenticatortype
+author: klg71
+realm: integ-test
+changes:
+  - addSimpleClient:
+      clientId: testClientJwtAuth
+  - updateClient:
+      clientId: testClientJwtAuth
+      publicClient: false
+      clientAuthenticatorType: client-jwt

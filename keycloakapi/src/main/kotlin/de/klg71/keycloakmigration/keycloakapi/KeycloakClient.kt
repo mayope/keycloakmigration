@@ -387,7 +387,7 @@ interface KeycloakClient {
     fun addUserFederation(addUserFederation: AddUserFederation, @Param("realm") realm: String)
 
     @RequestLine("DELETE /admin/realms/{realm}/components/{user-federation-id}")
-    fun deleteUserFederation(@Param("realm") realm: String, @Param("user-federation-id") userFederationId: UUID)
+    fun deleteUserFederation(@Param("realm") realm: String, @Param("user-federation-id") userFederationId: String)
 
     @RequestLine("POST /admin/realms/{realm}/components")
     @Headers("Content-Type: application/json; charset=utf-8")
@@ -399,7 +399,7 @@ interface KeycloakClient {
         "GET /admin/realms/{realm}/components" +
                 "?parent={ldap-id}&type=org.keycloak.storage.ldap.mappers.LDAPStorageMapper"
     )
-    fun ldapMappers(@Param("realm") realm: String, @Param("ldap-id") ldapId: UUID)
+    fun ldapMappers(@Param("realm") realm: String, @Param("ldap-id") ldapId: String)
             : List<UserFederationMapper>
 
     @RequestLine("DELETE /admin/realms/{realm}/components/{mapperId}")
