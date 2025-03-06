@@ -603,23 +603,5 @@ interface KeycloakClient {
         @Param("locale") locale: String,
         @Param("key") key: String
     ): Response
-
-    @Headers("Content-Type: application/json; charset=utf-8")
-    @RequestLine("GET /admin/realms/{realm}/organizations")
-    fun organizations(@Param("realm") realm: String): List<Organization>
-
-    @Headers("Content-Type: application/json; charset=utf-8")
-    @RequestLine("POST /admin/realms/{realm}/organizations")
-    fun addOrganization(
-        @Param("realm") realm: String,
-        organization: AddOrganization
-    ): Response
-
-    @Headers("Content-Type: application/json; charset=utf-8")
-    @RequestLine("DELETE /admin/realms/{realm}/organizations/{id}")
-    fun deleteOrganization(
-        @Param("id") id: UUID,
-        @Param("realm") realm: String,
-    ): Response
 }
 

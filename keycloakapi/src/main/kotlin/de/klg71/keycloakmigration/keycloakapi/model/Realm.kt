@@ -127,7 +127,6 @@ data class Realm(
     val loginTheme: String? = null,
     val requiredActions: List<RequiredActionProviderItem>? = null,
     val upConfig: RealmProfile? = null,
-    val organizationsEnabled: Boolean? = null,
     val clientProfiles: Map<String, List<String>> = mapOf("profiles" to emptyList()),
     val clientPolicies: Map<String, List<String>> = mapOf("policies" to emptyList())
 )
