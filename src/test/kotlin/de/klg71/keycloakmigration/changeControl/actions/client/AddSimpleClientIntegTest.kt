@@ -21,6 +21,7 @@ class AddSimpleClientIntegTest : AbstractIntegrationTest() {
         assertThat(testClient.attributes).isEqualTo(
             mapOf(
                 "backchannel.logout.revoke.offline.tokens" to "false", "backchannel.logout.session.required" to "true",
+                "realm_client" to "false",
                 "test" to "1", "test2" to "2"
             )
         )
@@ -39,6 +40,7 @@ class AddSimpleClientIntegTest : AbstractIntegrationTest() {
         assertThat(testClient.attributes).isEqualTo(
             mapOf(
                 "backchannel.logout.revoke.offline.tokens" to "false", "backchannel.logout.session.required" to "true",
+                "realm_client" to "false",
                 "test" to "1", "test2" to "2"
             )
         )

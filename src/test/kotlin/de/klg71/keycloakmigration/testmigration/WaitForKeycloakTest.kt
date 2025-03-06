@@ -17,11 +17,18 @@ import de.klg71.keycloakmigration.DEFAULT_REALM
 import de.klg71.keycloakmigration.KeycloakNotReadyException
 import de.klg71.keycloakmigration.MigrationArgs
 import de.klg71.keycloakmigration.migrate
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.apache.logging.log4j.core.config.Configurator
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.error.InstanceCreationException
 import java.nio.file.Paths
+import kotlin.coroutines.CoroutineContext
 
 
 class WaitForKeycloakTest {
@@ -45,30 +52,51 @@ class WaitForKeycloakTest {
         override fun failOnUndefinedVariables() = DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
         override fun warnOnUndefinedVariables() = DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
         override fun adminTotp() = ""
-        override fun disableSetUnmanagedAttributesToAdminEdit()= DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT
+        override fun disableSetUnmanagedAttributesToAdminEdit() = DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT
     }
 
     @Test(timeout = 12 * 60 * 1000)
     fun `should throw KeycloakNotReadyException when timeout is reached`() {
+        Assertions.setMaxStackTraceElementsDisplayed(100)
         Configurator.initialize(null, Paths.get("").toAbsolutePath().toString() + "/src/test/resources/log4j2.yml");
         assertThatThrownBy { migrate(TestMigrationArgs) }.isInstanceOf(KeycloakNotReadyException::class.java)
     }
 
     @Test
     internal fun `should wait for keycloak to start`() {
-        Thread {
-            val wireMockServer = WireMockServer(options().port(8888))
-            Thread.sleep(5000)
-            wireMockServer.start()
-            wireMockServer.stubFor(
-                get(UrlPattern.ANY).willReturn(ok().withBody("ok"))
-            )
-        }.start()
+        val wireMockServer = WireMockServer(options().port(8888))
+        var success=false
+        CoroutineScope(Dispatchers.Default).launch {
+            var alive = true
+            launch {
+                delay(1000)
+                wireMockServer.start()
+                wireMockServer.stubFor(
+                    get(UrlPattern.ANY).willReturn(ok().withBody("ok"))
+                )
+                while (alive) {
+                    delay(100)
+                }
+            }
+            launch {
+                delay(100)
+                Configurator.initialize(
+                    null, Paths.get("").toAbsolutePath().toString() + "/src/test/resources/log4j2.yml"
+                )
+                assertThatThrownBy { migrate(TestMigrationArgs) }.isInstanceOf(
+                    InstanceCreationException::class.java
+                ) // since wiremock will return nothing
+                alive = false
+                success=true
+            }
+        }
+        runBlocking {
+            while(!success){
+                delay(100)
+            }
+        }
+        wireMockServer.stop()
 
-        Configurator.initialize(null, Paths.get("").toAbsolutePath().toString() + "/src/test/resources/log4j2.yml");
-        assertThatThrownBy { migrate(TestMigrationArgs) }.isInstanceOf(
-            InstanceCreationException::class.java
-        ) // since wiremock will return nothing
     }
 
 }

@@ -14,35 +14,37 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
 
-    implementation("org.slf4j:slf4j-api:1.7.36")
-    api("io.github.openfeign:feign-core:12.3")
-    implementation("io.github.openfeign:feign-jackson:12.3")
-    implementation("io.github.openfeign:feign-httpclient:12.3")
+    implementation("org.slf4j:slf4j-api:2.0.16")
+    api("io.github.openfeign:feign-core:13.5")
+    implementation("io.github.openfeign:feign-jackson:13.5")
+    implementation("io.github.openfeign:feign-httpclient:13.5")
     implementation("io.github.openfeign.form:feign-form:3.8.0")
-    implementation("io.github.resilience4j:resilience4j-feign:1.5.0")
-    implementation("io.github.resilience4j:resilience4j-micrometer:1.5.0")
+    implementation("io.github.resilience4j:resilience4j-feign:2.3.0")
+    implementation("io.github.resilience4j:resilience4j-retry:2.3.0")
+    implementation("io.github.resilience4j:resilience4j-micrometer:2.3.0")
+    implementation("io.github.resilience4j:resilience4j-circuitbreaker:2.3.0")
 
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.0")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
-    implementation("io.insert-koin:koin-core:3.2.2")
-    implementation("commons-codec:commons-codec:1.15")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
+    implementation("io.insert-koin:koin-core:4.0.2")
+    implementation("commons-codec:commons-codec:1.18.0")
     implementation("com.xenomachina:kotlin-argparser:2.0.7")
 
-    implementation("org.apache.commons:commons-text:1.10.0")
-    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("org.apache.commons:commons-text:1.13.0")
+    implementation("org.apache.commons:commons-lang3:3.17.0")
 
-    testImplementation("org.slf4j:slf4j-api:1.7.36")
-    testImplementation("org.apache.logging.log4j:log4j-core:2.20.0")
-    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.20.0")
+    testImplementation("org.slf4j:slf4j-api:2.0.16")
+    testImplementation("org.apache.logging.log4j:log4j-core:2.24.3")
+    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.24.3")
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-    testImplementation("io.mockk:mockk:1.9")
-    testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation("io.insert-koin:koin-test:3.2.2")
+    testImplementation("io.mockk:mockk:1.13.16")
+    testImplementation("org.assertj:assertj-core:3.27.3")
+    testImplementation("io.insert-koin:koin-test:4.0.2")
     testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
-    testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation("org.assertj:assertj-core:3.27.3")
 }
 
 val sourcesJar by tasks.registering(Jar::class, fun Jar.() {
@@ -158,12 +160,12 @@ tasks {
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
-  compilerOptions {
-    jvmTarget.set(JvmTarget.JVM_11)
-  }
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }

@@ -42,11 +42,11 @@ internal class MigrationChangelog(private val migrationUserId: UUID, private val
     }
 
     private fun List<ChangeSet>.checkExistingHashes(changeHashes: List<String>, correctHashes: Boolean) {
-        changeHashes.forEachIndexed { i, it ->
-            if (get(i).hash() != it) {
-                handleHashError(correctHashes, it, i)
+        changeHashes.forEachIndexed { index, changeHash ->
+            if (get(index).hash() != changeHash) {
+                handleHashError(correctHashes, changeHash, index)
             }
-            LOG.info("Skipping migration: ${get(i).id}")
+            LOG.info("Skipping migration: ${get(index).id}")
         }
     }
 
