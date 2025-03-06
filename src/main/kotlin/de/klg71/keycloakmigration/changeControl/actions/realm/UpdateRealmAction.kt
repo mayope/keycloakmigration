@@ -201,7 +201,6 @@ class UpdateRealmAction(
     private fun mapValue(entry: Map.Entry<String, String>) =
         when (entry.key.lowercase()) {
             "notusername" -> "undefined"
-            "notcontainsusername" -> "undefined"
             "notemail" -> "undefined"
             else -> entry.value
         }
@@ -229,7 +228,6 @@ class UpdateRealmAction(
         "hashingalgorithm" -> "hashAlgorithm"
         "hashalgorithm" -> "hashAlgorithm"
         "notusername" -> "notUsername"
-        "notcontainsusername" -> "notContainsUsername"
         "notemail" -> "notEmail"
         else -> throw MigrationException("Not recognized policy: ${entry.key}")
     }
