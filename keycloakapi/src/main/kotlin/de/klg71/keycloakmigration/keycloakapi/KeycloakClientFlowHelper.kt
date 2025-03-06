@@ -51,8 +51,7 @@ private fun KeycloakClient.configureAuthExecutors(importFlow: ImportFlow, realm:
 
 private fun KeycloakClient.addExecution(realm: String,
     flowAlias: String,
-    executionImport: AuthenticationExecutionImport
-) {
+    executionImport: AuthenticationExecutionImport) {
     val executionId =
         addFlowExecution(realm, flowAlias, AddFlowExecution(executionImport.providerId)).extractLocationUUID()
     updateFlowExecution(
