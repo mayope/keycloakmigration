@@ -8,7 +8,6 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
-import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
 import de.klg71.keycloakmigration.keycloakapi.model.AddRole
 import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
@@ -33,7 +32,6 @@ import de.klg71.keycloakmigration.keycloakapi.model.IdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
-import de.klg71.keycloakmigration.keycloakapi.model.Organization
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem

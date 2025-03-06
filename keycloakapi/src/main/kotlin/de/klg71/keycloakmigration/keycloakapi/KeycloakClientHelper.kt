@@ -6,7 +6,6 @@ import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Role
-import de.klg71.keycloakmigration.keycloakapi.model.Organization
 import feign.Response
 import java.util.UUID
 
