@@ -191,3 +191,74 @@ See example below
             - notUsername: test
             - minLength: 8
 ```
+
+## addRealmProfileAttribute
+adds a new attribute in the user profile for the realm
+
+### Parameters
+- realm: String, optional
+- name: String, not optional,
+- displayName: String, optional,
+- annotations: Map< String, Any> optional,
+- validations: Map< String, Map< String, Any>> optional,
+- permissions: RealmAttributePermissions optional
+- required: RealmAttributeRequired optional
+- multivalued: Boolean, optional, default=true
+
+### Example
+```yaml
+    id: add-realm-profile-attribute
+    author: isaac
+    changes:
+      - addRealmProfileAttribute:
+          name: country
+          displayName: $${profile.attributes.country}
+          permissions:
+            view:
+              - admin
+              - user
+            edit:
+              - admin
+          required:
+            roles:
+              - admin
+              - user
+```
+
+## updateRealmProfileAttribute
+updates an attribute in the user profile for the realm
+
+### Parameters
+- realm: String, optional
+- name: String, not optional,
+- displayName: String, optional,
+- annotations: Map< String, Any> optional,
+- validations: Map< String, Map< String, Any>> optional,
+- permissions: RealmAttributePermissions optional
+- required: RealmAttributeRequired optional
+- multivalued: Boolean, optional, default=true
+
+### Example
+```yaml
+    id: add-realm-profile-attribute
+    author: isaac
+    changes:
+      - updateRealmProfileAttribute:
+          name: firstName
+          permissions:
+            view:
+              - admin
+              - user
+            edit:
+              - admin
+```
+
+#### RealmAttributePermissions
+##### Parameters
+- view: Set< String>, optional
+- edit: Set< String>, optional
+
+#### RealmAttributeRequired
+##### Parameters
+- roles: Set< String>, optional
+- scopes: Set< String>, optional
