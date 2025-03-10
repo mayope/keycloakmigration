@@ -92,7 +92,6 @@ class UpdateRealmAction(
     private val loginTheme: String? = null,
     private val unmanagedAttributePolicy: String? = null) : Action() {
 
-
     lateinit var oldRealm: Realm
 
     @Suppress("LongMethod", "ComplexMethod")
