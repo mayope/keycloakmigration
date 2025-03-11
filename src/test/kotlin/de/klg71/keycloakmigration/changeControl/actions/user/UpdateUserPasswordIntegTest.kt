@@ -19,7 +19,14 @@ class UpdateUserPasswordIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testUpdateUserPassword() {
-        AddUserAction(testRealm, "testIntegration").executeIt()
+        AddUserAction(
+            testRealm,
+            "testIntegration",
+            firstName = "Test",
+            lastName = "Integration",
+            email = "test.integration@test.com"
+        ).executeIt()
+
         val password = RandomStringUtils.randomAlphanumeric(15)
         UpdateUserPasswordAction(testRealm, "testIntegration", password = password).executeIt()
 
