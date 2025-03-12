@@ -23,7 +23,9 @@ class AddLocalizationEntryIntegTest : AbstractIntegrationTest() {
     fun testAddLocalizationEntryExisting() {
         AddLocalizationEntryAction(testRealm, locale = "en", key = "test-existing", text = "Test Existing").executeIt()
         assertThatThrownBy {
-            AddLocalizationEntryAction(testRealm, locale = "en", key = "test-existing", text = "Test Existing").executeIt()
+            AddLocalizationEntryAction(
+                testRealm, locale = "en", key = "test-existing", text = "Test Existing"
+            ).executeIt()
         }
             .isInstanceOf(MigrationException::class.java)
             .hasMessage("LocalizationEntry with en/test-existing already exists!")
