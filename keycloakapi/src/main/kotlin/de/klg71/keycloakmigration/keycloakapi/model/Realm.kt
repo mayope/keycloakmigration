@@ -13,17 +13,28 @@ data class IdentityProviderMapperItem(
     val config: Map<String, String>
 )
 
+data class RealmAttributePermissions(
+    val view: Set<String>? = null,
+    val edit: Set<String>? = null
+)
+
+data class RealmAttributeRequired(
+    val roles: Set<String>? = null,
+    val scopes: Set<String>? = null
+)
 
 data class RealmAttribute(
-    val name: String,
-    val displayName: String?,
-    val validations: Map<String, Map<String, Int>>,
-    val permissions: Map<String, List<String>>,
-    val multivalued: Boolean
+    var name: String,
+    var displayName: String?,
+    var annotations: Map<String, Any>?,
+    var validations: Map<String, Map<String, Any>>,
+    var permissions: RealmAttributePermissions,
+    var required: RealmAttributeRequired?,
+    var multivalued: Boolean
 )
 
 data class RealmProfile(
-    val attributes: List<RealmAttribute>,
+    val attributes: ArrayList<RealmAttribute>,
     val groups: List<Map<String, String>>,
     var unmanagedAttributePolicy: String? = null
 )
@@ -116,8 +127,8 @@ data class Realm(
     val loginTheme: String? = null,
     val requiredActions: List<RequiredActionProviderItem>? = null,
     val upConfig: RealmProfile? = null,
-    val clientProfiles:Map<String,List<String>> = mapOf("profiles" to emptyList()),
-    val clientPolicies:Map<String,List<String>> = mapOf("policies" to emptyList()),
+    val clientProfiles: Map<String, List<String>> = mapOf("profiles" to emptyList()),
+    val clientPolicies: Map<String, List<String>> = mapOf("policies" to emptyList())
 )
 
 
