@@ -23,8 +23,14 @@ fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
 }
 
 fun KeycloakClient.copyAuthFlow(realm: String, flowAlias: String, newName: String) {
-    if (flows(realm).any { it.alias == newName }) {
-        throw KeycloakApiException("Copy Flow failed, Flow: ${newName} already exists")
+    val flows = flows(realm)
+
+    if (flows.none { it.alias == flowAlias }) {
+        throw KeycloakApiException("Copy Flow failed, Flow: $flowAlias does not exist")
+    }
+
+    if (flows.any { it.alias == newName }) {
+        throw KeycloakApiException("Copy Flow failed, Flow: $newName already exists")
     }
 
     copyFlow(realm, flowAlias, CopyFlowExecution(newName))
