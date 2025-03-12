@@ -9,6 +9,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.RealmAttributeRequired
 import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
 
+@Suppress("LongParameterList")
 class AddRealmProfileAttributeAction(
     realm: String?,
     private val name: String,
