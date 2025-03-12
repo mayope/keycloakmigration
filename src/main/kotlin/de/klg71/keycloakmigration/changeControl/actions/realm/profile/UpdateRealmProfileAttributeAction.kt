@@ -12,12 +12,12 @@ import de.klg71.keycloakmigration.keycloakapi.realmExistsById
 class UpdateRealmProfileAttributeAction(
     realm: String?,
     private val name: String,
-    private val displayName: String?,
-    private val annotations: Map<String, Any>?,
-    private val validations: Map<String, Map<String, Any>>?,
-    private val permissions: RealmAttributePermissions?,
-    private val required: RealmAttributeRequired?,
-    private val multivalued: Boolean?
+    private val displayName: String? = null,
+    private val annotations: Map<String, Any>? = null,
+    private val validations: Map<String, Map<String, Any>>? = null,
+    private val permissions: RealmAttributePermissions? = null,
+    private val required: RealmAttributeRequired? = null,
+    private val multivalued: Boolean? = null
 ) : Action(realm) {
 
     private lateinit var oldRealmProfile: RealmProfile
@@ -34,7 +34,7 @@ class UpdateRealmProfileAttributeAction(
 
         val realmAttribute: RealmAttribute? = realmProfile.attributes.find { it.name == name }
 
-        if (realmAttribute == null) throw MigrationException("Realm attribute with name: $name does not exist!")
+        if (realmAttribute == null) throw MigrationException("Realm profile attribute with name: $name does not exist!")
 
         realmAttribute.let {
             it.name = name

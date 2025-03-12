@@ -14,13 +14,13 @@ data class IdentityProviderMapperItem(
 )
 
 data class RealmAttributePermissions(
-    val view: Set<String>?,
-    val edit: Set<String>?
+    val view: Set<String>? = null,
+    val edit: Set<String>? = null
 )
 
 data class RealmAttributeRequired(
-    val roles: Set<String>?,
-    val scopes: Set<String>?
+    val roles: Set<String>? = null,
+    val scopes: Set<String>? = null
 )
 
 data class RealmAttribute(
