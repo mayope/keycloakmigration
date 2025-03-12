@@ -205,9 +205,6 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "updateFlow" -> objectMapper.readValue<UpdateFlowAction>(actionJson)
             "copyFlow" -> objectMapper.readValue<CopyFlowAction>(actionJson)
 
-            "addFlowExecution" -> objectMapper.readValue<AddFlowExecutionAction>(actionJson)
-            "updateSubFlow" -> objectMapper.readValue<UpdateSubFlowAction>(actionJson)
-
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
 
             "addRealmProfileAttribute" -> objectMapper.readValue<AddRealmProfileAttributeAction>(actionJson)
