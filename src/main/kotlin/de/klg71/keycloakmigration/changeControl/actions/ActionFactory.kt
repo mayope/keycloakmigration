@@ -35,6 +35,7 @@ import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddCl
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeUserRealmRoleMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.DeleteClientScopeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.CopyFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
