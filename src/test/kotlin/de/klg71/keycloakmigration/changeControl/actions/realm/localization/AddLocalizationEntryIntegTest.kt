@@ -24,10 +24,7 @@ class AddLocalizationEntryIntegTest : AbstractIntegrationTest() {
         AddLocalizationEntryAction(testRealm, locale = "en", key = "test-existing", text = "Test Existing").executeIt()
         assertThatThrownBy {
             AddLocalizationEntryAction(
-                testRealm,
-                locale = "en",
-                key = "test-existing",
-                text = "Test Existing"
+                testRealm, locale = "en", key = "test-existing", text = "Test Existing"
             ).executeIt()
         }
             .isInstanceOf(MigrationException::class.java)
