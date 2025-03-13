@@ -143,6 +143,26 @@ changes:
   - deleteFlow:
     alias: trust-foreign-idp
 ```
+
+## CopyFlow
+Copies an authentication flow
+
+### Parameters
+- realm: String, optional
+- flowAlias: String, not optional
+- newName: String, not optional
+
+### Example
+```yaml
+id: copy-flow
+author: abigail.cortis
+realm: integ-test
+changes:
+  - copyFlow:
+      flowAlias: browser
+      newName: New Authentication Flow
+```
+
 ## AddFlowExecution
 Adds a flow execution
 
@@ -164,6 +184,7 @@ changes:
       provider: my-custom-authenticator
       executionAlias: custom authenticator
 ```
+
 ## UpdateSubFlow
 Updates a sub flow, if one exists
 
@@ -184,4 +205,3 @@ changes:
       subFlow: Custom Authentication Flow Organization
       requirement: DISABLED
 ```
-
