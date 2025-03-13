@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.AddMapper
+import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
 import de.klg71.keycloakmigration.keycloakapi.model.AddRole
 import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
@@ -31,6 +32,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.IdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderMapper
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
+import de.klg71.keycloakmigration.keycloakapi.model.Organization
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
@@ -595,6 +597,24 @@ interface KeycloakClient {
         @Param("realm") realm: String,
         @Param("locale") locale: String,
         @Param("key") key: String
+    ): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("GET /admin/realms/{realm}/organizations")
+    fun organizations(@Param("realm") realm: String): List<Organization>
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/organizations")
+    fun addOrganization(
+        @Param("realm") realm: String,
+        organization: AddOrganization
+    ): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("DELETE /admin/realms/{realm}/organizations/{id}")
+    fun deleteOrganization(
+        @Param("id") id: UUID,
+        @Param("realm") realm: String,
     ): Response
 }
 

@@ -152,6 +152,7 @@ updates a Realm, throws error if realm with that id does not exists
 - adminTheme:String, optional
 - emailTheme:String, optional
 - loginTheme:String, optional
+- organizationsEnabled:Boolean, optional
 
 #### Password Policy
 Supported policies:
