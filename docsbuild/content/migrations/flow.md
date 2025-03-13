@@ -143,4 +143,45 @@ changes:
   - deleteFlow:
     alias: trust-foreign-idp
 ```
+## AddFlowExecution
+Adds a flow execution
+
+### Parameters
+- realm: String, optional
+- flowAlias: String, not optional
+- provider: String, not optional
+- executionAlias: String, not optional
+- config: Map<String, String>, optional, default = empty
+
+### Example
+```yaml
+id: add-flow-execution
+author: abigail.cortis
+realm: integ-test
+changes:
+  - addFlowExecution:
+      flowAlias: Custom Authentication Flow forms
+      provider: my-custom-authenticator
+      executionAlias: custom authenticator
+```
+## UpdateSubFlow
+Updates a sub flow, if one exists
+
+### Parameters
+- realm: String, optional
+- topLevelFlow: String, not optional
+- subFlow: String, not optional
+- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL", not optional
+
+### Example
+```yaml
+id: update-sub-flow
+author: abigail.cortis
+realm: integ-test
+changes:
+  - updateSubFlow:
+      topLevelFlow: Custom Authentication Flow
+      subFlow: Custom Authentication Flow Organization
+      requirement: DISABLED
+```
 
