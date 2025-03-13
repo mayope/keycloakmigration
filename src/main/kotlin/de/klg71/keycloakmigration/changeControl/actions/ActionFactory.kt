@@ -203,7 +203,6 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addFlow" -> objectMapper.readValue<AddFlowAction>(actionJson)
             "deleteFlow" -> objectMapper.readValue<DeleteFlowAction>(actionJson)
             "updateFlow" -> objectMapper.readValue<UpdateFlowAction>(actionJson)
-            "copyFlow" -> objectMapper.readValue<CopyFlowAction>(actionJson)
 
             "addFlowExecution" -> objectMapper.readValue<AddFlowExecutionAction>(actionJson)
             "updateSubFlow" -> objectMapper.readValue<UpdateSubFlowAction>(actionJson)
