@@ -6,6 +6,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
+import de.klg71.keycloakmigration.keycloakapi.model.CopyFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
@@ -19,6 +20,20 @@ fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
     return createFlow(realm, importFlow).also {
         configureAuthExecutors(importFlow, realm)
     }
+}
+
+fun KeycloakClient.copyAuthFlow(realm: String, flowAlias: String, newName: String) {
+    val flows = flows(realm)
+
+    if (flows.none { it.alias == flowAlias }) {
+        throw KeycloakApiException("Copy Flow failed, Flow: $flowAlias does not exist")
+    }
+
+    if (flows.any { it.alias == newName }) {
+        throw KeycloakApiException("Copy Flow failed, Flow: $newName already exists")
+    }
+
+    copyFlow(realm, flowAlias, CopyFlowExecution(newName))
 }
 
 fun KeycloakClient.updateFlowInPlace(realm: String, alias: String, updateFlow: UpdateFlowInPlace) {
