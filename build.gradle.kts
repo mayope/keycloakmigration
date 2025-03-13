@@ -124,7 +124,7 @@ tasks {
         group = "keycloakmigration"
         description = "Starts local keycloak"
 
-        if (!File("keycloak/keycloak-$keycloakVersion").exists()) {
+        if (!File(project.projectDir, "keycloak/keycloak-$keycloakVersion").exists()) {
             dependsOn("setupKeycloak")
         }
 
@@ -156,30 +156,45 @@ tasks {
 
     register("execWindowsKeycloak") {
         doLast {
+            val keycloakDir = File(project.projectDir, "keycloak/keycloak-$keycloakVersion/bin")
+            val outputFile = File(project.projectDir, "keycloak/output.txt")
+
             ProcessBuilder(
                 "cmd", "/c", "kc.bat", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false","--http-relative-path=/auth","--log-level=info", ">",
-                "output.txt"
+                "${outputFile}"
             ).run {
-                directory(File("keycloak/keycloak-$keycloakVersion/bin"))
-                println("Starting local Keycloak on windows")
+                directory(keycloakDir)
+
                 environment()["NOPAUSE"] = "true"
                 environment()["KEYCLOAK_ADMIN"] = "admin"
                 environment()["KEYCLOAK_ADMIN_PASSWORD"] = "admin"
+
+                println("Starting local Keycloak on windows")
                 start()
+
                 waitForKeycloak()
             }
         }
     }
     register("execLinuxKeycloak") {
         doLast {
+            val keycloakDir = File(project.projectDir, "keycloak/keycloak-$keycloakVersion/bin")
+            val outputFile = File(project.projectDir, "keycloak/output.txt")
+
             ProcessBuilder(
-                "keycloak/keycloak-$keycloakVersion/bin/standalone.sh",
-                "-Djboss.socket.binding.port-offset=10000"
-            ).run {
-                println("Starting local Keycloak on linux")
+                "./kc.sh", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false", "--http-relative-path=/auth", "--log-level=info"
+            ).apply {
+                directory(keycloakDir)
+               
                 environment()["KEYCLOAK_ADMIN"] = "admin"
                 environment()["KEYCLOAK_ADMIN_PASSWORD"] = "admin"
+
+                redirectOutput(outputFile)
+                redirectErrorStream(true)
+
+                println("Starting local Keycloak on linux")
                 start()
+
                 waitForKeycloak()
             }
         }
@@ -195,20 +210,38 @@ tasks {
     }
     register("stopWindowsKeycloak") {
         doFirst {
+            val port = 18080
             val pid = command(listOf("netstat", "-aon")).lines().firstOrNull {
-                it.contains("TCP") && it.contains("0.0.0.0:18080") && it.contains("LISTENING")
+                it.contains("TCP") && it.contains("0.0.0.0:$port") && it.contains("LISTENING")
             }?.split(" ")?.last()?.toLong()
             if (pid != null) {
-                println("Killing process: $pid")
+                println("Killing process on port $port with PID $pid")
                 command(listOf("taskkill", "/F", "/PID", pid.toString()))
             }
         }
     }
 
-    register<Exec>("stopLinuxKeycloak") {
-        workingDir("keycloak/keycloak-$keycloakVersion/bin")
-        commandLine("sh", "jboss-cli.sh", "--connect", "--command=:shutdown", "--controller=127.0.0.1:19990")
-        standardOutput = System.out
+    register("stopLinuxKeycloak") {
+        doFirst {
+            val port = 18080
+            val pid = try {
+                ProcessBuilder("sh", "-c", "ss -lptn 'sport = :$port' | grep -o 'pid=[0-9]*' | cut -d= -f2")
+                    .redirectErrorStream(true)
+                    .start()
+                    .inputStream
+                    .bufferedReader()
+                    .readText()
+                    .trim()
+            } catch (e: Exception) {
+                null
+            }
+            if (!pid.isNullOrEmpty()) {
+                println("Killing process on port $port with PID $pid")
+                command(listOf("kill", "-9", pid))
+            } else {
+                println("No process found on port $port")
+            }
+        }
     }
 
     "test"{

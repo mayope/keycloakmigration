@@ -38,7 +38,14 @@ class UpdateUserIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testUpdateUser_password() {
-        AddUserAction(testRealm, "testIntegration").executeIt()
+        AddUserAction(
+            testRealm,
+            "testIntegration",
+            firstName = "Test",
+            lastName = "Integration",
+            email = "test.integration@test.com"
+        ).executeIt()
+
         val hashedSaltedValue =
             "1tWf95Drz6t8/9kKE3tiJXOywCzG/C0KDnmCIFXEDdFQMPB6iVWWxjLO9HJI3YwTfWZa78N+hcmYHcT1tkavcA=="
         val salt = "dGVzdA=="

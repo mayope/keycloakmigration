@@ -16,12 +16,12 @@ Parameters# id: String, not optional  Example#id:add-realmauthor:klg71chan
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mayope.github.io/keycloakmigration/migrations/realm/" />
 <meta property="article:published_time" content="2020-07-03T12:22:20+02:00" />
-<meta property="article:modified_time" content="2023-02-28T14:13:10+01:00" />
+<meta property="article:modified_time" content="2025-03-06T11:29:41+01:00" />
 <title>Realm Migrations | Keycloakmigration</title>
 <link rel="manifest" href="/keycloakmigration/manifest.json">
 <link rel="icon" href="/keycloakmigration/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/keycloakmigration/book.min.a8f172e9514e766ee7562278ee2929cc668544eb977d0ee52069556d89261049.css" integrity="sha256-qPFy6VFOdm7nViJ47ikpzGaFROuXfQ7lIGlVbYkmEEk=">
-<script defer src="/keycloakmigration/en.search.min.708d863d6febb9541d71abf317f906a1e2463018df01be880f42135a1dadeb20.js" integrity="sha256-cI2GPW/ruVQdcavzF/kGoeJGMBjfAb6ID0ITWh2t6yA="></script>
+<script defer src="/keycloakmigration/en.search.min.fd718f30ae7e72f243e0695e61bcd46899f554b65df4fa6953d6934c10e3c2f1.js" integrity="sha256-/XGPMK5&#43;cvJD4GleYbzUaJn1VLZd9PppU9aTTBDjwvE="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -81,6 +81,7 @@ https://github.com/alex-shpak/hugo-book
 <li><a href="https://mayope.github.io/keycloakmigration/migrations/identityprovider/">IdentityProvider Migrations</a></li>
 <li><a href="https://mayope.github.io/keycloakmigration/migrations/flow/">Flow Migrations</a></li>
 <li><a href="https://mayope.github.io/keycloakmigration/migrations/requiredactions/">RequiredActions Migrations</a></li>
+<li><a href="https://mayope.github.io/keycloakmigration/migrations/localization/">Localization Migrations</a></li>
 </ul>
 </li>
 <li><a href="/keycloakmigration/keycloak_api/">Using the Keycloakapi</a></li>
@@ -161,6 +162,18 @@ https://github.com/alex-shpak/hugo-book
       <ul>
         <li><a href="#parameters-2">Parameters</a></li>
         <li><a href="#example-2">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#addrealmprofileattribute">addRealmProfileAttribute</a>
+      <ul>
+        <li><a href="#parameters-3">Parameters</a></li>
+        <li><a href="#example-3">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#updaterealmprofileattribute">updateRealmProfileAttribute</a>
+      <ul>
+        <li><a href="#parameters-4">Parameters</a></li>
+        <li><a href="#example-4">Example</a></li>
       </ul>
     </li>
   </ul>
@@ -372,6 +385,7 @@ https://github.com/alex-shpak/hugo-book
 <li>hashingAlgorithm</li>
 <li>hashAlgorithm</li>
 <li>notUsername</li>
+<li>notContainsUsername</li>
 <li>notEmail</li>
 </ul>
 <p>See example below</p>
@@ -388,7 +402,104 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">passwordPolicy</span>:<span style="color:#bbb">
 </span><span style="color:#bbb">            </span>- <span style="color:#a2f;font-weight:bold">notUsername</span>:<span style="color:#bbb"> </span>test<span style="color:#bbb">
 </span><span style="color:#bbb">            </span>- <span style="color:#a2f;font-weight:bold">minLength</span>:<span style="color:#bbb"> </span><span style="color:#666">8</span><span style="color:#bbb">
-</span></code></pre></div></article>
+</span></code></pre></div><h2 id="addrealmprofileattribute">
+  addRealmProfileAttribute
+  <a class="anchor" href="#addrealmprofileattribute">#</a>
+</h2>
+<p>adds a new attribute in the user profile for the realm</p>
+<h3 id="parameters-3">
+  Parameters
+  <a class="anchor" href="#parameters-3">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional,</li>
+<li>displayName: String, optional,</li>
+<li>annotations: Map&lt; String, Any&gt; optional,</li>
+<li>validations: Map&lt; String, Map&lt; String, Any&raquo; optional,</li>
+<li>permissions: RealmAttributePermissions optional</li>
+<li>required: RealmAttributeRequired optional</li>
+<li>multivalued: Boolean, optional, default=true</li>
+</ul>
+<h3 id="example-3">
+  Example
+  <a class="anchor" href="#example-3">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-realm-profile-attribute<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>isaac<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">addRealmProfileAttribute</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>country<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">displayName</span>:<span style="color:#bbb"> </span>$${profile.attributes.country}<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">permissions</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">view</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">              </span>- admin<span style="color:#bbb">
+</span><span style="color:#bbb">              </span>- user<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">edit</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">              </span>- admin<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">required</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">roles</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">              </span>- admin<span style="color:#bbb">
+</span><span style="color:#bbb">              </span>- user<span style="color:#bbb">
+</span></code></pre></div><h2 id="updaterealmprofileattribute">
+  updateRealmProfileAttribute
+  <a class="anchor" href="#updaterealmprofileattribute">#</a>
+</h2>
+<p>updates an attribute in the user profile for the realm</p>
+<h3 id="parameters-4">
+  Parameters
+  <a class="anchor" href="#parameters-4">#</a>
+</h3>
+<ul>
+<li>realm: String, optional</li>
+<li>name: String, not optional,</li>
+<li>displayName: String, optional,</li>
+<li>annotations: Map&lt; String, Any&gt; optional,</li>
+<li>validations: Map&lt; String, Map&lt; String, Any&raquo; optional,</li>
+<li>permissions: RealmAttributePermissions optional</li>
+<li>required: RealmAttributeRequired optional</li>
+<li>multivalued: Boolean, optional, default=true</li>
+</ul>
+<h3 id="example-4">
+  Example
+  <a class="anchor" href="#example-4">#</a>
+</h3>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">id</span>:<span style="color:#bbb"> </span>add-realm-profile-attribute<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">author</span>:<span style="color:#bbb"> </span>isaac<span style="color:#bbb">
+</span><span style="color:#bbb">    </span><span style="color:#a2f;font-weight:bold">changes</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">      </span>- <span style="color:#a2f;font-weight:bold">updateRealmProfileAttribute</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">name</span>:<span style="color:#bbb"> </span>firstName<span style="color:#bbb">
+</span><span style="color:#bbb">          </span><span style="color:#a2f;font-weight:bold">permissions</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">view</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">              </span>- admin<span style="color:#bbb">
+</span><span style="color:#bbb">              </span>- user<span style="color:#bbb">
+</span><span style="color:#bbb">            </span><span style="color:#a2f;font-weight:bold">edit</span>:<span style="color:#bbb">
+</span><span style="color:#bbb">              </span>- admin<span style="color:#bbb">
+</span></code></pre></div><h4 id="realmattributepermissions">
+  RealmAttributePermissions
+  <a class="anchor" href="#realmattributepermissions">#</a>
+</h4>
+<h5 id="parameters-5">
+  Parameters
+  <a class="anchor" href="#parameters-5">#</a>
+</h5>
+<ul>
+<li>view: Set&lt; String&gt;, optional</li>
+<li>edit: Set&lt; String&gt;, optional</li>
+</ul>
+<h4 id="realmattributerequired">
+  RealmAttributeRequired
+  <a class="anchor" href="#realmattributerequired">#</a>
+</h4>
+<h5 id="parameters-6">
+  Parameters
+  <a class="anchor" href="#parameters-6">#</a>
+</h5>
+<ul>
+<li>roles: Set&lt; String&gt;, optional</li>
+<li>scopes: Set&lt; String&gt;, optional</li>
+</ul>
+</article>
  
       
 
@@ -438,6 +549,18 @@ https://github.com/alex-shpak/hugo-book
       <ul>
         <li><a href="#parameters-2">Parameters</a></li>
         <li><a href="#example-2">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#addrealmprofileattribute">addRealmProfileAttribute</a>
+      <ul>
+        <li><a href="#parameters-3">Parameters</a></li>
+        <li><a href="#example-3">Example</a></li>
+      </ul>
+    </li>
+    <li><a href="#updaterealmprofileattribute">updateRealmProfileAttribute</a>
+      <ul>
+        <li><a href="#parameters-4">Parameters</a></li>
+        <li><a href="#example-4">Example</a></li>
       </ul>
     </li>
   </ul>

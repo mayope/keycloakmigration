@@ -67,6 +67,18 @@ Parameters# realm: String, optional name: String, not optional  Example#id
     </item>
     
     <item>
+      <title>Localization Migrations</title>
+      <link>https://mayope.github.io/keycloakmigration/migrations/localization/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://mayope.github.io/keycloakmigration/migrations/localization/</guid>
+      <description>Localization Migrations#All migrations referring to the localization resource.
+addLocalizationEntry#adds a new localization entry, throws error if the entry exists for the same locale
+Parameters# realm: String, optional locale: String, not optional, key: String, not optional, text: String, not optional  Example#id:add-localization-entryauthor:isaacchanges:- addLocalizationEntry:locale:enkey:countrytext:CountyupdateLocalizationEntry#updates a localization entry, throws error if the entry doest not exists
+Parameters# realm: String, optional locale: String, not optional, key: String, not optional, text: String, not optional  Example#id:update-localization-entryauthor:isaacchanges:- updateLocalizationEntry:locale:enkey:countrytext:CountrydeleteLocalizationEntry#deletes a localization entry, throws error if the entry doest not exists</description>
+    </item>
+    
+    <item>
       <title>Realm Migrations</title>
       <link>https://mayope.github.io/keycloakmigration/migrations/realm/</link>
       <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>

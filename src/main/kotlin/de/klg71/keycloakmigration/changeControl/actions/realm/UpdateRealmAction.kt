@@ -90,7 +90,6 @@ class UpdateRealmAction(
     private val adminTheme: String? = null,
     private val emailTheme: String? = null,
     private val loginTheme: String? = null,
-    private val organizationsEnabled: Boolean? = null,
     private val unmanagedAttributePolicy: String? = null) : Action() {
 
     lateinit var oldRealm: Realm
@@ -181,8 +180,7 @@ class UpdateRealmAction(
         emailTheme ?: oldRealm.emailTheme,
         loginTheme ?: oldRealm.loginTheme,
         null,
-        realmProfile,
-        organizationsEnabled ?: oldRealm.organizationsEnabled
+        realmProfile
     )
 
     private fun concatenatePasswordPolicyString(): String {
@@ -203,6 +201,7 @@ class UpdateRealmAction(
     private fun mapValue(entry: Map.Entry<String, String>) =
         when (entry.key.lowercase()) {
             "notusername" -> "undefined"
+            "notcontainsusername" -> "undefined"
             "notemail" -> "undefined"
             else -> entry.value
         }
@@ -230,6 +229,7 @@ class UpdateRealmAction(
         "hashingalgorithm" -> "hashAlgorithm"
         "hashalgorithm" -> "hashAlgorithm"
         "notusername" -> "notUsername"
+        "notcontainsusername" -> "notContainsUsername"
         "notemail" -> "notEmail"
         else -> throw MigrationException("Not recognized policy: ${entry.key}")
     }
