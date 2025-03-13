@@ -2,15 +2,15 @@ package de.klg71.keycloakmigration.keycloakapi.model;
 
 import java.util.UUID
 
-data class Domain(
+data class OrganizationDomain(
     val name: String,
-    val verified: Boolean
+    val verified: Boolean = false
 )
 
 data class Organization(
     val id: UUID,
     val name: String,
-    val description: String,
-    val domains: List<Domain>,
-    val attributes: Map<String, String>
+    val alias: String?,
+    val redirectUrl: String?,
+    val domains: Set<OrganizationDomain>
 )
