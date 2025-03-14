@@ -9,4 +9,6 @@ data class AddSimpleClient(val clientId: String,
                            val protocol: String = OPENID_CONNECT_PROTOCOL,
                            val redirectUris: List<String>,
                            val secret: String? = null,
+                           val authorizationServicesEnabled: Boolean,
+                           var serviceAccountsEnabled: Boolean,
                            val publicClient: Boolean)
