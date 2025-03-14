@@ -1,0 +1,6 @@
+id: import-client-authorization
+author: devtobi
+changes:
+  - importClient:
+      realm: integ-test
+      authorizationRepresentationJsonFilename: integ-test-authorization.json

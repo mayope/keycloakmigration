@@ -18,6 +18,8 @@ Simple command to add a client to keycloak, TODO: add more fields
 - secret: String, optional
 - publicClient: Boolean, optional, default=true
 - redirectUris: List< String>, optional, default=empty
+- authorizationServicesEnabled: Boolean, optional, default=false
+- serviceAccountsEnabled: BOolean, optional, default=true
 ### Example
 ```yaml
     id: add-simple-client
@@ -92,6 +94,7 @@ Update a client
 - webOrigins: List< String>, optional, default=no change
 - fullScopeAllowed: Boolean, optional, default=no change
 - nodeReRegistrationTimeout: Int, optional, default=no change
+- authorizationServicesEnabled: Boolean, optional, default=no change
 
 ### Example
 ```yaml
@@ -378,3 +381,23 @@ adds a user-realm-role clientmapper, throws error if client or realm doesn't exi
           name: userRealmRole
           prefix: rolePrefix
 ```
+
+## importClientAuthorization
+Imports authorization configuration using the JSON representation
+
+### Parameters
+- realm: String, optional
+- clientRepresentationJsonFilename: String, not optional
+- relativeToFile: Boolean, optional, default=true
+
+### Example:
+```yaml
+    id: import-client-authorization
+    author: devtobi
+    changes:
+    - importClient:
+          realm: master
+          authorizationRepresentationJsonFilename: authorization.json
+          relativeToFile: true
+```
+

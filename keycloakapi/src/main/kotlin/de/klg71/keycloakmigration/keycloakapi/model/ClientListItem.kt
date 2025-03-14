@@ -26,6 +26,7 @@ data class ClientListItem(
         val protocol: String?,
         val attributes: Map<String, String>,
         val authenticationFlowBindingOverrides: Map<String, List<String>>,
+        var authorizationServicesEnabled: Boolean,
         val fullScopeAllowed: Boolean,
         val nodeReRegistrationTimeout: Int,
         val protocolMappers: List<ProtocolMapper>?,

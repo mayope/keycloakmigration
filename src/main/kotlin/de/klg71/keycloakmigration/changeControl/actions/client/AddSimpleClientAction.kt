@@ -15,6 +15,8 @@ class AddSimpleClientAction(
         private val attributes: Map<String, String> = mapOf(),
         private val protocol: String = OPENID_CONNECT_PROTOCOL,
         private val secret: String? = null,
+        private val authorizationServicesEnabled: Boolean = false,
+        private var serviceAccountsEnabled: Boolean = false,
         private val publicClient: Boolean = true,
         private val redirectUris: List<String> = emptyList()) : Action(realm) {
 
@@ -22,8 +24,17 @@ class AddSimpleClientAction(
 
     private val addClient = addClient()
 
-    private fun addClient() = AddSimpleClient(clientId, enabled, attributes, protocol, redirectUris, secret,
-            publicClient)
+    private fun addClient() = AddSimpleClient(
+        clientId,
+        enabled,
+        attributes,
+        protocol,
+        redirectUris,
+        secret,
+        authorizationServicesEnabled,
+        serviceAccountsEnabled,
+        publicClient
+    )
 
     override fun execute() {
         client.addSimpleClient(addClient, realm()).run {

@@ -2,10 +2,7 @@
 
 package de.klg71.keycloakmigration.keycloakapi
 
-import de.klg71.keycloakmigration.keycloakapi.model.Client
-import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
-import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
-import de.klg71.keycloakmigration.keycloakapi.model.Role
+import de.klg71.keycloakmigration.keycloakapi.model.*
 import feign.Response
 import java.util.UUID
 
@@ -43,6 +40,18 @@ fun KeycloakClient.clientById(clientId: String, realm: String): Client =
             }
         }.let {
             client(it.id, realm)
+        }
+
+fun KeycloakClient.isClientAuthorizationEnabled(clientId: String, realm: String): Boolean =
+    clients(realm)
+        .run {
+            if (isEmpty()) {
+                throw KeycloakApiException("Client with id: $clientId does not exist in $realm!")
+            }
+            find { it.clientId == clientId }?.let {
+                return it.authorizationServicesEnabled
+            }
+            throw KeycloakApiException("Client with id: $clientId does not exist in realm: $realm!")
         }
 
 fun KeycloakClient.clientScopeByName(name: String, realm: String): ClientScope =
