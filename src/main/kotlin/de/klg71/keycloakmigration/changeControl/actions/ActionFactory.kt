@@ -9,6 +9,7 @@ import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientActio
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteRoleScopeMappingAction
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.UpdateClientAction
+import de.klg71.keycloakmigration.changeControl.actions.client.authz.ImportClientAuthorizationAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddAudienceMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddClientAudienceMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddClientGroupMembershipMapperAction
@@ -164,6 +165,8 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addClientScopeUserRealmRoleMapper" -> objectMapper.readValue<AddClientScopeUserRealmRoleMapperAction>(
                 actionJson
             )
+
+            "importClientAuthorization" -> objectMapper.readValue<ImportClientAuthorizationAction>(actionJson)
 
             "addAdLdap" -> objectMapper.readValue<AddAdLdapAction>(actionJson)
             "addUserFederation" -> objectMapper.readValue<AddUserFederationAction>(actionJson)
