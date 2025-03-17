@@ -47,6 +47,7 @@ class DeleteClientAction(
                         protocol,
                         attributes,
                         authenticationFlowBindingOverrides,
+                        authorizationServicesEnabled,
                         fullScopeAllowed,
                         nodeReRegistrationTimeout,
                         protocolMappers,

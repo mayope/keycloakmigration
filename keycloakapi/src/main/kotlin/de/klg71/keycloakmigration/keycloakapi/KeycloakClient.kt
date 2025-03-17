@@ -29,12 +29,14 @@ import de.klg71.keycloakmigration.keycloakapi.model.Group
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProviderMapper
+import de.klg71.keycloakmigration.keycloakapi.model.ImportAuthorizationRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
 import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
+import de.klg71.keycloakmigration.keycloakapi.model.ResourceRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
@@ -227,6 +229,13 @@ interface KeycloakClient {
     @RequestLine("POST /admin/realms/{realm}/clients")
     @Headers("Content-Type: application/json; charset=utf-8")
     fun addSimpleClient(addSimpleClient: AddSimpleClient, @Param("realm") realm: String): Response
+
+    @RequestLine("POST /admin/realms/{realm}/clients/{client-id}/authz/resource-server/import")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun importAuthorization(importAuthorizationRepresentation: ImportAuthorizationRepresentation, @Param("client-id") clientId: UUID, @Param("realm") realm: String): Response
+
+    @RequestLine("GET /admin/realms/{realm}/clients/{client-id}/authz/resource-server/resource")
+    fun clientAuthorizationResources(@Param("client-id") clientId: UUID, @Param("realm") realm: String): List<ResourceRepresentation>
 
     @RequestLine("POST /admin/realms/{realm}/clients")
     @Headers("Content-Type: application/json; charset=utf-8")
