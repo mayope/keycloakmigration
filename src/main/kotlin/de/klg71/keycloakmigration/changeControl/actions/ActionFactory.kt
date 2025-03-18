@@ -36,6 +36,7 @@ import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddCl
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeUserRealmRoleMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.DeleteClientScopeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.CopyFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
@@ -206,6 +207,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addFlow" -> objectMapper.readValue<AddFlowAction>(actionJson)
             "deleteFlow" -> objectMapper.readValue<DeleteFlowAction>(actionJson)
             "updateFlow" -> objectMapper.readValue<UpdateFlowAction>(actionJson)
+            "copyFlow" -> objectMapper.readValue<CopyFlowAction>(actionJson)
 
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
 
