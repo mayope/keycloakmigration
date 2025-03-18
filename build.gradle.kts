@@ -118,13 +118,13 @@ tasks {
         description = "Setup local keycloak for testing purposes"
 
         from(zipTree("$buildDir/keycloak-$keycloakVersion.zip"))
-        into("keycloak")
+        into("$buildDir/keycloak")
     }
     register("startLocalKeycloak") {
         group = "keycloakmigration"
         description = "Starts local keycloak"
 
-        if (!File(project.projectDir, "keycloak/keycloak-$keycloakVersion").exists()) {
+        if (!File(project.buildDir, "keycloak/keycloak-$keycloakVersion").exists()) {
             dependsOn("setupKeycloak")
         }
 
@@ -156,8 +156,8 @@ tasks {
 
     register("execWindowsKeycloak") {
         doLast {
-            val keycloakDir = File(project.projectDir, "keycloak/keycloak-$keycloakVersion/bin")
-            val outputFile = File(project.projectDir, "keycloak/output.txt")
+            val keycloakDir = File(project.buildDir, "keycloak/keycloak-$keycloakVersion/bin")
+            val outputFile = File(project.buildDir, "keycloak/output.txt")
 
             ProcessBuilder(
                 "cmd", "/c", "kc.bat", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false","--http-relative-path=/auth","--log-level=info", ">",
@@ -178,8 +178,8 @@ tasks {
     }
     register("execLinuxKeycloak") {
         doLast {
-            val keycloakDir = File(project.projectDir, "keycloak/keycloak-$keycloakVersion/bin")
-            val outputFile = File(project.projectDir, "keycloak/output.txt")
+            val keycloakDir = File(project.buildDir, "keycloak/keycloak-$keycloakVersion/bin")
+            val outputFile = File(project.buildDir, "keycloak/output.txt")
 
             ProcessBuilder(
                 "./kc.sh", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false", "--http-relative-path=/auth", "--log-level=info"
