@@ -1,5 +1,5 @@
 {
-  "clientId": "integ-test-client",
+  "clientId": "integ-test-client-authorization",
   "surrogateAuthRequired": false,
   "enabled": true,
   "redirectUris": [],
@@ -30,6 +30,7 @@
     "saml.onetimeuse.condition": "false"
   },
   "authenticationFlowBindingOverrides": {},
+  "authorizationServicesEnabled": "true",
   "fullScopeAllowed": true,
   "nodeReRegistrationTimeout": -1,
   "protocolMappers": [
