@@ -1,0 +1,8 @@
+{
+  "resources": [
+    {
+      "name": "integ-client-authorization-resource",
+      "scopes": []
+    }
+  ]
+}
