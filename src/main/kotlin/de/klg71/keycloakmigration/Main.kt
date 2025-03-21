@@ -6,10 +6,10 @@ import de.klg71.keycloakmigration.changeControl.KeycloakMigration
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.slf4j.LoggerFactory
-import java.io.IOException
-import java.net.ConnectException
-import java.net.SocketException
-import java.net.URL
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
@@ -38,29 +38,30 @@ internal fun waitForKeycloak(baseUrl: String, timeout: Long) {
 
 @Suppress("SwallowedException")
 private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
+    val client = HttpClient.newHttpClient()
+    val request = HttpRequest.newBuilder()
+        .uri(URI.create(baseUrl))
+        .GET()
+        .build()
+        // todo: should we add .timeout() here?
+
     try {
-        if (URL(baseUrl).readBytes().isNotEmpty())
-            return true
-    } catch (e: IOException) {
-        if (logError) {
-            println("Error: ${e.message}")
-        }
-    } catch (e: ConnectException) {
-        if (logError) {
-            println("Error: ${e.message}")
-        }
-    } catch (e: SocketException) {
-        if (logError) {
-            println("Error: ${e.message}")
-        }
+        val response = client.send(request, HttpResponse.BodyHandlers.ofString())
+        // todo: is the connection here auto closable or not?
+        return response.statusCode() == 401
+
+    } catch (e: Exception) {
+        if (logError) println("Error: ${e.message}")
     }
+
     return false
 }
 
 fun migrate(migrationArgs: MigrationArgs) {
     migrationArgs.run {
         if (waitForKeycloak()) {
-            waitForKeycloak(migrationArgs.baseUrl(), migrationArgs.waitForKeycloakTimeout())
+            val url = "${migrationArgs.baseUrl()} admin/realms"
+            waitForKeycloak(url, migrationArgs.waitForKeycloakTimeout())
         }
         try {
             startKoin {
