@@ -41,17 +41,16 @@ internal fun waitForKeycloak(baseUrl: String, timeout: Long) {
 
 @Suppress("SwallowedException")
 private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
-    val client = HttpClient.newHttpClient()
     val request = HttpRequest.newBuilder()
         .uri(URI.create(baseUrl))
         .GET()
         .build()
-        // todo: should we add .timeout() here?
 
     try {
-        val response = client.send(request, HttpResponse.BodyHandlers.ofString())
-        // todo: is the connection here auto closable or not?
-        return response.statusCode() == 401
+        HttpClient.newHttpClient().use {
+            val response = it.send(request, HttpResponse.BodyHandlers.ofString())
+            return response.statusCode() == 401
+        }
     } catch (e: IOException) {
         if (logError) {
             println("Error: ${e.message}")
