@@ -42,7 +42,7 @@ internal fun waitForKeycloak(baseUrl: String, timeout: Long) {
 @Suppress("SwallowedException")
 private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
     val request = HttpRequest.newBuilder()
-        .uri(URI.create(baseUrl))
+        .uri(URI.create("$baseUrl/admin/realms"))
         .GET()
         .build()
 
@@ -71,8 +71,7 @@ private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
 fun migrate(migrationArgs: MigrationArgs) {
     migrationArgs.run {
         if (waitForKeycloak()) {
-            val url = "${migrationArgs.baseUrl()}/admin/realms"
-            waitForKeycloak(url, migrationArgs.waitForKeycloakTimeout())
+            waitForKeycloak(migrationArgs.baseUrl(), migrationArgs.waitForKeycloakTimeout())
         }
         try {
             startKoin {
