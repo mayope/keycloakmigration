@@ -6,6 +6,9 @@ import de.klg71.keycloakmigration.changeControl.KeycloakMigration
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.slf4j.LoggerFactory
+import java.io.IOException
+import java.net.ConnectException
+import java.net.SocketException
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -49,9 +52,18 @@ private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
         val response = client.send(request, HttpResponse.BodyHandlers.ofString())
         // todo: is the connection here auto closable or not?
         return response.statusCode() == 401
-
-    } catch (e: Exception) {
-        if (logError) println("Error: ${e.message}")
+    } catch (e: IOException) {
+        if (logError) {
+            println("Error: ${e.message}")
+        }
+    } catch (e: ConnectException) {
+        if (logError) {
+            println("Error: ${e.message}")
+        }
+    } catch (e: SocketException) {
+        if (logError) {
+            println("Error: ${e.message}")
+        }
     }
 
     return false
