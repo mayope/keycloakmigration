@@ -60,7 +60,7 @@ private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
 fun migrate(migrationArgs: MigrationArgs) {
     migrationArgs.run {
         if (waitForKeycloak()) {
-            val url = "${migrationArgs.baseUrl()} admin/realms"
+            val url = "${migrationArgs.baseUrl()}/admin/realms"
             waitForKeycloak(url, migrationArgs.waitForKeycloakTimeout())
         }
         try {
