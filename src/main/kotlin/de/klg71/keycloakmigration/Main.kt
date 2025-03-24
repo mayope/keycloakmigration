@@ -9,7 +9,10 @@ import org.koin.logger.SLF4JLogger
 import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketException
-import java.net.URL
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
@@ -37,9 +40,16 @@ internal fun waitForKeycloak(baseUrl: String, timeout: Long) {
 
 @Suppress("SwallowedException")
 private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
+    val request = HttpRequest.newBuilder()
+        .uri(URI.create("$baseUrl/admin/realms"))
+        .GET()
+        .build()
+
     try {
-        if (URL(baseUrl).readBytes().isNotEmpty())
-            return true
+        HttpClient.newHttpClient().use {
+            val response = it.send(request, HttpResponse.BodyHandlers.ofString())
+            return response.statusCode() == 401
+        }
     } catch (e: IOException) {
         if (logError) {
             println("Error: ${e.message}")
@@ -53,6 +63,7 @@ private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
             println("Error: ${e.message}")
         }
     }
+
     return false
 }
 
