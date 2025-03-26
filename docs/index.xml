@@ -79,6 +79,17 @@ Parameters# realm: String, optional locale: String, not optional, key: String
     </item>
     
     <item>
+      <title>Organization Migrations</title>
+      <link>https://mayope.github.io/keycloakmigration/migrations/organization/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://mayope.github.io/keycloakmigration/migrations/organization/</guid>
+      <description>Organization Migrations#All migrations referring to the organization resource.
+addOrganization#Adds a new organization to an exsisting realm
+Parameters# realm: String, optional name: String, not optional, alias: String, optional, default=name redirectUrl: String, optional, domains: List  Example#id:add-organizationauthor:isaac.merciecachanges:- addOrganization:name:testdomains:- name:test.comOrganizationDomain#Parameters# name: String, verified: Boolean, optional, default=false  </description>
+    </item>
+    
+    <item>
       <title>Realm Migrations</title>
       <link>https://mayope.github.io/keycloakmigration/migrations/realm/</link>
       <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
