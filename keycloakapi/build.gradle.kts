@@ -36,7 +36,7 @@ dependencies {
 
     testImplementation("org.slf4j:slf4j-api:2.0.16")
     testImplementation("org.apache.logging.log4j:log4j-core:2.24.3")
-    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.24.3")
+    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl:2.24.3")
 
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))

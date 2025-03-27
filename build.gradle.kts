@@ -53,7 +53,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.16")
     implementation("io.insert-koin:koin-logger-slf4j:4.0.2")
     implementation("org.apache.logging.log4j:log4j-core:2.24.3")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.24.3")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j2-impl:2.24.3")
 
     testImplementation("io.github.openfeign:feign-slf4j:13.5")
     testImplementation(kotlin("test"))
