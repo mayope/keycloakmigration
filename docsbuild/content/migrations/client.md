@@ -395,9 +395,13 @@ Imports authorization configuration using the JSON representation
 ```yaml
     id: import-client-authorization
     author: devtobi
+    realm: integ-test
     changes:
-    - importClientAuthorization:
-          realm: master
+      - addSimpleClient:
+          clientId: test
+          serviceAccountsEnabled: true
+          authorizationServicesEnabled: true
+      - importClientAuthorization:
           clientId: test
           authorizationRepresentationJsonFilename: authorization.json
           relativeToFile: true
