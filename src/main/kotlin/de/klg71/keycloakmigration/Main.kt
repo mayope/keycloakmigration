@@ -17,6 +17,7 @@ import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 const val DEFAULT_WAIT_FOR_KEYCLOAK_PAUSE_TIME = 1000L
+private const val STATUS_UNAUTHORISED = 401
 private const val LOGGING_MODULO = 10
 
 internal fun main(args: Array<String>) = mainBody {
@@ -48,7 +49,7 @@ private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
     try {
         HttpClient.newHttpClient().use {
             val response = it.send(request, HttpResponse.BodyHandlers.ofString())
-            return response.statusCode() == 401
+            return response.statusCode() == STATUS_UNAUTHORISED
         }
     } catch (e: IOException) {
         if (logError) {
