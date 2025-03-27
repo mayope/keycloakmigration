@@ -1,5 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
+import net.researchgate.release.ReleaseExtension
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.ByteArrayOutputStream
@@ -19,14 +20,14 @@ fun Project.command(cmd: List<String>, workingDirectory: String = ".", environme
     }
 
 plugins {
-    kotlin("jvm") version "2.1.0"
+    kotlin("jvm") version "2.1.10"
     id("maven-publish")
     id("signing")
-    id("de.undercouch.download") version "5.5.0"
-    id("net.researchgate.release") version "3.0.2"
+    id("de.undercouch.download") version "5.6.0"
+    id("net.researchgate.release") version "3.1.0"
 
     // Security check for dependencies by task
-    id("org.owasp.dependencycheck") version "10.0.4"
+    id("org.owasp.dependencycheck") version "12.0.1"
     // static code analysis
     id("io.gitlab.arturbosch.detekt") version "1.23.7"
 
@@ -37,31 +38,33 @@ dependencies {
     implementation(kotlin("stdlib"))
     api(project("keycloakapi"))
 
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.0")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.0")
-    implementation("io.insert-koin:koin-core:3.2.2")
-    implementation("commons-codec:commons-codec:1.15")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2")
+    implementation("io.insert-koin:koin-core:4.0.2")
+    implementation("commons-codec:commons-codec:1.18.0")
     implementation("com.xenomachina:kotlin-argparser:2.0.7")
 
     // Commons
-    implementation("org.apache.commons:commons-text:1.10.0")
-    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("org.apache.commons:commons-text:1.13.0")
+    implementation("org.apache.commons:commons-lang3:3.17.0")
 
     // Logging
-    implementation("org.slf4j:slf4j-api:1.7.36")
-    implementation("org.apache.logging.log4j:log4j-core:2.20.0")
-    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.20.0")
+    implementation("org.slf4j:slf4j-api:2.0.16")
+    implementation("io.insert-koin:koin-logger-slf4j:4.0.2")
+    implementation("org.apache.logging.log4j:log4j-core:2.24.3")
+    runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.24.3")
 
-    testImplementation("io.github.openfeign:feign-slf4j:12.3")
+    testImplementation("io.github.openfeign:feign-slf4j:13.5")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-    testImplementation("io.mockk:mockk:1.9")
+    testImplementation("io.mockk:mockk:1.13.16")
 
-    testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation("io.insert-koin:koin-test:3.2.2")
-    testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation("com.github.tomakehurst:wiremock-jre8:2.35.0")
+    testImplementation("org.assertj:assertj-core:3.27.3")
+    testImplementation("io.insert-koin:koin-test:4.0.2")
+    testImplementation("org.assertj:assertj-core:3.27.3")
+    testImplementation("com.github.tomakehurst:wiremock-jre8:3.0.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 }
 
 repositories {
@@ -115,13 +118,13 @@ tasks {
         description = "Setup local keycloak for testing purposes"
 
         from(zipTree("$buildDir/keycloak-$keycloakVersion.zip"))
-        into("keycloak")
+        into("$buildDir/keycloak")
     }
     register("startLocalKeycloak") {
         group = "keycloakmigration"
         description = "Starts local keycloak"
 
-        if (!File("keycloak/keycloak-$keycloakVersion").exists()) {
+        if (!File(project.buildDir, "keycloak/keycloak-$keycloakVersion").exists()) {
             dependsOn("setupKeycloak")
         }
 
@@ -153,30 +156,45 @@ tasks {
 
     register("execWindowsKeycloak") {
         doLast {
+            val keycloakDir = File(project.buildDir, "keycloak/keycloak-$keycloakVersion/bin")
+            val outputFile = File(project.buildDir, "keycloak/output.txt")
+
             ProcessBuilder(
                 "cmd", "/c", "kc.bat", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false","--http-relative-path=/auth","--log-level=info", ">",
-                "output.txt"
+                "${outputFile}"
             ).run {
-                directory(File("keycloak/keycloak-$keycloakVersion/bin"))
-                println("Starting local Keycloak on windows")
+                directory(keycloakDir)
+
                 environment()["NOPAUSE"] = "true"
                 environment()["KEYCLOAK_ADMIN"] = "admin"
                 environment()["KEYCLOAK_ADMIN_PASSWORD"] = "admin"
+
+                println("Starting local Keycloak on windows")
                 start()
+
                 waitForKeycloak()
             }
         }
     }
     register("execLinuxKeycloak") {
         doLast {
+            val keycloakDir = File(project.buildDir, "keycloak/keycloak-$keycloakVersion/bin")
+            val outputFile = File(project.buildDir, "keycloak/output.txt")
+
             ProcessBuilder(
-                "keycloak/keycloak-$keycloakVersion/bin/standalone.sh",
-                "-Djboss.socket.binding.port-offset=10000"
-            ).run {
-                println("Starting local Keycloak on linux")
+                "./kc.sh", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false", "--http-relative-path=/auth", "--log-level=info"
+            ).apply {
+                directory(keycloakDir)
+               
                 environment()["KEYCLOAK_ADMIN"] = "admin"
                 environment()["KEYCLOAK_ADMIN_PASSWORD"] = "admin"
+
+                redirectOutput(outputFile)
+                redirectErrorStream(true)
+
+                println("Starting local Keycloak on linux")
                 start()
+
                 waitForKeycloak()
             }
         }
@@ -192,20 +210,38 @@ tasks {
     }
     register("stopWindowsKeycloak") {
         doFirst {
+            val port = 18080
             val pid = command(listOf("netstat", "-aon")).lines().firstOrNull {
-                it.contains("TCP") && it.contains("0.0.0.0:18080") && it.contains("LISTENING")
+                it.contains("TCP") && it.contains("0.0.0.0:$port") && it.contains("LISTENING")
             }?.split(" ")?.last()?.toLong()
             if (pid != null) {
-                println("Killing process: $pid")
+                println("Killing process on port $port with PID $pid")
                 command(listOf("taskkill", "/F", "/PID", pid.toString()))
             }
         }
     }
 
-    register<Exec>("stopLinuxKeycloak") {
-        workingDir("keycloak/keycloak-$keycloakVersion/bin")
-        commandLine("sh", "jboss-cli.sh", "--connect", "--command=:shutdown", "--controller=127.0.0.1:19990")
-        standardOutput = System.out
+    register("stopLinuxKeycloak") {
+        doFirst {
+            val port = 18080
+            val pid = try {
+                ProcessBuilder("sh", "-c", "ss -lptn 'sport = :$port' | grep -o 'pid=[0-9]*' | cut -d= -f2")
+                    .redirectErrorStream(true)
+                    .start()
+                    .inputStream
+                    .bufferedReader()
+                    .readText()
+                    .trim()
+            } catch (e: Exception) {
+                null
+            }
+            if (!pid.isNullOrEmpty()) {
+                println("Killing process on port $port with PID $pid")
+                command(listOf("kill", "-9", pid))
+            } else {
+                println("No process found on port $port")
+            }
+        }
     }
 
     "test"{
@@ -350,6 +386,11 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
 signing {
     sign(publishing.publications["mavenJava"])
 }
+configure<ReleaseExtension>{
+    with(git){
+        requireBranch.set("master")
+    }
+}
 
 
 
@@ -372,11 +413,11 @@ dependencyCheck {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_11)
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }

@@ -14,7 +14,7 @@
   
   <url>
     <loc>https://mayope.github.io/keycloakmigration/migrations/client/</loc>
-    <lastmod>2024-09-19T10:50:24+02:00</lastmod>
+    <lastmod>2025-03-14T12:27:08+01:00</lastmod>
   </url>
   
   <url>
@@ -24,7 +24,7 @@
   
   <url>
     <loc>https://mayope.github.io/keycloakmigration/migrations/flow/</loc>
-    <lastmod>2024-05-03T23:39:25+02:00</lastmod>
+    <lastmod>2025-03-13T09:37:12+01:00</lastmod>
   </url>
   
   <url>
@@ -33,8 +33,18 @@
   </url>
   
   <url>
+    <loc>https://mayope.github.io/keycloakmigration/migrations/localization/</loc>
+    <lastmod>2025-03-06T11:29:41+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mayope.github.io/keycloakmigration/migrations/organization/</loc>
+    <lastmod>2025-03-13T16:10:14+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mayope.github.io/keycloakmigration/migrations/realm/</loc>
-    <lastmod>2023-02-28T14:13:10+01:00</lastmod>
+    <lastmod>2025-03-13T16:10:14+01:00</lastmod>
   </url>
   
   <url>

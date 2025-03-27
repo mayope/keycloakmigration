@@ -30,7 +30,7 @@ Parameters# realm: String, optional providerId: String, optional, default = n
       <guid>https://mayope.github.io/keycloakmigration/migrations/client/</guid>
       <description>Client Migrations#All migrations referring to the client resource.
 addSimpleClient#Simple command to add a client to keycloak, TODO: add more fields
-Parameters# realm: String, optional clientId: String, not optional, enabled: Boolean, optional, default=true attributes: Map&amp;lt; String, String&amp;gt;, optional, default = empty protocol: String, optional, default=&amp;quot;openid-connect&amp;rdquo; secret: String, optional publicClient: Boolean, optional, default=true redirectUris: List&amp;lt; String&amp;gt;, optional, default=empty  Example#id:add-simple-clientauthor:klg71changes:- addSimpleClient:realm:masterclientId:testdeleteClient#Delete a client in keycloak</description>
+Parameters# realm: String, optional clientId: String, not optional, enabled: Boolean, optional, default=true attributes: Map&amp;lt; String, String&amp;gt;, optional, default = empty protocol: String, optional, default=&amp;quot;openid-connect&amp;rdquo; secret: String, optional publicClient: Boolean, optional, default=true redirectUris: List&amp;lt; String&amp;gt;, optional, default=empty authorizationServicesEnabled: Boolean, optional, default=false serviceAccountsEnabled: BOolean, optional, default=true  Example#id:add-simple-clientauthor:klg71changes:- addSimpleClient:realm:masterclientId:testdeleteClient#Delete a client in keycloak</description>
     </item>
     
     <item>
@@ -65,6 +65,29 @@ Parameters# realm: String, optional alias: String, not optional description: 
 addGroup#Adds a new group to keycloak. Fails if the group already exists.
 Parameters# realm: String, optional name: String, not optional parent: String, default=empty  Example#id:testauthor:klg71changes:- addGroup:realm:mastername:testGroupdeleteGroup#Removes a group from keycloak. Fails if the group does not exist.
 Parameters# realm: String, optional name: String, not optional  Example#id:testauthor:klg71changes:- deleteGroup:realm:mastername:testUserupdateGroup#Updates a group from keycloak.</description>
+    </item>
+    
+    <item>
+      <title>Localization Migrations</title>
+      <link>https://mayope.github.io/keycloakmigration/migrations/localization/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://mayope.github.io/keycloakmigration/migrations/localization/</guid>
+      <description>Localization Migrations#All migrations referring to the localization resource.
+addLocalizationEntry#adds a new localization entry, throws error if the entry exists for the same locale
+Parameters# realm: String, optional locale: String, not optional, key: String, not optional, text: String, not optional  Example#id:add-localization-entryauthor:isaacchanges:- addLocalizationEntry:locale:enkey:countrytext:CountyupdateLocalizationEntry#updates a localization entry, throws error if the entry doest not exists
+Parameters# realm: String, optional locale: String, not optional, key: String, not optional, text: String, not optional  Example#id:update-localization-entryauthor:isaacchanges:- updateLocalizationEntry:locale:enkey:countrytext:CountrydeleteLocalizationEntry#deletes a localization entry, throws error if the entry doest not exists</description>
+    </item>
+    
+    <item>
+      <title>Organization Migrations</title>
+      <link>https://mayope.github.io/keycloakmigration/migrations/organization/</link>
+      <pubDate>Fri, 03 Jul 2020 12:22:20 +0200</pubDate>
+      
+      <guid>https://mayope.github.io/keycloakmigration/migrations/organization/</guid>
+      <description>Organization Migrations#All migrations referring to the organization resource.
+addOrganization#Adds a new organization to an exsisting realm
+Parameters# realm: String, optional name: String, not optional, alias: String, optional, default=name redirectUrl: String, optional, domains: List  Example#id:add-organizationauthor:isaac.merciecachanges:- addOrganization:name:testdomains:- name:test.comOrganizationDomain#Parameters# name: String, verified: Boolean, optional, default=false  </description>
     </item>
     
     <item>

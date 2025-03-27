@@ -46,6 +46,18 @@ fun KeycloakClient.clientById(clientId: String, realm: String): Client =
             client(it.id, realm)
         }
 
+fun KeycloakClient.isClientAuthorizationEnabled(clientId: String, realm: String): Boolean =
+    clients(realm)
+        .run {
+            if (isEmpty()) {
+                throw KeycloakApiException("Client with id: $clientId does not exist in $realm!")
+            }
+            find { it.clientId == clientId }?.let {
+                return it.authorizationServicesEnabled
+            }
+            throw KeycloakApiException("Client with id: $clientId does not exist in realm: $realm!")
+        }
+
 fun KeycloakClient.clientScopeByName(name: String, realm: String): ClientScope =
     clientScopes(realm)
         .run {
@@ -181,7 +193,9 @@ fun Response.extractLocationUUID(): UUID {
 // only id field can't be used as a realm's id because there are cases
 // where this field is a generic uuid, for example, Keycloak 20.0.3 initial master realm
 fun KeycloakClient.realmById(id: String) =
-    realms().firstOrNull { it.id == id || it.realm == id } ?: throw KeycloakApiException("Realm with id: $id does not exist!")
+    realms().firstOrNull { it.id == id || it.realm == id } ?: throw KeycloakApiException(
+        "Realm with id: $id does not exist!"
+    )
 
 @Suppress("TooGenericExceptionCaught")
 fun KeycloakClient.realmExistsById(id: String) =
