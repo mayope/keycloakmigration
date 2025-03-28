@@ -1,7 +1,6 @@
 package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
 import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
@@ -18,10 +17,6 @@ class AddFlowExecutionAction(
     private lateinit var executionId: UUID
 
     override fun execute() {
-        if (client.flows(realm()).none { it.alias == flowAlias }) {
-            throw MigrationException("Parent flow $flowAlias doesn't exist")
-        }
-
         executionId = client.addFlowExecution(realm(), flowAlias, AddFlowExecution(provider)).extractLocationUUID()
 
         if (config.isNotEmpty())

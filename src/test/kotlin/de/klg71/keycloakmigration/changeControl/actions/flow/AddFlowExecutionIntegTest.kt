@@ -1,7 +1,7 @@
 package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
-import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
@@ -48,16 +48,14 @@ class AddFlowExecutionIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testAddFlowExecution_NotExisting() {
-        val alias = "TestFlow"
-
         assertThatThrownBy {
             AddFlowExecutionAction(
                 testRealm,
-                flowAlias = alias,
+                flowAlias = "TestFlow",
                 provider = "deny-access-authenticator",
                 executionAlias = "Deny Access"
             ).executeIt()
-        }.isInstanceOf(MigrationException::class.java).hasMessage("Parent flow $alias doesn't exist")
+        }.isInstanceOf(KeycloakApiException::class.java).hasMessage("Parent flow doesn't exist")
     }
 
 }
