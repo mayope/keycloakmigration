@@ -47,10 +47,9 @@ private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
         .build()
 
     try {
-        HttpClient.newHttpClient().use {
-            val response = it.send(request, HttpResponse.BodyHandlers.ofString())
-            return response.statusCode() == STATUS_UNAUTHORISED
-        }
+        val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+
+        return response.statusCode() == STATUS_UNAUTHORISED
     } catch (e: IOException) {
         if (logError) {
             println("Error: ${e.message}")
