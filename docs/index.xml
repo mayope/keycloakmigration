@@ -29,7 +29,7 @@ Parameters# realm: String, optional providerId: String, optional, default = n
       <guid>https://mayope.github.io/keycloakmigration/migrations/client/</guid>
       <description>Client Migrations#All migrations referring to the client resource.
 addSimpleClient#Simple command to add a client to keycloak, TODO: add more fields
-Parameters# realm: String, optional clientId: String, not optional, enabled: Boolean, optional, default=true attributes: Map&amp;lt; String, String&amp;gt;, optional, default = empty protocol: String, optional, default=&amp;quot;openid-connect&amp;rdquo; secret: String, optional publicClient: Boolean, optional, default=true redirectUris: List&amp;lt; String&amp;gt;, optional, default=empty authorizationServicesEnabled: Boolean, optional, default=false serviceAccountsEnabled: BOolean, optional, default=true  Example#id:add-simple-clientauthor:klg71changes:- addSimpleClient:realm:masterclientId:testdeleteClient#Delete a client in keycloak</description>
+Parameters# realm: String, optional clientId: String, not optional, enabled: Boolean, optional, default=true attributes: Map&amp;lt; String, String&amp;gt;, optional, default = empty protocol: String, optional, default=&amp;quot;openid-connect&amp;rdquo; secret: String, optional publicClient: Boolean, optional, default=true redirectUris: List&amp;lt; String&amp;gt;, optional, default=empty authorizationServicesEnabled: Boolean, optional, default=false serviceAccountsEnabled: Boolean, optional, default=true  Example#id:add-simple-clientauthor:klg71changes:- addSimpleClient:realm:masterclientId:testdeleteClient#Delete a client in keycloak</description>
     </item>
     
     <item>
