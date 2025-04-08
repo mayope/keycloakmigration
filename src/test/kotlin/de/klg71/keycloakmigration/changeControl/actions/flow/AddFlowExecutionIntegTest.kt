@@ -55,7 +55,7 @@ class AddFlowExecutionIntegTest : AbstractIntegrationTest() {
                 provider = "deny-access-authenticator",
                 executionAlias = "Deny Access"
             ).executeIt()
-        }.isInstanceOf(KeycloakApiException::class.java).hasMessage("Parent flow doesn't exist")
+        }.isInstanceOf(KeycloakApiException::class.java).hasMessageContaining("Parent flow doesn't exist")
     }
 
 }

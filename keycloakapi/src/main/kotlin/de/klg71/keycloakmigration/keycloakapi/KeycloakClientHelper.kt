@@ -2,10 +2,6 @@
 
 package de.klg71.keycloakmigration.keycloakapi
 
-import com.fasterxml.jackson.core.JsonProcessingException
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.JsonMappingException
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
@@ -183,19 +179,8 @@ fun Response.isSuccessful() = when (status()) {
 
 fun Response.extractLocationUUID(): UUID {
     if (!isSuccessful()) {
-        var message = this.body().asReader(Charsets.UTF_8).readText()
-
-        try {
-            val body = jacksonObjectMapper().readValue(message, object : TypeReference<Map<String, String>>() {})
-
-            if (body.containsKey("error")) throw KeycloakApiException(body["error"].toString())
-        } catch (e: JsonProcessingException) {
-        } catch (e: JsonMappingException) {
-        }
-
-        throw KeycloakApiException(message, statusCode = status())
+        throw KeycloakApiException(this.body().asReader().readText(), statusCode = status())
     }
-
     return headers()["location"]!!.first()
         .run {
             split("/").last()
@@ -275,11 +260,11 @@ fun KeycloakClient.identityProviderMapperExistsByName(identityProviderAlias: Str
     identityProviderMappers(realm, identityProviderAlias).any { it.name == name }
 
 fun KeycloakClient.organizationByName(name: String, realm: String): Organization = organizations(realm).run {
-    if (isEmpty()) {
-        throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
+        if (isEmpty()) {
+            throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
+        }
+        find { it.name == name }?.let {
+            return it
+        }
+        throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
     }
-    find { it.name == name }?.let {
-        return it
-    }
-    throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
-}
