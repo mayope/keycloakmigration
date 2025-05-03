@@ -9,11 +9,15 @@ import org.koin.logger.SLF4JLogger
 import java.io.IOException
 import java.net.ConnectException
 import java.net.SocketException
-import java.net.URL
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 
 const val DEFAULT_WAIT_FOR_KEYCLOAK_PAUSE_TIME = 1000L
+private const val STATUS_UNAUTHORISED = 401
 private const val LOGGING_MODULO = 10
 
 internal fun main(args: Array<String>) = mainBody {
@@ -37,9 +41,15 @@ internal fun waitForKeycloak(baseUrl: String, timeout: Long) {
 
 @Suppress("SwallowedException")
 private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
+    val request = HttpRequest.newBuilder()
+        .uri(URI.create("$baseUrl/admin/realms"))
+        .GET()
+        .build()
+
     try {
-        if (URL(baseUrl).readBytes().isNotEmpty())
-            return true
+        val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
+
+        return response.statusCode() == STATUS_UNAUTHORISED
     } catch (e: IOException) {
         if (logError) {
             println("Error: ${e.message}")
@@ -53,6 +63,7 @@ private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
             println("Error: ${e.message}")
         }
     }
+
     return false
 }
 

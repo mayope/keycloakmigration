@@ -2,7 +2,7 @@ package de.klg71.keycloakmigration.testmigration
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.get
-import com.github.tomakehurst.wiremock.client.WireMock.ok
+import com.github.tomakehurst.wiremock.client.WireMock.unauthorized
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import com.github.tomakehurst.wiremock.matching.UrlPattern
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_PASSWORD
@@ -28,7 +28,6 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.error.InstanceCreationException
 import java.nio.file.Paths
-import kotlin.coroutines.CoroutineContext
 
 
 class WaitForKeycloakTest {
@@ -72,7 +71,7 @@ class WaitForKeycloakTest {
                 delay(1000)
                 wireMockServer.start()
                 wireMockServer.stubFor(
-                    get(UrlPattern.ANY).willReturn(ok().withBody("ok"))
+                    get(UrlPattern.ANY).willReturn(unauthorized())
                 )
                 while (alive) {
                     delay(100)
