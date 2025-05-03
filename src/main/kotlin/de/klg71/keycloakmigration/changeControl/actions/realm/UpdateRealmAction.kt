@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.realm
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.keycloakapi.model.PasswordPolicy
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
 import de.klg71.keycloakmigration.keycloakapi.realmById
@@ -91,7 +92,8 @@ class UpdateRealmAction(
     private val emailTheme: String? = null,
     private val loginTheme: String? = null,
     private val organizationsEnabled: Boolean? = null,
-    private val unmanagedAttributePolicy: String? = null) : Action() {
+    private val unmanagedAttributePolicy: String? = null
+) : Action() {
 
     lateinit var oldRealm: Realm
 
@@ -173,7 +175,7 @@ class UpdateRealmAction(
         resetCredentialsFlow ?: oldRealm.resetCredentialsFlow,
         clientAuthenticationFlow ?: oldRealm.clientAuthenticationFlow,
         dockerAuthenticationFlow ?: oldRealm.dockerAuthenticationFlow,
-        firstBrokerLoginFlow?:oldRealm.firstBrokerLoginFlow,
+        firstBrokerLoginFlow ?: oldRealm.firstBrokerLoginFlow,
         mergeAttributes(),
         userManagedAccessAllowed ?: oldRealm.userManagedAccessAllowed,
         accountTheme ?: oldRealm.accountTheme,
@@ -189,13 +191,15 @@ class UpdateRealmAction(
         if (passwordPolicy == null) {
             return oldRealm.passwordPolicy
         }
+
+        val passwordPolicies = client.serverInfo().passwordPolicies
         return passwordPolicy.map {
-            makePasswordPolicyTerm(it)
+            makePasswordPolicyTerm(it, passwordPolicies)
         }.joinToString(" and ")
     }
 
-    private fun makePasswordPolicyTerm(entry: Map.Entry<String, String>): String {
-        val name = mapName(entry)
+    private fun makePasswordPolicyTerm(entry: Map.Entry<String, String>, policies: List<PasswordPolicy>): String {
+        val name = mapName(entry, policies)
         val value = mapValue(entry)
         return "$name($value)"
     }
@@ -209,32 +213,38 @@ class UpdateRealmAction(
         }
 
     @Suppress("ComplexMethod")
-    private fun mapName(entry: Map.Entry<String, String>) = when (entry.key.lowercase()) {
-        "expirepassword" -> "forceExpiredPasswordChange"
-        "forceexpiredpasswordchange" -> "forceExpiredPasswordChange"
-        "hashingiterations" -> "hashIterations"
-        "hashiterations" -> "hashIterations"
-        "notrecentlyused" -> "passwordHistory"
-        "passwordhistory" -> "passwordHistory"
-        "digits" -> "digits"
-        "minlength" -> "length"
-        "maxlength" -> "maxLength"
-        "uppercasecharacters" -> "upperCase"
-        "uppercase" -> "upperCase"
-        "lowercasecharacters" -> "lowerCase"
-        "lowercase" -> "lowerCase"
-        "specialcharacters" -> "specialChars"
-        "specialchars" -> "specialChars"
-        "regularexpression" -> "regexPattern"
-        "regexpattern" -> "regexPattern"
-        "passwordblacklist" -> "passwordBlacklist"
-        "hashingalgorithm" -> "hashAlgorithm"
-        "hashalgorithm" -> "hashAlgorithm"
-        "notusername" -> "notUsername"
-        "notcontainsusername" -> "notContainsUsername"
-        "notemail" -> "notEmail"
-        else -> throw MigrationException("Not recognized policy: ${entry.key}")
-    }
+    private fun mapName(entry: Map.Entry<String, String>, policies: List<PasswordPolicy>) =
+        when (entry.key.lowercase()) {
+            "expirepassword" -> "forceExpiredPasswordChange"
+            "forceexpiredpasswordchange" -> "forceExpiredPasswordChange"
+            "hashingiterations" -> "hashIterations"
+            "hashiterations" -> "hashIterations"
+            "notrecentlyused" -> "passwordHistory"
+            "passwordhistory" -> "passwordHistory"
+            "digits" -> "digits"
+            "minlength" -> "length"
+            "maxlength" -> "maxLength"
+            "uppercasecharacters" -> "upperCase"
+            "uppercase" -> "upperCase"
+            "lowercasecharacters" -> "lowerCase"
+            "lowercase" -> "lowerCase"
+            "specialcharacters" -> "specialChars"
+            "specialchars" -> "specialChars"
+            "regularexpression" -> "regexPattern"
+            "regexpattern" -> "regexPattern"
+            "passwordblacklist" -> "passwordBlacklist"
+            "hashingalgorithm" -> "hashAlgorithm"
+            "hashalgorithm" -> "hashAlgorithm"
+            "notusername" -> "notUsername"
+            "notcontainsusername" -> "notContainsUsername"
+            "notemail" -> "notEmail"
+            else -> {
+                if (policies.none { it.id == entry.key })
+                    throw MigrationException("Not recognized policy: ${entry.key}")
+                else
+                    entry.key
+            }
+        }
 
     private fun mergeAttributes(): Map<String, String> {
         val newMap = oldRealm.attributes.toMutableMap()
