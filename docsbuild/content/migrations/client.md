@@ -19,7 +19,7 @@ Simple command to add a client to keycloak, TODO: add more fields
 - publicClient: Boolean, optional, default=true
 - redirectUris: List< String>, optional, default=empty
 - authorizationServicesEnabled: Boolean, optional, default=false
-- serviceAccountsEnabled: BOolean, optional, default=true
+- serviceAccountsEnabled: Boolean, optional, default=true
 ### Example
 ```yaml
     id: add-simple-client
@@ -387,16 +387,22 @@ Imports authorization configuration using the JSON representation
 
 ### Parameters
 - realm: String, optional
-- clientRepresentationJsonFilename: String, not optional
+- clientId: String, not optional
+- authorizationRepresentationJsonFilename: String, not optional
 - relativeToFile: Boolean, optional, default=true
 
 ### Example:
 ```yaml
     id: import-client-authorization
     author: devtobi
+    realm: integ-test
     changes:
-    - importClient:
-          realm: master
+      - addSimpleClient:
+          clientId: test
+          serviceAccountsEnabled: true
+          authorizationServicesEnabled: true
+      - importClientAuthorization:
+          clientId: test
           authorizationRepresentationJsonFilename: authorization.json
           relativeToFile: true
 ```
