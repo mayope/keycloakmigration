@@ -64,7 +64,8 @@ private fun KeycloakClient.configureAuthExecutors(importFlow: ImportFlow, realm:
     }
 }
 
-private fun KeycloakClient.addExecution(realm: String,
+private fun KeycloakClient.addExecution(
+    realm: String,
     flowAlias: String,
     executionImport: AuthenticationExecutionImport
 ) {
@@ -73,7 +74,7 @@ private fun KeycloakClient.addExecution(realm: String,
     updateFlowExecution(
         realm, flowAlias, UpdateFlowExecution(
             executionId, executionImport.requirement, executionImport.level, executionImport.index,
-            executionImport.providerId
+            executionImport.priority, executionImport.providerId
         )
     )
     updateFlowExecutionWithNewConfiguration(
@@ -85,9 +86,11 @@ private fun KeycloakClient.addExecution(realm: String,
     )
 }
 
-private fun KeycloakClient.updateAuthExecutors(flowAlias: String,
+private fun KeycloakClient.updateAuthExecutors(
+    flowAlias: String,
     realm: String,
-    executors: List<AuthenticationExecutionImport>) {
+    executors: List<AuthenticationExecutionImport>
+) {
     flowExecutions(realm, flowAlias).forEach {
         deleteFlowExecution(realm, it.id)
     }
@@ -98,7 +101,10 @@ private fun KeycloakClient.updateAuthExecutors(flowAlias: String,
 
 fun KeycloakClient.executionsToImport(realm: String, flowAlias: String) = flowExecutions(realm, flowAlias).map {
     AuthenticationExecutionImport(
-            it.requirement, it.providerId, it.level, it.index,
-            if (it.authenticationConfig == null) mapOf() else getAuthenticatorConfiguration(realm, it.authenticationConfig).config
+        it.requirement, it.providerId, it.level, it.index, it.priority,
+        if (it.authenticationConfig == null) mapOf() else getAuthenticatorConfiguration(
+            realm,
+            it.authenticationConfig
+        ).config
     )
 }
