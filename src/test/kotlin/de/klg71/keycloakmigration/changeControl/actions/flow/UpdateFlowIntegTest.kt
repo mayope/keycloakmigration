@@ -18,7 +18,7 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         val alias = "FloRida"
         AddFlowAction(
             testRealm, alias, "Right round", executions = listOf(
-                AuthenticationExecutionImport(Flow.Requirement.REQUIRED, "idp-auto-link", 0, 0, mapOf("foo" to "bar"))
+                AuthenticationExecutionImport(Flow.Requirement.REQUIRED, "idp-auto-link", 0, 0, 0, mapOf("foo" to "bar"))
             )
         ).executeIt()
 
@@ -28,7 +28,7 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         UpdateFlowAction(
             testRealm, flow.alias, newAlias, description, null, null, listOf(
                 AuthenticationExecutionImport(
-                    Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, mapOf("foo1" to "bar1")
+                    Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, 0,mapOf("foo1" to "bar1")
                 )
             )
         ).executeIt()
@@ -49,7 +49,7 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         val originalDescription = "Right round"
         AddFlowAction(
             testRealm, alias, originalDescription, executions = listOf(
-                AuthenticationExecutionImport(Flow.Requirement.REQUIRED, "idp-auto-link", 0, 0, mapOf("foo" to "bar"))
+                AuthenticationExecutionImport(Flow.Requirement.REQUIRED, "idp-auto-link", 0, 0, 0, mapOf("foo" to "bar"))
             )
         ).executeIt()
 
@@ -59,7 +59,7 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         val action = UpdateFlowAction(
             testRealm, flow.alias, newAlias, description, null, null, listOf(
                 AuthenticationExecutionImport(
-                    Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, mapOf("foo1" to "bar1")
+                    Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, 0,mapOf("foo1" to "bar1")
                 )
             )
         )

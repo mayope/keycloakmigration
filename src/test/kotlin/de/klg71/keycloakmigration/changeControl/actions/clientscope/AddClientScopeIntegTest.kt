@@ -51,12 +51,12 @@ class AddClientScopeIntegTest : AbstractIntegrationTest() {
         assertThat(theScope.protocolMappers!!.first().protocolMapper).isEqualTo("oidc-usermodel-property-mapper")
         assertThat(theScope.protocolMappers!!.first().consentRequired).isEqualTo(false)
         assertThat(theScope.protocolMappers!!.first().config).containsExactly(
-            AbstractMap.SimpleEntry("userinfo.token.claim", "true"),
             AbstractMap.SimpleEntry("user.attribute", "username"),
             AbstractMap.SimpleEntry("id.token.claim", "true"),
             AbstractMap.SimpleEntry("access.token.claim", "true"),
             AbstractMap.SimpleEntry("claim.name", "preferred_username"),
             AbstractMap.SimpleEntry("jsonType.label", "String"),
+            AbstractMap.SimpleEntry("userinfo.token.claim", "true"),
         )
         assertThat(theScope.description).isEqualTo("testName")
         assertThat(theScope.attributes).contains(
