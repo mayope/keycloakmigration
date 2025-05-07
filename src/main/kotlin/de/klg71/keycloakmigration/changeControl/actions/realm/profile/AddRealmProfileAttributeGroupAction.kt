@@ -12,8 +12,6 @@ class AddRealmProfileAttributeGroupAction(
     override fun execute() {
         val currentProfile = client.realmUserProfile(realm())
 
-//        TODO: add check if group with name already exists
-
         val newGroup = mapOf(
             "name" to name,
             "displayHeader" to (displayName ?: ""),
