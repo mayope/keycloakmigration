@@ -1,7 +1,6 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import jdk.jfr.Description
 import java.util.UUID
 
 data class IdentityProviderItem(val alias: String, val displayName: String? = null, val internalId: UUID)
@@ -38,7 +37,7 @@ data class RealmAttributeGroup(
     var name: String,
     var displayHeader: String?,
     var displayDescription: String?,
-    var annotations: Map<String, String>
+    var annotations: Map<String, String> = emptyMap()
 )
 
 data class RealmProfile(
