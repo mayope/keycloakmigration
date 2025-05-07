@@ -1,48 +1,42 @@
 package de.klg71.keycloakmigration.changeControl.actions.realm.profile
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
+import de.klg71.keycloakmigration.keycloakapi.model.RealmAttributeGroup
 
 class AddRealmProfileAttributeGroupAction(
   realm: String?,
   private val name: String,
   private val displayName: String?,
   private val displayDescription: String?,
+  private val annotations: Map<String, String>
 ) : Action(realm) {
   override fun execute() {
-    val currentProfile = client.realmUserProfile(realm())
+    val profile = client.realmUserProfile(realm())
 
-    val newGroup = mapOf(
-      "name" to name,
-      "displayHeader" to (displayName ?: ""),
-      "displayDescription" to (displayDescription ?: "")
+    val newGroup = RealmAttributeGroup(
+      name,
+      displayName,
+      displayDescription,
+      annotations
     )
 
-    val newProfile = RealmProfile(
-      currentProfile.attributes,
-      currentProfile.groups + newGroup,
-      currentProfile.unmanagedAttributePolicy
-    )
+    profile.groups.add(newGroup)
 
-    client.updateRealmProfile(realm(), newProfile)
+    client.updateRealmProfile(realm(), profile)
   }
 
   override fun undo() {
-    val currentProfile = client.realmUserProfile(realm())
+    val profile = client.realmUserProfile(realm())
 
-    val group = mapOf(
-      "name" to name,
-      "displayHeader" to (displayName ?: ""),
-      "displayDescription" to (displayDescription ?: "")
+    val group = RealmAttributeGroup(
+      name, displayName, displayDescription, annotations
     )
 
-    val indexToRemove = currentProfile.groups.indexOfLast { it == group }
+    val indexToRemove = profile.groups.indexOfLast { it == group }
 
-    val revertedGroups = currentProfile.groups.filterIndexed { index, _ -> index != indexToRemove }
+    profile.groups.removeAt(indexToRemove)
 
-    val newProfile = RealmProfile(currentProfile.attributes, revertedGroups, currentProfile.unmanagedAttributePolicy)
-
-    client.updateRealmProfile(realm(), newProfile)
+    client.updateRealmProfile(realm(), profile)
   }
 
   override fun name() = "AddRealmProfileAttributeGroup $name"
