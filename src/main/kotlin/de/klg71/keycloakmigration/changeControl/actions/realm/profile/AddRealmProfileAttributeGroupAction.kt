@@ -4,40 +4,40 @@ import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.model.RealmAttributeGroup
 
 class AddRealmProfileAttributeGroupAction(
-  realm: String?,
-  private val name: String,
-  private val displayName: String?,
-  private val displayDescription: String?,
-  private val annotations: Map<String, String>
+    realm: String?,
+    private val name: String,
+    private val displayName: String?,
+    private val displayDescription: String?,
+    private val annotations: Map<String, String>
 ) : Action(realm) {
-  override fun execute() {
-    val profile = client.realmUserProfile(realm())
+    override fun execute() {
+        val profile = client.realmUserProfile(realm())
 
-    val newGroup = RealmAttributeGroup(
-      name,
-      displayName,
-      displayDescription,
-      annotations
-    )
+        val newGroup = RealmAttributeGroup(
+            name,
+            displayName,
+            displayDescription,
+            annotations
+        )
 
-    profile.groups.add(newGroup)
+        profile.groups.add(newGroup)
 
-    client.updateRealmProfile(realm(), profile)
-  }
+        client.updateRealmProfile(realm(), profile)
+    }
 
-  override fun undo() {
-    val profile = client.realmUserProfile(realm())
+    override fun undo() {
+        val profile = client.realmUserProfile(realm())
 
-    val group = RealmAttributeGroup(
-      name, displayName, displayDescription, annotations
-    )
+        val group = RealmAttributeGroup(
+            name, displayName, displayDescription, annotations
+        )
 
-    val indexToRemove = profile.groups.indexOfLast { it == group }
+        val indexToRemove = profile.groups.indexOfLast { it == group }
 
-    profile.groups.removeAt(indexToRemove)
+        profile.groups.removeAt(indexToRemove)
 
-    client.updateRealmProfile(realm(), profile)
-  }
+        client.updateRealmProfile(realm(), profile)
+    }
 
-  override fun name() = "AddRealmProfileAttributeGroup $name"
+    override fun name() = "AddRealmProfileAttributeGroup $name"
 }
