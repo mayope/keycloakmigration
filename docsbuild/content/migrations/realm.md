@@ -200,7 +200,7 @@ adds a new attribute group in the user profile for the realm
 ### Parameters
 - realm: String, optional
 - name: String, not optional
-- displayname: String, optional
+- displayName: String, optional
 - displayDescription: String, optional
 - annotations: Map<String, String>, optional, default=empty map
 

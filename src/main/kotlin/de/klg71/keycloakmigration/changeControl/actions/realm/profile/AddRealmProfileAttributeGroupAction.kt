@@ -10,6 +10,7 @@ class AddRealmProfileAttributeGroupAction(
     private val displayDescription: String?,
     private val annotations: Map<String, String> = emptyMap()
 ) : Action(realm) {
+
     override fun execute() {
         val profile = client.realmUserProfile(realm())
 
