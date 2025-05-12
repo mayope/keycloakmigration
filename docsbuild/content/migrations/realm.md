@@ -201,7 +201,7 @@ adds a new attribute group in the user profile for the realm
 - realm: String, optional
 - name: String, not optional
 - displayName: String, optional
-- displayDescription: String, optional
+- description: String, optional
 - annotations: Map<String, String>, optional, default=empty map
 
 ### Example
@@ -212,7 +212,7 @@ changes:
   - updateRealmProfileAttributeGroup:
       name: custom-attribute-group
       displayName: Custom Attribute Group
-      displayDescription: A description for the custom attribute group
+      description: A description for the custom attribute group
       annotations:
         - annotationKey1: annotationValue1
         - annotationKey2: annotationValue2

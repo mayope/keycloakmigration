@@ -7,7 +7,7 @@ class AddRealmProfileAttributeGroupAction(
     realm: String?,
     private val name: String,
     private val displayName: String?,
-    private val displayDescription: String?,
+    private val description: String?,
     private val annotations: Map<String, String> = emptyMap()
 ) : Action(realm) {
 
@@ -17,7 +17,7 @@ class AddRealmProfileAttributeGroupAction(
         val newGroup = RealmAttributeGroup(
             name,
             displayName,
-            displayDescription,
+            description,
             annotations
         )
 
@@ -30,7 +30,7 @@ class AddRealmProfileAttributeGroupAction(
         val profile = client.realmUserProfile(realm())
 
         val group = RealmAttributeGroup(
-            name, displayName, displayDescription, annotations
+            name, displayName, description, annotations
         )
 
         val indexToRemove = profile.groups.indexOfLast { it == group }
