@@ -30,7 +30,8 @@ data class RealmAttribute(
     var validations: Map<String, Map<String, Any>>,
     var permissions: RealmAttributePermissions,
     var required: RealmAttributeRequired?,
-    var multivalued: Boolean
+    var multivalued: Boolean,
+    var group: String?
 )
 
 data class RealmAttributeGroup(

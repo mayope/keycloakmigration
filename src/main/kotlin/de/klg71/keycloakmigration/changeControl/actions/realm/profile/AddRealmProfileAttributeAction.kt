@@ -18,7 +18,8 @@ class AddRealmProfileAttributeAction(
     private val validations: Map<String, Map<String, Any>> = emptyMap(),
     private val permissions: RealmAttributePermissions = RealmAttributePermissions(emptySet(), emptySet()),
     private val required: RealmAttributeRequired = RealmAttributeRequired(emptySet(), emptySet()),
-    private val multivalued: Boolean = false
+    private val multivalued: Boolean = false,
+    private val group: String?
 ) : Action(realm) {
 
     private var oldRealmProfile: RealmProfile? = null
@@ -45,7 +46,8 @@ class AddRealmProfileAttributeAction(
                 validations,
                 RealmAttributePermissions(permissions.view ?: emptySet(), permissions.edit ?: emptySet()),
                 RealmAttributeRequired(required.roles ?: emptySet(), required.scopes ?: emptySet()),
-                multivalued
+                multivalued,
+                group
             )
         )
 
