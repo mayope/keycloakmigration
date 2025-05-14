@@ -209,7 +209,7 @@ adds a new attribute group in the user profile for the realm
 id: add-realm-profile-attribute-group
 author: abigail.cortis
 changes:
-  - updateRealmProfileAttributeGroup:
+  - addRealmProfileAttributeGroup:
       name: custom-attribute-group
       displayName: Custom Attribute Group
       description: A description for the custom attribute group
