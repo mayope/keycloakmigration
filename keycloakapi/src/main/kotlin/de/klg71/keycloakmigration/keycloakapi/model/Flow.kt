@@ -53,14 +53,10 @@ data class UpdateFlow(
     val description: String,
 )
 
-@JsonTypeInfo(
-    use = JsonTypeInfo.Id.NAME,
-    include = JsonTypeInfo.As.PROPERTY,
-    property = "class"
-)
+@JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 @JsonSubTypes(
-    JsonSubTypes.Type(value = AuthenticationExecutionImport::class, name = "execution"),
-    JsonSubTypes.Type(value = SubFlow::class, name = "subFlow")
+    JsonSubTypes.Type(AuthenticationExecutionImport::class),
+    JsonSubTypes.Type(SubFlow::class)
 )
 interface AuthenticationFlowAction {}
 
