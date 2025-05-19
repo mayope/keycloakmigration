@@ -230,6 +230,7 @@ adds a new attribute in the user profile for the realm
 - permissions: RealmAttributePermissions optional
 - required: RealmAttributeRequired optional
 - multivalued: Boolean, optional, default=true
+- group: String, optional
 
 ### Example
 ```yaml
