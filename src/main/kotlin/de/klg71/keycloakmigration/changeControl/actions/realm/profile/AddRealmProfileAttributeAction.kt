@@ -19,7 +19,7 @@ class AddRealmProfileAttributeAction(
     private val permissions: RealmAttributePermissions = RealmAttributePermissions(emptySet(), emptySet()),
     private val required: RealmAttributeRequired = RealmAttributeRequired(emptySet(), emptySet()),
     private val multivalued: Boolean = false,
-    private val group: String?
+    private val group: String? = null
 ) : Action(realm) {
 
     private var oldRealmProfile: RealmProfile? = null
