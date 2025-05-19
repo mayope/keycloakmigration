@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImpor
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
 import de.klg71.keycloakmigration.keycloakapi.model.CopyFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
+import de.klg71.keycloakmigration.keycloakapi.model.SubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowInPlace
@@ -18,7 +19,30 @@ fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
         throw KeycloakApiException("Import Flow failed, Flow: ${importFlow.alias} already exists")
     }
     return createFlow(realm, importFlow).also {
-        configureAuthExecutors(importFlow, realm)
+        importFlow.authenticationExecutions.forEach {
+            if (it is AuthenticationExecutionImport) addExecution(realm, importFlow.alias, it)
+            else if (it is SubFlow) configureSubFlow(realm, importFlow.alias, it)
+        }
+    }
+}
+
+private fun KeycloakClient.configureSubFlow(realm: String, flowAlias: String, subflow: SubFlow):UUID {
+    return addSubFlow(
+        realm,
+        flowAlias,
+        subflow
+    ).extractLocationUUID().also {
+        subflow.authenticationExecutions.forEach {
+            if (it is AuthenticationExecutionImport) addExecution(realm, subflow.alias, it)
+            else if (it is SubFlow) configureSubFlow(realm, subflow.alias, it)
+        }
+    }
+}
+
+private fun KeycloakClient.configureAuthenticationExecutions(realm: String, flow: SubFlow) {
+    flow.authenticationExecutions.forEach {
+        if (it is AuthenticationExecutionImport) addExecution(realm, flow.alias, it)
+        else if (it is SubFlow) configureSubFlow(realm, flow.alias, it)
     }
 }
 
@@ -55,13 +79,6 @@ private fun KeycloakClient.createFlow(realm: String, importFlow: ImportFlow): UU
             importFlow.alias, importFlow.buildIn, importFlow.description, importFlow.providerId, importFlow.topLevel
         )
     ).extractLocationUUID()
-}
-
-
-private fun KeycloakClient.configureAuthExecutors(importFlow: ImportFlow, realm: String) {
-    importFlow.authenticationExecutions.forEach {
-        addExecution(realm, importFlow.alias, it)
-    }
 }
 
 private fun KeycloakClient.addExecution(

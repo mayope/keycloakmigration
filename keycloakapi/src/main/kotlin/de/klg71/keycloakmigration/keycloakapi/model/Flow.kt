@@ -1,5 +1,7 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import java.util.UUID
 
 data class Flow(val id: UUID,
@@ -51,13 +53,31 @@ data class UpdateFlow(
     val description: String,
 )
 
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "class"
+)
+@JsonSubTypes(
+    JsonSubTypes.Type(value = AuthenticationExecutionImport::class, name = "execution"),
+    JsonSubTypes.Type(value = SubFlow::class, name = "subFlow")
+)
+interface AuthenticationFlowAction {}
+
 data class AuthenticationExecutionImport(
     val requirement: Flow.Requirement,
     val providerId: String?,
     val level: Int,
     val index: Int,
     val priority: Int,
-    val config: Map<String, String> = emptyMap())
+    val config: Map<String, String> = emptyMap()) : AuthenticationFlowAction
+
+data class SubFlow(
+    val alias: String,
+    val description: String,
+    val providerId: String,
+    val type: String,
+    val authenticationExecutions: List<AuthenticationFlowAction>) : AuthenticationFlowAction
 
 data class ImportFlow(
     val alias: String,
@@ -65,8 +85,7 @@ data class ImportFlow(
     val providerId: String,
     val topLevel: Boolean,
     val buildIn: Boolean,
-    val authenticationExecutions: List<AuthenticationExecutionImport>
-)
+    val authenticationExecutions: List<AuthenticationFlowAction>)
 
 data class UpdateFlowInPlace(
     val newAlias: String,
