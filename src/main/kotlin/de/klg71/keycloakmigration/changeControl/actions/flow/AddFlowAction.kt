@@ -2,7 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.importFlow
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationFlowAction
 import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
 import java.util.UUID
 
@@ -15,11 +15,10 @@ class AddFlowAction(
     private val buildIn: Boolean = false,
     private val providerId: String = "basic-flow",
     private val topLevel: Boolean = true,
-    private val executions: List<AuthenticationExecutionImport> = emptyList()
+    private val executions: List<AuthenticationFlowAction> = emptyList()
 ) : Action(realm) {
 
     private lateinit var flowUuid: UUID
-
 
     private fun addFlow() = ImportFlow(alias, description, providerId, topLevel, buildIn, executions)
 

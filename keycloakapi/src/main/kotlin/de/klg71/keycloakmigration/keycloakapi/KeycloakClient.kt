@@ -43,6 +43,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ResourceRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.model.ServerInfo
+import de.klg71.keycloakmigration.keycloakapi.model.SubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
@@ -555,6 +556,13 @@ interface KeycloakClient {
         updateFlowExecution: UpdateFlowExecution): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/authentication/flows/{alias}/executions/flow")
+    fun addSubFlow(
+        @Param("realm") realm: String,
+        @Param("alias") alias: String,
+        addFlow: SubFlow): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/executions/{executionId}/config")
     fun updateFlowExecutionWithNewConfiguration(@Param("realm") realm: String,
         @Param("executionId") executionId: String,
@@ -635,4 +643,3 @@ interface KeycloakClient {
         @Param("realm") realm: String,
     ): Response
 }
-

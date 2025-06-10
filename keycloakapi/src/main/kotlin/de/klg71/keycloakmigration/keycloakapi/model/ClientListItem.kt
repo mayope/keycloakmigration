@@ -25,7 +25,7 @@ data class ClientListItem(
         val frontchannelLogout: Boolean,
         val protocol: String?,
         val attributes: Map<String, String>,
-        val authenticationFlowBindingOverrides: Map<String, List<String>>,
+        val authenticationFlowBindingOverrides: Map<String, String>,
         var authorizationServicesEnabled: Boolean,
         val fullScopeAllowed: Boolean,
         val nodeReRegistrationTimeout: Int,
