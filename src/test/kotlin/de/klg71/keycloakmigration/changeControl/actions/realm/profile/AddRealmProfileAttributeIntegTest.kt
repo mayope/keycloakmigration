@@ -18,8 +18,8 @@ class AddRealmProfileAttributeIntegTest : AbstractIntegrationTest() {
         AddRealmProfileAttributeAction(testRealm, name = "country").executeIt()
         val attribute = realmProfileAttribute("country")
         assertThat(attribute).isNotNull()
-        assertThat(attribute?.required?.scopes).isEqualTo(emptySet<String>())
-        assertThat(attribute?.required?.roles).isEqualTo(emptySet<String>())
+        assertThat(attribute?.required?.scopes).isNull()
+        assertThat(attribute?.required?.roles).isNull()
         assertThat(attribute?.permissions?.view).isEqualTo(emptySet<String>())
         assertThat(attribute?.permissions?.edit).isEqualTo(emptySet<String>())
     }
