@@ -39,13 +39,6 @@ private fun KeycloakClient.configureSubFlow(realm: String, flowAlias: String, su
     }
 }
 
-private fun KeycloakClient.configureAuthenticationExecutions(realm: String, flow: SubFlow) {
-    flow.authenticationExecutions.forEach {
-        if (it is AuthenticationExecutionImport) addExecution(realm, flow.alias, it)
-        else if (it is SubFlow) configureSubFlow(realm, flow.alias, it)
-    }
-}
-
 fun KeycloakClient.copyAuthFlow(realm: String, flowAlias: String, newName: String) {
     val flows = flows(realm)
 
