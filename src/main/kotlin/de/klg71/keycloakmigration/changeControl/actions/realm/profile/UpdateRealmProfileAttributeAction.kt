@@ -23,6 +23,7 @@ class UpdateRealmProfileAttributeAction(
 
     private lateinit var oldRealmProfile: RealmProfile
 
+    @Suppress("CyclomaticComplexMethod")
     override fun execute() {
         if (!client.realmExistsById(realm())) {
             throw MigrationException("Realm with id: ${realm()} does not exist!")

@@ -209,7 +209,7 @@ adds a new attribute group in the user profile for the realm
 id: add-realm-profile-attribute-group
 author: abigail.cortis
 changes:
-  - updateRealmProfileAttributeGroup:
+  - addRealmProfileAttributeGroup:
       name: custom-attribute-group
       displayName: Custom Attribute Group
       description: A description for the custom attribute group
@@ -230,6 +230,7 @@ adds a new attribute in the user profile for the realm
 - permissions: RealmAttributePermissions optional
 - required: RealmAttributeRequired optional
 - multivalued: Boolean, optional, default=true
+- group: String, optional
 
 ### Example
 ```yaml

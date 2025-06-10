@@ -26,7 +26,7 @@ data class Client(
     val frontchannelLogout: Boolean,
     val protocol: String?,
     val attributes: Map<String, String>,
-    val authenticationFlowBindingOverrides: Map<String, List<String>>,
+    val authenticationFlowBindingOverrides: Map<String, String>,
     val authorizationServicesEnabled: Boolean,
     val fullScopeAllowed: Boolean,
     val nodeReRegistrationTimeout: Int,
@@ -63,7 +63,7 @@ class UpdateClientBuilder(private val existingClient: Client) {
     var frontchannelLogout: Boolean = existingClient.frontchannelLogout
     var protocol: String? = existingClient.protocol
     var attributes: Map<String, String> = existingClient.attributes
-    var authenticationFlowBindingOverrides: Map<String, List<String>> = existingClient.authenticationFlowBindingOverrides
+    var authenticationFlowBindingOverrides: Map<String, String> = existingClient.authenticationFlowBindingOverrides
     var authorizationServicesEnabled: Boolean = existingClient.authorizationServicesEnabled
     var fullScopeAllowed: Boolean = existingClient.fullScopeAllowed
     var nodeReRegistrationTimeout: Int = existingClient.nodeReRegistrationTimeout
