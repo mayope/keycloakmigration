@@ -16,7 +16,8 @@ Adds a new organization to an exsisting realm
 - name: String, not optional,
 - alias: String, optional, default=name
 - redirectUrl: String, optional,
-- domains: List<OrganizationDomain>
+- domains: List<OrganizationDomain>,
+- attributes: Map<String, String>
 
 ### Example
 ```yaml
@@ -27,6 +28,8 @@ Adds a new organization to an exsisting realm
         name: test
         domains:
           - name: test.com
+        attributes:
+          - theme: theme
 ```
 
 #### OrganizationDomain

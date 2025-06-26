@@ -13,7 +13,7 @@ class AddOrganizationAction(
     private val alias: String? = name,
     private val redirectUrl: String? = null,
     private val domains: Set<OrganizationDomain>,
-    private val config: Map<String, String>,
+    private val attributes: Map<String, String> = mapOf(),
     ) : Action(realm) {
 
     override fun execute() {
@@ -26,11 +26,11 @@ class AddOrganizationAction(
         if (domains.isEmpty())
             throw MigrationException("At least one domain needs to be provided!")
 
-        if (config.isEmpty())
-            throw MigrationException("At least one theme needs to be provided!")
+        if (attributes.isEmpty())
+            throw MigrationException("At least one attribute needs to be provided!")
 
         val organization = AddOrganization(
-            name, alias, redirectUrl, domains, config
+            name, alias, redirectUrl, domains, attributes
         )
 
         client.addOrganization(realm(), organization)
