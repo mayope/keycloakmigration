@@ -12,5 +12,6 @@ data class Organization(
     val name: String,
     val alias: String?,
     val redirectUrl: String?,
-    val domains: Set<OrganizationDomain>
+    val domains: Set<OrganizationDomain>,
+    val config: Map<String, String>
 )
