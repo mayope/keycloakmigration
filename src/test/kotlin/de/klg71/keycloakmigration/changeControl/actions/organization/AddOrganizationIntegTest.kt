@@ -24,7 +24,7 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
             testRealm,
             name,
             domains = setOf(OrganizationDomain("test.com")),
-            attributes = mapOf("theme" to "theme")
+            config = mapOf("theme" to "theme")
         ).executeIt()
 
         val org = client.organizationByName(name, testRealm)
@@ -32,7 +32,7 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
         assertThat(org.name).isEqualTo(name)
         assertThat(org.alias).isEqualTo(name)
         assertThat(org.domains).isEqualTo(setOf(OrganizationDomain("test.com")))
-        assertThat(org.attributes).isEqualTo(mapOf("theme" to "theme"))
+        assertThat(org.config).isEqualTo(mapOf("theme" to "theme"))
     }
 
     @Test
@@ -40,7 +40,7 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
         UpdateRealmAction(testRealm, organizationsEnabled = true).executeIt()
 
         assertThatThrownBy {
-            AddOrganizationAction(testRealm, "test", domains = setOf(), attributes = mapOf()).executeIt()
+            AddOrganizationAction(testRealm, "test", domains = setOf(), config = mapOf()).executeIt()
         }
             .isInstanceOf(MigrationException::class.java)
             .hasMessage("At least one domain needs to be provided!")
@@ -55,7 +55,7 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
             testRealm,
             name,
             domains = setOf(OrganizationDomain("test.com")),
-            attributes = mapOf("theme" to "theme")
+            config = mapOf("theme" to "theme")
         ).executeIt()
 
         assertThatThrownBy {
@@ -63,7 +63,7 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
                 testRealm,
                 name,
                 domains = setOf(OrganizationDomain("test.com")),
-                attributes = mapOf("theme" to "theme")
+                config = mapOf("theme" to "theme")
             ).executeIt()
         }
             .isInstanceOf(MigrationException::class.java)

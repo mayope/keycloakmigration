@@ -9,7 +9,7 @@ permalink: /migrations/organization/
 All migrations referring to the organization resource.
 
 ## addOrganization
-Adds a new organization to an exsisting realm
+Adds a new organization to an existing realm
 
 ### Parameters
 - realm: String, optional
@@ -17,7 +17,7 @@ Adds a new organization to an exsisting realm
 - alias: String, optional, default=name
 - redirectUrl: String, optional,
 - domains: List<OrganizationDomain>,
-- attributes: Map<String, String>
+- config: Map<String, String>
 
 ### Example
 ```yaml
@@ -28,7 +28,7 @@ Adds a new organization to an exsisting realm
         name: test
         domains:
           - name: test.com
-        attributes:
+        config:
           - theme: theme
 ```
 
