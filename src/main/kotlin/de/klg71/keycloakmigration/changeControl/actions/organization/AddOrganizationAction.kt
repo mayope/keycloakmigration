@@ -13,7 +13,7 @@ class AddOrganizationAction(
     private val alias: String? = name,
     private val redirectUrl: String? = null,
     private val domains: Set<OrganizationDomain>,
-    private val config: Map<String, String> = mapOf(),
+    private val attributes: Map<String, List<String>> = mapOf()
     ) : Action(realm) {
 
     override fun execute() {
@@ -27,7 +27,7 @@ class AddOrganizationAction(
             throw MigrationException("At least one domain needs to be provided!")
 
         val organization = AddOrganization(
-            name, alias, redirectUrl, domains, config
+            name, alias, redirectUrl, domains, attributes
         )
 
         client.addOrganization(realm(), organization)
