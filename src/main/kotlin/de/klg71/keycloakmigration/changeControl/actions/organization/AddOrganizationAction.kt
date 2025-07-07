@@ -6,6 +6,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.OrganizationDomain
 import de.klg71.keycloakmigration.keycloakapi.organizationByName
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
+import java.nio.charset.StandardCharsets
 
 class AddOrganizationAction(
     realm: String?,
@@ -14,7 +15,7 @@ class AddOrganizationAction(
     private val redirectUrl: String? = null,
     private val domains: Set<OrganizationDomain>,
     private val attributes: Map<String, List<String>> = mapOf()
-    ) : Action(realm) {
+) : Action(realm) {
 
     override fun execute() {
         if (!client.realmExistsById(realm()))
@@ -30,7 +31,12 @@ class AddOrganizationAction(
             name, alias, redirectUrl, domains, attributes
         )
 
-        client.addOrganization(realm(), organization)
+        val response = client.addOrganization(realm(), organization)
+
+        if (response.status() < 200 || response.status() >= 300) {
+            val responseText = response.body().asReader(StandardCharsets.UTF_8).use { it.readText() }
+            throw MigrationException("Failed to add Organisation: $responseText")
+        }
     }
 
     override fun undo() {
