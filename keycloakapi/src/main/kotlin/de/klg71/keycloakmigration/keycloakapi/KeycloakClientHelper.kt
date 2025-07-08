@@ -264,7 +264,7 @@ fun KeycloakClient.organizationByName(name: String, realm: String): Organization
             throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
         }
         find { it.name == name }?.let {
-            return it
+            return organization(realm, it.id)
         }
         throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
     }

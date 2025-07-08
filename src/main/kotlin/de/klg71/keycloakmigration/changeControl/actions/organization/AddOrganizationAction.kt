@@ -14,15 +14,15 @@ class AddOrganizationAction(
     private val alias: String? = name,
     private val redirectUrl: String? = null,
     private val domains: Set<OrganizationDomain>,
-    private val attributes: Map<String, List<String>> = mapOf()
+    private val attributes: Map<String, List<String>>? = mapOf()
 ) : Action(realm) {
 
     override fun execute() {
         if (!client.realmExistsById(realm()))
             throw MigrationException("Realm with id: ${realm()} does not exist!")
 
-        if (client.organizations(realm()).any { it.name == name })
-            throw MigrationException("Organisation with name: $name already exists!")
+//        if (client.organizations(realm()).any { it.name == name })
+//            throw MigrationException("Organisation with name: $name already exists!")
 
         if (domains.isEmpty())
             throw MigrationException("At least one domain needs to be provided!")

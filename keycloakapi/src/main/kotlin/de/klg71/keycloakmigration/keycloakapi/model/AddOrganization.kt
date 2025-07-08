@@ -5,5 +5,5 @@ data class AddOrganization(
     val alias: String?,
     val redirectUrl: String?,
     val domains: Set<OrganizationDomain>?,
-    val attributes: Map<String, List<String>> = emptyMap()
+    val attributes: Map<String, List<String>>? = mapOf()
 )

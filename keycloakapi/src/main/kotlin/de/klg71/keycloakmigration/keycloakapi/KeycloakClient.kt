@@ -630,6 +630,10 @@ interface KeycloakClient {
     fun organizations(@Param("realm") realm: String): List<Organization>
 
     @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("GET /admin/realms/{realm}/organizations/{id}")
+    fun organization(@Param("realm") realm: String, @Param("id") id: UUID): Organization
+
+    @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/organizations")
     fun addOrganization(
         @Param("realm") realm: String,
