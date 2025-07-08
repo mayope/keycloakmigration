@@ -1,4 +1,4 @@
-package de.klg71.keycloakmigration.keycloakapi.model;
+package de.klg71.keycloakmigration.keycloakapi.model
 
 data class AddOrganization(
     val name: String,
