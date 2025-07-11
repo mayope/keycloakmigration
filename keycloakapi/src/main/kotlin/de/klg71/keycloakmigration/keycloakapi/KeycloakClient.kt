@@ -635,10 +635,10 @@ interface KeycloakClient {
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/organizations")
-    fun addOrganization(
+    fun createOrganization(
         @Param("realm") realm: String,
         organization: AddOrganization
-    ): Organization
+    ): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("DELETE /admin/realms/{realm}/organizations/{id}")

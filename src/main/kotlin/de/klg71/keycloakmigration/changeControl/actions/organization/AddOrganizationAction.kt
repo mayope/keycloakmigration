@@ -2,11 +2,11 @@ package de.klg71.keycloakmigration.changeControl.actions.organization
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.keycloakapi.addOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.OrganizationDomain
 import de.klg71.keycloakmigration.keycloakapi.organizationByName
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
-import java.nio.charset.StandardCharsets
 
 class AddOrganizationAction(
     realm: String?,

@@ -265,18 +265,18 @@ fun KeycloakClient.organizationByName(name: String, realm: String): Organization
         if (isEmpty()) {
             throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
         }
-        // This was refactored due to the organizations endpoint not returning the attributes
         find { it.name == name }?.let {
+            // a separate request is required due to the organizations endpoint not returning the attributes
             return organization(realm, it.id)
         }
         throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
     }
 
-fun KeycloakClient.addOrganizationWithAttributes(realm: String, organization: AddOrganization): Organization {
-    val response = addOrganization(realm, organization)
-    if (response.status() < 200 || response.status() >= 300) {
-        val responseText = response.body().asReader(StandardCharsets.UTF_8).use { it.readText() }
-        throw KeycloakApiException("Failed to add Organisation: $responseText")
+fun KeycloakClient.addOrganization(realm: String, organization: AddOrganization) {
+    createOrganization(realm, organization).run {
+        if (status() < 200 || status() >= 300) {
+            val responseText = body().asReader(StandardCharsets.UTF_8).use { it.readText() }
+            throw KeycloakApiException("Failed to add Organisation: $responseText")
+        }
     }
-    return response
 }
