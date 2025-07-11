@@ -21,8 +21,8 @@ class AddOrganizationAction(
         if (!client.realmExistsById(realm()))
             throw MigrationException("Realm with id: ${realm()} does not exist!")
 
-//        if (client.organizations(realm()).any { it.name == name })
-//            throw MigrationException("Organisation with name: $name already exists!")
+        if (client.organizations(realm()).any { it.name == name })
+            throw MigrationException("Organisation with name: $name already exists!")
 
         if (domains.isEmpty())
             throw MigrationException("At least one domain needs to be provided!")
@@ -31,12 +31,7 @@ class AddOrganizationAction(
             name, alias, redirectUrl, domains, attributes
         )
 
-        val response = client.addOrganization(realm(), organization)
-
-        if (response.status() < 200 || response.status() >= 300) {
-            val responseText = response.body().asReader(StandardCharsets.UTF_8).use { it.readText() }
-            throw MigrationException("Failed to add Organisation: $responseText")
-        }
+        client.addOrganization(realm(), organization)
     }
 
     override fun undo() {

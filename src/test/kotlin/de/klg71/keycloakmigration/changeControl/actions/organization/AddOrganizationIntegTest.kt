@@ -24,7 +24,7 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
             testRealm,
             name,
             domains = setOf(OrganizationDomain("test.com")),
-            attributes = mapOf("theme" to listOf("theme"))
+            attributes = mapOf("attribute" to listOf("values"))
         ).executeIt()
 
         val org = client.organizationByName(name, testRealm)
@@ -32,7 +32,7 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
         assertThat(org.name).isEqualTo(name)
         assertThat(org.alias).isEqualTo(name)
         assertThat(org.domains).isEqualTo(setOf(OrganizationDomain("test.com")))
-        assertThat(org.attributes).isEqualTo(mapOf("theme" to listOf("theme")))
+        assertThat(org.attributes).isEqualTo(mapOf("attribute" to listOf("values")))
     }
 
     @Test
@@ -55,7 +55,7 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
             testRealm,
             name,
             domains = setOf(OrganizationDomain("test.com")),
-            attributes = mapOf("theme" to listOf("theme"))
+            attributes = mapOf("attribute" to listOf("values"))
         ).executeIt()
 
         assertThatThrownBy {
@@ -63,7 +63,7 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
                 testRealm,
                 name,
                 domains = setOf(OrganizationDomain("test.com")),
-                attributes = mapOf("theme" to listOf("theme"))
+                attributes = mapOf("attribute" to listOf("values"))
             ).executeIt()
         }
             .isInstanceOf(MigrationException::class.java)

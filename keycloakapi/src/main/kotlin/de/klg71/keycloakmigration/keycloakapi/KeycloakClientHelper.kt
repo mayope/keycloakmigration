@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.Organization
 import feign.Response
+import java.nio.charset.StandardCharsets
 import java.util.UUID
 
 /**
@@ -263,8 +264,18 @@ fun KeycloakClient.organizationByName(name: String, realm: String): Organization
         if (isEmpty()) {
             throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
         }
+
         find { it.name == name }?.let {
             return organization(realm, it.id)
         }
         throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
     }
+
+fun KeycloakClient.addOrganization(realm: String, organization: Organization): Response {
+    val response = this.addOrganization(realm, organization)
+    if (response.status() < 200 || response.status() >= 300) {
+        val responseText = response.body().asReader(StandardCharsets.UTF_8).use { it.readText() }
+        throw KeycloakApiException("Failed to add Organisation: $responseText")
+    }
+    return response
+}
