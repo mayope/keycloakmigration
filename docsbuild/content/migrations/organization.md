@@ -17,7 +17,7 @@ Adds a new organization to an existing realm
 - alias: String, optional, default=name
 - redirectUrl: String, optional,
 - domains: List<OrganizationDomain>,
-- attributes: Map<String, List<String>>
+- attributes: Map with Layout Map<String, List< String >>, default=empty
 
 ### Example
 ```yaml
