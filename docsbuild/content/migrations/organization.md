@@ -29,7 +29,7 @@ Adds a new organization to an existing realm
         domains:
           - name: test.com
         attributes:
-          attribute: 
+          custom-attribute: 
             - attributeValue
 ```
 

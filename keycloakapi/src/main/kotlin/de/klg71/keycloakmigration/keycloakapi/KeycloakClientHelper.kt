@@ -2,6 +2,7 @@
 
 package de.klg71.keycloakmigration.keycloakapi
 
+import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
@@ -264,15 +265,15 @@ fun KeycloakClient.organizationByName(name: String, realm: String): Organization
         if (isEmpty()) {
             throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
         }
-
+        // This was refactored due to the organizations endpoint not returning the attributes
         find { it.name == name }?.let {
             return organization(realm, it.id)
         }
         throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
     }
 
-fun KeycloakClient.addOrganization(realm: String, organization: Organization): Response {
-    val response = this.addOrganization(realm, organization)
+fun KeycloakClient.addOrganizationWithAttributes(realm: String, organization: AddOrganization): Organization {
+    val response = addOrganization(realm, organization)
     if (response.status() < 200 || response.status() >= 300) {
         val responseText = response.body().asReader(StandardCharsets.UTF_8).use { it.readText() }
         throw KeycloakApiException("Failed to add Organisation: $responseText")
