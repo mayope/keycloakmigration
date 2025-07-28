@@ -326,7 +326,7 @@ publishing {
     }
     repositories {
         maven {
-            setUrl("https://central.sonatype.com/central")
+            setUrl("https://ossrh-staging-api.central.sonatype.com")
             credentials {
                 val ossrhUser = project.findProperty("ossrhUser") as String? ?: ""
                 username = ossrhUser
