@@ -72,7 +72,7 @@ repositories {
 }
 
 tasks {
-    val keycloakVersion = "26.0.7"
+    val keycloakVersion = "26.3.2"
 
     named("build") {
         dependsOn("buildDocker", "docsbuild:buildDocs")
@@ -185,7 +185,7 @@ tasks {
                 "./kc.sh", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false", "--http-relative-path=/auth", "--log-level=info"
             ).apply {
                 directory(keycloakDir)
-               
+
                 environment()["KEYCLOAK_ADMIN"] = "admin"
                 environment()["KEYCLOAK_ADMIN_PASSWORD"] = "admin"
 
