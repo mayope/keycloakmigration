@@ -102,7 +102,8 @@ tasks {
         dependsOn(
             "publishAllPublicationsToProjectLocalRepository",
             "zipMavenCentralPortalPublication",
-           // "releaseMavenCentralPortalPublication",
+            "validateMavenCentralPortalPublication",
+            "releaseMavenCentralPortalPublication",
             //"publishMavenJavaPublicationToGitHubPackagesRepository",
             "plugin:publishPlugins",
             //"keycloakapi:publishMavenJavaPublicationToMavenRepository",
