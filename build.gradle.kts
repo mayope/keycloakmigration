@@ -318,30 +318,34 @@ publishing {
                         email.set("MeisegeierLukas@gmx.de")
                     }
                 }
-    }
-    repositories {
-        maven {
-            setUrl("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
-            credentials {
-                val ossrhUser = project.findProperty("ossrhUser") as String? ?: ""
-                username = ossrhUser
-                val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
-                password = ossrhPassword
-                if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
-                    logger.warn("Sonatype user and password are not set you won't be able to publish to maven central!")
-                }
             }
-        }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/mayope/keycloakmigration")
-            credentials {
-                val githubUser = project.findProperty("githubPublishUser") as String? ?: ""
-                username = githubUser
-                val githubAccessToken = project.findProperty("githubPublishKey") as String? ?: ""
-                password = githubAccessToken
-                if (githubUser.isBlank() || githubAccessToken.isBlank()) {
-                    logger.warn("Github user and password are not set you won't be able to publish to github!")
+            repositories {
+                maven {
+                    setUrl("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
+                    credentials {
+                        val ossrhUser = project.findProperty("ossrhUser") as String? ?: ""
+                        username = ossrhUser
+                        val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
+                        password = ossrhPassword
+                        if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
+                            logger.warn(
+                                "Sonatype user and password are not set you won't be able to publish to maven central!"
+                            )
+                        }
+                    }
+                }
+                maven {
+                    name = "GitHubPackages"
+                    url = uri("https://maven.pkg.github.com/mayope/keycloakmigration")
+                    credentials {
+                        val githubUser = project.findProperty("githubPublishUser") as String? ?: ""
+                        username = githubUser
+                        val githubAccessToken = project.findProperty("githubPublishKey") as String? ?: ""
+                        password = githubAccessToken
+                        if (githubUser.isBlank() || githubAccessToken.isBlank()) {
+                            logger.warn("Github user and password are not set you won't be able to publish to github!")
+                        }
+                    }
                 }
             }
         }
