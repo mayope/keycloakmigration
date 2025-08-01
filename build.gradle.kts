@@ -429,10 +429,7 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
 
 
 signing {
-    val signingKey: String? by project
-    val signingPassword: String? by project
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    //sign(publishing.publications["mavenJava"])
+    sign(publishing.publications["OSSRH"])
 }
 configure<ReleaseExtension>{
     with(git){
