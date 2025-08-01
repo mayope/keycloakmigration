@@ -395,6 +395,7 @@ publishing {
         }
     }
 }
+group = "de.klg71.keycloakmigration"
 publishOnCentral {
     repoOwner.set("klg71")
     projectDescription.set("Keycloak configuration as migration files")
