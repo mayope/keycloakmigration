@@ -101,7 +101,7 @@ tasks {
     "afterReleaseBuild"{
         dependsOn(
             "publishAllPublicationsToProjectLocalRepository",
-            "zipMavenCentralPortalPublication ",
+            "zipMavenCentralPortalPublication",
             "releaseMavenCentralPortalPublication",
             "publishMavenJavaPublicationToGitHubPackagesRepository",
             "plugin:publishPlugins",
