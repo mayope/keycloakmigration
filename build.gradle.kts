@@ -326,19 +326,22 @@ publishing {
     publications {
         withType<MavenPublication> {
             pom {
+                /*
                 withXml {
                     val root = asNode()
                     root.appendNode("name", "keycloakmigration")
                     root.appendNode("description", "Keycloak configuration as migration files")
                     root.appendNode("url", "https://github.com/mayope/keycloakmigration")
                 }
+
                 licenses {
                     license {
-                        name.set("MIT License")
+                        name.set("")
                         url.set("https://github.com/mayope/keycloakmigration")
                         distribution.set("repo")
                     }
                 }
+                 */
                 developers {
                     developer {
                         id.set("klg71")
@@ -346,11 +349,13 @@ publishing {
                         email.set("MeisegeierLukas@gmx.de")
                     }
                 }
+                /*
                 scm {
                     url.set("https://github.com/mayope/keycloakmigration")
                     connection.set("scm:git:git://github.com/mayope/keycloakmigration.git")
                     developerConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
                 }
+                 */
             }
         }
         /*
@@ -391,8 +396,13 @@ publishing {
     }
 }
 publishOnCentral {
-    repoOwner.set("Your-GitHub-username")
-    projectDescription.set("A reasonable description")
+    repoOwner.set("klg71")
+    projectDescription.set("Keycloak configuration as migration files")
+    projectLongName.set(project.name)
+    licenseName.set("MIT License")
+    licenseUrl.set("https://github.com/mayope/keycloakmigration/blob/master/LICENSE.md")
+    projectUrl.set("https://github.com/mayope/keycloakmigration")
+    scmConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
 }
 
 /*
