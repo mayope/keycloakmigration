@@ -100,7 +100,9 @@ tasks {
 
     "afterReleaseBuild"{
         dependsOn(
-            "publishMavenJavaPublicationToMavenRepository",
+            "publishAllPublicationsToProjectLocalRepository",
+            "zipMavenCentralPortalPublication ",
+            "releaseMavenCentralPortalPublication",
             "publishMavenJavaPublicationToGitHubPackagesRepository",
             "plugin:publishPlugins",
             "keycloakapi:publishMavenJavaPublicationToMavenRepository",
