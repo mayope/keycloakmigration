@@ -103,10 +103,10 @@ tasks {
             "publishAllPublicationsToProjectLocalRepository",
             "zipMavenCentralPortalPublication",
             "releaseMavenCentralPortalPublication",
-            "publishMavenJavaPublicationToGitHubPackagesRepository",
+            //"publishMavenJavaPublicationToGitHubPackagesRepository",
             "plugin:publishPlugins",
-            "keycloakapi:publishMavenJavaPublicationToMavenRepository",
-            "keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository",
+            //"keycloakapi:publishMavenJavaPublicationToMavenRepository",
+            //"keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository",
             "pushDocker", "shadowJar"
         )
     }
