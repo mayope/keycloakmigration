@@ -32,6 +32,9 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.23.7"
 
     id("com.github.johnrengelman.shadow") version "8.1.1" apply (false)
+    id ("org.danilopianini.publish-on-central") version "9.1.0"
+
+    id("org.jetbrains.dokka") version "2.0.0"
 }
 
 dependencies {
@@ -268,8 +271,8 @@ tasks {
     }
 
     val tagName = "klg71/keycloakmigration"
-    val version = project.version
-    val tag = "$tagName:$version"
+    val projectVersion = project.version
+    val tag = "$tagName:$projectVersion"
     val tagLatest = "$tagName:latest"
     register("buildDocker") {
         dependsOn("prepareDocker")
@@ -281,7 +284,7 @@ tasks {
                     "jar_file=${fatJar.outputs.files.first().name}",
                     "--label","\"org.opencontainers.image.url=https://github.com/mayope/keycloakmigration.git\"",
                     "--label","\"org.opencontainers.image.source=https://github.com/mayope/keycloakmigration.git\"",
-                    "--label","\"org.opencontainers.image.version=$version\"",
+                    "--label","\"org.opencontainers.image.version=$projectVersion\"",
                 )
             }
             exec {
@@ -302,6 +305,7 @@ tasks {
     }
 }
 
+/*
 val sourcesJar by tasks.creating(Jar::class) {
     dependsOn.add(tasks.javadoc)
     archiveClassifier.set("sources")
@@ -313,16 +317,48 @@ val javadocJar by tasks.creating(Jar::class) {
     archiveClassifier.set("javadoc")
     from(tasks.javadoc)
 }
+ */
 
 
 publishing {
     publications {
+        withType<MavenPublication> {
+            pom {
+                withXml {
+                    val root = asNode()
+                    root.appendNode("name", "keycloakmigration")
+                    root.appendNode("description", "Keycloak configuration as migration files")
+                    root.appendNode("url", "https://github.com/mayope/keycloakmigration")
+                }
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://github.com/mayope/keycloakmigration")
+                        distribution.set("repo")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("klg71")
+                        name.set("Lukas Meisegeier")
+                        email.set("MeisegeierLukas@gmx.de")
+                    }
+                }
+                scm {
+                    url.set("https://github.com/mayope/keycloakmigration")
+                    connection.set("scm:git:git://github.com/mayope/keycloakmigration.git")
+                    developerConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
+                }
+            }
+        }
+        /*
         register("mavenJava", MavenPublication::class) {
             groupId = "de.klg71.keycloakmigration"
             artifact(sourcesJar)
             artifact(javadocJar)
             from(components["java"])
         }
+         */
     }
     repositories {
         maven {
@@ -352,7 +388,12 @@ publishing {
         }
     }
 }
+publishOnCentral {
+    repoOwner.set("Your-GitHub-username")
+    projectDescription.set("A reasonable description")
+}
 
+/*
 val publications = project.publishing.publications.withType(MavenPublication::class.java).map {
     with(it.pom) {
         withXml {
@@ -382,9 +423,14 @@ val publications = project.publishing.publications.withType(MavenPublication::cl
         }
     }
 }
+ */
+
 
 signing {
-    sign(publishing.publications["mavenJava"])
+    val signingKey: String? by project
+    val signingPassword: String? by project
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    //sign(publishing.publications["mavenJava"])
 }
 configure<ReleaseExtension>{
     with(git){
