@@ -104,10 +104,11 @@ tasks {
             "zipMavenCentralPortalPublication",
             "validateMavenCentralPortalPublication",
             "releaseMavenCentralPortalPublication",
-            //"publishMavenJavaPublicationToGitHubPackagesRepository",
+            "keycloakapi:publishAllPublicationsToProjectLocalRepository",
+            "keycloakapi:zipMavenCentralPortalPublication",
+            "keycloakapi:validateMavenCentralPortalPublication",
+            "keycloakapi:releaseMavenCentralPortalPublication",
             "plugin:publishPlugins",
-            //"keycloakapi:publishMavenJavaPublicationToMavenRepository",
-            //"keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository",
             "pushDocker", "shadowJar"
         )
     }
