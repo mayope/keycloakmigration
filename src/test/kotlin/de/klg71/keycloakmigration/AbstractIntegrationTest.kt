@@ -12,12 +12,16 @@ import org.koin.core.context.stopKoin
 
 @Suppress("TopLevelPropertyNaming")
 private const val adminUser = "admin"
+
 @Suppress("TopLevelPropertyNaming")
 private const val adminPass = "admin"
+
 @Suppress("TopLevelPropertyNaming")
 const val TEST_BASE_URL = "http://localhost:18080/auth"
+
 @Suppress("TopLevelPropertyNaming")
 private const val realm = "master"
+
 @Suppress("TopLevelPropertyNaming")
 private const val clientId = "admin-cli"
 
@@ -29,7 +33,7 @@ abstract class AbstractIntegrationTest : KoinComponent {
         startKoin {
             modules(
                 myModule(
-                    adminUser, adminPass, "", false, 8081, TEST_BASE_URL, realm, clientId, emptyMap(),
+                    adminUser, adminPass, "", false, 8081, TEST_BASE_URL, realm, clientId, "", false, emptyMap(),
                     failOnUndefinedVariabled = true, warnOnUndefinedVariables = true, Slf4jLogger()
                 )
             )
@@ -40,7 +44,19 @@ abstract class AbstractIntegrationTest : KoinComponent {
         startKoin {
             modules(
                 myModule(
-                    adminUser, adminPass, "", false, 8081, TEST_BASE_URL, realm, clientId, parameters,
+                    adminUser, adminPass, "", false, 8081, TEST_BASE_URL, realm, clientId, "", false, parameters,
+                    failOnUndefinedVariabled = true, warnOnUndefinedVariables = true
+                )
+            )
+        }
+    }
+
+    fun startKoinWithClientSecret(loginClientId: String, clientSecret: String?, loginRealm: String) {
+        startKoin {
+            modules(
+                myModule(
+                    adminUser, adminPass, "", false, 8081, TEST_BASE_URL, loginRealm, loginClientId, clientSecret, true,
+                    emptyMap(),
                     failOnUndefinedVariabled = true, warnOnUndefinedVariables = true
                 )
             )
