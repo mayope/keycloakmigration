@@ -42,6 +42,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ResetPassword
 import de.klg71.keycloakmigration.keycloakapi.model.ResourceRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
+import de.klg71.keycloakmigration.keycloakapi.model.ServerInfo
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
@@ -63,6 +64,9 @@ data class RealmName(val realm: String)
  */
 @Suppress("TooManyFunctions")
 interface KeycloakClient {
+    @RequestLine("GET /admin/serverinfo")
+    fun serverInfo(): ServerInfo
+
     @RequestLine("GET /admin/realms")
     fun realms(): List<Realm>
 
