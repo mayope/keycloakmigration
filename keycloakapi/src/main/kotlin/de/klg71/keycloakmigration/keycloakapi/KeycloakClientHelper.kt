@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.Organization
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateOrganization
 import feign.Response
 import java.nio.charset.StandardCharsets
 import java.util.UUID
@@ -277,6 +278,25 @@ fun KeycloakClient.addOrganization(realm: String, organization: AddOrganization)
         if (status() < 200 || status() >= 300) {
             val responseText = body().asReader(StandardCharsets.UTF_8).use { it.readText() }
             throw KeycloakApiException("Failed to add Organisation: $responseText")
+        }
+    }
+}
+
+fun KeycloakClient.organizationByAlias(alias: String, realm: String): Organization = organizations(realm).run {
+    if (isEmpty()) {
+        throw KeycloakApiException("Organization with alias: $alias does not exist in realm: $realm!")
+    }
+    find { it.alias == alias }?.let {
+        return organization(realm, it.id)
+    }
+    throw KeycloakApiException("Organization with alias: $alias does not exist in realm: $realm!")
+}
+
+fun KeycloakClient.editOrganization(realm: String, id: UUID, organization: UpdateOrganization) {
+    updateOrganization(realm, id, organization).run {
+        if (!isSuccessful()) {
+            val responseText = body().asReader(StandardCharsets.UTF_8).use { it.readText() }
+            throw KeycloakApiException("Failed to update Organisation: $responseText")
         }
     }
 }
