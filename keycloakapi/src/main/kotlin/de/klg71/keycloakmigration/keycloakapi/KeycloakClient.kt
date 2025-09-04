@@ -433,7 +433,10 @@ interface KeycloakClient {
     fun deleteRealm(@Param("realm-id") id: String)
 
     @RequestLine("GET /admin/realms/{realm}/users/{user-id}/role-mappings/realm/composite")
-    fun userRoles(@Param("realm") realm: String, @Param("user-id") id: UUID): List<RoleListItem>
+    fun userRealmRolesExpanded(@Param("realm") realm: String, @Param("user-id") id: UUID): List<RoleListItem>
+
+    @RequestLine("GET /admin/realms/{realm}/users/{user-id}/role-mappings/realm")
+    fun userRealmRoles(@Param("realm") realm: String, @Param("user-id") id: UUID): List<RoleListItem>
 
     @RequestLine("GET /admin/realms/{realm}/users/{user-id}/groups")
     fun userGroups(@Param("realm") realm: String, @Param("user-id") id: UUID): List<UserGroupListItem>

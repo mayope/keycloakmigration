@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.Organization
+import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateOrganization
 import feign.Response
 import java.nio.charset.StandardCharsets
@@ -299,4 +300,11 @@ fun KeycloakClient.editOrganization(realm: String, id: UUID, organization: Updat
             throw KeycloakApiException("Failed to update Organisation: $responseText")
         }
     }
+}
+
+fun KeycloakClient.userRoles(realm: String, user: UUID, expanded: Boolean = true): List<RoleListItem> = roles(realm).run {
+    return if (expanded)
+        userRealmRolesExpanded(realm, user)
+    else
+        userRealmRoles(realm, user)
 }

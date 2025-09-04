@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.changeControl.actions.client.AssignRoleToClien
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteRoleScopeMappingAction
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
+import de.klg71.keycloakmigration.changeControl.actions.client.RevokeRoleFromClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.UpdateClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.authz.ImportClientAuthorizationAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddAudienceMapperAction
@@ -129,6 +130,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "assignRoleToClient" -> objectMapper.readValue<AssignRoleToClientAction>(actionJson)
             "addRoleScopeMapping" -> objectMapper.readValue<AddRoleScopeMappingAction>(actionJson)
             "deleteRoleScopeMapping" -> objectMapper.readValue<DeleteRoleScopeMappingAction>(actionJson)
+            "revokeRoleFromClient" -> objectMapper.readValue<RevokeRoleFromClientAction>(actionJson)
 
             "addClientScope" -> objectMapper.readValue<AddClientScopeAction>(actionJson)
             "deleteClientScope" -> objectMapper.readValue<DeleteClientScopeAction>(actionJson)
