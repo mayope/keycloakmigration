@@ -66,6 +66,7 @@ class UpdateRealmCustomPoliciesIntegTest: KoinTest {
         }
     }
 
+    @Suppress("LongMethod")
     private fun mockRealm(): Realm = Realm(
         id = "testRealm",
         realm = "testRealm",
