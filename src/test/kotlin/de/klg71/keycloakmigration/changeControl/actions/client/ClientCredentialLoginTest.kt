@@ -23,6 +23,7 @@ class ClientCredentialLoginTest : AbstractIntegrationTest() {
 
         stopKoin()
         startKoinWithClientSecret("simpleClient", secret, testRealm)
+
         stopKoin()
         startKoinWithParameters(emptyMap())
     }
