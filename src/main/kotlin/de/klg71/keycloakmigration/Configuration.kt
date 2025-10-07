@@ -31,6 +31,8 @@ fun myModule(adminUser: String,
     baseUrl: String,
     realm: String,
     clientId: String,
+    clientSecret: String?,
+    loginWithClientCredentials: Boolean,
     parameters: Map<String, String>,
     failOnUndefinedVariabled: Boolean,
     warnOnUndefinedVariables: Boolean,
@@ -40,7 +42,8 @@ fun myModule(adminUser: String,
     single(named("parameters")) { parameters }
     single {
         initKeycloakClient(
-            baseUrl, adminUser, adminPassword, adminUseOauth, adminUseOauthLocalPort, realm, clientId, logger, adminTotp
+            baseUrl, adminUser, adminPassword, adminUseOauth, adminUseOauthLocalPort, realm, clientId, clientSecret,
+            loginWithClientCredentials, logger, adminTotp
         )
     }
     single(named("migrationUserId")) { loadCurrentUser(get(), adminUser, realm) }
@@ -59,8 +62,8 @@ private fun initYamlObjectMapper(): ObjectMapper =
         .registerModule(KotlinModule.Builder().build())!!
 
 private fun actionModule(actionFactory: ActionFactory) = SimpleModule().addDeserializer(
-        Action::class.java, ActionDeserializer(actionFactory)
-    )!!
+    Action::class.java, ActionDeserializer(actionFactory)
+)!!
 
 private fun initActionFactory(objectMapper: ObjectMapper) = ActionFactory(
     objectMapper
