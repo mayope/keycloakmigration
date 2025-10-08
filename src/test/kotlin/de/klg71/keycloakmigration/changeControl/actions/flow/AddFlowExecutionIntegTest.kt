@@ -22,7 +22,7 @@ class AddFlowExecutionIntegTest : AbstractIntegrationTest() {
                 AuthenticationExecutionImport(
                     Flow.Requirement.REQUIRED,
                     "idp-auto-link",
-                    0, 0
+                    0, 0, 0
                 )
             )
         ).executeIt()

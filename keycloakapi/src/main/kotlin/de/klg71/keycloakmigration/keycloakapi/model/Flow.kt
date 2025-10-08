@@ -18,7 +18,7 @@ data class Flow(val id: UUID,
         val requirement: Requirement,
         val priority: Int,
         val userSetupAllowed: Boolean,
-        // This looks very weird but they seem to have this in their codebase, i will assume it means authenticatorFlow
+        // This looks very weird, but they seem to have this in their codebase, I will assume it means authenticatorFlow
         @Suppress("SpellCheckingInspection")
         val autheticatorFlow: Boolean)
 }
@@ -32,6 +32,7 @@ data class AuthenticationExecution(
     val providerId: String?,
     val level: Int,
     val index: Int,
+    val priority: Int,
     val authenticationConfig: String? = null,
     val authenticationFlow: Boolean
 )
@@ -55,6 +56,7 @@ data class AuthenticationExecutionImport(
     val providerId: String?,
     val level: Int,
     val index: Int,
+    val priority: Int,
     val config: Map<String, String> = emptyMap())
 
 data class ImportFlow(
@@ -80,6 +82,7 @@ data class UpdateFlowExecution(val id: UUID,
     val requirement: Flow.Requirement,
     val level: Int,
     val index: Int,
+    val priority: Int,
     val providerId: String?)
 
 data class CopyFlowExecution(val newName: String)
