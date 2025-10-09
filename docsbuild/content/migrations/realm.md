@@ -280,6 +280,26 @@ updates an attribute in the user profile for the realm
               - admin
 ```
 
+## updateRealmProfileOrder
+reorders attributes in the user profile for the realm based on the provided list
+
+### Parameters
+- realm: String, optional
+- order: List<String>, not optional — the list of attribute names in the desired order
+
+### Example
+```yaml
+    id: update-user-profile-order
+    author: amer.qwaider
+    changes:
+    - updateRealmProfileOrder:
+        order:
+          - lastName
+          - firstName
+          - email
+          - username
+```
+
 #### RealmAttributePermissions
 ##### Parameters
 - view: Set< String>, optional
