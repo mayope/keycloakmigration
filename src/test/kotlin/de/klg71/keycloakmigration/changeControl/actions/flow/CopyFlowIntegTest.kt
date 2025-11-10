@@ -23,7 +23,7 @@ class CopyFlowIntegTest : AbstractIntegrationTest() {
                 AuthenticationExecutionImport(
                     Flow.Requirement.REQUIRED,
                     "idp-auto-link",
-                    0, 0,
+                    0, 0, 0,
                     mapOf("foo" to "bar", "foo1" to "bar1")
                 )
             )
@@ -59,7 +59,7 @@ class CopyFlowIntegTest : AbstractIntegrationTest() {
         val alias = "TestFLow"
         AddFlowAction(
             testRealm, alias, "Right round", executions = listOf(
-                AuthenticationExecutionImport(Flow.Requirement.REQUIRED, "idp-auto-link", 0, 0, mapOf())
+                AuthenticationExecutionImport(Flow.Requirement.REQUIRED, "idp-auto-link", 0, 0, 0, mapOf())
             )
         ).executeIt()
         assertThatThrownBy {

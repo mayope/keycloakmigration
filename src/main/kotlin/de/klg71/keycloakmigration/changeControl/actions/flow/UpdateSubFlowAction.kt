@@ -31,6 +31,7 @@ class UpdateSubFlowAction(
             requirement,
             original.level,
             original.index,
+            original.priority,
             original.providerId
         )
 
@@ -47,6 +48,7 @@ class UpdateSubFlowAction(
             original.requirement,
             original.level,
             original.index,
+            original.priority,
             original.providerId
         )
 

@@ -8,7 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.component.inject
-import java.util.AbstractMap
+import java.util.*
 
 class AddClientScopeIntegTest : AbstractIntegrationTest() {
 
@@ -50,13 +50,14 @@ class AddClientScopeIntegTest : AbstractIntegrationTest() {
         assertThat(theScope.protocolMappers!!.first().protocol).isEqualTo("openid-connect")
         assertThat(theScope.protocolMappers!!.first().protocolMapper).isEqualTo("oidc-usermodel-property-mapper")
         assertThat(theScope.protocolMappers!!.first().consentRequired).isEqualTo(false)
-        assertThat(theScope.protocolMappers!!.first().config).containsExactly(
-            AbstractMap.SimpleEntry("userinfo.token.claim", "true"),
-            AbstractMap.SimpleEntry("user.attribute", "username"),
-            AbstractMap.SimpleEntry("id.token.claim", "true"),
-            AbstractMap.SimpleEntry("access.token.claim", "true"),
-            AbstractMap.SimpleEntry("claim.name", "preferred_username"),
-            AbstractMap.SimpleEntry("jsonType.label", "String"),
+        assertThat(theScope.protocolMappers!!.first().config).containsExactlyInAnyOrderEntriesOf(
+            mapOf("userinfo.token.claim" to "true",
+                "user.attribute" to "username",
+                "id.token.claim" to "true",
+                "access.token.claim" to "true",
+                "claim.name" to "preferred_username",
+                "jsonType.label" to "String"
+            )
         )
         assertThat(theScope.description).isEqualTo("testName")
         assertThat(theScope.attributes).contains(
