@@ -32,7 +32,10 @@ class TokenFlakinessTest {
         val adminUseOauth = false
         val adminUseOauthLocalPort = 8081
         val tokenHolder =
-            TokenHolder(initKeycloakLoginClient(baseUrl), adminUser, adminPassword, adminUseOauth, adminUseOauthLocalPort, baseUrl, realmName, clientId, "", 0)
+            TokenHolder(
+                initKeycloakLoginClient(baseUrl), adminUser, adminPassword, adminUseOauth, adminUseOauthLocalPort,
+                baseUrl, realmName, clientId, "", "", 0,false
+            )
         val configureClient = initKeycloakClientWithTokenHolder(baseUrl, tokenHolder = tokenHolder)
         val realm = configureClient.realmById(realmName)
         val updatedRealm = RealmUpdateBuilder(realm).run {
@@ -45,7 +48,10 @@ class TokenFlakinessTest {
         repeat(10000) {
             val preTokenTestDurationBeforeStartNs = 4
             val client =
-                initKeycloakClient(baseUrl, adminUser, adminPassword, adminUseOauth, adminUseOauthLocalPort, realmName, clientId, null, "", 20)
+                initKeycloakClient(
+                    baseUrl, adminUser, adminPassword, adminUseOauth, adminUseOauthLocalPort, realmName, clientId, "",false,
+                    null, "", 20
+                )
             val testCallStartTimeMs =
                 currentTimeMillis() + TimeUnit.SECONDS.toMillis(
                     tokenHolder.token().expiresIn
