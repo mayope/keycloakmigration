@@ -19,21 +19,24 @@ import java.time.Duration
 
 /**
  * Builds the [KeycloakClient]
- * @param baseUrl base url of the keycloak instance e.g. http://localhost:8080/auth
- * @param adminUser user to execute the migrations. executed migrations are stored in the user-attributes as hashes
- * @param adminPassword password of the user to execute the migrations
- * @param realm Realm to use for the login of the user
- * @param clientId id of the client to use for the login of the user
  */
-fun initKeycloakClient(baseUrl: String, adminUser: String, adminPassword: String,
-                       adminUseOauth: Boolean, adminUseOauthLocalPort: Int,
-                       realm: String,
-    clientId: String, logger: Logger? = null, totp: String = "", tokenOffsetMs: Long = 1000) = initObjectMapper().let {
+fun initKeycloakClient(baseUrl: String,
+    adminUser: String,
+    adminPassword: String,
+    adminUseOauth: Boolean,
+    adminUseOauthLocalPort: Int,
+    realm: String,
+    clientId: String,
+    clientSecret: String? = null,
+    loginWithClientCredentials: Boolean = false,
+    logger: Logger? = null,
+    totp: String = "",
+    tokenOffsetMs: Long = 1000) = initObjectMapper().let {
     TokenHolder(
         initKeycloakLoginClient(baseUrl, logger),
         adminUser, adminPassword,
         adminUseOauth, adminUseOauthLocalPort, baseUrl,
-        realm, clientId, totp, tokenOffsetMs
+        realm, clientId, clientSecret, totp, tokenOffsetMs, loginWithClientCredentials
     ).let {
         initKeycloakClientWithTokenHolder(baseUrl, logger, it)
     }

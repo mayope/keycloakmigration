@@ -5,9 +5,11 @@ import de.klg71.keycloakmigration.DEFAULT_ADMIN_USER
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_USE_OAUTH
 import de.klg71.keycloakmigration.DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT
 import de.klg71.keycloakmigration.DEFAULT_CLIENTID
+import de.klg71.keycloakmigration.DEFAULT_CLIENTSECRET
 import de.klg71.keycloakmigration.DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT
 import de.klg71.keycloakmigration.DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES
 import de.klg71.keycloakmigration.DEFAULT_FAIL_ON_UNDEFINED_VARIABLES
+import de.klg71.keycloakmigration.DEFAULT_LOGIN_WITH_CLIENT_CREDENTIALS
 import de.klg71.keycloakmigration.DEFAULT_REALM
 import de.klg71.keycloakmigration.DEFAULT_WAIT_FOR_KEYCLOAK
 import de.klg71.keycloakmigration.DEFAULT_WAIT_FOR_KEYCLOAK_TIMEOUT
@@ -27,6 +29,10 @@ object TestMigrationArgs : MigrationArgs {
     override fun migrationFile() = "src/test/resources/keycloak-changelog.yml"
     override fun realm() = DEFAULT_REALM
     override fun clientId() = DEFAULT_CLIENTID
+    override fun clientSecret() = DEFAULT_CLIENTSECRET
+
+    override fun loginWithClientSecret() = DEFAULT_LOGIN_WITH_CLIENT_CREDENTIALS
+
     override fun correctHashes() = false
     override fun parameters(): Map<String, String> {
         return mapOf("IS_TEST_ENV" to "true")

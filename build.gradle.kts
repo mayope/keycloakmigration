@@ -32,6 +32,9 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.23.7"
 
     id("com.github.johnrengelman.shadow") version "8.1.1" apply (false)
+    id ("org.danilopianini.publish-on-central") version "9.1.0"
+
+    id("org.jetbrains.dokka") version "2.0.0"
 }
 
 dependencies {
@@ -72,7 +75,7 @@ repositories {
 }
 
 tasks {
-    val keycloakVersion = "26.0.7"
+    val keycloakVersion = "26.3.2"
 
     named("build") {
         dependsOn("buildDocker", "docsbuild:buildDocs")
@@ -97,11 +100,15 @@ tasks {
 
     "afterReleaseBuild"{
         dependsOn(
-            "publishMavenJavaPublicationToMavenRepository",
-            "publishMavenJavaPublicationToGitHubPackagesRepository",
+            "publishAllPublicationsToProjectLocalRepository",
+            "zipMavenCentralPortalPublication",
+            "validateMavenCentralPortalPublication",
+            "releaseMavenCentralPortalPublication",
+            "keycloakapi:publishAllPublicationsToProjectLocalRepository",
+            "keycloakapi:zipMavenCentralPortalPublication",
+            "keycloakapi:validateMavenCentralPortalPublication",
+            "keycloakapi:releaseMavenCentralPortalPublication",
             "plugin:publishPlugins",
-            "keycloakapi:publishMavenJavaPublicationToMavenRepository",
-            "keycloakapi:publishMavenJavaPublicationToGitHubPackagesRepository",
             "pushDocker", "shadowJar"
         )
     }
@@ -185,7 +192,7 @@ tasks {
                 "./kc.sh", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false", "--http-relative-path=/auth", "--log-level=info"
             ).apply {
                 directory(keycloakDir)
-               
+
                 environment()["KEYCLOAK_ADMIN"] = "admin"
                 environment()["KEYCLOAK_ADMIN_PASSWORD"] = "admin"
 
@@ -268,8 +275,8 @@ tasks {
     }
 
     val tagName = "klg71/keycloakmigration"
-    val version = project.version
-    val tag = "$tagName:$version"
+    val projectVersion = project.version
+    val tag = "$tagName:$projectVersion"
     val tagLatest = "$tagName:latest"
     register("buildDocker") {
         dependsOn("prepareDocker")
@@ -281,7 +288,7 @@ tasks {
                     "jar_file=${fatJar.outputs.files.first().name}",
                     "--label","\"org.opencontainers.image.url=https://github.com/mayope/keycloakmigration.git\"",
                     "--label","\"org.opencontainers.image.source=https://github.com/mayope/keycloakmigration.git\"",
-                    "--label","\"org.opencontainers.image.version=$version\"",
+                    "--label","\"org.opencontainers.image.version=$projectVersion\"",
                 )
             }
             exec {
@@ -302,89 +309,64 @@ tasks {
     }
 }
 
-val sourcesJar by tasks.creating(Jar::class) {
-    dependsOn.add(tasks.javadoc)
-    archiveClassifier.set("sources")
-    from(sourceSets.main.get().allSource)
-}
-
-val javadocJar by tasks.creating(Jar::class) {
-    dependsOn.add(tasks.javadoc)
-    archiveClassifier.set("javadoc")
-    from(tasks.javadoc)
-}
-
-
 publishing {
     publications {
-        register("mavenJava", MavenPublication::class) {
-            groupId = "de.klg71.keycloakmigration"
-            artifact(sourcesJar)
-            artifact(javadocJar)
-            from(components["java"])
-        }
-    }
-    repositories {
-        maven {
-            setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2")
-            credentials {
-                val ossrhUser = project.findProperty("ossrhUser") as String? ?: ""
-                username = ossrhUser
-                val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
-                password = ossrhPassword
-                if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
-                    logger.warn("Sonatype user and password are not set you won't be able to publish to maven central!")
+        withType<MavenPublication> {
+            pom {
+                developers {
+                    developer {
+                        id.set("klg71")
+                        name.set("Lukas Meisegeier")
+                        email.set("MeisegeierLukas@gmx.de")
+                    }
+                }
+            }
+            repositories {
+                maven {
+                    setUrl("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
+                    credentials {
+                        val ossrhUser = project.findProperty("ossrhUser") as String? ?: ""
+                        username = ossrhUser
+                        val ossrhPassword = project.findProperty("ossrhPassword") as String? ?: ""
+                        password = ossrhPassword
+                        if (ossrhUser.isBlank() || ossrhPassword.isBlank()) {
+                            logger.warn(
+                                "Sonatype user and password are not set you won't be able to publish to maven central!"
+                            )
+                        }
+                    }
+                }
+                maven {
+                    name = "GitHubPackages"
+                    url = uri("https://maven.pkg.github.com/mayope/keycloakmigration")
+                    credentials {
+                        val githubUser = project.findProperty("githubPublishUser") as String? ?: ""
+                        username = githubUser
+                        val githubAccessToken = project.findProperty("githubPublishKey") as String? ?: ""
+                        password = githubAccessToken
+                        if (githubUser.isBlank() || githubAccessToken.isBlank()) {
+                            logger.warn("Github user and password are not set you won't be able to publish to github!")
+                        }
+                    }
                 }
             }
         }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/mayope/keycloakmigration")
-            credentials {
-                val githubUser = project.findProperty("githubPublishUser") as String? ?: ""
-                username = githubUser
-                val githubAccessToken = project.findProperty("githubPublishKey") as String? ?: ""
-                password = githubAccessToken
-                if (githubUser.isBlank() || githubAccessToken.isBlank()) {
-                    logger.warn("Github user and password are not set you won't be able to publish to github!")
-                }
-            }
-        }
     }
+}
+group = "de.klg71.keycloakmigration"
+publishOnCentral {
+    repoOwner.set("klg71")
+    projectDescription.set("Keycloak configuration as migration files")
+    projectLongName.set(project.name)
+    licenseName.set("MIT License")
+    licenseUrl.set("https://github.com/mayope/keycloakmigration/blob/master/LICENSE.md")
+    projectUrl.set("https://github.com/mayope/keycloakmigration")
+    scmConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
 }
 
-val publications = project.publishing.publications.withType(MavenPublication::class.java).map {
-    with(it.pom) {
-        withXml {
-            val root = asNode()
-            root.appendNode("name", "keycloakmigration")
-            root.appendNode("description", "Keycloak configuration as migration files")
-            root.appendNode("url", "https://github.com/mayope/keycloakmigration")
-        }
-        licenses {
-            license {
-                name.set("MIT License")
-                url.set("https://github.com/mayope/keycloakmigration")
-                distribution.set("repo")
-            }
-        }
-        developers {
-            developer {
-                id.set("klg71")
-                name.set("Lukas Meisegeier")
-                email.set("MeisegeierLukas@gmx.de")
-            }
-        }
-        scm {
-            url.set("https://github.com/mayope/keycloakmigration")
-            connection.set("scm:git:git://github.com/mayope/keycloakmigration.git")
-            developerConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
-        }
-    }
-}
 
 signing {
-    sign(publishing.publications["mavenJava"])
+    sign(publishing.publications["OSSRH"])
 }
 configure<ReleaseExtension>{
     with(git){

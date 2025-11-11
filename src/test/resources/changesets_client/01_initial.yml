@@ -1,0 +1,6 @@
+id: initial-keycloak
+author: klg71
+realm: integ-test-client
+changes:
+  - addRealm:
+      name: integ-test-client

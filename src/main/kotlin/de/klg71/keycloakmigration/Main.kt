@@ -79,7 +79,7 @@ fun migrate(migrationArgs: MigrationArgs) {
                     myModule(
                         adminUser(), adminPassword(), adminTotp(),
                         adminUseOauth(), adminUseOauthLocalPort(),
-                        baseUrl(), realm(), clientId(), parameters(),
+                        baseUrl(), realm(), clientId(), clientSecret(), loginWithClientSecret(), parameters(),
                         failOnUndefinedVariables(), warnOnUndefinedVariables()
                     )
                 )
