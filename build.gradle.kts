@@ -6,21 +6,18 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.ByteArrayOutputStream
 import java.net.ConnectException
 
-fun Project.command(cmd: List<String>, workingDirectory: String = ".", environment: Map<String, String> = emptyMap()) =
-    ByteArrayOutputStream().also { stream ->
+fun Project.command(cmd: List<String>, workingDirectory: String = ".", environment: Map<String, String> = emptyMap()):String{
+
         logger.info("Running command $cmd")
-        exec {
+        return providers.exec {
             environment(environment)
             commandLine = cmd
-            standardOutput = stream
             workingDir = File(workingDirectory)
-        }
-    }.run {
-        toString().trim()
-    }
+        }.standardOutput.asText.get().trim()
+}
 
 plugins {
-    kotlin("jvm") version "2.1.10"
+    kotlin("jvm") version "2.3.0-Beta2"
     id("maven-publish")
     id("signing")
     id("de.undercouch.download") version "5.6.0"
@@ -28,13 +25,13 @@ plugins {
 
     // Security check for dependencies by task
     id("org.owasp.dependencycheck") version "12.0.1"
-    // static code analysis
-    id("io.gitlab.arturbosch.detekt") version "1.23.7"
 
-    id("com.github.johnrengelman.shadow") version "8.1.1" apply (false)
+
+
+    id("com.gradleup.shadow") version "9.2.2" apply (false)
     id ("org.danilopianini.publish-on-central") version "9.1.0"
 
-    id("org.jetbrains.dokka") version "2.0.0"
+    //id("org.jetbrains.dokka") version "2.1.0"
 }
 
 dependencies {
@@ -78,7 +75,7 @@ tasks {
     val keycloakVersion = "26.3.2"
 
     named("build") {
-        dependsOn("buildDocker", "docsbuild:buildDocs")
+        dependsOn("buildDocker", /*"docsbuild:buildDocs" */)
     }
 
     register<ShadowJar>("shadowJar") {
@@ -256,10 +253,7 @@ tasks {
         finalizedBy("stopLocalKeycloak")
     }
 
-    withType<io.gitlab.arturbosch.detekt.Detekt> {
-        // Target version of the generated JVM bytecode. It is used for type resolution.
-        this.jvmTarget = "1.8"
-    }
+
     val dockerBuildWorkingDirectory = "${project.buildDir}/buildDocker"
     val fatJar by named("shadowJar")
     register<Copy>("prepareDocker") {
@@ -281,7 +275,7 @@ tasks {
     register("buildDocker") {
         dependsOn("prepareDocker")
         doLast {
-            exec {
+            providers.exec {
                 workingDir(dockerBuildWorkingDirectory)
                 commandLine(
                     "docker", "build", ".", "-t", tag, "--build-arg",
@@ -291,7 +285,7 @@ tasks {
                     "--label","\"org.opencontainers.image.version=$projectVersion\"",
                 )
             }
-            exec {
+            providers.exec {
                 commandLine("docker", "tag", tag, tagLatest)
             }
         }
@@ -299,10 +293,10 @@ tasks {
     register("pushDocker") {
         dependsOn("buildDocker")
         doLast {
-            exec {
+            providers.exec {
                 commandLine("docker", "push", tag)
             }
-            exec {
+            providers.exec {
                 commandLine("docker", "push", tagLatest)
             }
         }
@@ -395,11 +389,11 @@ dependencyCheck {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
+        jvmTarget.set(JvmTarget.JVM_24)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_24
+    targetCompatibility = JavaVersion.VERSION_24
 }

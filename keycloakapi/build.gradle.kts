@@ -4,7 +4,6 @@ plugins {
     kotlin("jvm")
     id("maven-publish")
     id("signing")
-    id("org.jetbrains.dokka")
 
     id ("org.danilopianini.publish-on-central")
 }
@@ -121,12 +120,8 @@ gradle.taskGraph.whenReady {
     }
 }
 
-tasks {
-    dokkaHtml.configure {
-        doFirst {
-            System.setProperty("idea.io.use.fallback", "true")
-        }
-        outputDirectory.set(File("${rootProject.projectDir}/docsbuild/static/documentation"))
+/*
+    dokka {
         dokkaSourceSets {
             configureEach {
                 includes.setFrom(listOf("keycloakapi.md"))
@@ -134,15 +129,16 @@ tasks {
         }
     }
 
-}
+ */
+
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
+        jvmTarget.set(JvmTarget.JVM_24)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_24
+    targetCompatibility = JavaVersion.VERSION_24
 }

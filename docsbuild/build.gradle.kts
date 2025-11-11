@@ -6,26 +6,28 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 tasks {
 
+    /*
     register("buildDocs") {
-        dependsOn(":keycloakapi:dokkaHtml")
+        dependsOn(":keycloakapi:dokkaGenerateHtml")
         doLast {
             if (isFamily(FAMILY_WINDOWS)) {
-                project.exec {
+                providers.exec {
                     workingDir(project.projectDir)
                     commandLine("${project.projectDir}\\bin\\hugo.exe", "-d", "..\\docs")
                 }
             } else {
-                project.exec {
+                providers.exec {
                     workingDir(project.projectDir)
                     commandLine("bin/hugo", "-d", "../docs")
                 }
             }
         }
     }
+     */
 }
 
