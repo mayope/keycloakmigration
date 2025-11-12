@@ -30,12 +30,20 @@ data class RealmAttribute(
     var validations: Map<String, Map<String, Any>>,
     var permissions: RealmAttributePermissions,
     var required: RealmAttributeRequired?,
-    var multivalued: Boolean
+    var multivalued: Boolean,
+    var group: String?
+)
+
+data class RealmAttributeGroup(
+    var name: String,
+    var displayHeader: String?,
+    var displayDescription: String?,
+    var annotations: Map<String, String> = emptyMap()
 )
 
 data class RealmProfile(
     val attributes: ArrayList<RealmAttribute>,
-    val groups: List<Map<String, String>>,
+    val groups: ArrayList<RealmAttributeGroup>,
     var unmanagedAttributePolicy: String? = null
 )
 
