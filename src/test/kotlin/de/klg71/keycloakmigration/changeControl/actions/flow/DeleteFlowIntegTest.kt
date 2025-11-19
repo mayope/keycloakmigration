@@ -7,6 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.koin.core.component.inject
+import java.util.UUID
 
 class DeleteFlowIntegTest : AbstractIntegrationTest() {
 
@@ -17,7 +18,11 @@ class DeleteFlowIntegTest : AbstractIntegrationTest() {
         val alias = "FloRida"
         AddFlowAction(
             testRealm, alias, "Right round", executions = listOf(
-                AuthenticationExecutionImport(Flow.Requirement.REQUIRED, "idp-auto-link", 0, 0, 0,mapOf())
+                AuthenticationExecutionImport(
+                    UUID.randomUUID(),
+                    Flow.Requirement.REQUIRED,
+                    "idp-auto-link",
+                    0, 0, 0,mapOf())
             )
         ).executeIt()
 

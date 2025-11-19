@@ -61,6 +61,7 @@ data class UpdateFlow(
 interface AuthenticationFlowAction {}
 
 data class AuthenticationExecutionImport(
+    val id: UUID?,
     val requirement: Flow.Requirement,
     val providerId: String?,
     val level: Int,

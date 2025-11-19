@@ -10,6 +10,7 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.component.inject
 import java.util.AbstractMap
+import java.util.UUID
 
 class CopyFlowIntegTest : AbstractIntegrationTest() {
 
@@ -21,6 +22,7 @@ class CopyFlowIntegTest : AbstractIntegrationTest() {
         AddFlowAction(
             testRealm, "TestFLow", "Right round", executions = listOf(
                 AuthenticationExecutionImport(
+                    UUID.randomUUID(),
                     Flow.Requirement.REQUIRED,
                     "idp-auto-link",
                     0, 0, 0,
@@ -59,7 +61,11 @@ class CopyFlowIntegTest : AbstractIntegrationTest() {
         val alias = "TestFLow"
         AddFlowAction(
             testRealm, alias, "Right round", executions = listOf(
-                AuthenticationExecutionImport(Flow.Requirement.REQUIRED, "idp-auto-link", 0, 0, 0, mapOf())
+                AuthenticationExecutionImport(
+                    UUID.randomUUID(),
+                    Flow.Requirement.REQUIRED,
+                    "idp-auto-link",
+                    0, 0, 0, mapOf())
             )
         ).executeIt()
         assertThatThrownBy {

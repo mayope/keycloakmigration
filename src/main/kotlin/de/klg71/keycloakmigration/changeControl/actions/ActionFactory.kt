@@ -40,6 +40,7 @@ import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowExecutionAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.CopyFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowExecutionAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateSubFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
@@ -218,6 +219,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "copyFlow" -> objectMapper.readValue<CopyFlowAction>(actionJson)
 
             "addFlowExecution" -> objectMapper.readValue<AddFlowExecutionAction>(actionJson)
+            "deleteFlowExecution" -> objectMapper.readValue<DeleteFlowExecutionAction>(actionJson)
             "updateSubFlow" -> objectMapper.readValue<UpdateSubFlowAction>(actionJson)
 
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
