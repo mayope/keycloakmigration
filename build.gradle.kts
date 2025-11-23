@@ -297,26 +297,26 @@ tasks {
     val projectVersion = project.version
     val tag = "$tagName:$projectVersion"
     val tagLatest = "$tagName:latest"
-    register("buildDocker") {
+    register<Exec>("buildDocker") {
         dependsOn("prepareDocker")
-        doLast {
-            providers.exec {
-                workingDir(dockerBuildWorkingDirectory)
-                commandLine(
-                    "docker", "build", ".", "-t", tag, "--build-arg",
-                    "jar_file=${fatJar.outputs.files.first().name}",
-                    "--label", "\"org.opencontainers.image.url=https://github.com/mayope/keycloakmigration.git\"",
-                    "--label", "\"org.opencontainers.image.source=https://github.com/mayope/keycloakmigration.git\"",
-                    "--label", "\"org.opencontainers.image.version=$projectVersion\"",
-                )
-            }
-            providers.exec {
-                commandLine("docker", "tag", tag, tagLatest)
-            }
-        }
+
+        workingDir(dockerBuildWorkingDirectory)
+        commandLine(
+            "docker", "build", ".", "-t", tag, "--build-arg",
+            "jar_file=${fatJar.outputs.files.first().name}",
+            "--label", "\"org.opencontainers.image.url=https://github.com/mayope/keycloakmigration.git\"",
+            "--label", "\"org.opencontainers.image.source=https://github.com/mayope/keycloakmigration.git\"",
+            "--label", "\"org.opencontainers.image.version=$projectVersion\"",
+        )
+    }
+    register<Exec>("tagDocker") {
+        dependsOn("buildDocker")
+
+        workingDir(dockerBuildWorkingDirectory)
+        commandLine("docker", "tag", tag, tagLatest)
     }
     register("pushDocker") {
-        dependsOn("buildDocker")
+        dependsOn("tagDocker")
         doLast {
             providers.exec {
                 commandLine("docker", "push", tag)
