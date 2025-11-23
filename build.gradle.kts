@@ -403,7 +403,7 @@ gradle.taskGraph.whenReady {
     if (allTasks.any { it is Sign }) {
         allprojects {
             extra["signing.keyId"] = "5357AC31"
-            extra["signing.secretKeyRingFile"] = project.findProperty("signing_key_ring_file")
+            extra["signing.secretKeyRingFile"] = File(project.findProperty("signing_key_ring_file").toString())
             extra["signing.password"] = project.findProperty("signing_key_ring_file_password")
         }
     }
