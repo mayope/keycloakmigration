@@ -2,14 +2,8 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
 import net.researchgate.release.ReleaseExtension
 import org.apache.tools.ant.taskdefs.condition.Os
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.dokka.gradle.DokkaTask
-import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.io.ByteArrayOutputStream
 import java.net.ConnectException
-import java.nio.file.Paths
-import kotlin.io.path.absolutePathString
 
 fun Project.command(
     cmd: List<String>,
@@ -38,7 +32,7 @@ plugins {
 
 
     id("com.gradleup.shadow") version "9.2.2" apply (false)
-    id ("com.vanniktech.maven.publish") version "0.35.0"
+    id("com.vanniktech.maven.publish") version "0.35.0"
 
     id("dokka-convention")
 
@@ -105,9 +99,6 @@ tasks {
             project.configurations.compileClasspath.get(),
             project.configurations.runtimeClasspath.get()
         )
-        project.configurations.compileClasspath.get().allDependencies.forEach {
-            println(it)
-        }
     }
 
 
@@ -315,16 +306,16 @@ tasks {
         workingDir(dockerBuildWorkingDirectory)
         commandLine("docker", "tag", tag, tagLatest)
     }
-    register("pushDocker") {
+    register<Exec>("pushDockerVersion") {
         dependsOn("tagDocker")
-        doLast {
-            providers.exec {
-                commandLine("docker", "push", tag)
-            }
-            providers.exec {
-                commandLine("docker", "push", tagLatest)
-            }
-        }
+        commandLine("docker", "push", tag)
+    }
+    register<Exec>("pushDockerLatest") {
+        dependsOn("tagDocker")
+        commandLine("docker", "push", tagLatest)
+    }
+    register("pushDocker") {
+        dependsOn("tagDocker", "pushDockerVersion", "pushDockerLatest")
     }
 }
 
