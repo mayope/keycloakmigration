@@ -38,7 +38,7 @@ plugins {
 
 
     id("com.gradleup.shadow") version "9.2.2" apply (false)
-    id("org.danilopianini.publish-on-central") version "9.1.0"
+    id("org.danilopianini.publish-on-central") version "9.1.8"
 
     id("dokka-convention")
 
