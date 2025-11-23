@@ -91,7 +91,7 @@ tasks {
     val keycloakVersion = "26.3.2"
 
     named("build") {
-        dependsOn("buildDocker" /*"docsbuild:buildDocs" */)
+        dependsOn("buildDocker", "docsbuild:buildDocs")
     }
 
     register<ShadowJar>("shadowJar") {
