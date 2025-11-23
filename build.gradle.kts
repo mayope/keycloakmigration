@@ -2,22 +2,29 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import de.undercouch.gradle.tasks.download.Download
 import net.researchgate.release.ReleaseExtension
 import org.apache.tools.ant.taskdefs.condition.Os
+import org.gradle.kotlin.dsl.withType
+import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.ByteArrayOutputStream
 import java.net.ConnectException
 
-fun Project.command(cmd: List<String>, workingDirectory: String = ".", environment: Map<String, String> = emptyMap()):String{
+fun Project.command(
+    cmd: List<String>,
+    workingDirectory: String = ".",
+    environment: Map<String, String> = emptyMap()
+): String {
 
-        logger.info("Running command $cmd")
-        return providers.exec {
-            environment(environment)
-            commandLine = cmd
-            workingDir = File(workingDirectory)
-        }.standardOutput.asText.get().trim()
+    logger.info("Running command $cmd")
+    return providers.exec {
+        environment(environment)
+        commandLine = cmd
+        workingDir = File(workingDirectory)
+    }.standardOutput.asText.get().trim()
 }
 
 plugins {
-    kotlin("jvm") version "2.3.0-Beta2"
+    kotlin("jvm")
     id("maven-publish")
     id("signing")
     id("de.undercouch.download") version "5.6.0"
@@ -29,9 +36,11 @@ plugins {
 
 
     id("com.gradleup.shadow") version "9.2.2" apply (false)
-    id ("org.danilopianini.publish-on-central") version "9.1.0"
+    id("org.danilopianini.publish-on-central") version "9.1.0"
 
-    //id("org.jetbrains.dokka") version "2.1.0"
+    id("dokka-convention")
+
+    id("org.jetbrains.dokka")
 }
 
 dependencies {
@@ -65,7 +74,12 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.27.3")
     testImplementation("com.github.tomakehurst:wiremock-jre8:3.0.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
+
+
+
+    dokka(project("keycloakapi"))
 }
+
 
 repositories {
     mavenCentral()
@@ -75,7 +89,7 @@ tasks {
     val keycloakVersion = "26.3.2"
 
     named("build") {
-        dependsOn("buildDocker", /*"docsbuild:buildDocs" */)
+        dependsOn("buildDocker" /*"docsbuild:buildDocs" */)
     }
 
     register<ShadowJar>("shadowJar") {
@@ -95,7 +109,7 @@ tasks {
     }
 
 
-    "afterReleaseBuild"{
+    "afterReleaseBuild" {
         dependsOn(
             "publishAllPublicationsToProjectLocalRepository",
             "zipMavenCentralPortalPublication",
@@ -164,7 +178,16 @@ tasks {
             val outputFile = File(project.buildDir, "keycloak/output.txt")
 
             ProcessBuilder(
-                "cmd", "/c", "kc.bat", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false","--http-relative-path=/auth","--log-level=info", ">",
+                "cmd",
+                "/c",
+                "kc.bat",
+                "start-dev",
+                "--http-port=18080",
+                "--http-management-port=18081",
+                "--hostname-strict=false",
+                "--http-relative-path=/auth",
+                "--log-level=info",
+                ">",
                 "${outputFile}"
             ).run {
                 directory(keycloakDir)
@@ -186,7 +209,13 @@ tasks {
             val outputFile = File(project.buildDir, "keycloak/output.txt")
 
             ProcessBuilder(
-                "./kc.sh", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false", "--http-relative-path=/auth", "--log-level=info"
+                "./kc.sh",
+                "start-dev",
+                "--http-port=18080",
+                "--http-management-port=18081",
+                "--hostname-strict=false",
+                "--http-relative-path=/auth",
+                "--log-level=info"
             ).apply {
                 directory(keycloakDir)
 
@@ -248,7 +277,7 @@ tasks {
         }
     }
 
-    "test"{
+    "test" {
         dependsOn("startLocalKeycloak")
         finalizedBy("stopLocalKeycloak")
     }
@@ -280,9 +309,9 @@ tasks {
                 commandLine(
                     "docker", "build", ".", "-t", tag, "--build-arg",
                     "jar_file=${fatJar.outputs.files.first().name}",
-                    "--label","\"org.opencontainers.image.url=https://github.com/mayope/keycloakmigration.git\"",
-                    "--label","\"org.opencontainers.image.source=https://github.com/mayope/keycloakmigration.git\"",
-                    "--label","\"org.opencontainers.image.version=$projectVersion\"",
+                    "--label", "\"org.opencontainers.image.url=https://github.com/mayope/keycloakmigration.git\"",
+                    "--label", "\"org.opencontainers.image.source=https://github.com/mayope/keycloakmigration.git\"",
+                    "--label", "\"org.opencontainers.image.version=$projectVersion\"",
                 )
             }
             providers.exec {
@@ -362,8 +391,8 @@ publishOnCentral {
 signing {
     sign(publishing.publications["OSSRH"])
 }
-configure<ReleaseExtension>{
-    with(git){
+configure<ReleaseExtension> {
+    with(git) {
         requireBranch.set("master")
     }
 }
@@ -389,11 +418,11 @@ dependencyCheck {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_24)
+        jvmTarget.set(JvmTarget.JVM_23)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_24
-    targetCompatibility = JavaVersion.VERSION_24
+    sourceCompatibility = JavaVersion.VERSION_23
+    targetCompatibility = JavaVersion.VERSION_23
 }

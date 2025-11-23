@@ -4,6 +4,8 @@ plugins {
     id("signing")
     id("java-gradle-plugin")
     id("com.gradle.plugin-publish") version "2.0.0"
+
+    id("dokka-convention")
 }
 
 repositories {

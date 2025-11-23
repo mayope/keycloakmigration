@@ -80,7 +80,7 @@ abstract class AbstractIntegrationTest : KoinComponent {
     fun tearDown() {
         DeleteRealmAction(testRealm).executeIt()
         runBlocking {
-            delay(2000)
+            delay(200)
         }
         stopKoin()
     }

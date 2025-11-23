@@ -1,0 +1,377 @@
+
+> Configure project :
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:6:8: 'class DokkaTaskPartial : AbstractDokkaLeafTask' is deprecated. Dokka Gradle plugin V1 mode is deprecated, and scheduled to be removed in Dokka v2.2.0. Migrate to V2 mode https://kotl.in/dokka-gradle-migration.
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:124:16: 'var buildDir: File' is deprecated. Deprecated in Java.
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:131:24: 'var buildDir: File' is deprecated. Deprecated in Java.
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:132:16: 'var buildDir: File' is deprecated. Deprecated in Java.
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:138:27: 'var buildDir: File' is deprecated. Deprecated in Java.
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:170:44: 'var buildDir: File' is deprecated. Deprecated in Java.
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:171:43: 'var buildDir: File' is deprecated. Deprecated in Java.
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:192:44: 'var buildDir: File' is deprecated. Deprecated in Java.
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:193:43: 'var buildDir: File' is deprecated. Deprecated in Java.
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:264:50: 'var buildDir: File' is deprecated. Deprecated in Java.
+w: file:///home/lukas/repositories/keycloakmigration/build.gradle.kts:407:16: 'class DokkaTaskPartial : AbstractDokkaLeafTask' is deprecated. Dokka Gradle plugin V1 mode is deprecated, and scheduled to be removed in Dokka v2.2.0. Migrate to V2 mode https://kotl.in/dokka-gradle-migration.
+Sonatype user and password are not set you won't be able to publish to maven central!
+Github user and password are not set you won't be able to publish to github!
+
+> Configure project :keycloakapi
+w: file:///home/lukas/repositories/keycloakmigration/keycloakapi/build.gradle.kts:1:8: 'class DokkaTaskPartial : AbstractDokkaLeafTask' is deprecated. Dokka Gradle plugin V1 mode is deprecated, and scheduled to be removed in Dokka v2.2.0. Migrate to V2 mode https://kotl.in/dokka-gradle-migration.
+w: file:///home/lukas/repositories/keycloakmigration/keycloakapi/build.gradle.kts:136:16: 'class DokkaTaskPartial : AbstractDokkaLeafTask' is deprecated. Dokka Gradle plugin V1 mode is deprecated, and scheduled to be removed in Dokka v2.2.0. Migrate to V2 mode https://kotl.in/dokka-gradle-migration.
+Sonatype user and password are not set you won't be able to publish to maven central!
+Github user and password are not set you won't be able to publish to github!
+
+> Task :tasks
+org.jetbrains.kotlin:kotlin-stdlib:
+com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2
+com.fasterxml.jackson.core:jackson-databind:2.18.2
+com.fasterxml.jackson.module:jackson-module-kotlin:2.18.2
+io.insert-koin:koin-core:4.0.2
+commons-codec:commons-codec:1.18.0
+com.xenomachina:kotlin-argparser:2.0.7
+org.apache.commons:commons-text:1.13.0
+org.apache.commons:commons-lang3:3.17.0
+org.slf4j:slf4j-api:2.0.16
+io.insert-koin:koin-logger-slf4j:4.0.2
+org.apache.logging.log4j:log4j-core:2.24.3
+project ':keycloakapi'
+
+------------------------------------------------------------
+Tasks runnable from root project 'keycloakmigration'
+------------------------------------------------------------
+
+Build tasks
+-----------
+assemble - Assembles the outputs of this project.
+docsbuild:assemble - Assembles the outputs of this project.
+keycloakapi:assemble - Assembles the outputs of this project.
+plugin:assemble - Assembles the outputs of this project.
+build - Assembles and tests this project.
+docsbuild:build - Assembles and tests this project.
+keycloakapi:build - Assembles and tests this project.
+plugin:build - Assembles and tests this project.
+buildDependents - Assembles and tests this project and all projects that depend on it.
+docsbuild:buildDependents - Assembles and tests this project and all projects that depend on it.
+keycloakapi:buildDependents - Assembles and tests this project and all projects that depend on it.
+plugin:buildDependents - Assembles and tests this project and all projects that depend on it.
+buildKotlinToolingMetadata - Build metadata json file containing information about the used Kotlin tooling
+docsbuild:buildKotlinToolingMetadata - Build metadata json file containing information about the used Kotlin tooling
+keycloakapi:buildKotlinToolingMetadata - Build metadata json file containing information about the used Kotlin tooling
+plugin:buildKotlinToolingMetadata - Build metadata json file containing information about the used Kotlin tooling
+buildNeeded - Assembles and tests this project and all projects it depends on.
+docsbuild:buildNeeded - Assembles and tests this project and all projects it depends on.
+keycloakapi:buildNeeded - Assembles and tests this project and all projects it depends on.
+plugin:buildNeeded - Assembles and tests this project and all projects it depends on.
+classes - Assembles main classes.
+docsbuild:classes - Assembles main classes.
+keycloakapi:classes - Assembles main classes.
+plugin:classes - Assembles main classes.
+clean - Deletes the build directory.
+docsbuild:clean - Deletes the build directory.
+keycloakapi:clean - Deletes the build directory.
+plugin:clean - Deletes the build directory.
+jar - Assembles a jar archive containing the classes of the 'main' feature.
+docsbuild:jar - Assembles a jar archive containing the classes of the 'main' feature.
+keycloakapi:jar - Assembles a jar archive containing the classes of the 'main' feature.
+plugin:jar - Assembles a jar archive containing the classes of the 'main' feature.
+javadocJar - Assembles a jar archive containing the main javadoc.
+keycloakapi:javadocJar - Assembles a jar archive containing the main javadoc.
+plugin:javadocJar - Assembles a jar archive containing the main javadoc.
+kotlinSourcesJar - Assembles a jar archive containing the sources of target 'kotlin'.
+docsbuild:kotlinSourcesJar - Assembles a jar archive containing the sources of target 'kotlin'.
+keycloakapi:kotlinSourcesJar - Assembles a jar archive containing the sources of target 'kotlin'.
+plugin:kotlinSourcesJar - Assembles a jar archive containing the sources of target 'kotlin'.
+shadowJar - Create a combined JAR of project and runtime dependencies
+sourcesJar - Assembles a jar archive containing the main sources.
+keycloakapi:sourcesJar - Assembles a jar archive containing the main sources.
+plugin:sourcesJar - Assembles a jar archive containing the main sources.
+testClasses - Assembles test classes.
+docsbuild:testClasses - Assembles test classes.
+keycloakapi:testClasses - Assembles test classes.
+plugin:testClasses - Assembles test classes.
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build.
+updateDaemonJvm - Generates or updates the Gradle Daemon JVM criteria.
+wrapper - Generates Gradle wrapper files.
+
+Documentation tasks
+-------------------
+javadoc - Generates Javadoc API documentation for the 'main' feature.
+docsbuild:javadoc - Generates Javadoc API documentation for the 'main' feature.
+keycloakapi:javadoc - Generates Javadoc API documentation for the 'main' feature.
+plugin:javadoc - Generates Javadoc API documentation for the 'main' feature.
+
+Dokka tasks
+-----------
+dokkaGenerate - Generates Dokka publications for all formats
+dokkaGenerateHtml - Generate Dokka html publication
+
+Help tasks
+----------
+artifactTransforms - Displays the Artifact Transforms that can be executed in root project 'keycloakmigration'.
+docsbuild:artifactTransforms - Displays the Artifact Transforms that can be executed in project ':docsbuild'.
+keycloakapi:artifactTransforms - Displays the Artifact Transforms that can be executed in project ':keycloakapi'.
+plugin:artifactTransforms - Displays the Artifact Transforms that can be executed in project ':plugin'.
+buildEnvironment - Displays all buildscript dependencies declared in root project 'keycloakmigration'.
+docsbuild:buildEnvironment - Displays all buildscript dependencies declared in project ':docsbuild'.
+keycloakapi:buildEnvironment - Displays all buildscript dependencies declared in project ':keycloakapi'.
+plugin:buildEnvironment - Displays all buildscript dependencies declared in project ':plugin'.
+dependencies - Displays all dependencies declared in root project 'keycloakmigration'.
+docsbuild:dependencies - Displays all dependencies declared in project ':docsbuild'.
+keycloakapi:dependencies - Displays all dependencies declared in project ':keycloakapi'.
+plugin:dependencies - Displays all dependencies declared in project ':plugin'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'keycloakmigration'.
+docsbuild:dependencyInsight - Displays the insight into a specific dependency in project ':docsbuild'.
+keycloakapi:dependencyInsight - Displays the insight into a specific dependency in project ':keycloakapi'.
+plugin:dependencyInsight - Displays the insight into a specific dependency in project ':plugin'.
+help - Displays a help message.
+docsbuild:help - Displays a help message.
+keycloakapi:help - Displays a help message.
+plugin:help - Displays a help message.
+javaToolchains - Displays the detected java toolchains.
+docsbuild:javaToolchains - Displays the detected java toolchains.
+keycloakapi:javaToolchains - Displays the detected java toolchains.
+plugin:javaToolchains - Displays the detected java toolchains.
+kotlinDslAccessorsReport - Prints the Kotlin code for accessing the currently available project extensions.
+docsbuild:kotlinDslAccessorsReport - Prints the Kotlin code for accessing the currently available project extensions.
+keycloakapi:kotlinDslAccessorsReport - Prints the Kotlin code for accessing the currently available project extensions.
+plugin:kotlinDslAccessorsReport - Prints the Kotlin code for accessing the currently available project extensions.
+outgoingVariants - Displays the outgoing variants of root project 'keycloakmigration'.
+docsbuild:outgoingVariants - Displays the outgoing variants of project ':docsbuild'.
+keycloakapi:outgoingVariants - Displays the outgoing variants of project ':keycloakapi'.
+plugin:outgoingVariants - Displays the outgoing variants of project ':plugin'.
+projects - Displays the sub-projects of root project 'keycloakmigration'.
+docsbuild:projects - Displays the sub-projects of project ':docsbuild'.
+keycloakapi:projects - Displays the sub-projects of project ':keycloakapi'.
+plugin:projects - Displays the sub-projects of project ':plugin'.
+properties - Displays the properties of root project 'keycloakmigration'.
+docsbuild:properties - Displays the properties of project ':docsbuild'.
+keycloakapi:properties - Displays the properties of project ':keycloakapi'.
+plugin:properties - Displays the properties of project ':plugin'.
+resolvableConfigurations - Displays the configurations that can be resolved in root project 'keycloakmigration'.
+docsbuild:resolvableConfigurations - Displays the configurations that can be resolved in project ':docsbuild'.
+keycloakapi:resolvableConfigurations - Displays the configurations that can be resolved in project ':keycloakapi'.
+plugin:resolvableConfigurations - Displays the configurations that can be resolved in project ':plugin'.
+tasks - Displays the tasks runnable from root project 'keycloakmigration' (some of the displayed tasks may belong to subprojects).
+docsbuild:tasks - Displays the tasks runnable from project ':docsbuild'.
+keycloakapi:tasks - Displays the tasks runnable from project ':keycloakapi'.
+plugin:tasks - Displays the tasks runnable from project ':plugin'.
+
+Keycloakmigration tasks
+-----------------------
+startLocalKeycloak - Starts local keycloak
+stopLocalKeycloak - Stops local keycloak
+
+OWASP dependency-check tasks
+----------------------------
+dependencyCheckAggregate - Identifies and reports known vulnerabilities (CVEs) in multi-project dependencies.
+dependencyCheckAnalyze - Identifies and reports known vulnerabilities (CVEs) in project dependencies.
+dependencyCheckPurge - Purges the local cache of the NVD.
+dependencyCheckUpdate - Downloads and stores updates from the NVD CVE data feeds.
+
+Plugin development tasks
+------------------------
+plugin:pluginDescriptors - Generates plugin descriptors from plugin declarations.
+plugin:pluginUnderTestMetadata - Generates the metadata for plugin functional tests.
+plugin:validatePlugins - Validates the plugin by checking parameter annotations on task and artifact transform types etc.
+
+Plugin Portal tasks
+-------------------
+plugin:login - Update the gradle.properties files so this machine can publish to the Gradle Plugin portal.
+plugin:publishPlugins - Publishes this plugin to the Gradle Plugin portal.
+
+Publishing tasks
+----------------
+dropMavenCentralPortalPublication - Drops the Maven Central Portal publication
+keycloakapi:dropMavenCentralPortalPublication - Drops the Maven Central Portal publication
+plugin:generateMetadataFileForKeycloakmigrationpluginPluginMarkerMavenPublication - Generates the Gradle metadata file for publication 'keycloakmigrationpluginPluginMarkerMaven'.
+plugin:generateMetadataFileForMavenJavaPublication - Generates the Gradle metadata file for publication 'mavenJava'.
+generateMetadataFileForOSSRHPublication - Generates the Gradle metadata file for publication 'OSSRH'.
+keycloakapi:generateMetadataFileForOSSRHPublication - Generates the Gradle metadata file for publication 'OSSRH'.
+plugin:generateMetadataFileForPluginMavenPublication - Generates the Gradle metadata file for publication 'pluginMaven'.
+plugin:generatePomFileForKeycloakmigrationpluginPluginMarkerMavenPublication - Generates the Maven POM file for publication 'keycloakmigrationpluginPluginMarkerMaven'.
+plugin:generatePomFileForMavenJavaPublication - Generates the Maven POM file for publication 'mavenJava'.
+generatePomFileForOSSRHPublication - Generates the Maven POM file for publication 'OSSRH'.
+keycloakapi:generatePomFileForOSSRHPublication - Generates the Maven POM file for publication 'OSSRH'.
+plugin:generatePomFileForPluginMavenPublication - Generates the Maven POM file for publication 'pluginMaven'.
+publish - Publishes all publications produced by this project.
+keycloakapi:publish - Publishes all publications produced by this project.
+plugin:publish - Publishes all publications produced by this project.
+publishAllPublicationsToGitHubPackagesRepository - Publishes all Maven publications produced by this project to the GitHubPackages repository.
+keycloakapi:publishAllPublicationsToGitHubPackagesRepository - Publishes all Maven publications produced by this project to the GitHubPackages repository.
+publishAllPublicationsToMavenRepository - Publishes all Maven publications produced by this project to the maven repository.
+keycloakapi:publishAllPublicationsToMavenRepository - Publishes all Maven publications produced by this project to the maven repository.
+publishAllPublicationsToProjectLocalRepository - Publishes all Maven publications produced by this project to the ProjectLocal repository.
+keycloakapi:publishAllPublicationsToProjectLocalRepository - Publishes all Maven publications produced by this project to the ProjectLocal repository.
+plugin:publishKeycloakmigrationpluginPluginMarkerMavenPublicationToMavenLocal - Publishes Maven publication 'keycloakmigrationpluginPluginMarkerMaven' to the local Maven repository.
+plugin:publishMavenJavaPublicationToMavenLocal - Publishes Maven publication 'mavenJava' to the local Maven repository.
+publishOSSRHPublicationToGitHubPackagesRepository - Publishes Maven publication 'OSSRH' to Maven repository 'GitHubPackages'.
+keycloakapi:publishOSSRHPublicationToGitHubPackagesRepository - Publishes Maven publication 'OSSRH' to Maven repository 'GitHubPackages'.
+publishOSSRHPublicationToMavenLocal - Publishes Maven publication 'OSSRH' to the local Maven repository.
+keycloakapi:publishOSSRHPublicationToMavenLocal - Publishes Maven publication 'OSSRH' to the local Maven repository.
+publishOSSRHPublicationToMavenRepository - Publishes Maven publication 'OSSRH' to Maven repository 'maven'.
+keycloakapi:publishOSSRHPublicationToMavenRepository - Publishes Maven publication 'OSSRH' to Maven repository 'maven'.
+publishOSSRHPublicationToProjectLocalRepository - Publishes Maven publication 'OSSRH' to Maven repository 'ProjectLocal'.
+keycloakapi:publishOSSRHPublicationToProjectLocalRepository - Publishes Maven publication 'OSSRH' to Maven repository 'ProjectLocal'.
+plugin:publishPluginMavenPublicationToMavenLocal - Publishes Maven publication 'pluginMaven' to the local Maven repository.
+publishToMavenLocal - Publishes all Maven publications produced by this project to the local Maven cache.
+keycloakapi:publishToMavenLocal - Publishes all Maven publications produced by this project to the local Maven cache.
+plugin:publishToMavenLocal - Publishes all Maven publications produced by this project to the local Maven cache.
+releaseMavenCentralPortalPublication - Releases the Maven Central Portal publication
+keycloakapi:releaseMavenCentralPortalPublication - Releases the Maven Central Portal publication
+saveMavenCentralPortalDeploymentId - Saves the Maven Central Portal deployment ID locally
+keycloakapi:saveMavenCentralPortalDeploymentId - Saves the Maven Central Portal deployment ID locally
+validateMavenCentralPortalPublication - Validates the Maven Central Portal publication, uploading if needed
+keycloakapi:validateMavenCentralPortalPublication - Validates the Maven Central Portal publication, uploading if needed
+zipMavenCentralPortalPublication - Creates a zip file containing the project-local Maven repository
+keycloakapi:zipMavenCentralPortalPublication - Creates a zip file containing the project-local Maven repository
+
+Release tasks
+-------------
+afterReleaseBuild - Runs immediately after the build when doing a release
+beforeReleaseBuild - Runs immediately before the build when doing a release
+checkCommitNeeded - Checks to see if there are any added, modified, removed, or un-versioned files.
+checkoutMergeFromReleaseBranch - Checkout to the main branch, and merge modifications from the release branch in working tree.
+checkoutMergeToReleaseBranch
+checkSnapshotDependencies - Checks to see if your project has any SNAPSHOT dependencies.
+checkUpdateNeeded - Checks to see if there are any incoming or outgoing changes that haven't been applied locally.
+commitNewVersion - Commits the version update to your SCM
+confirmReleaseVersion - Prompts user for this release version. Allows for alpha or pre releases.
+createReleaseTag - Creates a tag for the release.
+createScmAdapter - Finds the correct SCM plugin
+initScmAdapter - Initializes the SCM plugin
+prepareVersions - Locates project version files or prompts for creation
+preTagCommit - Commits any changes made by the Release plugin - eg. If the unSnapshotVersion task was executed
+release - Verify project, release, and update version to next.
+unSnapshotVersion - Removes "-SNAPSHOT" from your project's current version.
+updateVersion - Prompts user for the next version. Does it's best to supply a smart default.
+
+Signing tasks
+-------------
+generatePgpKeys - Generates a new PGP keypair.
+
+Usage: 
+gradlew generatePgpKeys --name "Jane Doe <janedoe@example.com>" --password YOUR_PASSWORD
+keycloakapi:generatePgpKeys - Generates a new PGP keypair.
+
+Usage: 
+gradlew generatePgpKeys --name "Jane Doe <janedoe@example.com>" --password YOUR_PASSWORD
+plugin:generatePgpKeys - Generates a new PGP keypair.
+
+Usage: 
+gradlew generatePgpKeys --name "Jane Doe <janedoe@example.com>" --password YOUR_PASSWORD
+uploadPublicPgpKey - Uploads the public PGP key to a keyserver
+keycloakapi:uploadPublicPgpKey - Uploads the public PGP key to a keyserver
+plugin:uploadPublicPgpKey - Uploads the public PGP key to a keyserver
+
+Validation tasks
+----------------
+plugin:checkPomFileForKeycloakmigrationpluginPluginMarkerMavenPublication
+plugin:checkPomFileForMavenJavaPublication
+checkPomFileForOSSRHPublication
+keycloakapi:checkPomFileForOSSRHPublication
+plugin:checkPomFileForPluginMavenPublication
+checkSigningConfiguration - Checks that a signing configuration is set up correctly.
+keycloakapi:checkSigningConfiguration - Checks that a signing configuration is set up correctly.
+plugin:checkSigningConfiguration - Checks that a signing configuration is set up correctly.
+
+Verification tasks
+------------------
+check - Runs all checks.
+docsbuild:check - Runs all checks.
+keycloakapi:check - Runs all checks.
+plugin:check - Runs all checks.
+checkKotlinGradlePluginConfigurationErrors - Checks that Kotlin Gradle Plugin hasn't reported project configuration errors, failing otherwise. This task always runs before compileKotlin* or similar tasks.
+docsbuild:checkKotlinGradlePluginConfigurationErrors - Checks that Kotlin Gradle Plugin hasn't reported project configuration errors, failing otherwise. This task always runs before compileKotlin* or similar tasks.
+keycloakapi:checkKotlinGradlePluginConfigurationErrors - Checks that Kotlin Gradle Plugin hasn't reported project configuration errors, failing otherwise. This task always runs before compileKotlin* or similar tasks.
+plugin:checkKotlinGradlePluginConfigurationErrors - Checks that Kotlin Gradle Plugin hasn't reported project configuration errors, failing otherwise. This task always runs before compileKotlin* or similar tasks.
+checkLegacyAbi - Checks that the public Application Binary Interface (ABI) of the current project code matchesthe reference dump file for the 'main' variant.
+docsbuild:checkLegacyAbi - Checks that the public Application Binary Interface (ABI) of the current project code matchesthe reference dump file for the 'main' variant.
+keycloakapi:checkLegacyAbi - Checks that the public Application Binary Interface (ABI) of the current project code matchesthe reference dump file for the 'main' variant.
+plugin:checkLegacyAbi - Checks that the public Application Binary Interface (ABI) of the current project code matchesthe reference dump file for the 'main' variant.
+test - Runs the test suite.
+docsbuild:test - Runs the test suite.
+keycloakapi:test - Runs the test suite.
+plugin:test - Runs the test suite.
+updateLegacyAbi - Writes the public Application Binary Interface (ABI) of the current code to the reference dump file for the 'main' variant.
+docsbuild:updateLegacyAbi - Writes the public Application Binary Interface (ABI) of the current code to the reference dump file for the 'main' variant.
+keycloakapi:updateLegacyAbi - Writes the public Application Binary Interface (ABI) of the current code to the reference dump file for the 'main' variant.
+plugin:updateLegacyAbi - Writes the public Application Binary Interface (ABI) of the current code to the reference dump file for the 'main' variant.
+
+Other tasks
+-----------
+buildDocker
+docsbuild:buildDocs
+compileJava - Compiles main Java source.
+docsbuild:compileJava - Compiles main Java source.
+keycloakapi:compileJava - Compiles main Java source.
+plugin:compileJava - Compiles main Java source.
+compileKotlin - Compiles the compilation 'main' in target ''.
+docsbuild:compileKotlin - Compiles the compilation 'main' in target ''.
+keycloakapi:compileKotlin - Compiles the compilation 'main' in target ''.
+plugin:compileKotlin - Compiles the compilation 'main' in target ''.
+compileTestJava - Compiles test Java source.
+docsbuild:compileTestJava - Compiles test Java source.
+keycloakapi:compileTestJava - Compiles test Java source.
+plugin:compileTestJava - Compiles test Java source.
+compileTestKotlin - Compiles the compilation 'test' in target ''.
+docsbuild:compileTestKotlin - Compiles the compilation 'test' in target ''.
+keycloakapi:compileTestKotlin - Compiles the compilation 'test' in target ''.
+plugin:compileTestKotlin - Compiles the compilation 'test' in target ''.
+dokkaGenerateModuleHtml - Executes the Dokka Generator, generating a html module
+dokkaGeneratePublicationHtml - Executes the Dokka Generator, generating the html publication
+dokkaGfm - [⚠ V1 tasks disabled] Generates documentation in 'GFM' format.
+dokkaGfmCollector - [⚠ V1 tasks disabled] Generates documentation merging all subprojects 'dokkaGfm' tasks into one virtual module.
+dokkaGfmMultiModule - [⚠ V1 tasks disabled] Runs all subprojects 'dokkaGfmMultiModule' tasks and generates GFM module navigation page.
+dokkaHtml - [⚠ V1 tasks disabled] Generates documentation in 'HTML' format.
+dokkaHtmlCollector - [⚠ V1 tasks disabled] Generates documentation merging all subprojects 'dokkaHtml' tasks into one virtual module.
+dokkaHtmlMultiModule - [⚠ V1 tasks disabled] Runs all subprojects 'dokkaHtmlMultiModule' tasks and generates HTML module navigation page.
+dokkaJavadoc - [⚠ V1 tasks disabled] Generates documentation in 'Javadoc' format.
+dokkaJavadocCollector - [⚠ V1 tasks disabled] Generates documentation merging all subprojects 'dokkaJavadoc' tasks into one virtual module.
+dokkaJekyll - [⚠ V1 tasks disabled] Generates documentation in 'Jekyll' format.
+dokkaJekyllCollector - [⚠ V1 tasks disabled] Generates documentation merging all subprojects 'dokkaJekyll' tasks into one virtual module.
+dokkaJekyllMultiModule - [⚠ V1 tasks disabled] Runs all subprojects 'dokkaJekyllMultiModule' tasks and generates Jekyll module navigation page.
+downloadKeycloak - Download local keycloak distribution for testing purposes
+dumpLegacyAbi - Dumps the public Application Binary Interface (ABI) into files in the build directory for the 'main' variant.
+docsbuild:dumpLegacyAbi - Dumps the public Application Binary Interface (ABI) into files in the build directory for the 'main' variant.
+keycloakapi:dumpLegacyAbi - Dumps the public Application Binary Interface (ABI) into files in the build directory for the 'main' variant.
+plugin:dumpLegacyAbi - Dumps the public Application Binary Interface (ABI) into files in the build directory for the 'main' variant.
+execLinuxKeycloak
+execWindowsKeycloak
+logLinkDokkaGeneratePublicationHtml
+mainClasses
+docsbuild:mainClasses
+keycloakapi:mainClasses
+plugin:mainClasses
+prepareDocker
+prepareKotlinBuildScriptModel
+processResources - Processes main resources.
+docsbuild:processResources - Processes main resources.
+keycloakapi:processResources - Processes main resources.
+plugin:processResources - Processes main resources.
+processTestResources - Processes test resources.
+docsbuild:processTestResources - Processes test resources.
+keycloakapi:processTestResources - Processes test resources.
+plugin:processTestResources - Processes test resources.
+pushDocker
+runBuildTasks
+setupKeycloak - Setup local keycloak for testing purposes
+plugin:signKeycloakmigrationpluginPluginMarkerMavenPublication - Signs all artifacts in the 'keycloakmigrationpluginPluginMarkerMaven' publication.
+plugin:signMavenJavaPublication - Signs all artifacts in the 'mavenJava' publication.
+signOSSRHPublication - Signs all artifacts in the 'OSSRH' publication.
+keycloakapi:signOSSRHPublication - Signs all artifacts in the 'OSSRH' publication.
+plugin:signPluginMavenPublication - Signs all artifacts in the 'pluginMaven' publication.
+startLinuxKeycloak
+startWindowsKeycloak
+stopLinuxKeycloak
+stopWindowsKeycloak
+
+Rules
+-----
+Pattern: clean<TaskName>: Cleans the output files of a task.
+Pattern: build<ConfigurationName>: Assembles the artifacts of a configuration.
+
+BUILD SUCCESSFUL in 2s
+1 actionable task: 1 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.2.0/userguide/configuration_cache_enabling.html

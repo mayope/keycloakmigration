@@ -1,3 +1,4 @@
+import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -6,6 +7,8 @@ plugins {
     id("signing")
 
     id ("org.danilopianini.publish-on-central")
+
+    id("dokka-convention")
 }
 
 repositories {
@@ -120,25 +123,14 @@ gradle.taskGraph.whenReady {
     }
 }
 
-/*
-    dokka {
-        dokkaSourceSets {
-            configureEach {
-                includes.setFrom(listOf("keycloakapi.md"))
-            }
-        }
-    }
-
- */
-
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_24)
+        jvmTarget.set(JvmTarget.JVM_23)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_24
-    targetCompatibility = JavaVersion.VERSION_24
+    sourceCompatibility = JavaVersion.VERSION_23
+    targetCompatibility = JavaVersion.VERSION_23
 }
