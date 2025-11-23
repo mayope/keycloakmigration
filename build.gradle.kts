@@ -8,6 +8,8 @@ import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.io.ByteArrayOutputStream
 import java.net.ConnectException
+import java.nio.file.Paths
+import kotlin.io.path.absolutePathString
 
 fun Project.command(
     cmd: List<String>,
@@ -403,7 +405,7 @@ gradle.taskGraph.whenReady {
     if (allTasks.any { it is Sign }) {
         allprojects {
             extra["signing.keyId"] = "5357AC31"
-            extra["signing.secretKeyRingFile"] = File(project.findProperty("signing_key_ring_file").toString())
+            extra["signing.secretKeyRingFile"] = Paths.get(project.findProperty("signing_key_ring_file").toString()).absolutePathString()
             extra["signing.password"] = project.findProperty("signing_key_ring_file_password")
         }
     }
