@@ -96,6 +96,39 @@ publishing {
     }
 }
 
+
+mavenPublishing {
+    coordinates("de.klg71.keycloakmigration", "keycloakmigration")
+
+    pom {
+        name.set("keycloakmigration")
+        description.set("Keycloak configuration as migration files")
+        url.set("https://github.com/mayope/keycloakmigration")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://github.com/mayope/keycloakmigration/blob/master/LICENSE.md")
+                distribution.set("https://github.com/mayope/keycloakmigration/blob/master/LICENSE.md")
+            }
+        }
+        developers {
+            developer {
+                id.set("klg71")
+                name.set("Lukas Meisegeier")
+                url.set("https://github.com/klg71/")
+            }
+        }
+        scm {
+            url.set("https://github.com/mayope/keycloakmigration")
+            connection.set("scm:git:git://github.com/mayope/keycloakmigration.git")
+            developerConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
+        }
+    }
+    publishToMavenCentral(automaticRelease = true)
+
+
+    signAllPublications()
+}
 /*
 group = "de.klg71.keycloakmigration"
 publishOnCentral {
