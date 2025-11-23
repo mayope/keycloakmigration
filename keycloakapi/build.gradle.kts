@@ -98,7 +98,7 @@ publishing {
 
 
 mavenPublishing {
-    coordinates("de.klg71.keycloakmigration", "keycloakmigration")
+    coordinates("de.klg71.keycloakmigration", "keycloakapi")
 
     pom {
         name.set("keycloakmigration")
