@@ -113,7 +113,6 @@ tasks {
 
     "afterReleaseBuild" {
         dependsOn(
-            "publishAllPublicationsToProjectLocalRepository",
             "publishToMavenCentral",
             "keycloakapi:publishToMavenCentral",
             "plugin:publishPlugins",
