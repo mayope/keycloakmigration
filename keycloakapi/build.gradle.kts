@@ -6,7 +6,7 @@ plugins {
     id("maven-publish")
     id("signing")
 
-    id ("org.danilopianini.publish-on-central")
+    id ("com.vanniktech.maven.publish") version "0.35.0"
 
     id("dokka-convention")
 }
@@ -96,6 +96,7 @@ publishing {
     }
 }
 
+/*
 group = "de.klg71.keycloakmigration"
 publishOnCentral {
     repoOwner.set("klg71")
@@ -110,6 +111,7 @@ publishOnCentral {
 signing {
     sign(publishing.publications["OSSRH"])
 }
+ */
 
 
 
