@@ -1,12 +1,14 @@
+import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("jvm")
     id("maven-publish")
     id("signing")
-    id("org.jetbrains.dokka")
 
-    id ("org.danilopianini.publish-on-central")
+    id ("com.vanniktech.maven.publish") version "0.35.0"
+
+    id("dokka-convention")
 }
 
 repositories {
@@ -94,6 +96,40 @@ publishing {
     }
 }
 
+
+mavenPublishing {
+    coordinates("de.klg71.keycloakmigration", "keycloakapi")
+
+    pom {
+        name.set("keycloakmigration")
+        description.set("Keycloak configuration as migration files")
+        url.set("https://github.com/mayope/keycloakmigration")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://github.com/mayope/keycloakmigration/blob/master/LICENSE.md")
+                distribution.set("https://github.com/mayope/keycloakmigration/blob/master/LICENSE.md")
+            }
+        }
+        developers {
+            developer {
+                id.set("klg71")
+                name.set("Lukas Meisegeier")
+                url.set("https://github.com/klg71/")
+            }
+        }
+        scm {
+            url.set("https://github.com/mayope/keycloakmigration")
+            connection.set("scm:git:git://github.com/mayope/keycloakmigration.git")
+            developerConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
+        }
+    }
+    publishToMavenCentral(automaticRelease = true)
+
+
+    signAllPublications()
+}
+/*
 group = "de.klg71.keycloakmigration"
 publishOnCentral {
     repoOwner.set("klg71")
@@ -108,6 +144,7 @@ publishOnCentral {
 signing {
     sign(publishing.publications["OSSRH"])
 }
+ */
 
 
 
@@ -121,28 +158,14 @@ gradle.taskGraph.whenReady {
     }
 }
 
-tasks {
-    dokkaHtml.configure {
-        doFirst {
-            System.setProperty("idea.io.use.fallback", "true")
-        }
-        outputDirectory.set(File("${rootProject.projectDir}/docsbuild/static/documentation"))
-        dokkaSourceSets {
-            configureEach {
-                includes.setFrom(listOf("keycloakapi.md"))
-            }
-        }
-    }
-
-}
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
+        jvmTarget.set(JvmTarget.JVM_23)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_23
+    targetCompatibility = JavaVersion.VERSION_23
 }

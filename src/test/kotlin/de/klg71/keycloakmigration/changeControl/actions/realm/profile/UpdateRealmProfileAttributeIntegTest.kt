@@ -31,7 +31,7 @@ class UpdateRealmProfileAttributeIntegTest : AbstractIntegrationTest() {
 
         val attribute = realmProfileAttribute("country")
         assertThat(attribute).isNotNull()
-        assertThat(attribute?.required?.scopes).isNull()
+        assertThat(attribute?.required?.scopes).isEqualTo(null)
         assertThat(attribute?.required?.roles).isEqualTo(setOf("admin", "user"))
         assertThat(attribute?.permissions?.view).isEqualTo(setOf("admin", "user"))
         assertThat(attribute?.permissions?.edit).isEqualTo(emptySet<String>())
