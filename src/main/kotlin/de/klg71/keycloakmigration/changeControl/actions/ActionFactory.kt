@@ -68,6 +68,7 @@ import de.klg71.keycloakmigration.changeControl.actions.realm.localization.AddLo
 import de.klg71.keycloakmigration.changeControl.actions.realm.localization.DeleteLocalizationEntryAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.localization.UpdateLocalizationEntryAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.profile.AddRealmProfileAttributeAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.profile.AddRealmProfileAttributeGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.profile.UpdateRealmProfileAttributeAction
 import de.klg71.keycloakmigration.changeControl.actions.requiredactions.UpdateRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
@@ -217,6 +218,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
 
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
 
+            "addRealmProfileAttributeGroup" -> objectMapper.readValue<AddRealmProfileAttributeGroupAction>(actionJson)
             "addRealmProfileAttribute" -> objectMapper.readValue<AddRealmProfileAttributeAction>(actionJson)
             "updateRealmProfileAttribute" -> objectMapper.readValue<UpdateRealmProfileAttributeAction>(actionJson)
 

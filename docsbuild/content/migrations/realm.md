@@ -194,6 +194,30 @@ See example below
             - minLength: 8
 ```
 
+## addRealmProfileAttributeGroup
+adds a new attribute group in the user profile for the realm
+
+### Parameters
+- realm: String, optional
+- name: String, not optional
+- displayName: String, optional
+- description: String, optional
+- annotations: Map<String, String>, optional, default=empty map
+
+### Example
+```yaml
+id: add-realm-profile-attribute-group
+author: abigail.cortis
+changes:
+  - addRealmProfileAttributeGroup:
+      name: custom-attribute-group
+      displayName: Custom Attribute Group
+      description: A description for the custom attribute group
+      annotations:
+        - annotationKey1: annotationValue1
+        - annotationKey2: annotationValue2
+```
+
 ## addRealmProfileAttribute
 adds a new attribute in the user profile for the realm
 
@@ -206,6 +230,7 @@ adds a new attribute in the user profile for the realm
 - permissions: RealmAttributePermissions optional
 - required: RealmAttributeRequired optional
 - multivalued: Boolean, optional, default=true
+- group: String, optional
 
 ### Example
 ```yaml
