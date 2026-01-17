@@ -3,12 +3,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("jvm")
+    id("dokka-convention")
     id("maven-publish")
     id("signing")
-
     id ("com.vanniktech.maven.publish") version "0.35.0"
-
-    id("dokka-convention")
 }
 
 repositories {
@@ -161,11 +159,11 @@ gradle.taskGraph.whenReady {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_23)
+        jvmTarget.set(JvmTarget.JVM_21)
     }
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_23
-    targetCompatibility = JavaVersion.VERSION_23
+    targetCompatibility = JavaVersion.VERSION_21
 }

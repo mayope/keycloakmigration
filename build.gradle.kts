@@ -21,22 +21,17 @@ fun Project.command(
 
 plugins {
     kotlin("jvm")
+    id("dokka-convention")
     id("maven-publish")
+    id("org.jetbrains.dokka")
     id("signing")
+
     id("de.undercouch.download") version "5.6.0"
     id("net.researchgate.release") version "3.1.0"
-
     // Security check for dependencies by task
     id("org.owasp.dependencycheck") version "12.0.1"
-
-
-
     id("com.gradleup.shadow") version "9.2.2" apply (false)
     id("com.vanniktech.maven.publish") version "0.35.0"
-
-    id("dokka-convention")
-
-    id("org.jetbrains.dokka")
 }
 
 dependencies {
@@ -440,11 +435,11 @@ dependencyCheck {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_23)
+        jvmTarget.set(JvmTarget.JVM_21)
     }
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_23
-    targetCompatibility = JavaVersion.VERSION_23
+    targetCompatibility = JavaVersion.VERSION_21
 }
