@@ -29,8 +29,6 @@ plugins {
     // Security check for dependencies by task
     id("org.owasp.dependencycheck") version "12.0.1"
 
-
-
     id("com.gradleup.shadow") version "9.2.2" apply (false)
     id("com.vanniktech.maven.publish") version "0.35.0"
 
@@ -364,19 +362,6 @@ publishing {
     }
 }
 group = "de.klg71.keycloakmigration"
-/*
-publishOnCentral {
-    repoOwner.set("klg71")
-    projectDescription.set("Keycloak configuration as migration files")
-    projectLongName.set(project.name)
-    licenseName.set("MIT License")
-    licenseUrl.set("https://github.com/mayope/keycloakmigration/blob/master/LICENSE.md")
-    projectUrl.set("https://github.com/mayope/keycloakmigration")
-    scmConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
-}
-
- */
-
 
 mavenPublishing {
     coordinates("de.klg71.keycloakmigration", "keycloakmigration")
@@ -417,8 +402,6 @@ configure<ReleaseExtension> {
         requireBranch.set("master")
     }
 }
-
-
 
 gradle.taskGraph.whenReady {
     if (allTasks.any { it is Sign }) {
