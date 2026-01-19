@@ -423,11 +423,11 @@ dependencyCheck {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_23)
+        jvmTarget.set(JvmTarget.JVM_21)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_23
-    targetCompatibility = JavaVersion.VERSION_23
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
