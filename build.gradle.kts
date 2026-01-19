@@ -396,6 +396,13 @@ mavenPublishing {
     signAllPublications()
 }
 
+
+configure<ReleaseExtension> {
+    with(git) {
+        requireBranch.set("jvm-21")
+    }
+}
+
 gradle.taskGraph.whenReady {
     if (allTasks.any { it is Sign }) {
         allprojects {
