@@ -396,13 +396,6 @@ mavenPublishing {
     signAllPublications()
 }
 
-
-configure<ReleaseExtension> {
-    with(git) {
-        requireBranch.set("master")
-    }
-}
-
 gradle.taskGraph.whenReady {
     if (allTasks.any { it is Sign }) {
         allprojects {
