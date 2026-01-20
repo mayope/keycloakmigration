@@ -1,26 +1,35 @@
 import org.apache.tools.ant.taskdefs.condition.Os.FAMILY_WINDOWS
 import org.apache.tools.ant.taskdefs.condition.Os.isFamily
+import java.nio.file.Paths
 
 plugins {
     kotlin("jvm")
+    id("dokka-convention")
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
+dependencies{
+    dokka(project(":keycloakapi"))
+    dokka(project(":"))
+}
 tasks {
+    named("build"){
+        dependsOn("buildDocs")
+    }
 
     register("buildDocs") {
-        dependsOn(":keycloakapi:dokkaHtml")
+        dependsOn(":docsbuild:dokkaGenerateHtml")
         doLast {
             if (isFamily(FAMILY_WINDOWS)) {
-                project.exec {
+                providers.exec {
                     workingDir(project.projectDir)
                     commandLine("${project.projectDir}\\bin\\hugo.exe", "-d", "..\\docs")
                 }
             } else {
-                project.exec {
+                providers.exec {
                     workingDir(project.projectDir)
                     commandLine("bin/hugo", "-d", "../docs")
                 }
@@ -28,4 +37,8 @@ tasks {
         }
     }
 }
+
+dokka {
+    dokkaPublications.html {
+        outputDirectory.set(File(rootDir.path+("/docs/documentation"))) } }
 

@@ -1,74 +1,60 @@
-<!DOCTYPE html>
-<html class="no-js">
+<!doctype html>
+<html class="no-js" lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>de.klg71.keycloakmigration.keycloakapi</title>
-    <link href="../../images/logo-icon.svg" rel="icon" type="image/svg">
-    <script>var pathToRoot = "../../";</script>
-    <script>document.documentElement.classList.replace("no-js","js");</script>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>
+    <script>document.documentElement.classList.replace("no-js", "js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
-    if (storage == null) {
+      if (storage == null) {
         const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
         if (osDarkSchemePreferred === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    } else {
+      } else {
         const savedDarkMode = JSON.parse(storage)
-        if(savedDarkMode === true) {
-            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        if (savedDarkMode === true) {
+          document.getElementsByTagName("html")[0].classList.add("theme-dark")
         }
-    }
+      }
     </script>
-<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
-<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
 <link href="../../styles/style.css" rel="Stylesheet">
 <link href="../../styles/main.css" rel="Stylesheet">
 <link href="../../styles/prism.css" rel="Stylesheet">
 <link href="../../styles/logo-styles.css" rel="Stylesheet">
-<link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
 <link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
-<script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script>
-<script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
-<script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script>
-<script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
-<script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
-<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer="defer"></script>
-<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
-</head>
+<script type="text/javascript" src="../../scripts/safe-local-storage_blocking.js"></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer></script></head>
 <body>
-    <div class="root">
-    <nav class="navigation theme-dark" id="navigation-wrapper">
-            <a class="library-name--link" href="../../index.html">
-                    keycloakapi
-            </a>
-        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle"
-                type="button">Toggle table of contents
+<div class="root">
+    <header class="navigation theme-dark" id="navigation-wrapper" role="banner">
+<a class="library-name--link" href="../../index.html" tabindex="1">
+                    docsbuild
+            </a>        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only" id="toc-toggle" type="button">Toggle table of contents
         </button>
         <div class="navigation-controls--break ui-kit_mobile-only"></div>
-        <div class="library-version" id="library-version">
-0.2.82-SNAPSHOT        </div>
+        <div class="library-version" id="library-version">0.2.122-SNAPSHOT
+        </div>
         <div class="navigation-controls">
-        <div class="filter-section filter-section_loading" id="filter-section">
-                <button class="platform-tag platform-selector jvm-like" data-active=""
-                        data-filter=":keycloakapi:dokkaHtml/main">jvm</button>
+        <ul class="filter-section filter-section_loading" id="filter-section" aria-label="Target filter">
+                <button class="platform-tag platform-selector jvm-like" data-active="" aria-pressed="true" data-filter=":keycloakapi/main">jvm</button>
             <div class="dropdown filter-section--dropdown" data-role="dropdown" id="filter-section-dropdown">
-                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox"
-                        data-role="dropdown-toggle"
-                        aria-controls="platform-tags-listbox"
-                        aria-haspopup="listbox"
-                        aria-expanded="false"
-                        aria-label="Toggle source sets"
-                ></button>
-                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox">
-                    <div class="dropdown--header"><span>Platform filter</span>
-                        <button class="button" data-role="dropdown-toggle" aria-label="Close platform filter">
+                <button class="button button_dropdown filter-section--dropdown-toggle" role="combobox" data-role="dropdown-toggle" aria-controls="platform-tags-listbox" aria-haspopup="listbox" aria-expanded="false" aria-label="Toggle source sets"></button>
+                <ul role="listbox" id="platform-tags-listbox" class="dropdown--list" data-role="dropdown-listbox" aria-label="Target filter">
+                    <div class="dropdown--header"><span>Target filter</span>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close target filter">
                             <i class="ui-kit-icon ui-kit-icon_cross"></i>
                         </button>
                     </div>
                         <li role="option" class="dropdown--option platform-selector-option jvm-like" tabindex="0">
                             <label class="checkbox">
-                                <input type="checkbox" class="checkbox--input" id=":keycloakapi:dokkaHtml/main"
-                                       data-filter=":keycloakapi:dokkaHtml/main"/>
+                                <input type="checkbox" class="checkbox--input" id=":keycloakapi/main" data-filter=":keycloakapi/main">
                                 <span class="checkbox--icon"></span>
                                 jvm
                             </label>
@@ -76,36 +62,36 @@
                 </ul>
                 <div class="dropdown--overlay"></div>
             </div>
-        </div>
-            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button"
-                    type="button">Switch theme
+        </ul>
+            <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">Switch theme
             </button>
             <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar" role="button">Search in
                 API
             </div>
         </div>
-    </nav>
-        <div id="container">
-            <div class="sidebar" id="leftColumn">
-                <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
-                    <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
-                        data-role="dropdown-listbox">
-                        <div class="dropdown--header">
+    </header>
+    <div id="container">
+        <nav id="leftColumn" class="sidebar" data-item-type="SECTION" data-item-config="{&quot;defaultSize&quot;: 280, &quot;minSize&quot;: 200, &quot;maxSize&quot;: 400}">
+            <a class="toc--skip-link" href="#main">Skip to content</a>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list" data-role="dropdown-listbox" aria-label="Table of contents">
+                    <div class="dropdown--header">
                             <span>
-                                    keycloakapi
+                                    docsbuild
                             </span>
-                            <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
-                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
-                            </button>
-                        </div>
-                        <div class="sidebar--inner" id="sideMenu"></div>
-                    </ul>
-                    <div class="dropdown--overlay"></div>
-                </div>
+                        <button class="button" data-role="dropdown-toggle" aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
             </div>
-            <div id="main">
-<div class="main-content" data-page-type="package" id="content" pageIds="keycloakapi::de.klg71.keycloakmigration.keycloakapi////PointingToDeclaration//45327550">
-  <div class="breadcrumbs"><a href="../../index.html">keycloakapi</a><span class="delimiter">/</span><span class="current">de.klg71.keycloakmigration.keycloakapi</span></div>
+        </nav>
+        <div id="resizer" class="resizer" data-item-type="BAR"></div>
+        <div id="main" data-item-type="SECTION" role="main">
+<div class="main-content" data-page-type="package" id="content" pageids="keycloakapi::de.klg71.keycloakmigration.keycloakapi////PointingToDeclaration//1646233687">
+  <div class="breadcrumbs"><a href="../index.html">keycloakapi</a><span class="delimiter">/</span><span class="current">de.klg71.keycloakmigration.keycloakapi</span></div>
   <div class="cover ">
     <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
   </div>
@@ -113,108 +99,108 @@
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="TYPE">Types</button><button class="section-tab" data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions</button></div>
     <div class="tabs-section-body">
       <div data-togglable="TYPE">
-        <h2 class="">Types</h2>
-        <div class="table"><a data-name="1345500758%2FClasslikes%2F45327550" anchor-label="ContentTypeEncoder" id="1345500758%2FClasslikes%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+        <h2 class="tableheader">Types</h2>
+        <div class="table"><a data-name="1345500758%2FClasslikes%2F1646233687" anchor-label="ContentTypeEncoder" id="1345500758%2FClasslikes%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-content-type-encoder/index.html"><span>Content</span><wbr></wbr><span>Type</span><wbr></wbr><span><span>Encoder</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1345500758%2FClasslikes%2F45327550"></span>
+                  <div><a href="-content-type-encoder/index.html"><span>Content</span><wbr><span>Type</span><wbr><span><span>Encoder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1345500758%2FClasslikes%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-content-type-encoder/index.html">ContentTypeEncoder</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">objectMapper<span class="token operator">: </span><span data-unresolved-link="com.fasterxml.jackson.databind/ObjectMapper///PointingToDeclaration/">ObjectMapper</span></span></span><span class="token punctuation">)</span> : <span data-unresolved-link="feign.codec/Encoder///PointingToDeclaration/">Encoder</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-content-type-encoder/index.html">ContentTypeEncoder</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">objectMapper<span class="token operator">: </span><span data-unresolved-link="com.fasterxml.jackson.databind/ObjectMapper///PointingToDeclaration/">ObjectMapper</span></span></span><span class="token punctuation">)</span> : <span data-unresolved-link="feign.codec/Encoder///PointingToDeclaration/">Encoder</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="419645534%2FClasslikes%2F45327550" anchor-label="EmailActions" id="419645534%2FClasslikes%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="419645534%2FClasslikes%2F1646233687" anchor-label="EmailActions" id="419645534%2FClasslikes%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-email-actions/index.html"><span>Email</span><wbr></wbr><span><span>Actions</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="419645534%2FClasslikes%2F45327550"></span>
+                  <div><a href="-email-actions/index.html"><span>Email</span><wbr><span><span>Actions</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="419645534%2FClasslikes%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-email-actions/index.html">EmailActions</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-email-actions/index.html">EmailActions</a><span class="token operator">&gt; </span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">enum </span><a href="-email-actions/index.html">EmailActions</a> : <a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="-email-actions/index.html">EmailActions</a><span class="token operator">&gt; </span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-2142457607%2FClasslikes%2F45327550" anchor-label="KeycloakApiException" id="-2142457607%2FClasslikes%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-2142457607%2FClasslikes%2F1646233687" anchor-label="KeycloakApiException" id="-2142457607%2FClasslikes%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-keycloak-api-exception/index.html"><span>Keycloak</span><wbr></wbr><span>Api</span><wbr></wbr><span><span>Exception</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2142457607%2FClasslikes%2F45327550"></span>
+                  <div><a href="-keycloak-api-exception/index.html"><span>Keycloak</span><wbr><span>Api</span><wbr><span><span>Exception</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2142457607%2FClasslikes%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-keycloak-api-exception/index.html">KeycloakApiException</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">message<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">statusCode<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html">RuntimeException</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-keycloak-api-exception/index.html">KeycloakApiException</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">message<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">statusCode<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span> : <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/RuntimeException.html">RuntimeException</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="391226115%2FClasslikes%2F45327550" anchor-label="KeycloakClient" id="391226115%2FClasslikes%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="391226115%2FClasslikes%2F1646233687" anchor-label="KeycloakClient" id="391226115%2FClasslikes%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-keycloak-client/index.html"><span>Keycloak</span><wbr></wbr><span><span>Client</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="391226115%2FClasslikes%2F45327550"></span>
+                  <div><a href="-keycloak-client/index.html"><span>Keycloak</span><wbr><span><span>Client</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="391226115%2FClasslikes%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-keycloak-client/index.html">KeycloakClient</a></div><div class="brief "><p class="paragraph">Interface access resources on keycloak. Build with <a href="init-keycloak-client.html">initKeycloakClient</a></p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-keycloak-client/index.html">KeycloakClient</a></div><div class="brief "><p class="paragraph">Interface access resources on keycloak. Build with <a href="init-keycloak-client.html">initKeycloakClient</a></p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="658796544%2FClasslikes%2F45327550" anchor-label="KeycloakLoginClient" id="658796544%2FClasslikes%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="658796544%2FClasslikes%2F1646233687" anchor-label="KeycloakLoginClient" id="658796544%2FClasslikes%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-keycloak-login-client/index.html"><span>Keycloak</span><wbr></wbr><span>Login</span><wbr></wbr><span><span>Client</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="658796544%2FClasslikes%2F45327550"></span>
+                  <div><a href="-keycloak-login-client/index.html"><span>Keycloak</span><wbr><span>Login</span><wbr><span><span>Client</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="658796544%2FClasslikes%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-keycloak-login-client/index.html">KeycloakLoginClient</a></div><div class="brief "><p class="paragraph">Interface to get acquire tokens from keycloak. Build with <a href="init-keycloak-login-client.html">initKeycloakLoginClient</a></p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-keycloak-login-client/index.html">KeycloakLoginClient</a></div><div class="brief "><p class="paragraph">Interface to get acquire tokens from keycloak. Build with <a href="init-keycloak-login-client.html">initKeycloakLoginClient</a></p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-800641894%2FClasslikes%2F45327550" anchor-label="PlainTextEncoder" id="-800641894%2FClasslikes%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-800641894%2FClasslikes%2F1646233687" anchor-label="PlainTextEncoder" id="-800641894%2FClasslikes%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-plain-text-encoder/index.html"><span>Plain</span><wbr></wbr><span>Text</span><wbr></wbr><span><span>Encoder</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-800641894%2FClasslikes%2F45327550"></span>
+                  <div><a href="-plain-text-encoder/index.html"><span>Plain</span><wbr><span>Text</span><wbr><span><span>Encoder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-800641894%2FClasslikes%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-plain-text-encoder/index.html">PlainTextEncoder</a> : <span data-unresolved-link="feign.codec/Encoder///PointingToDeclaration/">Encoder</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-plain-text-encoder/index.html">PlainTextEncoder</a> : <span data-unresolved-link="feign.codec/Encoder///PointingToDeclaration/">Encoder</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1071816617%2FClasslikes%2F45327550" anchor-label="RealmName" id="1071816617%2FClasslikes%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="1071816617%2FClasslikes%2F1646233687" anchor-label="RealmName" id="1071816617%2FClasslikes%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-realm-name/index.html"><span>Realm</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1071816617%2FClasslikes%2F45327550"></span>
+                  <div><a href="-realm-name/index.html"><span>Realm</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1071816617%2FClasslikes%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-realm-name/index.html">RealmName</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="-realm-name/index.html">RealmName</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
@@ -222,603 +208,603 @@
         </div>
       </div>
       <div data-togglable="FUNCTION">
-        <h2 class="">Functions</h2>
-        <div class="table"><a data-name="-1484182493%2FFunctions%2F45327550" anchor-label="clientById" id="-1484182493%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+        <h2 class="tableheader">Functions</h2>
+        <div class="table"><a data-name="-1484182493%2FFunctions%2F1646233687" anchor-label="clientById" id="-1484182493%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="client-by-id.html"><span>client</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1484182493%2FFunctions%2F45327550"></span>
+                  <div><a href="client-by-id.html"><span>client</span><wbr><span>By</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1484182493%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-by-id.html"><span class="token function">clientById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-client/index.html">Client</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-by-id.html"><span class="token function">clientById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-client/index.html">Client</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="973672219%2FFunctions%2F45327550" anchor-label="clientMapperExistsByName" id="973672219%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="973672219%2FFunctions%2F1646233687" anchor-label="clientMapperExistsByName" id="973672219%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="client-mapper-exists-by-name.html"><span>client</span><wbr></wbr><span>Mapper</span><wbr></wbr><span>Exists</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="973672219%2FFunctions%2F45327550"></span>
+                  <div><a href="client-mapper-exists-by-name.html"><span>client</span><wbr><span>Mapper</span><wbr><span>Exists</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="973672219%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-mapper-exists-by-name.html"><span class="token function">clientMapperExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">mapperName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-mapper-exists-by-name.html"><span class="token function">clientMapperExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">mapperName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-953369790%2FFunctions%2F45327550" anchor-label="clientRoleByName" id="-953369790%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-953369790%2FFunctions%2F1646233687" anchor-label="clientRoleByName" id="-953369790%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="client-role-by-name.html"><span>client</span><wbr></wbr><span>Role</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-953369790%2FFunctions%2F45327550"></span>
+                  <div><a href="client-role-by-name.html"><span>client</span><wbr><span>Role</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-953369790%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-role-by-name.html"><span class="token function">clientRoleByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-role/index.html">Role</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-role-by-name.html"><span class="token function">clientRoleByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-role/index.html">Role</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="818063631%2FFunctions%2F45327550" anchor-label="clientScopeByName" id="818063631%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="818063631%2FFunctions%2F1646233687" anchor-label="clientScopeByName" id="818063631%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="client-scope-by-name.html"><span>client</span><wbr></wbr><span>Scope</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="818063631%2FFunctions%2F45327550"></span>
+                  <div><a href="client-scope-by-name.html"><span>client</span><wbr><span>Scope</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="818063631%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-scope-by-name.html"><span class="token function">clientScopeByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-client-scope/index.html">ClientScope</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-scope-by-name.html"><span class="token function">clientScopeByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-client-scope/index.html">ClientScope</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1992082615%2FFunctions%2F45327550" anchor-label="clientScopeMapperExistsByName" id="1992082615%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="1992082615%2FFunctions%2F1646233687" anchor-label="clientScopeMapperExistsByName" id="1992082615%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="client-scope-mapper-exists-by-name.html"><span>client</span><wbr></wbr><span>Scope</span><wbr></wbr><span>Mapper</span><wbr></wbr><span>Exists</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1992082615%2FFunctions%2F45327550"></span>
+                  <div><a href="client-scope-mapper-exists-by-name.html"><span>client</span><wbr><span>Scope</span><wbr><span>Mapper</span><wbr><span>Exists</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1992082615%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-scope-mapper-exists-by-name.html"><span class="token function">clientScopeMapperExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientScopeName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">mapperName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-scope-mapper-exists-by-name.html"><span class="token function">clientScopeMapperExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientScopeName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">mapperName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-144644586%2FFunctions%2F45327550" anchor-label="clientScopeUUID" id="-144644586%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-144644586%2FFunctions%2F1646233687" anchor-label="clientScopeUUID" id="-144644586%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="client-scope-u-u-i-d.html"><span>client</span><wbr></wbr><span>Scope</span><wbr></wbr><span><span>UUID</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-144644586%2FFunctions%2F45327550"></span>
+                  <div><a href="client-scope-u-u-i-d.html"><span>client</span><wbr><span>Scope</span><wbr><span><span>UUID</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-144644586%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-scope-u-u-i-d.html"><span class="token function">clientScopeUUID</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientScopeName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html">UUID</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-scope-u-u-i-d.html"><span class="token function">clientScopeUUID</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientScopeName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/UUID.html">UUID</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-220991878%2FFunctions%2F45327550" anchor-label="clientUUID" id="-220991878%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-220991878%2FFunctions%2F1646233687" anchor-label="clientUUID" id="-220991878%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="client-u-u-i-d.html"><span>client</span><wbr></wbr><span><span>UUID</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-220991878%2FFunctions%2F45327550"></span>
+                  <div><a href="client-u-u-i-d.html"><span>client</span><wbr><span><span>UUID</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-220991878%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-u-u-i-d.html"><span class="token function">clientUUID</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html">UUID</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="client-u-u-i-d.html"><span class="token function">clientUUID</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/UUID.html">UUID</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="643622906%2FFunctions%2F45327550" anchor-label="copyAuthFlow" id="643622906%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="643622906%2FFunctions%2F1646233687" anchor-label="copyAuthFlow" id="643622906%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="copy-auth-flow.html"><span>copy</span><wbr></wbr><span>Auth</span><wbr></wbr><span><span>Flow</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="643622906%2FFunctions%2F45327550"></span>
+                  <div><a href="copy-auth-flow.html"><span>copy</span><wbr><span>Auth</span><wbr><span><span>Flow</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="643622906%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="copy-auth-flow.html"><span class="token function">copyAuthFlow</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">flowAlias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">newName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="copy-auth-flow.html"><span class="token function">copyAuthFlow</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">flowAlias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">newName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1102050725%2FFunctions%2F45327550" anchor-label="executionsToImport" id="1102050725%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="1102050725%2FFunctions%2F1646233687" anchor-label="executionsToImport" id="1102050725%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="executions-to-import.html"><span>executions</span><wbr></wbr><span>To</span><wbr></wbr><span><span>Import</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1102050725%2FFunctions%2F45327550"></span>
+                  <div><a href="executions-to-import.html"><span>executions</span><wbr><span>To</span><wbr><span><span>Import</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1102050725%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="executions-to-import.html"><span class="token function">executionsToImport</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">flowAlias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-authentication-execution-import/index.html">AuthenticationExecutionImport</a><span class="token operator">&gt;</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="executions-to-import.html"><span class="token function">executionsToImport</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">flowAlias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-authentication-execution-import/index.html">AuthenticationExecutionImport</a><span class="token operator">&gt;</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1421258343%2FFunctions%2F45327550" anchor-label="existsClient" id="-1421258343%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-1421258343%2FFunctions%2F1646233687" anchor-label="existsClient" id="-1421258343%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="exists-client.html"><span>exists</span><wbr></wbr><span><span>Client</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1421258343%2FFunctions%2F45327550"></span>
+                  <div><a href="exists-client.html"><span>exists</span><wbr><span><span>Client</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1421258343%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-client.html"><span class="token function">existsClient</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-client.html"><span class="token function">existsClient</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="856100712%2FFunctions%2F45327550" anchor-label="existsClientRole" id="856100712%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="856100712%2FFunctions%2F1646233687" anchor-label="existsClientRole" id="856100712%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="exists-client-role.html"><span>exists</span><wbr></wbr><span>Client</span><wbr></wbr><span><span>Role</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="856100712%2FFunctions%2F45327550"></span>
+                  <div><a href="exists-client-role.html"><span>exists</span><wbr><span>Client</span><wbr><span><span>Role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="856100712%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-client-role.html"><span class="token function">existsClientRole</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-client-role.html"><span class="token function">existsClientRole</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="342969901%2FFunctions%2F45327550" anchor-label="existsClientScope" id="342969901%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="342969901%2FFunctions%2F1646233687" anchor-label="existsClientScope" id="342969901%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="exists-client-scope.html"><span>exists</span><wbr></wbr><span>Client</span><wbr></wbr><span><span>Scope</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="342969901%2FFunctions%2F45327550"></span>
+                  <div><a href="exists-client-scope.html"><span>exists</span><wbr><span>Client</span><wbr><span><span>Scope</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="342969901%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-client-scope.html"><span class="token function">existsClientScope</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-client-scope.html"><span class="token function">existsClientScope</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="225858679%2FFunctions%2F45327550" anchor-label="existsGroup" id="225858679%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="225858679%2FFunctions%2F1646233687" anchor-label="existsGroup" id="225858679%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="exists-group.html"><span>exists</span><wbr></wbr><span><span>Group</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="225858679%2FFunctions%2F45327550"></span>
+                  <div><a href="exists-group.html"><span>exists</span><wbr><span><span>Group</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="225858679%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-group.html"><span class="token function">existsGroup</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-group.html"><span class="token function">existsGroup</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-735580402%2FFunctions%2F45327550" anchor-label="existsRole" id="-735580402%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-735580402%2FFunctions%2F1646233687" anchor-label="existsRole" id="-735580402%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="exists-role.html"><span>exists</span><wbr></wbr><span><span>Role</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-735580402%2FFunctions%2F45327550"></span>
+                  <div><a href="exists-role.html"><span>exists</span><wbr><span><span>Role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-735580402%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-role.html"><span class="token function">existsRole</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-role.html"><span class="token function">existsRole</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1500360537%2FFunctions%2F45327550" anchor-label="existsUser" id="1500360537%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="1500360537%2FFunctions%2F1646233687" anchor-label="existsUser" id="1500360537%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="exists-user.html"><span>exists</span><wbr></wbr><span><span>User</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1500360537%2FFunctions%2F45327550"></span>
+                  <div><a href="exists-user.html"><span>exists</span><wbr><span><span>User</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1500360537%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-user.html"><span class="token function">existsUser</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="exists-user.html"><span class="token function">existsUser</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1053537305%2FFunctions%2F45327550" anchor-label="extractLocationUUID" id="-1053537305%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-1053537305%2FFunctions%2F1646233687" anchor-label="extractLocationUUID" id="-1053537305%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="extract-location-u-u-i-d.html"><span>extract</span><wbr></wbr><span>Location</span><wbr></wbr><span><span>UUID</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1053537305%2FFunctions%2F45327550"></span>
+                  <div><a href="extract-location-u-u-i-d.html"><span>extract</span><wbr><span>Location</span><wbr><span><span>UUID</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1053537305%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="feign/Response///PointingToDeclaration/">Response</span><span class="token punctuation">.</span><a href="extract-location-u-u-i-d.html"><span class="token function">extractLocationUUID</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html">UUID</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="feign/Response///PointingToDeclaration/">Response</span><span class="token punctuation">.</span><a href="extract-location-u-u-i-d.html"><span class="token function">extractLocationUUID</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/UUID.html">UUID</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="263049945%2FFunctions%2F45327550" anchor-label="groupByName" id="263049945%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="263049945%2FFunctions%2F1646233687" anchor-label="groupByName" id="263049945%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="group-by-name.html"><span>group</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="263049945%2FFunctions%2F45327550"></span>
+                  <div><a href="group-by-name.html"><span>group</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="263049945%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="group-by-name.html"><span class="token function">groupByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-group/index.html">Group</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="group-by-name.html"><span class="token function">groupByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-group/index.html">Group</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-239076768%2FFunctions%2F45327550" anchor-label="groupUUID" id="-239076768%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-239076768%2FFunctions%2F1646233687" anchor-label="groupUUID" id="-239076768%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="group-u-u-i-d.html"><span>group</span><wbr></wbr><span><span>UUID</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-239076768%2FFunctions%2F45327550"></span>
+                  <div><a href="group-u-u-i-d.html"><span>group</span><wbr><span><span>UUID</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-239076768%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="group-u-u-i-d.html"><span class="token function">groupUUID</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">group<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html">UUID</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="group-u-u-i-d.html"><span class="token function">groupUUID</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">group<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/UUID.html">UUID</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="2102331376%2FFunctions%2F45327550" anchor-label="identityProviderByAlias" id="2102331376%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="2102331376%2FFunctions%2F1646233687" anchor-label="identityProviderByAlias" id="2102331376%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="identity-provider-by-alias.html"><span>identity</span><wbr></wbr><span>Provider</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Alias</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2102331376%2FFunctions%2F45327550"></span>
+                  <div><a href="identity-provider-by-alias.html"><span>identity</span><wbr><span>Provider</span><wbr><span>By</span><wbr><span><span>Alias</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2102331376%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="identity-provider-by-alias.html"><span class="token function">identityProviderByAlias</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">alias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-identity-provider/index.html">IdentityProvider</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="identity-provider-by-alias.html"><span class="token function">identityProviderByAlias</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">alias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-identity-provider/index.html">IdentityProvider</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1105641324%2FFunctions%2F45327550" anchor-label="identityProviderExistsByAlias" id="1105641324%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="1105641324%2FFunctions%2F1646233687" anchor-label="identityProviderExistsByAlias" id="1105641324%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="identity-provider-exists-by-alias.html"><span>identity</span><wbr></wbr><span>Provider</span><wbr></wbr><span>Exists</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Alias</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1105641324%2FFunctions%2F45327550"></span>
+                  <div><a href="identity-provider-exists-by-alias.html"><span>identity</span><wbr><span>Provider</span><wbr><span>Exists</span><wbr><span>By</span><wbr><span><span>Alias</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1105641324%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="identity-provider-exists-by-alias.html"><span class="token function">identityProviderExistsByAlias</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">alias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="identity-provider-exists-by-alias.html"><span class="token function">identityProviderExistsByAlias</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">alias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1384133613%2FFunctions%2F45327550" anchor-label="identityProviderMapperByName" id="-1384133613%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-1384133613%2FFunctions%2F1646233687" anchor-label="identityProviderMapperByName" id="-1384133613%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="identity-provider-mapper-by-name.html"><span>identity</span><wbr></wbr><span>Provider</span><wbr></wbr><span>Mapper</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1384133613%2FFunctions%2F45327550"></span>
+                  <div><a href="identity-provider-mapper-by-name.html"><span>identity</span><wbr><span>Provider</span><wbr><span>Mapper</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1384133613%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="identity-provider-mapper-by-name.html"><span class="token function">identityProviderMapperByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">identityProviderAlias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-identity-provider-mapper/index.html">IdentityProviderMapper</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="identity-provider-mapper-by-name.html"><span class="token function">identityProviderMapperByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">identityProviderAlias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-identity-provider-mapper/index.html">IdentityProviderMapper</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1289237207%2FFunctions%2F45327550" anchor-label="identityProviderMapperExistsByName" id="1289237207%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="1289237207%2FFunctions%2F1646233687" anchor-label="identityProviderMapperExistsByName" id="1289237207%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="identity-provider-mapper-exists-by-name.html"><span>identity</span><wbr></wbr><span>Provider</span><wbr></wbr><span>Mapper</span><wbr></wbr><span>Exists</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1289237207%2FFunctions%2F45327550"></span>
+                  <div><a href="identity-provider-mapper-exists-by-name.html"><span>identity</span><wbr><span>Provider</span><wbr><span>Mapper</span><wbr><span>Exists</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1289237207%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="identity-provider-mapper-exists-by-name.html"><span class="token function">identityProviderMapperExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">identityProviderAlias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="identity-provider-mapper-exists-by-name.html"><span class="token function">identityProviderMapperExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">identityProviderAlias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="933356226%2FFunctions%2F45327550" anchor-label="importFlow" id="933356226%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="933356226%2FFunctions%2F1646233687" anchor-label="importFlow" id="933356226%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="import-flow.html"><span>import</span><wbr></wbr><span><span>Flow</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="933356226%2FFunctions%2F45327550"></span>
+                  <div><a href="import-flow.html"><span>import</span><wbr><span><span>Flow</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="933356226%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="import-flow.html"><span class="token function">importFlow</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">importFlow<span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-import-flow/index.html">ImportFlow</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html">UUID</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="import-flow.html"><span class="token function">importFlow</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">importFlow<span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-import-flow/index.html">ImportFlow</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/UUID.html">UUID</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-487138515%2FFunctions%2F45327550" anchor-label="initKeycloakClient" id="-487138515%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-1305076333%2FFunctions%2F1646233687" anchor-label="initKeycloakClient" id="-1305076333%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="init-keycloak-client.html"><span>init</span><wbr></wbr><span>Keycloak</span><wbr></wbr><span><span>Client</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-487138515%2FFunctions%2F45327550"></span>
+                  <div><a href="init-keycloak-client.html"><span>init</span><wbr><span>Keycloak</span><wbr><span><span>Client</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1305076333%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="init-keycloak-client.html"><span class="token function">initKeycloakClient</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">baseUrl<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">adminUser<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">adminPassword<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">adminUseOauth<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">adminUseOauthLocalPort<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">logger<span class="token operator">: </span><span data-unresolved-link="feign/Logger///PointingToDeclaration/">Logger</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">totp<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span><span class="token string">&quot;&quot;</span><span class="token punctuation">, </span></span><span class="parameter ">tokenOffsetMs<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">1000</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-keycloak-client/index.html">KeycloakClient</a></div><div class="brief "><p class="paragraph">Builds the <a href="-keycloak-client/index.html">KeycloakClient</a></p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="init-keycloak-client.html"><span class="token function">initKeycloakClient</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">baseUrl<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">adminUser<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">adminPassword<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">adminUseOauth<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">adminUseOauthLocalPort<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">clientSecret<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">loginWithClientCredentials<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span><span class="token punctuation">, </span></span><span class="parameter ">logger<span class="token operator">: </span><span data-unresolved-link="feign/Logger///PointingToDeclaration/">Logger</span><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">totp<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token operator"> = </span><span class="token string">""</span><span class="token punctuation">, </span></span><span class="parameter ">tokenOffsetMs<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">1000</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-keycloak-client/index.html">KeycloakClient</a></div><div class="brief "><p class="paragraph">Builds the <a href="-keycloak-client/index.html">KeycloakClient</a></p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="478747342%2FFunctions%2F45327550" anchor-label="initKeycloakLoginClient" id="478747342%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="478747342%2FFunctions%2F1646233687" anchor-label="initKeycloakLoginClient" id="478747342%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="init-keycloak-login-client.html"><span>init</span><wbr></wbr><span>Keycloak</span><wbr></wbr><span>Login</span><wbr></wbr><span><span>Client</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="478747342%2FFunctions%2F45327550"></span>
+                  <div><a href="init-keycloak-login-client.html"><span>init</span><wbr><span>Keycloak</span><wbr><span>Login</span><wbr><span><span>Client</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="478747342%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="init-keycloak-login-client.html"><span class="token function">initKeycloakLoginClient</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">baseUrl<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">logger<span class="token operator">: </span><span data-unresolved-link="feign/Logger///PointingToDeclaration/">Logger</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-keycloak-login-client/index.html">KeycloakLoginClient</a></div><div class="brief "><p class="paragraph">Builds the <a href="-keycloak-login-client/index.html">KeycloakLoginClient</a> Only build this if you just need a token and don't need any other keycloak resources. <a href="init-keycloak-client.html">initKeycloakClient</a> automatically acquires tokens.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="init-keycloak-login-client.html"><span class="token function">initKeycloakLoginClient</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">baseUrl<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">logger<span class="token operator">: </span><span data-unresolved-link="feign/Logger///PointingToDeclaration/">Logger</span><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="-keycloak-login-client/index.html">KeycloakLoginClient</a></div><div class="brief "><p class="paragraph">Builds the <a href="-keycloak-login-client/index.html">KeycloakLoginClient</a> Only build this if you just need a token and don't need any other keycloak resources. <a href="init-keycloak-client.html">initKeycloakClient</a> automatically acquires tokens.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-731708957%2FFunctions%2F45327550" anchor-label="isClientAuthorizationEnabled" id="-731708957%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-731708957%2FFunctions%2F1646233687" anchor-label="isClientAuthorizationEnabled" id="-731708957%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="is-client-authorization-enabled.html"><span>is</span><wbr></wbr><span>Client</span><wbr></wbr><span>Authorization</span><wbr></wbr><span><span>Enabled</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-731708957%2FFunctions%2F45327550"></span>
+                  <div><a href="is-client-authorization-enabled.html"><span>is</span><wbr><span>Client</span><wbr><span>Authorization</span><wbr><span><span>Enabled</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-731708957%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="is-client-authorization-enabled.html"><span class="token function">isClientAuthorizationEnabled</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="is-client-authorization-enabled.html"><span class="token function">isClientAuthorizationEnabled</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clientId<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1068711910%2FFunctions%2F45327550" anchor-label="isSuccessful" id="-1068711910%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-1068711910%2FFunctions%2F1646233687" anchor-label="isSuccessful" id="-1068711910%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="is-successful.html"><span>is</span><wbr></wbr><span><span>Successful</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1068711910%2FFunctions%2F45327550"></span>
+                  <div><a href="is-successful.html"><span>is</span><wbr><span><span>Successful</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1068711910%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="feign/Response///PointingToDeclaration/">Response</span><span class="token punctuation">.</span><a href="is-successful.html"><span class="token function">isSuccessful</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><span data-unresolved-link="feign/Response///PointingToDeclaration/">Response</span><span class="token punctuation">.</span><a href="is-successful.html"><span class="token function">isSuccessful</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="885009083%2FFunctions%2F45327550" anchor-label="ldapMapperByName" id="885009083%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="885009083%2FFunctions%2F1646233687" anchor-label="ldapMapperByName" id="885009083%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="ldap-mapper-by-name.html"><span>ldap</span><wbr></wbr><span>Mapper</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="885009083%2FFunctions%2F45327550"></span>
+                  <div><a href="ldap-mapper-by-name.html"><span>ldap</span><wbr><span>Mapper</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="885009083%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="ldap-mapper-by-name.html"><span class="token function">ldapMapperByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">ldapName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-user-federation-mapper/index.html">UserFederationMapper</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="ldap-mapper-by-name.html"><span class="token function">ldapMapperByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">ldapName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-user-federation-mapper/index.html">UserFederationMapper</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1527712897%2FFunctions%2F45327550" anchor-label="ldapMapperExistsByName" id="-1527712897%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-1527712897%2FFunctions%2F1646233687" anchor-label="ldapMapperExistsByName" id="-1527712897%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="ldap-mapper-exists-by-name.html"><span>ldap</span><wbr></wbr><span>Mapper</span><wbr></wbr><span>Exists</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1527712897%2FFunctions%2F45327550"></span>
+                  <div><a href="ldap-mapper-exists-by-name.html"><span>ldap</span><wbr><span>Mapper</span><wbr><span>Exists</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1527712897%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="ldap-mapper-exists-by-name.html"><span class="token function">ldapMapperExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">ldapName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="ldap-mapper-exists-by-name.html"><span class="token function">ldapMapperExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">ldapName<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-2077965365%2FFunctions%2F45327550" anchor-label="organizationByName" id="-2077965365%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-2077965365%2FFunctions%2F1646233687" anchor-label="organizationByName" id="-2077965365%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="organization-by-name.html"><span>organization</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2077965365%2FFunctions%2F45327550"></span>
+                  <div><a href="organization-by-name.html"><span>organization</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2077965365%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="organization-by-name.html"><span class="token function">organizationByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-organization/index.html">Organization</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="organization-by-name.html"><span class="token function">organizationByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-organization/index.html">Organization</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1883602924%2FFunctions%2F45327550" anchor-label="realmById" id="-1883602924%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-1883602924%2FFunctions%2F1646233687" anchor-label="realmById" id="-1883602924%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="realm-by-id.html"><span>realm</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1883602924%2FFunctions%2F45327550"></span>
+                  <div><a href="realm-by-id.html"><span>realm</span><wbr><span>By</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1883602924%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="realm-by-id.html"><span class="token function">realmById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-realm/index.html">Realm</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="realm-by-id.html"><span class="token function">realmById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-realm/index.html">Realm</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-110799464%2FFunctions%2F45327550" anchor-label="realmExistsById" id="-110799464%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-110799464%2FFunctions%2F1646233687" anchor-label="realmExistsById" id="-110799464%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="realm-exists-by-id.html"><span>realm</span><wbr></wbr><span>Exists</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-110799464%2FFunctions%2F45327550"></span>
+                  <div><a href="realm-exists-by-id.html"><span>realm</span><wbr><span>Exists</span><wbr><span>By</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-110799464%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="realm-exists-by-id.html"><span class="token function">realmExistsById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="realm-exists-by-id.html"><span class="token function">realmExistsById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1869298491%2FFunctions%2F45327550" anchor-label="retryDefaultConfig" id="-1869298491%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-1869298491%2FFunctions%2F1646233687" anchor-label="retryDefaultConfig" id="-1869298491%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="retry-default-config.html"><span>retry</span><wbr></wbr><span>Default</span><wbr></wbr><span><span>Config</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1869298491%2FFunctions%2F45327550"></span>
+                  <div><a href="retry-default-config.html"><span>retry</span><wbr><span>Default</span><wbr><span><span>Config</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1869298491%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="retry-default-config.html"><span class="token function">retryDefaultConfig</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="io.github.resilience4j.retry/RetryConfig///PointingToDeclaration/">RetryConfig</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="retry-default-config.html"><span class="token function">retryDefaultConfig</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="io.github.resilience4j.retry/RetryConfig///PointingToDeclaration/">RetryConfig</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1146270841%2FFunctions%2F45327550" anchor-label="roleExistsByName" id="-1146270841%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-1146270841%2FFunctions%2F1646233687" anchor-label="roleExistsByName" id="-1146270841%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="role-exists-by-name.html"><span>role</span><wbr></wbr><span>Exists</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1146270841%2FFunctions%2F45327550"></span>
+                  <div><a href="role-exists-by-name.html"><span>role</span><wbr><span>Exists</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1146270841%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="role-exists-by-name.html"><span class="token function">roleExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="role-exists-by-name.html"><span class="token function">roleExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">client<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="role-exists-by-name.html"><span class="token function">roleExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="role-exists-by-name.html"><span class="token function">roleExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">client<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-300436901%2FFunctions%2F45327550" anchor-label="updateFlowInPlace" id="-300436901%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-300436901%2FFunctions%2F1646233687" anchor-label="updateFlowInPlace" id="-300436901%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="update-flow-in-place.html"><span>update</span><wbr></wbr><span>Flow</span><wbr></wbr><span>In</span><wbr></wbr><span><span>Place</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-300436901%2FFunctions%2F45327550"></span>
+                  <div><a href="update-flow-in-place.html"><span>update</span><wbr><span>Flow</span><wbr><span>In</span><wbr><span><span>Place</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-300436901%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="update-flow-in-place.html"><span class="token function">updateFlowInPlace</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">alias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">updateFlow<span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-update-flow-in-place/index.html">UpdateFlowInPlace</a></span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="update-flow-in-place.html"><span class="token function">updateFlowInPlace</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">alias<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">updateFlow<span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-update-flow-in-place/index.html">UpdateFlowInPlace</a></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-224963277%2FFunctions%2F45327550" anchor-label="userByName" id="-224963277%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-224963277%2FFunctions%2F1646233687" anchor-label="userByName" id="-224963277%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="user-by-name.html"><span>user</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-224963277%2FFunctions%2F45327550"></span>
+                  <div><a href="user-by-name.html"><span>user</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-224963277%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="user-by-name.html"><span class="token function">userByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-user/index.html">User</a></div><div class="brief "><p class="paragraph">File contains a lot of convenience functions when interacting with the keycloak client</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="user-by-name.html"><span class="token function">userByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-user/index.html">User</a></div><div class="brief "><p class="paragraph">File contains a lot of convenience functions when interacting with the keycloak client</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-190236294%2FFunctions%2F45327550" anchor-label="userExists" id="-190236294%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-190236294%2FFunctions%2F1646233687" anchor-label="userExists" id="-190236294%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="user-exists.html"><span>user</span><wbr></wbr><span><span>Exists</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-190236294%2FFunctions%2F45327550"></span>
+                  <div><a href="user-exists.html"><span>user</span><wbr><span><span>Exists</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-190236294%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="user-exists.html"><span class="token function">userExists</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">user<span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html">UUID</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="user-exists.html"><span class="token function">userExists</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">user<span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/UUID.html">UUID</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1332524400%2FFunctions%2F45327550" anchor-label="userFederationByName" id="1332524400%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="1332524400%2FFunctions%2F1646233687" anchor-label="userFederationByName" id="1332524400%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="user-federation-by-name.html"><span>user</span><wbr></wbr><span>Federation</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1332524400%2FFunctions%2F45327550"></span>
+                  <div><a href="user-federation-by-name.html"><span>user</span><wbr><span>Federation</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1332524400%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="user-federation-by-name.html"><span class="token function">userFederationByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-user-federation/index.html">UserFederation</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="user-federation-by-name.html"><span class="token function">userFederationByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../de.klg71.keycloakmigration.keycloakapi.model/-user-federation/index.html">UserFederation</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1136044468%2FFunctions%2F45327550" anchor-label="userFederationExistsByName" id="1136044468%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="1136044468%2FFunctions%2F1646233687" anchor-label="userFederationExistsByName" id="1136044468%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="user-federation-exists-by-name.html"><span>user</span><wbr></wbr><span>Federation</span><wbr></wbr><span>Exists</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1136044468%2FFunctions%2F45327550"></span>
+                  <div><a href="user-federation-exists-by-name.html"><span>user</span><wbr><span>Federation</span><wbr><span>Exists</span><wbr><span>By</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1136044468%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="user-federation-exists-by-name.html"><span class="token function">userFederationExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="user-federation-exists-by-name.html"><span class="token function">userFederationExistsByName</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-101037254%2FFunctions%2F45327550" anchor-label="userUUID" id="-101037254%2FFunctions%2F45327550" data-filterable-set=":keycloakapi:dokkaHtml/main"></a>
-          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi:dokkaHtml/main" data-filterable-set=":keycloakapi:dokkaHtml/main">
+<a data-name="-101037254%2FFunctions%2F1646233687" anchor-label="userUUID" id="-101037254%2FFunctions%2F1646233687" data-filterable-set=":keycloakapi/main"></a>
+          <div class="table-row table-row_content" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":keycloakapi/main" data-filterable-set=":keycloakapi/main">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="user-u-u-i-d.html"><span>user</span><wbr></wbr><span><span>UUID</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-101037254%2FFunctions%2F45327550"></span>
+                  <div><a href="user-u-u-i-d.html"><span>user</span><wbr><span><span>UUID</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-101037254%2FFunctions%2F1646233687"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi:dokkaHtml/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="user-u-u-i-d.html"><span class="token function">userUUID</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">user<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html">UUID</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":keycloakapi/main"><div class="symbol monospace"><span class="token keyword">fun </span><a href="-keycloak-client/index.html">KeycloakClient</a><span class="token punctuation">.</span><a href="user-u-u-i-d.html"><span class="token function">userUUID</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">user<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">realm<span class="token operator">: </span><a href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/UUID.html">UUID</a></div></div></div>
                 </div>
               </div>
             </div>
@@ -829,17 +815,21 @@
   </div>
 </div>
     <div class="footer">
-        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
-        <span>© 2025 Copyright</span>
-        <span class="pull-right">
-            <span>Generated by </span>
-            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
-                <span>dokka</span>
-            </a>
-        </span>
-    </div>
+        <div class="footer--container">
+            <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+            <div class="footer--content">
+                <div>
+                    <span>Generated by </span>
+                    <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                        Dokka
+                    </a>
+                    <div>© 2025 Copyright</div>
+                </div>
             </div>
         </div>
     </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
