@@ -35,7 +35,8 @@ class UpdateClientAction(
     private val rootUrl: String? = null,
     private val webOrigins: List<String>? = null,
     private val fullScopeAllowed: Boolean? = null,
-    private val nodeReRegistrationTimeout: Int ?= null) : Action(realm) {
+    private val nodeReRegistrationTimeout: Int ?= null,
+    private val authenticationFlowBindingOverrides: MutableMap<String, String> ?= null) : Action(realm) {
 
     companion object {
       @JvmStatic
@@ -69,7 +70,7 @@ class UpdateClientAction(
         frontchannelLogout ?: oldClient.frontchannelLogout,
         protocol ?: oldClient.protocol,
         attributes ?: oldClient.attributes,
-        oldClient.authenticationFlowBindingOverrides,
+        authenticationFlowBindingOverrides ?: oldClient.authenticationFlowBindingOverrides,
         authorizationServicesEnabled  ?: oldClient.authorizationServicesEnabled,
         fullScopeAllowed ?: oldClient.fullScopeAllowed,
         nodeReRegistrationTimeout ?: oldClient.nodeReRegistrationTimeout,
@@ -87,7 +88,7 @@ class UpdateClientAction(
         if (clientAuthenticatorType != null && clientAuthenticatorType !in supportedClientAuthenticatorTypes) {
             throw MigrationException(
                 "Client authenticator type '$clientAuthenticatorType' is not supported. " +
-                "Use one of: ${supportedClientAuthenticatorTypes.joinToString(", ")}"
+                  "Use one of: ${supportedClientAuthenticatorTypes.joinToString(", ")}"
             )
         }
 
@@ -96,6 +97,16 @@ class UpdateClientAction(
         }
 
         oldClient = client.clientById(clientId, realm())
+
+        if (authenticationFlowBindingOverrides != null) {
+            val flows = client.flows(realm())
+
+            authenticationFlowBindingOverrides.entries.forEach { entry ->
+                authenticationFlowBindingOverrides[entry.key] = flows.first { it.alias == entry.value }.id.toString()
+            }
+        }
+
+
         client.updateClient(oldClient.id, updateClient(), realm())
     }
 

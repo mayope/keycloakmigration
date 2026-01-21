@@ -95,6 +95,7 @@ Update a client
 - fullScopeAllowed: Boolean, optional, default=no change
 - nodeReRegistrationTimeout: Int, optional, default=no change
 - authorizationServicesEnabled: Boolean, optional, default=no change
+- authenticationFlowBindingOverrides: Map<String, String>, optional, default=no change
 
 ### Example
 ```yaml
