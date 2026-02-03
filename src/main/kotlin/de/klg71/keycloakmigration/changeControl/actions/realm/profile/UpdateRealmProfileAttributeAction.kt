@@ -23,6 +23,7 @@ class UpdateRealmProfileAttributeAction(
 
     private lateinit var oldRealmProfile: RealmProfile
 
+    @Suppress("CyclomaticComplexMethod")
     override fun execute() {
         if (!client.realmExistsById(realm())) {
             throw MigrationException("Realm with id: ${realm()} does not exist!")
@@ -48,12 +49,15 @@ class UpdateRealmProfileAttributeAction(
                     permissions.edit ?: realmAttribute.permissions.edit
                 )
             }
-            it.required = if (required == null) realmAttribute.required else {
-                RealmAttributeRequired(
-                    required.roles ?: realmAttribute.required?.roles,
-                    required.scopes ?: realmAttribute.required?.scopes
-                )
-            }
+            it.required =
+                if (required == null) realmAttribute.required
+                else if (required.roles?.isEmpty() ?: false) null
+                else {
+                    RealmAttributeRequired(
+                        required.roles ?: realmAttribute.required?.roles,
+                        required.scopes ?: realmAttribute.required?.scopes
+                    )
+                }
             it.multivalued = multivalued ?: realmAttribute.multivalued
         }
 
