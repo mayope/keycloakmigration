@@ -45,11 +45,7 @@ class AddRealmProfileAttributeAction(
                 annotations,
                 validations,
                 RealmAttributePermissions(permissions.view ?: emptySet(), permissions.edit ?: emptySet()),
-                if (required == null || required.roles?.isEmpty() ?: true) null
-                else RealmAttributeRequired(
-                    required.roles ?: emptySet(),
-                    required.scopes ?: emptySet()
-                ),
+                required?.let { RealmAttributeRequired(required.roles ?: emptySet(), required.scopes) },
                 multivalued,
                 group
             )
