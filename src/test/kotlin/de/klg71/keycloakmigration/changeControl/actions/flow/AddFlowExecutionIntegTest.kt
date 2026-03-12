@@ -49,6 +49,58 @@ class AddFlowExecutionIntegTest : AbstractIntegrationTest() {
     }
 
     @Test
+    fun testAddFlowExecution_WithRequirement() {
+        val alias = "TestFlowRequirement"
+        AddFlowAction(
+            testRealm, alias, "Right round", executions = listOf(
+                AuthenticationExecutionImport(
+                    UUID.randomUUID(),
+                    Flow.Requirement.REQUIRED,
+                    "idp-auto-link",
+                    0, 0, 0
+                )
+            )
+        ).executeIt()
+
+        AddFlowExecutionAction(
+            testRealm,
+            flowAlias = alias,
+            provider = "deny-access-authenticator",
+            executionAlias = "Deny Access",
+            requirement = Flow.Requirement.REQUIRED
+        ).executeIt()
+
+        val executions = client.flowExecutions(testRealm, alias)
+        assertThat(executions[1].requirement).isEqualTo(Flow.Requirement.REQUIRED)
+    }
+
+    @Test
+    fun testAddFlowExecution_WithPriority() {
+        val alias = "TestFlowPriority"
+        AddFlowAction(
+            testRealm, alias, "Right round", executions = listOf(
+                AuthenticationExecutionImport(
+                    UUID.randomUUID(),
+                    Flow.Requirement.REQUIRED,
+                    "idp-auto-link",
+                    0, 0, 0
+                )
+            )
+        ).executeIt()
+
+        AddFlowExecutionAction(
+            testRealm,
+            flowAlias = alias,
+            provider = "deny-access-authenticator",
+            executionAlias = "Deny Access",
+            priority = 50
+        ).executeIt()
+
+        val executions = client.flowExecutions(testRealm, alias)
+        assertThat(executions[1].priority).isEqualTo(50)
+    }
+
+    @Test
     fun testAddFlowExecution_NotExisting() {
         assertThatThrownBy {
             AddFlowExecutionAction(

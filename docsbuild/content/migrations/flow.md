@@ -172,6 +172,8 @@ Adds a flow execution
 - provider: String, not optional
 - executionAlias: String, not optional
 - config: Map<String, String>, optional, default = empty
+- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL", optional, default = no update
+- priority: Integer, optional, default = no update
 
 ### Example
 ```yaml
@@ -183,6 +185,8 @@ changes:
       flowAlias: Custom Authentication Flow forms
       provider: my-custom-authenticator
       executionAlias: custom authenticator
+      priority: 10
+      requirement: REQUIRED
 ```
 
 ## DeleteFlowExecution
