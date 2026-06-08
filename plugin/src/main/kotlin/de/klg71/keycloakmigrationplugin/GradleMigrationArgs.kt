@@ -8,8 +8,12 @@ open class GradleMigrationArgs(
     private val adminTotp: String,
     private val adminUseOauth: Boolean,
     private val adminUseOauthLocalPort: Int,
-    private val migrationFile: String, private val baseUrl: String,
-    private val realm: String, private val clientId: String,
+    private val migrationFile: String,
+    private val baseUrl: String,
+    private val realm: String,
+    private val clientId: String,
+    private val clientSecret: String,
+    private val loginWithClientSecret: Boolean,
     private val correctHashes: Boolean,
     private val parameters: Map<String, String>,
     private val waitForKeycloak: Boolean,
@@ -29,6 +33,10 @@ open class GradleMigrationArgs(
 
     override fun realm() = realm
     override fun clientId() = clientId
+    override fun clientSecret(): String? = clientSecret
+
+    override fun loginWithClientSecret() = loginWithClientSecret
+
     override fun correctHashes() = correctHashes
     override fun waitForKeycloak() = waitForKeycloak
     override fun waitForKeycloakTimeout() = waitForKeycloakTimeout

@@ -11,6 +11,8 @@ interface MigrationArgs {
     fun migrationFile(): String
     fun realm(): String
     fun clientId(): String
+    fun clientSecret(): String?
+    fun loginWithClientSecret(): Boolean
     fun correctHashes(): Boolean
     fun parameters(): Map<String, String>
     fun waitForKeycloak(): Boolean

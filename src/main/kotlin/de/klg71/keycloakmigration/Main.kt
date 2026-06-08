@@ -49,18 +49,23 @@ private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
     try {
         val response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString())
 
-        return response.statusCode() == STATUS_UNAUTHORISED
+        val success = response.statusCode() == STATUS_UNAUTHORISED
+        if (!success && logError) {
+            println("Error for ${request.uri()}: ${response.statusCode()} ${response.body()}")
+        }
+
+        return success
     } catch (e: IOException) {
         if (logError) {
-            println("Error: ${e.message}")
+            println("Error for ${request.uri()}: ${e.message}")
         }
     } catch (e: ConnectException) {
         if (logError) {
-            println("Error: ${e.message}")
+            println("Error for ${request.uri()}: ${e.message}")
         }
     } catch (e: SocketException) {
         if (logError) {
-            println("Error: ${e.message}")
+            println("Error for ${request.uri()}: ${e.message}")
         }
     }
 
@@ -79,7 +84,7 @@ fun migrate(migrationArgs: MigrationArgs) {
                     myModule(
                         adminUser(), adminPassword(), adminTotp(),
                         adminUseOauth(), adminUseOauthLocalPort(),
-                        baseUrl(), realm(), clientId(), parameters(),
+                        baseUrl(), realm(), clientId(), clientSecret(), loginWithClientSecret(), parameters(),
                         failOnUndefinedVariables(), warnOnUndefinedVariables()
                     )
                 )

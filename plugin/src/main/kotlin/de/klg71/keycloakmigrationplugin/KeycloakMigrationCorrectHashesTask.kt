@@ -34,6 +34,12 @@ open class KeycloakMigrationCorrectHashesTask : DefaultTask() {
     var clientId = "admin-cli"
 
     @Input
+    var clientSecret = ""
+
+    @Input
+    var loginWithClientSecret = false
+
+    @Input
     var parameters = emptyMap<String, String>()
 
     @Input
@@ -58,7 +64,7 @@ open class KeycloakMigrationCorrectHashesTask : DefaultTask() {
             adminUser, adminPassword, adminTotp,
             adminUseOauth, adminUseOauthLocalPort,
             Paths.get(project.projectDir.toString(), migrationFile).toString(),
-            baseUrl, realm, clientId, true,
+            baseUrl, realm, clientId, clientSecret, loginWithClientSecret, true,
             parameters, waitForKeycloak, waitForKeycloakTimeout, failOnUndefinedVariables, warnOnUndefinedVariables,
             disableSetUnmanagedAttributesToAdminEdit
         )

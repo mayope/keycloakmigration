@@ -3,6 +3,7 @@ package de.klg71.keycloakmigration.keycloakapi
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer
 import de.klg71.keycloakmigration.keycloakapi.model.AccessToken
+import feign.FeignException
 import org.slf4j.LoggerFactory
 import java.awt.Desktop
 import java.io.IOException
@@ -13,16 +14,23 @@ import java.net.URI
 import java.nio.charset.StandardCharsets
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Manages the keycloak access tokens and refreshes if needed
  */
 internal class TokenHolder(private val client: KeycloakLoginClient,
-    private val adminUser: String, private val adminPassword: String,
-    private val adminUseOauth: Boolean, private val adminUseOauthLocalPort: Int,
+    private val adminUser: String,
+    private val adminPassword: String,
+    private val adminUseOauth: Boolean,
+    private val adminUseOauthLocalPort: Int,
     private val baseUrl: String,
-    private val realm: String, private val clientId: String,
-    private val totp: String, private val tokenRefreshOffsetMs: Long = 1000) {
+    private val realm: String,
+    private val clientId: String,
+    private val clientSecret: String?,
+    private val totp: String,
+    private val tokenRefreshOffsetMs: Long = 1000,
+    private val loginWithClientCredentials: Boolean) {
 
     companion object {
         val LOG = LoggerFactory.getLogger(TokenHolder::class.java)!!
@@ -50,17 +58,32 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
 
     private fun getNewToken() = if (!refreshExpired()) {
         LOG.info("using refreshToken")
-        client.login(realm, "refresh_token", token.refreshToken, clientId)
+        client.login(realm, "refresh_token", token.refreshToken, clientId, clientSecret ?: "")
     } else {
         LOG.info("using password")
         initialLogin()
     }
 
     private fun initialLogin(): AccessToken {
-        return if (adminUseOauth)
-            loginWithOauth()
-        else
-            client.login(realm, "password", clientId, adminUser, adminPassword, totp)
+
+        return try {
+            when {
+                adminUseOauth ->
+                    loginWithOauth()
+
+                loginWithClientCredentials ->
+                    client.login(
+                        realm, "client_credentials", clientId,
+                        clientSecret ?: error("logging in with client credentials needs a clientSecret!")
+                    )
+
+                else ->
+                    client.login(realm, "password", clientId, clientSecret ?: "", adminUser, adminPassword, totp)
+            }
+        } catch (e: FeignException) {
+            println(e.responseBody().getOrNull()?.toString())
+            throw e
+        }
     }
 
     private fun loginWithOauth(): AccessToken {
@@ -114,6 +137,7 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
                 grantType = "authorization_code",
                 code = code,
                 clientId = clientId,
+                clientSecret = clientSecret ?: "",
                 redirectUri = redirectUri
             )
 

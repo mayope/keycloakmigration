@@ -10,7 +10,9 @@ internal class SendEmailTest {
 
     // @Test
     fun testSendEmail() {
-        val client = initKeycloakClient("http://localhost:18080/auth", "admin", "admin", false, 8081, "master", "admin-cli")
+        val client = initKeycloakClient(
+            "http://localhost:18080/auth", "admin", "admin", false, 8081, "master", "admin-cli", "", false
+        )
         if (client.realmNames().map { it.realm }.contains("sendMail")) {
             client.deleteRealm("sendMail")
         }

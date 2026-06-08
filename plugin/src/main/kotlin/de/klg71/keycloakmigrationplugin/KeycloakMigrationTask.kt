@@ -34,6 +34,12 @@ open class KeycloakMigrationTask : DefaultTask() {
     var clientId = "admin-cli"
 
     @Input
+    var clientSecret = ""
+
+    @Input
+    var loginWithClientSecret = false
+
+    @Input
     var parameters = emptyMap<String, String>()
 
     @Input
@@ -58,7 +64,7 @@ open class KeycloakMigrationTask : DefaultTask() {
             adminUser, adminPassword, adminTotp,
             adminUseOauth, adminUseOauthLocalPort,
             Paths.get(project.projectDir.toString(), migrationFile).toString(),
-            baseUrl, realm, clientId, false,
+            baseUrl, realm, clientId, clientSecret, loginWithClientSecret, false,
             parameters, waitForKeycloak, waitForKeycloakTimeout, failOnUndefinedVariables, warnOnUndefinedVariables,
             disableSetUnmanagedAttributesToAdminEdit
         )

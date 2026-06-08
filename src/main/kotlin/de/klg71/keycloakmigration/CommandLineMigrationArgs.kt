@@ -12,12 +12,14 @@ const val DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT = 8081
 const val DEFAULT_KEYCLOAK_SERVER = "http://localhost:8080/auth"
 const val DEFAULT_REALM = "master"
 const val DEFAULT_CLIENTID = "admin-cli"
+val DEFAULT_CLIENTSECRET: String? = null
 const val DEFAULT_CORRECT_HASHES = false
 const val DEFAULT_WAIT_FOR_KEYCLOAK = false
 const val DEFAULT_WAIT_FOR_KEYCLOAK_TIMEOUT = "0"
 const val DEFAULT_FAIL_ON_UNDEFINED_VARIABLES = false
 const val DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES = false
 const val DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT = false
+const val DEFAULT_LOGIN_WITH_CLIENT_CREDENTIALS = false
 
 @Suppress("SpreadOperator", "TooManyFunctions")
 internal class CommandLineMigrationArgs(parser: ArgParser) :
@@ -43,6 +45,12 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
     private val adminUseOauth by parser.flagging(
         names = arrayOf("-o", "--use-oauth"),
         help = "Use OAuth2 for login instead of user/pass/(totp), defaulting to $DEFAULT_ADMIN_USE_OAUTH."
+    ).default(DEFAULT_ADMIN_USE_OAUTH)
+
+    private val loginWithClientCredentials by parser.flagging(
+        names = arrayOf("-m", "--login-with-client-credentials"),
+        help = "Login to keycloak by using clientId and clientSecret," +
+                " defaulting to $DEFAULT_LOGIN_WITH_CLIENT_CREDENTIALS."
     )
         .default(DEFAULT_ADMIN_USE_OAUTH)
 
@@ -74,6 +82,11 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
         help = "Client to use for migration, defaulting to $DEFAULT_CLIENTID"
     )
         .default(DEFAULT_CLIENTID)
+    private val clientSecret by parser.storing(
+        names = arrayOf("-s", "--client-secret"),
+        help = "Client secret used for authentication $DEFAULT_CLIENTSECRET"
+    ).default(DEFAULT_CLIENTSECRET)
+
 
     private val correctHashes by parser.flagging(
         names = arrayOf("--correct-hashes"),
@@ -145,6 +158,8 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
     override fun realm() = realm
 
     override fun clientId() = clientId
+    override fun clientSecret() = clientSecret
+    override fun loginWithClientSecret() = loginWithClientCredentials
 
     override fun correctHashes() = correctHashes
 
