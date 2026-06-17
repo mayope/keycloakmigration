@@ -1,6 +1,7 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
 import java.util.UUID
+import com.fasterxml.jackson.annotation.JsonProperty
 
 data class IdentityProvider(
     val providerId: String,
@@ -14,6 +15,11 @@ data class IdentityProvider(
     val linkOnly: Boolean,
     val firstBrokerLoginFlowAlias: String="",
     val postBrokerLoginFlowAlias: String="",
-    val updateProfileFirstLoginMode: String
+    @field:JsonProperty(required = false)
+    @Deprecated(
+        message = "Field removed in Keycloak 26.5.0+. Kept for backward compatibility",
+        level = DeprecationLevel.WARNING
+    )
+    val updateProfileFirstLoginMode: String = "on"
 )
 
