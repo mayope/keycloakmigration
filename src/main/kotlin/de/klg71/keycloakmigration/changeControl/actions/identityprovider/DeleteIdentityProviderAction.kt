@@ -36,7 +36,6 @@ class DeleteIdentityProviderAction(
                     it.linkOnly,
                     it.firstBrokerLoginFlowAlias,
                     it.postBrokerLoginFlowAlias,
-                    it.updateProfileFirstLoginMode
                 ), realm()
             )
             logger.warn("Readded deleted IdentityProvider: {}, you have to reset the clientSecret", alias)

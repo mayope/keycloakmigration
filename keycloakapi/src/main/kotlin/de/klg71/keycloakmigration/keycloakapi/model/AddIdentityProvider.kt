@@ -11,7 +11,6 @@ data class AddIdentityProvider(
     val linkOnly: Boolean,
     val firstBrokerLoginFlowAlias: String,
     val postBrokerLoginFlowAlias: String,
-    val updateProfileFirstLoginMode: String = "on"
 )
 
 fun addKeycloakIdentityProvider(
@@ -43,7 +42,6 @@ fun addKeycloakIdentityProvider(
     linkOnly: Boolean = false,
     firstBrokerLoginFlowAlias: String = "first broker login",
     postBrokerLoginFlowAlias: String = "",
-    updateProfileFirstLoginMode: String = "on"
 ) = AddIdentityProvider(
     "keycloak-oidc", alias, displayName, enabled, mapOf(
         "acceptsPromptNoneForwardFromClient" to acceptsPromptNoneForwardFromClient,
@@ -67,6 +65,5 @@ fun addKeycloakIdentityProvider(
         "userInfoUrl" to userInfoUrl,
         "validateSignature" to validateSignature
     ), trustEmail, storeToken, linkOnly, firstBrokerLoginFlowAlias, postBrokerLoginFlowAlias,
-    updateProfileFirstLoginMode
 )
 
