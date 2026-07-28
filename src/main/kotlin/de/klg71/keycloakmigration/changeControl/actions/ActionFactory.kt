@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.changeControl.actions.client.AssignRoleToClien
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.DeleteRoleScopeMappingAction
 import de.klg71.keycloakmigration.changeControl.actions.client.ImportClientAction
+import de.klg71.keycloakmigration.changeControl.actions.client.RevokeRoleFromClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.UpdateClientAction
 import de.klg71.keycloakmigration.changeControl.actions.client.authz.ImportClientAuthorizationAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddAudienceMapperAction
@@ -61,6 +62,7 @@ import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.AddSamlSurnameAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.DeleteIdentityProviderMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.organization.AddOrganizationAction
+import de.klg71.keycloakmigration.changeControl.actions.organization.UpdateOrganizationAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
@@ -128,6 +130,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "assignRoleToClient" -> objectMapper.readValue<AssignRoleToClientAction>(actionJson)
             "addRoleScopeMapping" -> objectMapper.readValue<AddRoleScopeMappingAction>(actionJson)
             "deleteRoleScopeMapping" -> objectMapper.readValue<DeleteRoleScopeMappingAction>(actionJson)
+            "revokeRoleFromClient" -> objectMapper.readValue<RevokeRoleFromClientAction>(actionJson)
 
             "addClientScope" -> objectMapper.readValue<AddClientScopeAction>(actionJson)
             "deleteClientScope" -> objectMapper.readValue<DeleteClientScopeAction>(actionJson)
@@ -227,6 +230,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "deleteLocalizationEntry" -> objectMapper.readValue<DeleteLocalizationEntryAction>(actionJson)
 
             "addOrganization" -> objectMapper.readValue<AddOrganizationAction>(actionJson)
+            "updateOrganization" -> objectMapper.readValue<UpdateOrganizationAction>(actionJson)
 
             else -> throw ParseException(
                 "Unknown Change type: $actionName"

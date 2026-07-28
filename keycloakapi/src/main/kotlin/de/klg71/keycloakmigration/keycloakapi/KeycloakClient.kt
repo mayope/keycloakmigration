@@ -48,6 +48,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateIdentityProvider
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.User
 import de.klg71.keycloakmigration.keycloakapi.model.UserFederation
 import de.klg71.keycloakmigration.keycloakapi.model.UserFederationMapper
@@ -96,7 +97,6 @@ interface KeycloakClient {
         @Param("realm") realm: String,
         @Param("from") from: Int = 0,
         @Param("max") max: Int = 100): List<User>
-
 
     @RequestLine("DELETE /admin/realms/{realm}/users/{user-id}")
     fun deleteUser(@Param("user-id") userId: UUID, @Param("realm") realm: String)
@@ -433,7 +433,10 @@ interface KeycloakClient {
     fun deleteRealm(@Param("realm-id") id: String)
 
     @RequestLine("GET /admin/realms/{realm}/users/{user-id}/role-mappings/realm/composite")
-    fun userRoles(@Param("realm") realm: String, @Param("user-id") id: UUID): List<RoleListItem>
+    fun userRealmRolesExpanded(@Param("realm") realm: String, @Param("user-id") id: UUID): List<RoleListItem>
+
+    @RequestLine("GET /admin/realms/{realm}/users/{user-id}/role-mappings/realm")
+    fun userRealmRoles(@Param("realm") realm: String, @Param("user-id") id: UUID): List<RoleListItem>
 
     @RequestLine("GET /admin/realms/{realm}/users/{user-id}/groups")
     fun userGroups(@Param("realm") realm: String, @Param("user-id") id: UUID): List<UserGroupListItem>
@@ -630,8 +633,12 @@ interface KeycloakClient {
     fun organizations(@Param("realm") realm: String): List<Organization>
 
     @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("GET /admin/realms/{realm}/organizations/{id}")
+    fun organization(@Param("realm") realm: String, @Param("id") id: UUID): Organization
+
+    @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/organizations")
-    fun addOrganization(
+    fun createOrganization(
         @Param("realm") realm: String,
         organization: AddOrganization
     ): Response
@@ -641,5 +648,13 @@ interface KeycloakClient {
     fun deleteOrganization(
         @Param("id") id: UUID,
         @Param("realm") realm: String,
+    ): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("PUT /admin/realms/{realm}/organizations/{id}")
+    fun updateOrganization(
+        @Param("realm") realm: String,
+        @Param("id") id: UUID,
+        organization: UpdateOrganization
     ): Response
 }

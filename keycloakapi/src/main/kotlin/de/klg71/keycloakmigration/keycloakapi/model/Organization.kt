@@ -1,4 +1,4 @@
-package de.klg71.keycloakmigration.keycloakapi.model;
+package de.klg71.keycloakmigration.keycloakapi.model
 
 import java.util.UUID
 
@@ -12,5 +12,6 @@ data class Organization(
     val name: String,
     val alias: String?,
     val redirectUrl: String?,
-    val domains: Set<OrganizationDomain>
+    val domains: Set<OrganizationDomain>,
+    val attributes: Map<String, List<String>>? = mapOf(),
 )

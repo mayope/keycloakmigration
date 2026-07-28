@@ -20,13 +20,19 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
         val name = "test"
 
         UpdateRealmAction(testRealm, organizationsEnabled = true).executeIt()
-        AddOrganizationAction(testRealm, name, domains = setOf(OrganizationDomain("test.com"))).executeIt()
+        AddOrganizationAction(
+            testRealm,
+            name,
+            domains = setOf(OrganizationDomain("test.com")),
+            attributes = mapOf("custom-attribute" to listOf("values"))
+        ).executeIt()
 
         val org = client.organizationByName(name, testRealm)
 
         assertThat(org.name).isEqualTo(name)
         assertThat(org.alias).isEqualTo(name)
         assertThat(org.domains).isEqualTo(setOf(OrganizationDomain("test.com")))
+        assertThat(org.attributes).isEqualTo(mapOf("custom-attribute" to listOf("values")))
     }
 
     @Test
@@ -34,7 +40,7 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
         UpdateRealmAction(testRealm, organizationsEnabled = true).executeIt()
 
         assertThatThrownBy {
-            AddOrganizationAction(testRealm, "test", domains = setOf()).executeIt()
+            AddOrganizationAction(testRealm, "test", domains = setOf(), attributes = mapOf()).executeIt()
         }
             .isInstanceOf(MigrationException::class.java)
             .hasMessage("At least one domain needs to be provided!")
@@ -45,10 +51,20 @@ class AddOrganizationIntegTest : AbstractIntegrationTest() {
         val name = "test"
 
         UpdateRealmAction(testRealm, organizationsEnabled = true).executeIt()
-        AddOrganizationAction(testRealm, name, domains = setOf(OrganizationDomain("test.com"))).executeIt()
+        AddOrganizationAction(
+            testRealm,
+            name,
+            domains = setOf(OrganizationDomain("test.com")),
+            attributes = mapOf("custom-attribute" to listOf("values"))
+        ).executeIt()
 
         assertThatThrownBy {
-            AddOrganizationAction(testRealm, name, domains = setOf(OrganizationDomain("test.com"))).executeIt()
+            AddOrganizationAction(
+                testRealm,
+                name,
+                domains = setOf(OrganizationDomain("test.com")),
+                attributes = mapOf("custom-attribute" to listOf("values"))
+            ).executeIt()
         }
             .isInstanceOf(MigrationException::class.java)
             .hasMessage("Organisation with name: test already exists!")

@@ -2,6 +2,7 @@ package de.klg71.keycloakmigration.changeControl.actions.organization
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.keycloakapi.addOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.OrganizationDomain
 import de.klg71.keycloakmigration.keycloakapi.organizationByName
@@ -12,7 +13,8 @@ class AddOrganizationAction(
     private val name: String,
     private val alias: String? = name,
     private val redirectUrl: String? = null,
-    private val domains: Set<OrganizationDomain>
+    private val domains: Set<OrganizationDomain>,
+    private val attributes: Map<String, List<String>>? = mapOf()
 ) : Action(realm) {
 
     override fun execute() {
@@ -26,7 +28,7 @@ class AddOrganizationAction(
             throw MigrationException("At least one domain needs to be provided!")
 
         val organization = AddOrganization(
-            name, alias, redirectUrl, domains
+            name, alias, redirectUrl, domains, attributes
         )
 
         client.addOrganization(realm(), organization)
