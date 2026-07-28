@@ -9,6 +9,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.Organization
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
+import de.klg71.keycloakmigration.keycloakapi.model.UpdateIdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateOrganization
 import feign.Response
 import java.nio.charset.StandardCharsets
@@ -264,15 +265,15 @@ fun KeycloakClient.identityProviderMapperExistsByName(identityProviderAlias: Str
     identityProviderMappers(realm, identityProviderAlias).any { it.name == name }
 
 fun KeycloakClient.organizationByName(name: String, realm: String): Organization = organizations(realm).run {
-        if (isEmpty()) {
-            throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
-        }
-        find { it.name == name }?.let {
-            // a separate request is required due to the organizations endpoint not returning the attributes
-            return organization(realm, it.id)
-        }
-        throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
+    if (isEmpty()) {
+        throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
     }
+    find { it.name == name }?.let {
+        // a separate request is required due to the organizations endpoint not returning the attributes
+        return organization(realm, it.id)
+    }
+    throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
+}
 
 fun KeycloakClient.addOrganization(realm: String, organization: AddOrganization) {
     createOrganization(realm, organization).run {
@@ -291,6 +292,19 @@ fun KeycloakClient.organizationByAlias(alias: String, realm: String): Organizati
         return organization(realm, it.id)
     }
     throw KeycloakApiException("Organization with alias: $alias does not exist in realm: $realm!")
+}
+
+fun KeycloakClient.updateIdentityProvider(
+    updateIdentityProvider: UpdateIdentityProvider,
+    realm: String,
+    alias: String
+) {
+    updateIdentityProvider(updateIdentityProvider, realm, alias).run {
+        if (!isSuccessful()) {
+            val responseText = body().asReader(StandardCharsets.UTF_8).use { it.readText() }
+            throw KeycloakApiException("Failed to update identity provider: $responseText")
+        }
+    }
 }
 
 fun KeycloakClient.editOrganization(realm: String, id: UUID, organization: UpdateOrganization) {

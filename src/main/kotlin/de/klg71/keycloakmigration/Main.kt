@@ -69,9 +69,9 @@ private fun isKeycloakReady(baseUrl: String, logError: Boolean): Boolean {
 
 fun migrate(migrationArgs: MigrationArgs) {
     migrationArgs.run {
-        if (waitForKeycloak()) {
-            waitForKeycloak(migrationArgs.baseUrl(), migrationArgs.waitForKeycloakTimeout())
-        }
+//        if (waitForKeycloak()) {
+//            waitForKeycloak(migrationArgs.baseUrl(), migrationArgs.waitForKeycloakTimeout())
+//        }
         try {
             startKoin {
                 logger(SLF4JLogger())

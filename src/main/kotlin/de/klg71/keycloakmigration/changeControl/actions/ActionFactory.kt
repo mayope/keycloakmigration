@@ -63,6 +63,8 @@ import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.AddSamlSurnameAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.DeleteIdentityProviderMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.organization.AddOrganizationAction
+import de.klg71.keycloakmigration.changeControl.actions.organization.LinkIdentityProviderAction
+import de.klg71.keycloakmigration.changeControl.actions.organization.UnlinkIdentityProviderAction
 import de.klg71.keycloakmigration.changeControl.actions.organization.UpdateOrganizationAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
@@ -235,6 +237,8 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
 
             "addOrganization" -> objectMapper.readValue<AddOrganizationAction>(actionJson)
             "updateOrganization" -> objectMapper.readValue<UpdateOrganizationAction>(actionJson)
+            "linkIdentityProvider" -> objectMapper.readValue<LinkIdentityProviderAction>(actionJson)
+            "unlinkIdentityProvider" -> objectMapper.readValue<UnlinkIdentityProviderAction>(actionJson)
 
             else -> throw ParseException(
                 "Unknown Change type: $actionName"
