@@ -294,19 +294,6 @@ fun KeycloakClient.organizationByAlias(alias: String, realm: String): Organizati
     throw KeycloakApiException("Organization with alias: $alias does not exist in realm: $realm!")
 }
 
-fun KeycloakClient.updateIdentityProvider(
-    updateIdentityProvider: UpdateIdentityProvider,
-    realm: String,
-    alias: String
-) {
-    updateIdentityProvider(updateIdentityProvider, realm, alias).run {
-        if (!isSuccessful()) {
-            val responseText = body().asReader(StandardCharsets.UTF_8).use { it.readText() }
-            throw KeycloakApiException("Failed to update identity provider: $responseText")
-        }
-    }
-}
-
 fun KeycloakClient.editOrganization(realm: String, id: UUID, organization: UpdateOrganization) {
     updateOrganization(realm, id, organization).run {
         if (!isSuccessful()) {
