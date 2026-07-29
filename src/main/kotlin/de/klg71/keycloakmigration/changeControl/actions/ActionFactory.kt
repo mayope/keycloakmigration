@@ -24,10 +24,10 @@ import de.klg71.keycloakmigration.changeControl.actions.client.mapper.AddUserRea
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteClientMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.client.mapper.DeleteMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AddClientScopeAction
-import de.klg71.keycloakmigration.changeControl.actions.clientscope.DeleteClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignDefaultClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignOptionalClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.AssignRoleToClientScopeAction
+import de.klg71.keycloakmigration.changeControl.actions.clientscope.DeleteClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.WithdrawDefaultClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.WithdrawOptionalClientScopeAction
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddClientScopeAudienceMapperAction
@@ -63,6 +63,7 @@ import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.DeleteIdentityProviderMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.organization.AddOrganizationAction
 import de.klg71.keycloakmigration.changeControl.actions.organization.UpdateOrganizationAction
+import de.klg71.keycloakmigration.changeControl.actions.organization.LinkIdentityProviderToOrganizationAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
@@ -231,6 +232,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
 
             "addOrganization" -> objectMapper.readValue<AddOrganizationAction>(actionJson)
             "updateOrganization" -> objectMapper.readValue<UpdateOrganizationAction>(actionJson)
+            "linkIdentityProvider" -> objectMapper.readValue<LinkIdentityProviderToOrganizationAction>(actionJson)
 
             else -> throw ParseException(
                 "Unknown Change type: $actionName"
