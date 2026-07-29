@@ -6,10 +6,9 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
-import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.Organization
+import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateIdentityProvider
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateOrganization
 import feign.Response
 import java.nio.charset.StandardCharsets
