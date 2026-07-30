@@ -70,3 +70,22 @@ Updates an existing organization. The alias may not be updated.
 ##### Parameters
 - name: String,
 - verified: Boolean, optional, default=false
+
+## linkIdentityProvider
+Links an existing identity provider to an organization.
+
+### Parameters
+- realm: String, optional
+- organizationAlias: String, not optional, alias of the organization
+- identityProviderAlias: String, not optional, alias of the identity provider
+
+### Example
+```yaml
+id: link-identity-provider-to-org
+author: abigail.cortis
+realm: test
+changes:
+- linkIdentityProvider:
+    organizationAlias: my-organization
+    identityProviderAlias: my-identity-provider
+```

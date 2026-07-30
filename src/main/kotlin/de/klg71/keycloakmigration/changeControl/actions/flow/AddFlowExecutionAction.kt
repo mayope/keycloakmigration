@@ -8,6 +8,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import java.util.UUID
 
+@Suppress("LongParameterList")
 class AddFlowExecutionAction(
     realm: String?,
     private val flowAlias: String,
