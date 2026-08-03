@@ -3,24 +3,24 @@ import de.undercouch.gradle.tasks.download.Download
 import net.researchgate.release.ReleaseExtension
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import java.io.ByteArrayOutputStream
 import java.net.ConnectException
 
-fun Project.command(cmd: List<String>, workingDirectory: String = ".", environment: Map<String, String> = emptyMap()) =
-    ByteArrayOutputStream().also { stream ->
-        logger.info("Running command $cmd")
-        exec {
-            environment(environment)
-            commandLine = cmd
-            standardOutput = stream
-            workingDir = File(workingDirectory)
-        }
-    }.run {
-        toString().trim()
-    }
+fun Project.command(
+    cmd: List<String>,
+    workingDirectory: String = ".",
+    environment: Map<String, String> = emptyMap()
+): String {
+
+    logger.info("Running command $cmd")
+    return providers.exec {
+        environment(environment)
+        commandLine = cmd
+        workingDir = File(workingDirectory)
+    }.standardOutput.asText.get().trim()
+}
 
 plugins {
-    kotlin("jvm") version "2.1.10"
+    kotlin("jvm")
     id("maven-publish")
     id("signing")
     id("de.undercouch.download") version "5.6.0"
@@ -28,13 +28,13 @@ plugins {
 
     // Security check for dependencies by task
     id("org.owasp.dependencycheck") version "12.0.1"
-    // static code analysis
-    id("io.gitlab.arturbosch.detekt") version "1.23.7"
 
-    id("com.github.johnrengelman.shadow") version "8.1.1" apply (false)
-    id ("org.danilopianini.publish-on-central") version "9.1.0"
+    id("com.gradleup.shadow") version "9.2.2" apply (false)
+    id("com.vanniktech.maven.publish") version "0.35.0"
 
-    id("org.jetbrains.dokka") version "2.0.0"
+    id("dokka-convention")
+
+    id("org.jetbrains.dokka")
 }
 
 dependencies {
@@ -68,7 +68,12 @@ dependencies {
     testImplementation("org.assertj:assertj-core:3.27.3")
     testImplementation("com.github.tomakehurst:wiremock-jre8:3.0.1")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
+
+
+
+    dokka(project("keycloakapi"))
 }
+
 
 repositories {
     mavenCentral()
@@ -92,22 +97,13 @@ tasks {
             project.configurations.compileClasspath.get(),
             project.configurations.runtimeClasspath.get()
         )
-        project.configurations.compileClasspath.get().allDependencies.forEach {
-            println(it)
-        }
     }
 
 
-    "afterReleaseBuild"{
+    "afterReleaseBuild" {
         dependsOn(
-            "publishAllPublicationsToProjectLocalRepository",
-            "zipMavenCentralPortalPublication",
-            "validateMavenCentralPortalPublication",
-            "releaseMavenCentralPortalPublication",
-            "keycloakapi:publishAllPublicationsToProjectLocalRepository",
-            "keycloakapi:zipMavenCentralPortalPublication",
-            "keycloakapi:validateMavenCentralPortalPublication",
-            "keycloakapi:releaseMavenCentralPortalPublication",
+            "publishToMavenCentral",
+            "keycloakapi:publishToMavenCentral",
             "plugin:publishPlugins",
             "pushDocker", "shadowJar"
         )
@@ -167,7 +163,16 @@ tasks {
             val outputFile = File(project.buildDir, "keycloak/output.txt")
 
             ProcessBuilder(
-                "cmd", "/c", "kc.bat", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false","--http-relative-path=/auth","--log-level=info", ">",
+                "cmd",
+                "/c",
+                "kc.bat",
+                "start-dev",
+                "--http-port=18080",
+                "--http-management-port=18081",
+                "--hostname-strict=false",
+                "--http-relative-path=/auth",
+                "--log-level=info",
+                ">",
                 "${outputFile}"
             ).run {
                 directory(keycloakDir)
@@ -189,7 +194,13 @@ tasks {
             val outputFile = File(project.buildDir, "keycloak/output.txt")
 
             ProcessBuilder(
-                "./kc.sh", "start-dev", "--http-port=18080", "--http-management-port=18081", "--hostname-strict=false", "--http-relative-path=/auth", "--log-level=info"
+                "./kc.sh",
+                "start-dev",
+                "--http-port=18080",
+                "--http-management-port=18081",
+                "--hostname-strict=false",
+                "--http-relative-path=/auth",
+                "--log-level=info"
             ).apply {
                 directory(keycloakDir)
 
@@ -251,15 +262,12 @@ tasks {
         }
     }
 
-    "test"{
+    "test" {
         dependsOn("startLocalKeycloak")
         finalizedBy("stopLocalKeycloak")
     }
 
-    withType<io.gitlab.arturbosch.detekt.Detekt> {
-        // Target version of the generated JVM bytecode. It is used for type resolution.
-        this.jvmTarget = "1.8"
-    }
+
     val dockerBuildWorkingDirectory = "${project.buildDir}/buildDocker"
     val fatJar by named("shadowJar")
     register<Copy>("prepareDocker") {
@@ -278,34 +286,34 @@ tasks {
     val projectVersion = project.version
     val tag = "$tagName:$projectVersion"
     val tagLatest = "$tagName:latest"
-    register("buildDocker") {
+    register<Exec>("buildDocker") {
         dependsOn("prepareDocker")
-        doLast {
-            exec {
-                workingDir(dockerBuildWorkingDirectory)
-                commandLine(
-                    "docker", "build", ".", "-t", tag, "--build-arg",
-                    "jar_file=${fatJar.outputs.files.first().name}",
-                    "--label","\"org.opencontainers.image.url=https://github.com/mayope/keycloakmigration.git\"",
-                    "--label","\"org.opencontainers.image.source=https://github.com/mayope/keycloakmigration.git\"",
-                    "--label","\"org.opencontainers.image.version=$projectVersion\"",
-                )
-            }
-            exec {
-                commandLine("docker", "tag", tag, tagLatest)
-            }
-        }
+
+        workingDir(dockerBuildWorkingDirectory)
+        commandLine(
+            "docker", "build", ".", "-t", tag, "--build-arg",
+            "jar_file=${fatJar.outputs.files.first().name}",
+            "--label", "\"org.opencontainers.image.url=https://github.com/mayope/keycloakmigration.git\"",
+            "--label", "\"org.opencontainers.image.source=https://github.com/mayope/keycloakmigration.git\"",
+            "--label", "\"org.opencontainers.image.version=$projectVersion\"",
+        )
+    }
+    register<Exec>("tagDocker") {
+        dependsOn("buildDocker")
+
+        workingDir(dockerBuildWorkingDirectory)
+        commandLine("docker", "tag", tag, tagLatest)
+    }
+    register<Exec>("pushDockerVersion") {
+        dependsOn("tagDocker")
+        commandLine("docker", "push", tag)
+    }
+    register<Exec>("pushDockerLatest") {
+        dependsOn("tagDocker")
+        commandLine("docker", "push", tagLatest)
     }
     register("pushDocker") {
-        dependsOn("buildDocker")
-        doLast {
-            exec {
-                commandLine("docker", "push", tag)
-            }
-            exec {
-                commandLine("docker", "push", tagLatest)
-            }
-        }
+        dependsOn("tagDocker", "pushDockerVersion", "pushDockerLatest")
     }
 }
 
@@ -354,27 +362,46 @@ publishing {
     }
 }
 group = "de.klg71.keycloakmigration"
-publishOnCentral {
-    repoOwner.set("klg71")
-    projectDescription.set("Keycloak configuration as migration files")
-    projectLongName.set(project.name)
-    licenseName.set("MIT License")
-    licenseUrl.set("https://github.com/mayope/keycloakmigration/blob/master/LICENSE.md")
-    projectUrl.set("https://github.com/mayope/keycloakmigration")
-    scmConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
+
+mavenPublishing {
+    coordinates("de.klg71.keycloakmigration", "keycloakmigration")
+
+    pom {
+        name.set("keycloakmigration")
+        description.set("Keycloak configuration as migration files")
+        url.set("https://github.com/mayope/keycloakmigration")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://github.com/mayope/keycloakmigration/blob/master/LICENSE.md")
+                distribution.set("https://github.com/mayope/keycloakmigration/blob/master/LICENSE.md")
+            }
+        }
+        developers {
+            developer {
+                id.set("klg71")
+                name.set("Lukas Meisegeier")
+                url.set("https://github.com/klg71/")
+            }
+        }
+        scm {
+            url.set("https://github.com/mayope/keycloakmigration")
+            connection.set("scm:git:git://github.com/mayope/keycloakmigration.git")
+            developerConnection.set("scm:git:ssh://git@github.com/mayope/keycloakmigration.git")
+        }
+    }
+    publishToMavenCentral(automaticRelease = true)
+
+
+    signAllPublications()
 }
 
 
-signing {
-    sign(publishing.publications["OSSRH"])
-}
-configure<ReleaseExtension>{
-    with(git){
+configure<ReleaseExtension> {
+    with(git) {
         requireBranch.set("master")
     }
 }
-
-
 
 gradle.taskGraph.whenReady {
     if (allTasks.any { it is Sign }) {
@@ -386,6 +413,7 @@ gradle.taskGraph.whenReady {
     }
 }
 
+
 dependencyCheck {
     failOnError = true
     // https://www.first.org/cvss/specification-document#Qualitative-Severity-Rating-Scale
@@ -395,11 +423,11 @@ dependencyCheck {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17)
+        jvmTarget.set(JvmTarget.JVM_23)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_23
+    targetCompatibility = JavaVersion.VERSION_23
 }

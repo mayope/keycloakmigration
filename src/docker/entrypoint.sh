@@ -1,14 +1,49 @@
 #!/bin/sh
-if [ -z ${ADMIN_TOTP} ]; then TOTP=""; else TOTP="-t $ADMIN_TOTP"; fi
-ARGUMENTS="'${KEYCLOAK_CHANGELOG:-/migration/keycloak-changelog.yml}' -u '${ADMIN_USER:-admin}' -p '${ADMIN_PASSWORD:-admin}' $TOTP -c '${ADMIN_CLIENT:-admin-cli}' -r '${LOGIN_REALM:-master}' -b '${BASEURL:-http://localhost:8080/auth}' --wait-for-keycloak-timeout ${WAIT_FOR_KEYCLOAK_TIMEOUT:-0}"
+set -e
 
-if [ -z ${WAIT_FOR_KEYCLOAK+x} ]; then echo "dont wait for keycloak"; else ARGUMENTS="$ARGUMENTS --wait-for-keycloak"; fi
-if [ -z ${LOGIN_WITH_CLIENT_SECRET+x} ]; then echo "don't login with client secret"; else ARGUMENTS="$ARGUMENTS --login-with-client-credentials"; fi
-if [ -z ${CLIENT_SECRET+x} ]; then echo "don't use client secret"; else ARGUMENTS="$ARGUMENTS --client-secret '${CLIENT_SECRET}'"; fi
-if [ -z ${FAIL_ON_UNDEFINED_VARIABLES+x} ]; then echo "dont fail on errors"; else ARGUMENTS="$ARGUMENTS --fail-on-undefined-variables"; fi
-if [ -z ${DISABLE_WARN_ON_UNDEFINED_VARIABLES+x} ]; then echo "warn on errors"; else ARGUMENTS="$ARGUMENTS --disable-warn-on-undefined-variables"; fi
-if [ -z ${CORRECT_HASHES+x} ]; then echo "dont correct hashes"; else ARGUMENTS="$ARGUMENTS --correct-hashes"; fi
-if [ -z ${STAY_IDLE+x} ]; then echo "dont stay idle"; else ARGUMENTS="$ARGUMENTS || true && tail -f /dev/null "; fi
+# Handle TOTP
+TOTP=""
+[ -n "${ADMIN_TOTP}" ] && TOTP="-t ${ADMIN_TOTP}"
 
-if [ -z ${PRINT_ARGUMENTS} ]; then echo ""; else echo "$ARGUMENTS"; fi
-/bin/sh -c "java -jar keycloakmigration.jar $ARGUMENTS" || true
+# Base arguments
+ARGUMENTS="${KEYCLOAK_CHANGELOG:-/migration/keycloak-changelog.yml}"
+ARGUMENTS="$ARGUMENTS -u ${ADMIN_USER:-admin} -p ${ADMIN_PASSWORD:-admin} $TOTP"
+ARGUMENTS="$ARGUMENTS -c ${ADMIN_CLIENT:-admin-cli} -r ${LOGIN_REALM:-master}"
+ARGUMENTS="$ARGUMENTS -b ${BASEURL:-http://localhost:8080/auth}"
+ARGUMENTS="$ARGUMENTS --wait-for-keycloak-timeout ${WAIT_FOR_KEYCLOAK_TIMEOUT:-0}"
+
+# Optional flags
+[ -n "${WAIT_FOR_KEYCLOAK+x}" ] && ARGUMENTS="$ARGUMENTS --wait-for-keycloak" || echo "dont wait for keycloak"
+[ -n "${LOGIN_WITH_CLIENT_SECRET+x}" ] && ARGUMENTS="$ARGUMENTS --login-with-client-credentials" || echo "don't login with client secret"
+[ -n "${CLIENT_SECRET+x}" ] && ARGUMENTS="$ARGUMENTS --client-secret ${CLIENT_SECRET}" || echo "don't use client secret"
+[ -n "${FAIL_ON_UNDEFINED_VARIABLES+x}" ] && ARGUMENTS="$ARGUMENTS --fail-on-undefined-variables" || echo "dont fail on errors"
+[ -n "${DISABLE_WARN_ON_UNDEFINED_VARIABLES+x}" ] && ARGUMENTS="$ARGUMENTS --disable-warn-on-undefined-variables" || echo "warn on errors"
+[ -n "${CORRECT_HASHES+x}" ] && ARGUMENTS="$ARGUMENTS --correct-hashes" || echo "dont correct hashes"
+
+# Print if requested
+[ -n "${PRINT_ARGUMENTS}" ] && echo "$ARGUMENTS"
+
+# Run migration
+set +e
+java -jar keycloakmigration.jar $ARGUMENTS
+RESULT=$?
+set -e
+
+# Handle exit behavior
+if [ $RESULT -ne 0 ]; then
+  echo "Migration failed with exit code $RESULT"
+  if [ -n "${EXIT_ON_ERROR+x}" ]; then
+    echo "EXIT_ON_ERROR is set — exiting..."
+    exit $RESULT
+  else
+    echo "EXIT_ON_ERROR not set — continuing..."
+  fi
+else
+  echo "Migration completed successfully."
+fi
+
+# Stay idle if requested
+if [ -n "${STAY_IDLE+x}" ]; then
+  echo "Staying idle..."
+  tail -f /dev/null
+fi

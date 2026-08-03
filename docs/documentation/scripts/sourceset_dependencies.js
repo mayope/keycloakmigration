@@ -1,1 +1,1 @@
-sourceset_dependencies='{":keycloakapi:dokkaHtml/main":[]}'
+sourceset_dependencies = '{":keycloakapi/main":[],":/main":[]}'

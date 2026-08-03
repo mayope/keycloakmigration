@@ -37,7 +37,6 @@ class AddKeycloakIdentityProviderAction(
     private val linkOnly: Boolean = false,
     private val firstBrokerLoginFlowAlias: String = "first broker login",
     private val postBrokerLoginFlowAlias: String = "",
-    private val updateProfileFirstLoginMode: String = "on",
 ) : Action(realm) {
 
 
@@ -55,7 +54,7 @@ class AddKeycloakIdentityProviderAction(
             validateSignature, forwardParameters, loginHint, disableUserInfo, hideOnLoginPage, backchannelSupported,
             syncMode, acceptsPromptsNoneForwardFromClient, uiLocales, displayName, guiOrder, enabled, trustEmail,
             useJwksUrl, storeToken, linkOnly,
-            firstBrokerLoginFlowAlias, postBrokerLoginFlowAlias, updateProfileFirstLoginMode
+            firstBrokerLoginFlowAlias, postBrokerLoginFlowAlias
         )
 
     override fun undo() {

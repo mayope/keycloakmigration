@@ -42,7 +42,6 @@ class UpdateIdentityProviderIntegTest : AbstractIntegrationTest() {
         assertThat(identityProvider.linkOnly).isEqualTo(true)
         assertThat(identityProvider.firstBrokerLoginFlowAlias).isEqualTo("first broker login")
         assertThat(identityProvider.postBrokerLoginFlowAlias).isEqualTo("")
-        assertThat(identityProvider.updateProfileFirstLoginMode).isEqualTo("on")
         newConfig.forEach {
             assertThat(identityProvider.config).containsEntry(it.key, it.value)
         }
@@ -68,7 +67,7 @@ class UpdateIdentityProviderIntegTest : AbstractIntegrationTest() {
         )
         val updateAction = UpdateIdentityProviderAction(
             testRealm, "test", "keycloak-oidc", newConfig, displayName = "displayName new", true, true, true, true,
-            "first broker login", "", ""
+            "first broker login", "",
         )
         updateAction.executeIt()
         updateAction.undoIt()
@@ -84,7 +83,6 @@ class UpdateIdentityProviderIntegTest : AbstractIntegrationTest() {
         assertThat(identityProvider.linkOnly).isEqualTo(true)
         assertThat(identityProvider.firstBrokerLoginFlowAlias).isEqualTo("first broker login")
         assertThat(identityProvider.postBrokerLoginFlowAlias).isEqualTo("")
-        assertThat(identityProvider.updateProfileFirstLoginMode).isEqualTo("on")
         config.forEach {
             assertThat(identityProvider.config).containsEntry(it.key, it.value)
         }
@@ -102,7 +100,7 @@ class UpdateIdentityProviderIntegTest : AbstractIntegrationTest() {
         assertThatThrownBy {
             UpdateIdentityProviderAction(
                 testRealm, "test", "keycloak-oidc", config, displayName = "displayName", true, true, true, true,
-                "first broker login", "", ""
+                "first broker login", "",
             ).executeIt()
         }.isInstanceOf(MigrationException::class.java)
             .hasMessage("Identity Provider with alias: test does not exist in realm: test!")

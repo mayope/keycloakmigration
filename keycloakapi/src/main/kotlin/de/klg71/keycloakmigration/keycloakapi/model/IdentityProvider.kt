@@ -14,6 +14,5 @@ data class IdentityProvider(
     val linkOnly: Boolean,
     val firstBrokerLoginFlowAlias: String="",
     val postBrokerLoginFlowAlias: String="",
-    val updateProfileFirstLoginMode: String
 )
 
