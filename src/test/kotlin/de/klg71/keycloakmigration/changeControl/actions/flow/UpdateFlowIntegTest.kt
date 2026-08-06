@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import org.koin.core.component.inject
 import java.util.AbstractMap.SimpleEntry
+import java.util.UUID
 
 class UpdateFlowIntegTest : AbstractIntegrationTest() {
 
@@ -19,6 +20,7 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         AddFlowAction(
             testRealm, alias, "Right round", executions = listOf(
                 AuthenticationExecutionImport(
+                    UUID.randomUUID(),
                     Flow.Requirement.REQUIRED,
                     "idp-auto-link",
                     0,
@@ -35,7 +37,7 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         UpdateFlowAction(
             testRealm, flow.alias, newAlias, description, null, null, listOf(
                 AuthenticationExecutionImport(
-                    Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, 0, mapOf("foo1" to "bar1")
+                    UUID.randomUUID(),Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, 0, mapOf("foo1" to "bar1")
                 )
             )
         ).executeIt()
@@ -57,6 +59,7 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         AddFlowAction(
             testRealm, alias, originalDescription, executions = listOf(
                 AuthenticationExecutionImport(
+                    UUID.randomUUID(),
                     Flow.Requirement.REQUIRED,
                     "idp-auto-link",
                     0,
@@ -73,7 +76,7 @@ class UpdateFlowIntegTest : AbstractIntegrationTest() {
         val action = UpdateFlowAction(
             testRealm, flow.alias, newAlias, description, null, null, listOf(
                 AuthenticationExecutionImport(
-                    Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, 0, mapOf("foo1" to "bar1")
+                    UUID.randomUUID(),Flow.Requirement.REQUIRED, "idp-confirm-link", 0, 0, 0, mapOf("foo1" to "bar1")
                 )
             )
         )

@@ -629,7 +629,7 @@ interface KeycloakClient {
     ): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
-    @RequestLine("GET /admin/realms/{realm}/organizations")
+    @RequestLine("GET /admin/realms/{realm}/organizations/?first=0&max=1000")
     fun organizations(@Param("realm") realm: String): List<Organization>
 
     @Headers("Content-Type: application/json; charset=utf-8")

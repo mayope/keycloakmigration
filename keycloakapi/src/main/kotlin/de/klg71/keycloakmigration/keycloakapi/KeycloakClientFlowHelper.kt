@@ -111,7 +111,7 @@ private fun KeycloakClient.updateAuthExecutors(
 
 fun KeycloakClient.executionsToImport(realm: String, flowAlias: String) = flowExecutions(realm, flowAlias).map {
     AuthenticationExecutionImport(
-        it.requirement, it.providerId, it.level, it.index, it.priority,
+        it.id, it.requirement, it.providerId, it.level, it.index, it.priority,
         if (it.authenticationConfig == null) mapOf() else getAuthenticatorConfiguration(
             realm,
             it.authenticationConfig

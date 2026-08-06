@@ -40,6 +40,7 @@ import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowExecutionAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.CopyFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowExecutionAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateSubFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
@@ -73,6 +74,7 @@ import de.klg71.keycloakmigration.changeControl.actions.realm.localization.Updat
 import de.klg71.keycloakmigration.changeControl.actions.realm.profile.AddRealmProfileAttributeAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.profile.AddRealmProfileAttributeGroupAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.profile.UpdateRealmProfileAttributeAction
+import de.klg71.keycloakmigration.changeControl.actions.realm.profile.UpdateRealmProfileOrderAction
 import de.klg71.keycloakmigration.changeControl.actions.requiredactions.UpdateRequiredActionAction
 import de.klg71.keycloakmigration.changeControl.actions.role.AddRoleAction
 import de.klg71.keycloakmigration.changeControl.actions.role.DeleteRoleAction
@@ -218,6 +220,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "copyFlow" -> objectMapper.readValue<CopyFlowAction>(actionJson)
 
             "addFlowExecution" -> objectMapper.readValue<AddFlowExecutionAction>(actionJson)
+            "deleteFlowExecution" -> objectMapper.readValue<DeleteFlowExecutionAction>(actionJson)
             "updateSubFlow" -> objectMapper.readValue<UpdateSubFlowAction>(actionJson)
 
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)
@@ -225,6 +228,7 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "addRealmProfileAttributeGroup" -> objectMapper.readValue<AddRealmProfileAttributeGroupAction>(actionJson)
             "addRealmProfileAttribute" -> objectMapper.readValue<AddRealmProfileAttributeAction>(actionJson)
             "updateRealmProfileAttribute" -> objectMapper.readValue<UpdateRealmProfileAttributeAction>(actionJson)
+            "updateRealmProfileOrder" -> objectMapper.readValue<UpdateRealmProfileOrderAction>(actionJson)
 
             "addLocalizationEntry" -> objectMapper.readValue<AddLocalizationEntryAction>(actionJson)
             "updateLocalizationEntry" -> objectMapper.readValue<UpdateLocalizationEntryAction>(actionJson)

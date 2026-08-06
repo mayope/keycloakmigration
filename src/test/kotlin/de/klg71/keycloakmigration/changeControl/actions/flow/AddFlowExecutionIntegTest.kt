@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.component.inject
+import java.util.UUID
 
 class AddFlowExecutionIntegTest : AbstractIntegrationTest() {
 
@@ -20,6 +21,7 @@ class AddFlowExecutionIntegTest : AbstractIntegrationTest() {
         AddFlowAction(
             testRealm, alias, "Right round", executions = listOf(
                 AuthenticationExecutionImport(
+                    UUID.randomUUID(),
                     Flow.Requirement.REQUIRED,
                     "idp-auto-link",
                     0, 0, 0
