@@ -6,8 +6,8 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
-import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.Organization
+import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateOrganization
 import feign.Response
@@ -264,15 +264,16 @@ fun KeycloakClient.identityProviderMapperExistsByName(identityProviderAlias: Str
     identityProviderMappers(realm, identityProviderAlias).any { it.name == name }
 
 fun KeycloakClient.organizationByName(name: String, realm: String): Organization = organizations(realm).run {
-        if (isEmpty()) {
-            throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
-        }
-        find { it.name == name }?.let {
-            // a separate request is required due to the organizations endpoint not returning the attributes
-            return organization(realm, it.id)
-        }
-        throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
+    if (isEmpty()) {
+        throw KeycloakApiException("Organization with name: $name does not exist in $realm!")
     }
+    find { it.name == name }?.let {
+        // a separate request is required due to the organizations endpoint not returning the attributes
+        return organization(realm, it.id)
+    }
+
+    throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
+}
 
 fun KeycloakClient.addOrganization(realm: String, organization: AddOrganization) {
     createOrganization(realm, organization).run {

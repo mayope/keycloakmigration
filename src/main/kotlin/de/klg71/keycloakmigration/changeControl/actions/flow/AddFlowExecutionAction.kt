@@ -6,6 +6,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
 import java.util.UUID
 
+@Suppress("LongParameterList")
 class AddFlowExecutionAction(
     realm: String?,
     private val flowAlias: String,

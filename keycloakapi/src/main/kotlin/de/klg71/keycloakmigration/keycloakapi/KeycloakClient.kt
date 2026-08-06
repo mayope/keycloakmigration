@@ -657,4 +657,25 @@ interface KeycloakClient {
         @Param("id") id: UUID,
         organization: UpdateOrganization
     ): Response
+
+    @RequestLine("GET /admin/realms/{realm}/organizations/{id}/identity-providers")
+    fun organizationIdentityProviders(
+        @Param("realm") realm: String,
+        @Param("id") orgId: String
+    ): List<IdentityProvider>
+
+    @Headers("Content-Type: application/json")
+    @RequestLine("POST /admin/realms/{realm}/organizations/{orgId}/identity-providers")
+    fun linkIdentityProviderToOrganization(
+        @Param("realm") realm: String,
+        @Param("orgId") orgId: String,
+        identityProviderAlias: String
+    ): Response
+
+    @RequestLine("DELETE /admin/realms/{realm}/organizations/{orgId}/identity-providers/{alias}")
+    fun unlinkIdentityProviderFromOrganization(
+        @Param("realm") realm: String,
+        @Param("orgId") orgId: String,
+        @Param("alias") alias: String
+    ): Response
 }
