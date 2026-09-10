@@ -24,13 +24,13 @@ Adds a new organization to an existing realm
     id: add-organization
     author: isaac.mercieca
     changes:
-    - addOrganization:
-        name: test
-        domains:
-          - name: test.com
-        attributes:
-          custom-attribute: 
-            - attributeValue
+      - addOrganization:
+          name: test
+          domains:
+            - name: test.com
+          attributes:
+            custom-attribute:
+              - attributeValue
 ```
 
 #### OrganizationDomain
@@ -55,15 +55,15 @@ Updates an existing organization. The alias may not be updated.
     author: david.briffa
     realm: test
     changes:
-    - updateOrganization:
-        alias: organization-alias
-        name: updated-name
-        redirectUrl: http://redirectUrl.com
-        domains:
-          - name: updated-domain.com
-        attributes:
-          custom-attribute: 
-            - updated-value
+      - updateOrganization:
+          alias: organization-alias
+          name: updated-name
+          redirectUrl: http://redirectUrl.com
+          domains:
+            - name: updated-domain.com
+          attributes:
+            custom-attribute:
+              - updated-value
 ```
 
 #### OrganizationDomain

@@ -271,6 +271,7 @@ fun KeycloakClient.organizationByName(name: String, realm: String): Organization
         // a separate request is required due to the organizations endpoint not returning the attributes
         return organization(realm, it.id)
     }
+
     throw KeycloakApiException("Organization with name: $name does not exist in realm: $realm!")
 }
 

@@ -36,7 +36,6 @@ class AddIdentityProviderIntegTest : AbstractIntegrationTest() {
         assertThat(identityProvider.linkOnly).isEqualTo(true)
         assertThat(identityProvider.firstBrokerLoginFlowAlias).isEqualTo("first broker login")
         assertThat(identityProvider.postBrokerLoginFlowAlias).isEqualTo("")
-        assertThat(identityProvider.updateProfileFirstLoginMode).isEqualTo("on")
         config.forEach {
             assertThat(identityProvider.config).containsEntry(it.key, it.value)
         }

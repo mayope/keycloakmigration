@@ -4,6 +4,8 @@ import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.DeleteRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
 import feign.slf4j.Slf4jLogger
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.koin.core.component.KoinComponent
@@ -77,6 +79,9 @@ abstract class AbstractIntegrationTest : KoinComponent {
     @After
     fun tearDown() {
         DeleteRealmAction(testRealm).executeIt()
+        runBlocking {
+            delay(200)
+        }
         stopKoin()
     }
 }

@@ -48,7 +48,6 @@ class UpdateKeycloakIdentityProviderIntegTest : AbstractIntegrationTest() {
         assertThat(identityProvider.linkOnly).isEqualTo(false)
         assertThat(identityProvider.firstBrokerLoginFlowAlias).isEqualTo("first broker login")
         assertThat(identityProvider.postBrokerLoginFlowAlias).isEqualTo("")
-        assertThat(identityProvider.updateProfileFirstLoginMode).isEqualTo("on")
         config.forEach {
             assertThat(identityProvider.config).containsEntry(it.key, it.value)
         }
@@ -93,7 +92,6 @@ class UpdateKeycloakIdentityProviderIntegTest : AbstractIntegrationTest() {
         assertThat(identityProvider.linkOnly).isEqualTo(false)
         assertThat(identityProvider.firstBrokerLoginFlowAlias).isEqualTo("first broker login")
         assertThat(identityProvider.postBrokerLoginFlowAlias).isEqualTo("")
-        assertThat(identityProvider.updateProfileFirstLoginMode).isEqualTo("on")
         config.forEach {
             assertThat(identityProvider.config).containsEntry(it.key, it.value)
         }

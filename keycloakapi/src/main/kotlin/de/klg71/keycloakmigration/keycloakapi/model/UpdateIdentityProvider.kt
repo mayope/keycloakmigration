@@ -14,7 +14,6 @@ data class UpdateIdentityProvider(
     val linkOnly: Boolean,
     val firstBrokerLoginFlowAlias: String,
     val postBrokerLoginFlowAlias: String,
-    val updateProfileFirstLoginMode: String = "on"
 )
 
 fun patchIdentityProvider(
@@ -29,7 +28,6 @@ fun patchIdentityProvider(
     linkOnly: Boolean?,
     firstBrokerLoginFlowAlias: String?,
     postBrokerLoginFlowAlias: String?,
-    updateProfileFirstLoginMode: String?,
 ) = UpdateIdentityProvider(
     existingIdp.internalId,
     providerId ?: existingIdp.providerId,
@@ -42,7 +40,6 @@ fun patchIdentityProvider(
     linkOnly ?: existingIdp.linkOnly,
     firstBrokerLoginFlowAlias ?: existingIdp.firstBrokerLoginFlowAlias,
     postBrokerLoginFlowAlias ?: existingIdp.postBrokerLoginFlowAlias,
-    updateProfileFirstLoginMode ?: existingIdp.updateProfileFirstLoginMode,
 )
 
 fun patchIdpConfig(existingIdp: IdentityProvider, newConfig: Map<String, String>?): Map<String, String> {
@@ -66,7 +63,6 @@ fun fromExisting(
     idp.linkOnly,
     idp.firstBrokerLoginFlowAlias,
     idp.postBrokerLoginFlowAlias,
-    idp.updateProfileFirstLoginMode
 )
 
 fun patchKeycloakIdentityProvider(
@@ -99,7 +95,6 @@ fun patchKeycloakIdentityProvider(
     linkOnly: Boolean? = null,
     firstBrokerLoginFlowAlias: String? = null,
     postBrokerLoginFlowAlias: String? = null,
-    updateProfileFirstLoginMode: String? = null,
 ) = UpdateIdentityProvider(
     existingIdp.internalId,
     "keycloak-oidc",
@@ -134,7 +129,6 @@ fun patchKeycloakIdentityProvider(
     linkOnly ?: existingIdp.linkOnly,
     firstBrokerLoginFlowAlias ?: existingIdp.firstBrokerLoginFlowAlias,
     postBrokerLoginFlowAlias ?: existingIdp.postBrokerLoginFlowAlias,
-    updateProfileFirstLoginMode ?: existingIdp.updateProfileFirstLoginMode,
 )
 
 private fun patchKeycloakIdpConfig(

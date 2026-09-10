@@ -23,7 +23,6 @@ class UpdateIdentityProviderAction(
     private val linkOnly: Boolean? = null,
     private val firstBrokerLoginFlowAlias: String? = null,
     private val postBrokerLoginFlowAlias: String? = null,
-    private val updateProfileFirstLoginMode: String? = null,
 ) : Action(realm) {
 
     private lateinit var identityProvider: IdentityProvider
@@ -44,7 +43,7 @@ class UpdateIdentityProviderAction(
     private fun updateIdentityProvider(idp: IdentityProvider): UpdateIdentityProvider =
         patchIdentityProvider(
             idp, providerId, alias, displayName, enabled, config, trustEmail, storeToken, linkOnly,
-            firstBrokerLoginFlowAlias, postBrokerLoginFlowAlias, updateProfileFirstLoginMode
+            firstBrokerLoginFlowAlias, postBrokerLoginFlowAlias,
         )
 
     override fun undo() {

@@ -41,7 +41,6 @@ class UpdateKeycloakIdentityProviderAction(
     private val linkOnly: Boolean? = null,
     private val firstBrokerLoginFlowAlias: String? = null,
     private val postBrokerLoginFlowAlias: String? = null,
-    private val updateProfileFirstLoginMode: String? = null,
 ) : Action(realm) {
 
     private lateinit var identityProvider: IdentityProvider
@@ -91,7 +90,6 @@ class UpdateKeycloakIdentityProviderAction(
             linkOnly,
             firstBrokerLoginFlowAlias,
             postBrokerLoginFlowAlias,
-            updateProfileFirstLoginMode,
         )
 
     override fun undo() {

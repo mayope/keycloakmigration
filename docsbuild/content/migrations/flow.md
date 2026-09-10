@@ -208,6 +208,25 @@ changes:
       provider: my-custom-provider
 ```
 
+## DeleteFlowExecution
+Deletes a flow execution from a specified flow.
+
+### Parameters
+- realm: String, optional
+- flowAlias: String, not optional
+- provider: String, not optional
+
+### Example
+```yaml
+id: delete-flow-execution
+author: amer.qwaider
+realm: integ-test
+changes:
+  - deleteFlowExecution:
+      flowAlias: Custom Authentication Flow
+      provider: my-custom-provider
+```
+
 ## UpdateSubFlow
 Updates a sub flow, if one exists
 
