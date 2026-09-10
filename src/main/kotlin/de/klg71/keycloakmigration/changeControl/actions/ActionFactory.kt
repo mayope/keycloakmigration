@@ -63,7 +63,6 @@ import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.AddSamlSurnameAttributeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.mapper.DeleteIdentityProviderMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.organization.AddOrganizationAction
-import de.klg71.keycloakmigration.changeControl.actions.organization.LinkIdentityProviderToOrganizationAction
 import de.klg71.keycloakmigration.changeControl.actions.organization.UpdateOrganizationAction
 import de.klg71.keycloakmigration.changeControl.actions.organization.LinkIdentityProviderToOrganizationAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.AddRealmAction
