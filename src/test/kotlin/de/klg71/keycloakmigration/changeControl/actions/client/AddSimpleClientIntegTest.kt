@@ -51,6 +51,25 @@ class AddSimpleClientIntegTest : AbstractIntegrationTest() {
     }
 
     @Test
+    fun testAddClient_isIdempotentWhenClientAlreadyExists() {
+        // First add creates the client.
+        AddSimpleClientAction(testRealm, "simpleClient", true, mapOf("test" to "1")).executeIt()
+        val created = client.clientById("simpleClient", testRealm)
+
+        // Re-running the same add (as happens when a changeset is replayed after a
+        // half-applied prior run) must NOT throw on the 409, and must adopt the
+        // existing client rather than deleting or duplicating it.
+        AddSimpleClientAction(testRealm, "simpleClient", true, mapOf("test" to "1")).executeIt()
+
+        val afterReRun = client.clientById("simpleClient", testRealm)
+        assertThat(afterReRun.id).isEqualTo(created.id)
+        assertThat(afterReRun.enabled).isEqualTo(true)
+        // The adopted client is left intact — the re-run's undo path must not have
+        // fired, and the original client is still present with a single instance.
+        assertThat(client.clients(testRealm).filter { it.clientId == "simpleClient" }).hasSize(1)
+    }
+
+    @Test
     fun testAddClientWithAuthorizationEnabled() {
         AddSimpleClientAction(
             testRealm,
