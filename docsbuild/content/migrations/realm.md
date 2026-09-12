@@ -231,6 +231,7 @@ adds a new attribute in the user profile for the realm
 - required: RealmAttributeRequired optional
 - multivalued: Boolean, optional, default=true
 - group: String, optional
+- defaultValue: String, optional
 
 ### Example
 ```yaml
@@ -239,6 +240,7 @@ adds a new attribute in the user profile for the realm
     changes:
       - addRealmProfileAttribute:
           name: country
+          defaultValue: mt
           displayName: $${profile.attributes.country}
           permissions:
             view:
@@ -264,6 +266,7 @@ updates an attribute in the user profile for the realm
 - permissions: RealmAttributePermissions optional
 - required: RealmAttributeRequired optional
 - multivalued: Boolean, optional, default=true
+- defaultValue: String, optional
 
 ### Example
 ```yaml
@@ -272,6 +275,7 @@ updates an attribute in the user profile for the realm
     changes:
       - updateRealmProfileAttribute:
           name: firstName
+          defaultValue: mt
           permissions:
             view:
               - admin

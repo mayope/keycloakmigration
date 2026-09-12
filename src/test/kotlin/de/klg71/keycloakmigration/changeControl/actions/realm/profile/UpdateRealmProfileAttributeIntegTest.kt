@@ -38,6 +38,25 @@ class UpdateRealmProfileAttributeIntegTest : AbstractIntegrationTest() {
     }
 
     @Test
+    fun testUpdateRealmProfileAttributeDefaultValue() {
+        AddRealmProfileAttributeAction(
+            testRealm,
+            name = "country",
+            defaultValue = "mt"
+        ).executeIt()
+
+        assertThat(realmProfileAttribute("country")?.defaultValue).isEqualTo("mt")
+
+        UpdateRealmProfileAttributeAction(
+            testRealm,
+            name = "country",
+            defaultValue = "us"
+        ).executeIt()
+
+        assertThat(realmProfileAttribute("country")?.defaultValue).isEqualTo("us")
+    }
+
+    @Test
     fun testUpdateRealmProfileAttributeNotExisting() {
         assertThatThrownBy {
             UpdateRealmProfileAttributeAction(testRealm, name = "country").executeIt()
