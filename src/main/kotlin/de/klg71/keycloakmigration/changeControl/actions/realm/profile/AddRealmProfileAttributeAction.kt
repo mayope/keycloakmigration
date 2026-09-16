@@ -20,7 +20,7 @@ class AddRealmProfileAttributeAction(
     private val required: RealmAttributeRequired? = null,
     private val multivalued: Boolean = false,
     private val group: String? = null,
-    //private val defaultValue: String? = null
+    private val defaultValue: String? = null
 ) : Action(realm) {
 
     private var oldRealmProfile: RealmProfile? = null
@@ -49,7 +49,7 @@ class AddRealmProfileAttributeAction(
                 required?.let { RealmAttributeRequired(required.roles ?: emptySet(), required.scopes) },
                 multivalued,
                 group,
-                //defaultValue
+                defaultValue
                 
             )
         )

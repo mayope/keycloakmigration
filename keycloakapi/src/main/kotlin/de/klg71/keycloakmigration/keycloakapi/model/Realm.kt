@@ -32,7 +32,7 @@ data class RealmAttribute(
     var required: RealmAttributeRequired?,
     var multivalued: Boolean,
     var group: String?,
-    // var defaultValue: String? = null
+    var defaultValue: String? = null
 )
 
 data class RealmAttributeGroup(
