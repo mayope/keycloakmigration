@@ -31,7 +31,8 @@ data class RealmAttribute(
     var permissions: RealmAttributePermissions,
     var required: RealmAttributeRequired?,
     var multivalued: Boolean,
-    var group: String?
+    var group: String?,
+    var defaultValue: String? = null
 )
 
 data class RealmAttributeGroup(

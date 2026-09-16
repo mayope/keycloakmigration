@@ -18,7 +18,8 @@ class UpdateRealmProfileAttributeAction(
     private val validations: Map<String, Map<String, Any>>? = null,
     private val permissions: RealmAttributePermissions? = null,
     private val required: RealmAttributeRequired? = null,
-    private val multivalued: Boolean? = null
+    private val multivalued: Boolean? = null,
+    private val defaultValue: String? = null
 ) : Action(realm) {
 
     private lateinit var oldRealmProfile: RealmProfile
@@ -59,6 +60,7 @@ class UpdateRealmProfileAttributeAction(
                     )
                 }
             it.multivalued = multivalued ?: realmAttribute.multivalued
+            it.defaultValue = defaultValue ?: realmAttribute.defaultValue
         }
 
         client.updateRealmProfile(realm(), realmProfile)
