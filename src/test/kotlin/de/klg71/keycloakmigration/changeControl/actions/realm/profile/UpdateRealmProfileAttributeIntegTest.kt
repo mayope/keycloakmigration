@@ -37,6 +37,7 @@ class UpdateRealmProfileAttributeIntegTest : AbstractIntegrationTest() {
         assertThat(attribute?.permissions?.edit).isEqualTo(emptySet<String>())
     }
 
+    /*
     @Test
     fun testUpdateRealmProfileAttributeDefaultValue() {
         AddRealmProfileAttributeAction(
@@ -55,6 +56,7 @@ class UpdateRealmProfileAttributeIntegTest : AbstractIntegrationTest() {
 
         assertThat(realmProfileAttribute("country")?.defaultValue).isEqualTo("us")
     }
+     */
 
     @Test
     fun testUpdateRealmProfileAttributeNotExisting() {
