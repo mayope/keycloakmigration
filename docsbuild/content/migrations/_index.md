@@ -43,7 +43,7 @@ To start developing on this project you can use the gradle tasks.
 
 To start the local development keycloak you can just use the task ```startLocalKeycloak```
 
-Tested with OpenJdk 12 and Keycloak 19.0.0
+Tested with JDK 25 and Keycloak 26.5.7
 
 ### Use keycloakmigration through maven dependency
 #### Gradle dependency
