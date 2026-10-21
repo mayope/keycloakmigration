@@ -21,6 +21,7 @@ headless = true
   - [Flow Migrations]({{< ref  "/migrations/flow.md" >}})
   - [RequiredActions Migrations]({{< ref  "/migrations/requiredactions.md" >}})
   - [Localization Migrations]({{< ref "/migrations/localization.md" >}})
+  - [Organization Migrations]({{< ref "/migrations/organization.md" >}})
 - [Using the Keycloakapi]({{< relref "/keycloak_api.md" >}})
 - [Hash Troubleshooting]({{< relref "/hashmigration.md" >}})
 - [Implementation Details]({{< relref "/implementation_details.md" >}})

@@ -61,7 +61,7 @@ dependencies {
     testImplementation("io.github.openfeign:feign-slf4j:13.5")
     testImplementation(kotlin("test"))
     testImplementation(kotlin("test-junit"))
-    testImplementation("io.mockk:mockk:1.13.16")
+    testImplementation("io.mockk:mockk:1.14.11")
 
     testImplementation("org.assertj:assertj-core:3.27.3")
     testImplementation("io.insert-koin:koin-test:4.0.2")
@@ -423,11 +423,11 @@ dependencyCheck {
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_24)
+        jvmTarget.set(JvmTarget.JVM_25)
     }
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_24
-    targetCompatibility = JavaVersion.VERSION_24
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }

@@ -8,7 +8,7 @@ To start developing on this project you can use the gradle tasks.
 
 To start the local development keycloak you can just use the task ```startLocalKeycloak```
 
-Tested with OpenJdk 12 and Keycloak 19.0.0
+Tested with JDK 25 and Keycloak 26.5.7
 
 If you want to contribute to this project please visit the [issues](https://github.com/klg71/keycloakmigration/issues) page and maybe you can find something interesting :)
 

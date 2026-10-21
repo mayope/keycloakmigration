@@ -97,4 +97,46 @@ class LinkIdentityProviderToOrganizationActionTest : AbstractIntegrationTest() {
 
     assertThat(linkedIdps.map { it.alias }).doesNotContain(idpAlias)
   }
+
+  @Test
+  fun testUndoLinkIdentityProviderToOrganizationWhenAliasDiffersFromName() {
+    val orgName = "Test Org Alias"
+    val orgAlias = "test-org-alias"
+    val idpAlias = "test-idp-alias"
+
+    UpdateRealmAction(testRealm, organizationsEnabled = true).executeIt()
+
+    AddOrganizationAction(
+      realm = testRealm,
+      name = orgName,
+      alias = orgAlias,
+      domains = setOf(OrganizationDomain("test-org-alias.com"))
+    ).executeIt()
+
+    AddIdentityProviderAction(
+      realm = testRealm,
+      alias = idpAlias,
+      providerId = "oidc",
+      config = mapOf(
+        "authorizationUrl" to "https://auth.test.com",
+        "tokenUrl" to "https://auth.test.com/token",
+        "clientId" to "test-client",
+        "clientSecret" to "test-secret"
+      )
+    ).executeIt()
+
+    val action = LinkIdentityProviderToOrganizationAction(
+      realm = testRealm,
+      organizationAlias = orgAlias,
+      identityProviderAlias = idpAlias
+    )
+
+    action.executeIt()
+    action.undoIt()
+
+    val org = client.organizationByName(orgName, testRealm)
+    val linkedIdps = client.organizationIdentityProviders(testRealm, org.id.toString())
+
+    assertThat(linkedIdps.map { it.alias }).doesNotContain(idpAlias)
+  }
 }
