@@ -71,6 +71,27 @@ Updates an existing organization. The alias may not be updated.
 - name: String,
 - verified: Boolean, optional, default=false
 
+## deleteOrganization
+Deletes an existing organization, identified by its alias. Identity providers linked to the
+organization are unlinked but not deleted.
+
+On rollback, the organization is recreated with its name, alias, redirectUrl, domains and
+attributes, and its identity providers are linked again. Members can't be restored.
+
+### Parameters
+- realm: String, optional,
+- alias: String, not optional
+
+### Example
+```yaml
+    id: delete-organization
+    author: isaac.mercieca
+    realm: test
+    changes:
+      - deleteOrganization:
+          alias: organization-alias
+```
+
 ## linkIdentityProvider
 Links an existing identity provider to an organization.
 
