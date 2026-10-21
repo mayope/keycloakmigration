@@ -7,12 +7,18 @@ permalink: /migrations/
 
 ## Supported migrations
 Currently we implemented migration actions for the following resources:
-- [User](usermigrations.markdown) 
-- [Group](groupmigrations.markdown) 
-- [Role](rolemigrations.markdown) 
-- [Realm](realmmigrations.markdown) 
-- [Client](clientmigrations.markdown) 
-- [UserFederation](userfederationmigrations.markdown) 
+- [User]({{< ref "/migrations/user.md" >}})
+- [Group]({{< ref "/migrations/group.md" >}})
+- [Role]({{< ref "/migrations/role.md" >}})
+- [Client]({{< ref "/migrations/client.md" >}})
+- [ClientScope]({{< ref "/migrations/scopes.md" >}})
+- [Realm]({{< ref "/migrations/realm.md" >}})
+- [UserFederation]({{< ref "/migrations/userfederation.md" >}})
+- [IdentityProvider]({{< ref "/migrations/identityprovider.md" >}})
+- [Flow]({{< ref "/migrations/flow.md" >}})
+- [RequiredActions]({{< ref "/migrations/requiredactions.md" >}})
+- [Localization]({{< ref "/migrations/localization.md" >}})
+- [Organization]({{< ref "/migrations/organization.md" >}})
 
 For more examples see `src/test/resources/changesets`.
 
