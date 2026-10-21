@@ -3,7 +3,6 @@ package de.klg71.keycloakmigration.changeControl.actions.organization
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.keycloakapi.isSuccessful
 import de.klg71.keycloakmigration.keycloakapi.organizationByAlias
-import de.klg71.keycloakmigration.keycloakapi.organizationByName
 
 class LinkIdentityProviderToOrganizationAction(
   realm: String? = null,
@@ -29,7 +28,7 @@ class LinkIdentityProviderToOrganizationAction(
   }
 
   override fun undo() {
-    val org = client.organizationByName(organizationAlias, realm())
+    val org = client.organizationByAlias(organizationAlias, realm())
 
     val response = client.unlinkIdentityProviderFromOrganization(
       realm = realm(),

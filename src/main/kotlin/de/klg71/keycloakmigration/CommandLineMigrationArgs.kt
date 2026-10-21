@@ -7,6 +7,7 @@ import com.xenomachina.argparser.default
 const val DEFAULT_CHANGELOGFILE = "keycloak-changelog.yml"
 const val DEFAULT_ADMIN_USER = "admin"
 const val DEFAULT_ADMIN_PASSWORD = "admin"
+const val DEFAULT_ADMIN_TOTP = ""
 const val DEFAULT_ADMIN_USE_OAUTH = false
 const val DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT = 8081
 const val DEFAULT_KEYCLOAK_SERVER = "http://localhost:8080/auth"
@@ -40,7 +41,7 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
         names = arrayOf("-t", "--totp"),
         help = "Time based one time password for the migration user, empty per default"
     )
-        .default(DEFAULT_ADMIN_PASSWORD)
+        .default(DEFAULT_ADMIN_TOTP)
 
     private val adminUseOauth by parser.flagging(
         names = arrayOf("-o", "--use-oauth"),
@@ -54,10 +55,10 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
     )
         .default(DEFAULT_ADMIN_USE_OAUTH)
 
-    private val adminUseOauthLocalPort by parser.counting(
+    private val adminUseOauthLocalPort by parser.storing(
         names = arrayOf("-P", "--use-oauth-local-port"),
         help = "Which port to listen for the auth code callback, defaulting to $DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT."
-    )
+    ) { toInt() }
         .default(DEFAULT_ADMIN_USE_OAUTH_LOCAL_PORT)
 
     private val baseUrl by parser.storing(
@@ -169,7 +170,7 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
                 "Invalid parameter detected: $it, syntax for parameter is param1=value1!"
             )
         }
-        it.split("=").run {
+        it.split("=", limit = 2).run {
             first() to get(1)
         }
     }.run {
