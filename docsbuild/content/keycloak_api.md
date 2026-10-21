@@ -31,4 +31,4 @@ compile("de.klg71.keycloakmigration:keycloakapi:x.x.x")
 
 The keycloakapi uses [OpenFeign](https://github.com/OpenFeign/feign) to connect to the keycloak instance.
 
-Full documentation is available here: [Documentation](/keycloakmigration/documentation/keycloakapi)
+Full documentation is available here: [Documentation](../documentation/keycloakapi/)
