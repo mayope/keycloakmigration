@@ -35,6 +35,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ImportAuthorizationRepresent
 import de.klg71.keycloakmigration.keycloakapi.model.ImportClientRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Mapper
 import de.klg71.keycloakmigration.keycloakapi.model.Organization
+import de.klg71.keycloakmigration.keycloakapi.model.OrganizationMember
 import de.klg71.keycloakmigration.keycloakapi.model.Realm
 import de.klg71.keycloakmigration.keycloakapi.model.RealmProfile
 import de.klg71.keycloakmigration.keycloakapi.model.RequiredActionProviderItem
@@ -677,5 +678,21 @@ interface KeycloakClient {
         @Param("realm") realm: String,
         @Param("orgId") orgId: String,
         @Param("alias") alias: String
+    ): Response
+
+    @RequestLine("GET /admin/realms/{realm}/organizations/{orgId}/members?first={first}&max={max}")
+    fun organizationMembers(
+        @Param("realm") realm: String,
+        @Param("orgId") orgId: String,
+        @Param("first") first: Int,
+        @Param("max") max: Int
+    ): List<OrganizationMember>
+
+    @Headers("Content-Type: application/json")
+    @RequestLine("POST /admin/realms/{realm}/organizations/{orgId}/members")
+    fun addOrganizationMember(
+        @Param("realm") realm: String,
+        @Param("orgId") orgId: String,
+        userId: String
     ): Response
 }

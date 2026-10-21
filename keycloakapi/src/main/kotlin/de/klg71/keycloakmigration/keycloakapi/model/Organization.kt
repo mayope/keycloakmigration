@@ -15,3 +15,9 @@ data class Organization(
     val domains: Set<OrganizationDomain>,
     val attributes: Map<String, List<String>>? = mapOf(),
 )
+
+data class OrganizationMember(
+    val id: UUID,
+    val username: String,
+    val membershipType: String? = null
+)

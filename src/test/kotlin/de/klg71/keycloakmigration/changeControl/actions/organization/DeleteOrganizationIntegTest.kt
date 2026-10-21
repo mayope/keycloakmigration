@@ -3,10 +3,14 @@ package de.klg71.keycloakmigration.changeControl.actions.organization
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.identityprovider.AddIdentityProviderAction
 import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
+import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAction
 import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.allOrganizationMembers
+import de.klg71.keycloakmigration.keycloakapi.isSuccessful
 import de.klg71.keycloakmigration.keycloakapi.model.OrganizationDomain
 import de.klg71.keycloakmigration.keycloakapi.organizationByAlias
+import de.klg71.keycloakmigration.keycloakapi.userByName
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
@@ -50,6 +54,15 @@ class DeleteOrganizationIntegTest : AbstractIntegrationTest() {
         ).executeIt()
     }
 
+    private val memberName = "delete-member"
+
+    private fun addUnmanagedMember() {
+        AddUserAction(testRealm, memberName).executeIt()
+        val organization = client.organizationByAlias(alias, testRealm)
+        val userId = client.userByName(memberName, testRealm).id.toString()
+        assertThat(client.addOrganizationMember(testRealm, organization.id.toString(), userId).isSuccessful()).isTrue()
+    }
+
     @Test
     fun testDeleteOrganization() {
         addOrganization()
@@ -70,6 +83,16 @@ class DeleteOrganizationIntegTest : AbstractIntegrationTest() {
     }
 
     @Test
+    fun testDeleteOrganizationKeepsUnmanagedMember() {
+        addOrganization()
+        addUnmanagedMember()
+
+        DeleteOrganizationAction(testRealm, alias).executeIt()
+
+        assertThat(client.userByName(memberName, testRealm).username).isEqualTo(memberName)
+    }
+
+    @Test
     fun testDeleteOrganizationNotExisting() {
         UpdateRealmAction(testRealm, organizationsEnabled = true).executeIt()
 
@@ -81,6 +104,7 @@ class DeleteOrganizationIntegTest : AbstractIntegrationTest() {
     fun testUndoDeleteOrganization() {
         addOrganization()
         addLinkedIdentityProvider()
+        addUnmanagedMember()
         val original = client.organizationByAlias(alias, testRealm)
 
         val action = DeleteOrganizationAction(testRealm, alias)
@@ -94,5 +118,7 @@ class DeleteOrganizationIntegTest : AbstractIntegrationTest() {
             .isEqualTo(original)
         assertThat(client.organizationIdentityProviders(testRealm, restored.id.toString()).map { it.alias })
             .containsExactly(idpAlias)
+        assertThat(client.allOrganizationMembers(testRealm, restored.id).map { it.username })
+            .containsExactly(memberName)
     }
 }

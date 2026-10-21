@@ -7,6 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Organization
+import de.klg71.keycloakmigration.keycloakapi.model.OrganizationMember
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateOrganization
@@ -292,6 +293,17 @@ fun KeycloakClient.organizationByAlias(alias: String, realm: String): Organizati
         return organization(realm, it.id)
     }
     throw KeycloakApiException("Organization with alias: $alias does not exist in realm: $realm!")
+}
+
+private const val ORGANIZATION_MEMBERS_PAGE_SIZE = 100
+
+fun KeycloakClient.allOrganizationMembers(realm: String, orgId: UUID): List<OrganizationMember> {
+    val members = mutableListOf<OrganizationMember>()
+    do {
+        val page = organizationMembers(realm, orgId.toString(), members.size, ORGANIZATION_MEMBERS_PAGE_SIZE)
+        members += page
+    } while (page.size == ORGANIZATION_MEMBERS_PAGE_SIZE)
+    return members
 }
 
 fun KeycloakClient.editOrganization(realm: String, id: UUID, organization: UpdateOrganization) {
