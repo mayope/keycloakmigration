@@ -37,6 +37,19 @@ java -jar keycloakmigration-x.x.x-fat.jar
                                                               migration,
                                                               defaulting to master
 
+      -s CLIENT_SECRET, --client-secret CLIENT_SECRET         Secret of the client.
+
+      -m, --login-with-client-credentials                     Login with the client credentials of -c and -s
+                                                              instead of -u and -p, defaulting to false.
+                                                              -u must still exist: it stores the migration hashes.
+
+      --fallback-to-password-login                            With -m, login with -u and -p instead if keycloak
+                                                              rejects the client (missing, disabled, no service
+                                                              account or wrong secret), defaulting to false.
+
+      --fallback-client FALLBACK_CLIENT                       Client for the password login of
+                                                              --fallback-to-password-login, defaulting to admin-cli.
+
       --correct-hashes                                        Correct hashes to most recent version, defaulting to false
 
                                                               Just choose this option if you didn't change anything in

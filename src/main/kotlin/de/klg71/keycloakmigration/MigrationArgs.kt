@@ -1,5 +1,7 @@
 package de.klg71.keycloakmigration
 
+import de.klg71.keycloakmigration.keycloakapi.DEFAULT_FALLBACK_CLIENT_ID
+
 @Suppress("TooManyFunctions")
 interface MigrationArgs {
     fun adminUser(): String
@@ -13,6 +15,8 @@ interface MigrationArgs {
     fun clientId(): String
     fun clientSecret(): String?
     fun loginWithClientSecret(): Boolean
+    fun fallbackToPasswordLogin(): Boolean = DEFAULT_FALLBACK_TO_PASSWORD_LOGIN
+    fun fallbackClientId(): String = DEFAULT_FALLBACK_CLIENT_ID
     fun correctHashes(): Boolean
     fun parameters(): Map<String, String>
     fun waitForKeycloak(): Boolean

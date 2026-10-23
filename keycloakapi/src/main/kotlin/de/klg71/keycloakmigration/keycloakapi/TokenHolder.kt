@@ -30,11 +30,26 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
     private val clientSecret: String?,
     private val totp: String,
     private val tokenRefreshOffsetMs: Long = 1000,
-    private val loginWithClientCredentials: Boolean) {
+    private val loginWithClientCredentials: Boolean,
+    private val fallbackToPasswordLogin: Boolean = false,
+    private val fallbackClientId: String = DEFAULT_FALLBACK_CLIENT_ID) {
 
     companion object {
         val LOG = LoggerFactory.getLogger(TokenHolder::class.java)!!
+
+        // Keycloak answers a client credentials login with 401 when the client doesn't exist, is disabled, can't use
+        // service accounts or the secret is wrong. The response body is often lost on a 401, so the status decides;
+        // a 400 only counts when its body names one of these errors.
+        private const val CLIENT_REJECTED_STATUS = 401
+        private const val BAD_REQUEST_STATUS = 400
+        private val UNUSABLE_CLIENT_ERRORS = setOf("invalid_client", "unauthorized_client")
+        private val OAUTH_ERROR = Regex("\"error\"\\s*:\\s*\"([^\"]+)\"")
     }
+
+    // Declared before token, because initialLogin() runs while the token is initialized
+    private var passwordFallbackActive = false
+    private var loginClientId = clientId
+    private var loginClientSecret = clientSecret ?: ""
 
     private var token: AccessToken = initialLogin()
     private var tokenReceived: Long = currentTimeMillis()
@@ -43,7 +58,7 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
     private fun tokenExpired() =
         currentTimeMillis() - tokenReceived > TimeUnit.SECONDS.toMillis(token.expiresIn) - tokenRefreshOffsetMs
 
-    private fun refreshExpired() =
+    private fun refreshExpired() = token.refreshToken == null ||
         currentTimeMillis() - tokenReceived > TimeUnit.SECONDS.toMillis(token.refreshExpiresIn) - tokenRefreshOffsetMs
 
     fun token(): AccessToken {
@@ -58,9 +73,9 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
 
     private fun getNewToken() = if (!refreshExpired()) {
         LOG.info("using refreshToken")
-        client.login(realm, "refresh_token", token.refreshToken, clientId, clientSecret ?: "")
+        client.login(realm, "refresh_token", token.refreshToken!!, loginClientId, loginClientSecret)
     } else {
-        LOG.info("using password")
+        LOG.info("logging in again")
         initialLogin()
     }
 
@@ -71,19 +86,41 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
                 adminUseOauth ->
                     loginWithOauth()
 
-                loginWithClientCredentials ->
-                    client.login(
-                        realm, "client_credentials", clientId,
-                        clientSecret ?: error("logging in with client credentials needs a clientSecret!")
-                    )
+                loginWithClientCredentials && !passwordFallbackActive ->
+                    loginWithClientCredentials()
 
                 else ->
-                    client.login(realm, "password", clientId, clientSecret ?: "", adminUser, adminPassword, totp)
+                    loginWithPassword()
             }
         } catch (e: FeignException) {
             println(e.responseBody().getOrNull()?.toString())
             throw e
         }
+    }
+
+    private fun loginWithPassword() =
+        client.login(realm, "password", loginClientId, loginClientSecret, adminUser, adminPassword, totp)
+
+    private fun loginWithClientCredentials(): AccessToken = try {
+        client.login(
+            realm, "client_credentials", clientId,
+            clientSecret ?: error("logging in with client credentials needs a clientSecret!")
+        )
+    } catch (e: FeignException) {
+        val error = OAUTH_ERROR.find(e.contentUTF8())?.groupValues?.get(1)
+        val clientRejected = e.status() == CLIENT_REJECTED_STATUS ||
+            (e.status() == BAD_REQUEST_STATUS && error in UNUSABLE_CLIENT_ERRORS)
+        if (!fallbackToPasswordLogin || !clientRejected) {
+            throw e
+        }
+        LOG.warn(
+            "Client credentials login with client '$clientId' failed (${e.status()} ${error ?: "no error details"}), " +
+                "falling back to password login as '$adminUser' with client '$fallbackClientId'"
+        )
+        passwordFallbackActive = true
+        loginClientId = fallbackClientId
+        loginClientSecret = ""
+        loginWithPassword()
     }
 
     private fun loginWithOauth(): AccessToken {

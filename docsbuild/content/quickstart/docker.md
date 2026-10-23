@@ -32,6 +32,22 @@ docker run --env BASEURL=http://localhost:8080 klg71/keycloakmigration
 - `ADMIN_CLIENT` client to use for admin login
 
    default: admin-cli
+- `LOGIN_WITH_CLIENT_SECRET`(flag) Login with the client credentials of `ADMIN_CLIENT` and `CLIENT_SECRET` instead
+  of `ADMIN_USER` and `ADMIN_PASSWORD`. `ADMIN_USER` must still exist, because it stores the migration hashes.
+  The client needs service accounts and `client_credentials.use_refresh_token` isn't required.
+
+   default: unset
+- `CLIENT_SECRET` secret of `ADMIN_CLIENT`
+
+   default: unset
+- `FALLBACK_TO_PASSWORD_LOGIN`(flag) With `LOGIN_WITH_CLIENT_SECRET`, login with `ADMIN_USER` and
+  `ADMIN_PASSWORD` instead if keycloak rejects the client (missing, disabled, no service account or wrong
+  secret). Useful when the migration itself creates the client. A warning is logged when it falls back.
+
+   default: unset
+- `FALLBACK_CLIENT` client to use for the password login of `FALLBACK_TO_PASSWORD_LOGIN`
+
+   default: admin-cli
 - `LOGIN_REALM` realm to use for admin login
 
    default: master

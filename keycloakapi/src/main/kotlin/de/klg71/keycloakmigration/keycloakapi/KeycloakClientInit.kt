@@ -20,6 +20,11 @@ import java.time.Duration
 /**
  * Builds the [KeycloakClient]
  */
+/**
+ * Client used for the password login when a client credentials login falls back to it
+ */
+const val DEFAULT_FALLBACK_CLIENT_ID = "admin-cli"
+
 fun initKeycloakClient(baseUrl: String,
     adminUser: String,
     adminPassword: String,
@@ -31,12 +36,15 @@ fun initKeycloakClient(baseUrl: String,
     loginWithClientCredentials: Boolean = false,
     logger: Logger? = null,
     totp: String = "",
-    tokenOffsetMs: Long = 1000) = initObjectMapper().let {
+    tokenOffsetMs: Long = 1000,
+    fallbackToPasswordLogin: Boolean = false,
+    fallbackClientId: String = DEFAULT_FALLBACK_CLIENT_ID) = initObjectMapper().let {
     TokenHolder(
         initKeycloakLoginClient(baseUrl, logger),
         adminUser, adminPassword,
         adminUseOauth, adminUseOauthLocalPort, baseUrl,
-        realm, clientId, clientSecret, totp, tokenOffsetMs, loginWithClientCredentials
+        realm, clientId, clientSecret, totp, tokenOffsetMs, loginWithClientCredentials,
+        fallbackToPasswordLogin, fallbackClientId
     ).let {
         initKeycloakClientWithTokenHolder(baseUrl, logger, it)
     }

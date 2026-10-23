@@ -12,6 +12,7 @@ import de.klg71.keycloakmigration.changeControl.StringEnvSubstitutor
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.ActionDeserializer
 import de.klg71.keycloakmigration.changeControl.actions.ActionFactory
+import de.klg71.keycloakmigration.keycloakapi.DEFAULT_FALLBACK_CLIENT_ID
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.initKeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.userByName
@@ -36,14 +37,17 @@ fun myModule(adminUser: String,
     parameters: Map<String, String>,
     failOnUndefinedVariabled: Boolean,
     warnOnUndefinedVariables: Boolean,
-    logger: Logger? = null) = module {
+    logger: Logger? = null,
+    fallbackToPasswordLogin: Boolean = DEFAULT_FALLBACK_TO_PASSWORD_LOGIN,
+    fallbackClientId: String = DEFAULT_FALLBACK_CLIENT_ID) = module {
     single { StringEnvSubstitutor(failOnUndefinedVariabled, warnOnUndefinedVariables) }
     single(named("yamlObjectMapper")) { initYamlObjectMapper() }
     single(named("parameters")) { parameters }
     single {
         initKeycloakClient(
             baseUrl, adminUser, adminPassword, adminUseOauth, adminUseOauthLocalPort, realm, clientId, clientSecret,
-            loginWithClientCredentials, logger, adminTotp
+            loginWithClientCredentials, logger, adminTotp,
+            fallbackToPasswordLogin = fallbackToPasswordLogin, fallbackClientId = fallbackClientId
         )
     }
     single(named("migrationUserId")) { loadCurrentUser(get(), adminUser, realm) }
