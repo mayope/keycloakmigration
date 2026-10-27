@@ -208,6 +208,46 @@ changes:
       provider: my-custom-provider
 ```
 
+## AddSubFlow
+Adds a sub flow to an existing flow. The parent can be a top-level flow or another sub flow, so a sub
+flow can be nested in a sub flow by pointing `flowAlias` at it. Executions are added to the new sub
+flow with `addFlowExecution`, using the sub flow's alias as `flowAlias`.
+
+A sub flow's alias has to be unique in the realm, like any flow's alias. On rollback the sub flow is
+deleted together with everything added to it.
+
+### Parameters
+- realm: String, optional
+- flowAlias: String, not optional, alias of the parent flow or sub flow
+- alias: String, not optional, alias of the new sub flow
+- description: String, optional, default = ""
+- type: String = "basic-flow" | "form-flow", optional, default = "basic-flow"
+- provider: String, optional, the form provider of a "form-flow", e.g. "registration-page-form"
+- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL", optional, default = "DISABLED"
+- priority: Integer, optional, default = keycloak's
+
+### Example
+```yaml
+id: add-sub-flow
+author: isaac.mercieca
+realm: integ-test
+changes:
+  - addSubFlow:
+      flowAlias: Custom Authentication Flow
+      alias: Custom Authentication Flow Organization
+      requirement: CONDITIONAL
+      priority: 20
+  - addSubFlow:
+      flowAlias: Custom Authentication Flow Organization
+      alias: Custom Authentication Flow Organization Identity Provider
+      requirement: REQUIRED
+  - addFlowExecution:
+      flowAlias: Custom Authentication Flow Organization Identity Provider
+      provider: identity-provider-redirector
+      executionAlias: organization identity provider
+      requirement: REQUIRED
+```
+
 ## UpdateSubFlow
 Updates a sub flow, if one exists
 

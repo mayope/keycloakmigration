@@ -3,6 +3,7 @@ package de.klg71.keycloakmigration.keycloakapi
 import de.klg71.keycloakmigration.keycloakapi.model.AddClient
 import de.klg71.keycloakmigration.keycloakapi.model.AddClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
+import de.klg71.keycloakmigration.keycloakapi.model.AddSubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
@@ -564,6 +565,13 @@ interface KeycloakClient {
         @Param("realm") realm: String,
         @Param("alias") alias: String,
         addFlow: SubFlow): Response
+
+    @Headers("Content-Type: application/json; charset=utf-8")
+    @RequestLine("POST /admin/realms/{realm}/authentication/flows/{alias}/executions/flow")
+    fun addSubFlow(
+        @Param("realm") realm: String,
+        @Param("alias") alias: String,
+        addSubFlow: AddSubFlow): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/executions/{executionId}/config")
