@@ -78,10 +78,15 @@ abstract class AbstractIntegrationTest : KoinComponent {
 
     @After
     fun tearDown() {
-        DeleteRealmAction(testRealm).executeIt()
-        runBlocking {
-            delay(200)
+        try {
+            DeleteRealmAction(testRealm).executeIt()
+            runBlocking {
+                delay(200)
+            }
+        } catch (e: Exception) {
+            println("Realm cleanup failed during tearDown, continuing: ${e.message}")
+        } finally {
+            stopKoin()
         }
-        stopKoin()
     }
 }
