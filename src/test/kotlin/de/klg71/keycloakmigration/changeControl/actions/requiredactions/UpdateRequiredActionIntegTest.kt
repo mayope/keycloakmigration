@@ -45,6 +45,7 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
     @Test
     fun testUpdateRequiredActions_Rollback() {
         val requiredAction = client.requiredAction(testRealm, "UPDATE_PASSWORD")
+        val originalPriority = requiredAction.priority
         val action = UpdateRequiredActionAction(
             testRealm, requiredAction.alias, null, "update_password2", "Update password 2",
             mapOf(
@@ -86,7 +87,7 @@ class UpdateRequiredActionIntegTest : AbstractIntegrationTest() {
         assertThat(revertedRequiredAction.config).isEmpty()
         assertThat(revertedRequiredAction.defaultAction).isEqualTo(false)
         assertThat(revertedRequiredAction.enabled).isEqualTo(true)
-        assertThat(revertedRequiredAction.priority).isEqualTo(30)
+        assertThat(revertedRequiredAction.priority).isEqualTo(originalPriority)
     }
 
 }
