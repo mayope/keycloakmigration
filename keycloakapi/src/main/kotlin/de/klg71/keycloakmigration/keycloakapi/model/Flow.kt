@@ -78,9 +78,10 @@ data class SubFlow(
     val authenticationExecutions: List<AuthenticationFlowAction>) : AuthenticationFlowAction
 
 /**
- * Body of POST .../flows/{alias}/executions/flow, which adds a subflow to an existing flow or subflow.
- * Keycloak reads "provider" (needed for a form-flow), not "providerId". The endpoint only creates the
- * empty subflow; its executions are added afterwards with separate calls.
+ * Request body of POST .../flows/{alias}/executions/flow, which adds a subflow to the given flow or
+ * subflow. This type only models that request: Keycloak reads "provider" here (needed for a form-flow),
+ * not "providerId". The endpoint just creates the empty subflow; any executions it should contain are
+ * added afterwards with separate calls. For the read model (and nested executions) see [SubFlow].
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class AddSubFlow(

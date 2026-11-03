@@ -55,7 +55,6 @@ class AddSubFlowAction(
         // orphaned subflow is rolled back even if the following retrieval or updates throw.
         setExecuted()
 
-        // A subflow's alias is unique in the realm and is its execution's display name
         val execution = subFlowExecution()
         executionId = execution.id
 
@@ -84,9 +83,12 @@ class AddSubFlowAction(
         }
     }
 
-    private fun subFlowExecution(): AuthenticationExecution =
+    // A subflow's alias is unique in the realm and is its execution's display name
+    private fun findSubFlowExecution(): AuthenticationExecution? =
         client.flowExecutions(realm(), flowAlias).firstOrNull { it.authenticationFlow && it.displayName == alias }
-            ?: throw MigrationException("SubFlow $alias was added but not found in $flowAlias!")
+
+    private fun subFlowExecution(): AuthenticationExecution =
+        findSubFlowExecution() ?: throw MigrationException("SubFlow $alias was added but not found in $flowAlias!")
 
     /**
      * Deleting the subflow's execution also deletes the subflow and everything in it.
@@ -95,9 +97,7 @@ class AddSubFlowAction(
      * back to resolving the subflow's execution by its alias.
      */
     override fun undo() {
-        val id = executionId ?: client.flowExecutions(realm(), flowAlias)
-            .firstOrNull { it.authenticationFlow && it.displayName == alias }?.id
-            ?: return
+        val id = executionId ?: findSubFlowExecution()?.id ?: return
         client.deleteFlowExecution(realm(), id)
     }
 
