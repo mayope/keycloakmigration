@@ -17,7 +17,9 @@ class UpdateSubFlowIntegTest : AbstractIntegrationTest() {
 
     @Test
     fun testUpdateSubFlow() {
-        val alias = "direct grant (copy)"
+        // Keycloak 26.7.3 validates the copied flow alias and rejects '(' / ')'
+        // ("Character '(' not allowed."), so use a name without parentheses.
+        val alias = "direct grant copy"
         val subFlowAlias = "$alias Direct Grant - Conditional OTP"
 
         CopyFlowAction(testRealm, flowAlias = "direct grant", newName = alias).executeIt()
