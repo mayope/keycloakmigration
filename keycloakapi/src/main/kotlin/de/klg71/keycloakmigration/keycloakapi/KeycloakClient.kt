@@ -3,7 +3,6 @@ package de.klg71.keycloakmigration.keycloakapi
 import de.klg71.keycloakmigration.keycloakapi.model.AddClient
 import de.klg71.keycloakmigration.keycloakapi.model.AddClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
-import de.klg71.keycloakmigration.keycloakapi.model.AddSubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AddGroup
 import de.klg71.keycloakmigration.keycloakapi.model.AddIdentityProvider
@@ -13,6 +12,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
 import de.klg71.keycloakmigration.keycloakapi.model.AddRole
 import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
+import de.klg71.keycloakmigration.keycloakapi.model.AddSubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AddUser
 import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederation
 import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederationMapper
