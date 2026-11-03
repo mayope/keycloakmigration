@@ -225,8 +225,8 @@ deleted together with everything added to it.
 - description: String, optional, default = ""
 - type: String = "basic-flow" | "form-flow", optional, default = "basic-flow"
 - provider: String, optional, the form provider of a "form-flow", e.g. "registration-page-form"
-- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL", optional, default = "DISABLED"
-- priority: Integer, optional, default = keycloak's
+- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL", optional, left unset applies Keycloak's default for a new sub flow execution (currently "DISABLED")
+- priority: Integer, optional, left unset applies Keycloak's default for a new sub flow execution
 - executions: List< AuthenticationExecutionImport | SubFlow >, optional, default = emptyList(), the executions to add into the new sub flow
 
 ### Example
