@@ -30,7 +30,7 @@ class AddSubFlowAction(
     private val executions: List<AuthenticationFlowAction> = emptyList()
 ) : Action(realm) {
 
-    private lateinit var executionId: UUID
+    private var executionId: UUID? = null
 
     override fun execute() {
         if (type !in SUB_FLOW_TYPES)
@@ -51,10 +51,13 @@ class AddSubFlowAction(
                 )
         }
 
+        // The subflow now exists, so mark executed before anything else can fail: this guarantees the
+        // orphaned subflow is rolled back even if the following retrieval or updates throw.
+        setExecuted()
+
         // A subflow's alias is unique in the realm and is its execution's display name
         val execution = subFlowExecution()
         executionId = execution.id
-        setExecuted()
 
         // The create endpoint only makes the empty subflow, so add the requested executions into it
         client.addExecutions(realm(), alias, executions)
@@ -64,7 +67,7 @@ class AddSubFlowAction(
                 realm(),
                 flowAlias,
                 UpdateFlowExecution(
-                    executionId,
+                    execution.id,
                     requirement ?: execution.requirement,
                     execution.level,
                     execution.index,
@@ -87,9 +90,15 @@ class AddSubFlowAction(
 
     /**
      * Deleting the subflow's execution also deletes the subflow and everything in it.
+     *
+     * The id may be unknown if execute() failed between creating the subflow and retrieving it, so fall
+     * back to resolving the subflow's execution by its alias.
      */
     override fun undo() {
-        client.deleteFlowExecution(realm(), executionId)
+        val id = executionId ?: client.flowExecutions(realm(), flowAlias)
+            .firstOrNull { it.authenticationFlow && it.displayName == alias }?.id
+            ?: return
+        client.deleteFlowExecution(realm(), id)
     }
 
     override fun name() = "AddSubFlow $alias to $flowAlias"
