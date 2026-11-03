@@ -1,6 +1,7 @@
 package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.AbstractIntegrationTest
+import de.klg71.keycloakmigration.MASKED_VALUE
 import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
@@ -9,7 +10,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import org.koin.core.component.inject
-import java.util.AbstractMap
 import java.util.UUID
 
 class AddFlowIntegTest : AbstractIntegrationTest() {
@@ -42,10 +42,8 @@ class AddFlowIntegTest : AbstractIntegrationTest() {
         assertThat(executions.first().authenticationConfig != null)
         val authenticatorConfiguration =
             client.getAuthenticatorConfiguration(testRealm, executions.first().authenticationConfig!!)
-        assertThat(authenticatorConfiguration.config).containsExactly(
-            AbstractMap.SimpleEntry("foo", "bar"),
-            AbstractMap.SimpleEntry("foo1", "bar1"),
-        )
+        assertThat(authenticatorConfiguration.config.keys).containsExactlyInAnyOrder("foo", "foo1")
+        assertThat(authenticatorConfiguration.config.values).allMatch { it == MASKED_VALUE }
     }
 
     @Test
@@ -76,18 +74,14 @@ class AddFlowIntegTest : AbstractIntegrationTest() {
         assertThat(executions.first().requirement).isEqualTo(Flow.Requirement.REQUIRED)
         val authenticatorConfiguration1 =
             client.getAuthenticatorConfiguration(testRealm, executions.first().authenticationConfig!!)
-        assertThat(authenticatorConfiguration1.config).containsExactly(
-            AbstractMap.SimpleEntry("foo", "bar"),
-            AbstractMap.SimpleEntry("foo1", "bar1"),
-        )
+        assertThat(authenticatorConfiguration1.config.keys).containsExactlyInAnyOrder("foo", "foo1")
+        assertThat(authenticatorConfiguration1.config.values).allMatch { it == MASKED_VALUE }
         assertThat(executions[1].providerId).isEqualTo("idp-confirm-link")
         assertThat(executions[1].requirement).isEqualTo(Flow.Requirement.ALTERNATIVE)
         val authenticatorConfiguration2 =
             client.getAuthenticatorConfiguration(testRealm, executions[1].authenticationConfig!!)
-        assertThat(authenticatorConfiguration2.config).containsExactly(
-            AbstractMap.SimpleEntry("foo2", "bar2"),
-            AbstractMap.SimpleEntry("foo3", "bar3"),
-        )
+        assertThat(authenticatorConfiguration2.config.keys).containsExactlyInAnyOrder("foo2", "foo3")
+        assertThat(authenticatorConfiguration2.config.values).allMatch { it == MASKED_VALUE }
     }
 
     @Test

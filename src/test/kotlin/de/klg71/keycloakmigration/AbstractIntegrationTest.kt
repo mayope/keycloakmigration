@@ -21,6 +21,12 @@ private const val adminPass = "admin"
 @Suppress("TopLevelPropertyNaming")
 const val TEST_BASE_URL = "http://localhost:18080/auth"
 
+/**
+ * Keycloak 26.7.3 masks authenticator/required-action config values in admin API
+ * responses, returning this constant (10 asterisks) while preserving the keys.
+ */
+const val MASKED_VALUE = "**********"
+
 @Suppress("TopLevelPropertyNaming")
 private const val realm = "master"
 
