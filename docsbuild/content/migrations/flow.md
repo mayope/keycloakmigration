@@ -227,7 +227,7 @@ deleted together with everything added to it.
 - provider: String, optional, the form provider of a "form-flow", e.g. "registration-page-form"
 - requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL", optional, default = "DISABLED"
 - priority: Integer, optional, default = keycloak's
-- executions: List, optional, default = empty, the executions to add into the new sub flow
+- executions: List< AuthenticationExecutionImport | SubFlow >, optional, default = emptyList(), the executions to add into the new sub flow
 
 ### Example
 ```yaml
@@ -251,7 +251,8 @@ changes:
       requirement: REQUIRED
 ```
 
-The executions a sub flow should contain can also be passed inline with `executions`:
+The executions a sub flow should contain can also be passed inline with `executions`, using the same
+entries as `addFlow` (see the `AuthenticationExecutionImport` subclass above):
 ```yaml
 id: add-sub-flow-with-executions
 author: isaac.mercieca
@@ -262,12 +263,8 @@ changes:
       alias: Custom Authentication Flow Organization
       requirement: CONDITIONAL
       executions:
-        - authenticationExecutionImport:
-            requirement: ALTERNATIVE
-            providerId: auth-cookie
-            level: 0
-            index: 0
-            priority: 0
+        - requirement: ALTERNATIVE
+          providerId: auth-cookie
 ```
 
 ## UpdateSubFlow
