@@ -3,8 +3,11 @@ package de.klg71.keycloakmigration.changeControl.actions.flow
 import de.klg71.keycloakmigration.AbstractIntegrationTest
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
+import de.klg71.keycloakmigration.keycloakapi.model.SubFlow
 import feign.FeignException
+import java.util.UUID
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
@@ -72,6 +75,71 @@ class AddSubFlowIntegTest : AbstractIntegrationTest() {
         val cookie = client.flowExecutions(testRealm, "Sub").single()
         assertThat(cookie.providerId).isEqualTo("auth-cookie")
         assertThat(cookie.requirement).isEqualTo(Flow.Requirement.ALTERNATIVE)
+    }
+
+    @Test
+    fun testAddSubFlowWithExecutions() {
+        addTopLevelFlow()
+
+        AddSubFlowAction(
+            testRealm, topLevelFlow, "Sub", requirement = Flow.Requirement.REQUIRED,
+            executions = listOf(
+                AuthenticationExecutionImport(
+                    UUID.randomUUID(), Flow.Requirement.ALTERNATIVE, "auth-cookie", 0, 0, 0
+                ),
+                AuthenticationExecutionImport(
+                    UUID.randomUUID(), Flow.Requirement.DISABLED, "auth-otp-form", 0, 1, 0
+                )
+            )
+        ).executeIt()
+
+        val subFlowExecutions = client.flowExecutions(testRealm, "Sub")
+        assertThat(subFlowExecutions.map { it.providerId })
+            .containsExactlyInAnyOrder("auth-cookie", "auth-otp-form")
+        assertThat(subFlowExecutions.first { it.providerId == "auth-cookie" }.requirement)
+            .isEqualTo(Flow.Requirement.ALTERNATIVE)
+    }
+
+    @Test
+    fun testAddSubFlowWithNestedSubFlowExecution() {
+        addTopLevelFlow()
+
+        AddSubFlowAction(
+            testRealm, topLevelFlow, "Sub", requirement = Flow.Requirement.REQUIRED,
+            executions = listOf(
+                SubFlow(
+                    "Nested", "a nested subflow", "basic-flow", "basic-flow",
+                    listOf(
+                        AuthenticationExecutionImport(
+                            UUID.randomUUID(), Flow.Requirement.ALTERNATIVE, "auth-cookie", 0, 0, 0
+                        )
+                    )
+                )
+            )
+        ).executeIt()
+
+        val nested = execution(topLevelFlow, "Nested")
+        assertThat(nested.authenticationFlow).isTrue
+        assertThat(client.flowExecutions(testRealm, "Nested").map { it.providerId }).containsExactly("auth-cookie")
+    }
+
+    @Test
+    fun testUndoAddSubFlowWithExecutionsRemovesEverything() {
+        addTopLevelFlow()
+        val action = AddSubFlowAction(
+            testRealm, topLevelFlow, "Sub", requirement = Flow.Requirement.REQUIRED,
+            executions = listOf(
+                AuthenticationExecutionImport(
+                    UUID.randomUUID(), Flow.Requirement.ALTERNATIVE, "auth-cookie", 0, 0, 0
+                )
+            )
+        )
+        action.executeIt()
+
+        action.undoIt()
+
+        assertThat(client.flowExecutions(testRealm, topLevelFlow)).isEmpty()
+        assertThatThrownBy { client.flowExecutions(testRealm, "Sub") }.isInstanceOf(FeignException::class.java)
     }
 
     @Test

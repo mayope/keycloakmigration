@@ -4,7 +4,9 @@ package de.klg71.keycloakmigration.keycloakapi
 
 import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
+import de.klg71.keycloakmigration.keycloakapi.model.AddSubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationFlowAction
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
 import de.klg71.keycloakmigration.keycloakapi.model.CopyFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
@@ -19,22 +21,44 @@ fun KeycloakClient.importFlow(realm: String, importFlow: ImportFlow): UUID {
         throw KeycloakApiException("Import Flow failed, Flow: ${importFlow.alias} already exists")
     }
     return createFlow(realm, importFlow).also {
-        importFlow.authenticationExecutions.forEach {
-            if (it is AuthenticationExecutionImport) addExecution(realm, importFlow.alias, it)
-            else if (it is SubFlow) configureSubFlow(realm, importFlow.alias, it)
-        }
+        addExecutions(realm, importFlow.alias, importFlow.authenticationExecutions)
     }
 }
 
-private fun KeycloakClient.configureSubFlow(realm: String, flowAlias: String, subflow: SubFlow):UUID {
+private fun KeycloakClient.configureSubFlow(
+    realm: String,
+    flowAlias: String,
+    subflow: AddSubFlow,
+    executions: List<AuthenticationFlowAction>
+): UUID {
     return addSubFlow(
         realm,
         flowAlias,
         subflow
     ).extractLocationUUID().also {
-        subflow.authenticationExecutions.forEach {
-            if (it is AuthenticationExecutionImport) addExecution(realm, subflow.alias, it)
-            else if (it is SubFlow) configureSubFlow(realm, subflow.alias, it)
+        addExecutions(realm, subflow.alias, executions)
+    }
+}
+
+/**
+ * Adds a list of [executions] into the flow (or subflow) identified by [flowAlias]. Plain executions
+ * are added directly; nested subflows are configured recursively. This is the single place that maps
+ * an [AuthenticationFlowAction] to the call that materializes it.
+ */
+fun KeycloakClient.addExecutions(
+    realm: String,
+    flowAlias: String,
+    executions: List<AuthenticationFlowAction>
+) {
+    executions.forEach {
+        when (it) {
+            is AuthenticationExecutionImport -> addExecution(realm, flowAlias, it)
+            // The create endpoint reads "provider", so map SubFlow.providerId onto AddSubFlow.provider.
+            is SubFlow -> configureSubFlow(
+                realm, flowAlias,
+                AddSubFlow(it.alias, it.description, it.type, it.providerId),
+                it.authenticationExecutions
+            )
         }
     }
 }

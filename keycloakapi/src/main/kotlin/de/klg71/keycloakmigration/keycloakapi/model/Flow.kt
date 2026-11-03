@@ -79,7 +79,8 @@ data class SubFlow(
 
 /**
  * Body of POST .../flows/{alias}/executions/flow, which adds a subflow to an existing flow or subflow.
- * Keycloak reads "provider" (needed for a form-flow), not "providerId".
+ * Keycloak reads "provider" (needed for a form-flow), not "providerId". The endpoint only creates the
+ * empty subflow; its executions are added afterwards with separate calls.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class AddSubFlow(

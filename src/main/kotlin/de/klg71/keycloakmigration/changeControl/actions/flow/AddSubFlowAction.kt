@@ -2,9 +2,11 @@ package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.keycloakapi.addExecutions
 import de.klg71.keycloakmigration.keycloakapi.isSuccessful
 import de.klg71.keycloakmigration.keycloakapi.model.AddSubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
+import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationFlowAction
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import feign.FeignException
@@ -24,7 +26,8 @@ class AddSubFlowAction(
     private val type: String = "basic-flow",
     private val provider: String? = null,
     private val requirement: Flow.Requirement? = null,
-    private val priority: Int? = null
+    private val priority: Int? = null,
+    private val executions: List<AuthenticationFlowAction> = emptyList()
 ) : Action(realm) {
 
     private lateinit var executionId: UUID
@@ -52,6 +55,9 @@ class AddSubFlowAction(
         val execution = subFlowExecution()
         executionId = execution.id
         setExecuted()
+
+        // The create endpoint only makes the empty subflow, so add the requested executions into it
+        client.addExecutions(realm(), alias, executions)
 
         if (requirement != null || priority != null) {
             client.updateFlowExecution(
