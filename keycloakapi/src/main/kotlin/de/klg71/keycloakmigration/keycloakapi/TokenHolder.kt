@@ -71,12 +71,15 @@ internal class TokenHolder(private val client: KeycloakLoginClient,
         return token
     }
 
-    private fun getNewToken() = if (!refreshExpired()) {
-        LOG.info("using refreshToken")
-        client.login(realm, "refresh_token", token.refreshToken!!, loginClientId, loginClientSecret)
-    } else {
-        LOG.info("logging in again")
-        initialLogin()
+    private fun getNewToken(): AccessToken {
+        val refreshToken = token.refreshToken
+        return if (refreshToken != null && !refreshExpired()) {
+            LOG.info("using refreshToken")
+            client.login(realm, "refresh_token", refreshToken, loginClientId, loginClientSecret)
+        } else {
+            LOG.info("logging in again")
+            initialLogin()
+        }
     }
 
     private fun initialLogin(): AccessToken {
