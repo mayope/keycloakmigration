@@ -85,7 +85,8 @@ fun migrate(migrationArgs: MigrationArgs) {
                         adminUser(), adminPassword(), adminTotp(),
                         adminUseOauth(), adminUseOauthLocalPort(),
                         baseUrl(), realm(), clientId(), clientSecret(), loginWithClientSecret(), parameters(),
-                        failOnUndefinedVariables(), warnOnUndefinedVariables()
+                        failOnUndefinedVariables(), warnOnUndefinedVariables(),
+                        fallbackToPasswordLogin = fallbackToPasswordLogin(), fallbackClientId = fallbackClientId()
                     )
                 )
                 KeycloakMigration(

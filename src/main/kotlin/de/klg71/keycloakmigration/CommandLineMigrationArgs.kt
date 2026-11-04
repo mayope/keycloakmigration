@@ -3,6 +3,7 @@ package de.klg71.keycloakmigration
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.InvalidArgumentException
 import com.xenomachina.argparser.default
+import de.klg71.keycloakmigration.keycloakapi.DEFAULT_FALLBACK_CLIENT_ID
 
 const val DEFAULT_CHANGELOGFILE = "keycloak-changelog.yml"
 const val DEFAULT_ADMIN_USER = "admin"
@@ -20,6 +21,7 @@ const val DEFAULT_FAIL_ON_UNDEFINED_VARIABLES = false
 const val DEFAULT_DISABLE_WARN_ON_UNDEFINED_VARIABLES = false
 const val DEFAULT_DISABLE_UNMANAGED_ATTRIBUTES_ADMIN_EDIT = false
 const val DEFAULT_LOGIN_WITH_CLIENT_CREDENTIALS = false
+const val DEFAULT_FALLBACK_TO_PASSWORD_LOGIN = false
 
 @Suppress("SpreadOperator", "TooManyFunctions")
 internal class CommandLineMigrationArgs(parser: ArgParser) :
@@ -53,6 +55,21 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
                 " defaulting to $DEFAULT_LOGIN_WITH_CLIENT_CREDENTIALS."
     )
         .default(DEFAULT_ADMIN_USE_OAUTH)
+
+    private val fallbackToPasswordLogin by parser.flagging(
+        names = arrayOf("--fallback-to-password-login"),
+        help = "With --login-with-client-credentials, login with user and password instead if keycloak " +
+                "rejects the client (missing, disabled, no service account or wrong secret)," +
+                " defaulting to $DEFAULT_FALLBACK_TO_PASSWORD_LOGIN."
+    )
+        .default(DEFAULT_FALLBACK_TO_PASSWORD_LOGIN)
+
+    private val fallbackClientId by parser.storing(
+        names = arrayOf("--fallback-client"),
+        help = "Client to use for the password login of --fallback-to-password-login," +
+                " defaulting to $DEFAULT_FALLBACK_CLIENT_ID."
+    )
+        .default(DEFAULT_FALLBACK_CLIENT_ID)
 
     private val adminUseOauthLocalPort by parser.counting(
         names = arrayOf("-P", "--use-oauth-local-port"),
@@ -160,6 +177,8 @@ internal class CommandLineMigrationArgs(parser: ArgParser) :
     override fun clientId() = clientId
     override fun clientSecret() = clientSecret
     override fun loginWithClientSecret() = loginWithClientCredentials
+    override fun fallbackToPasswordLogin() = fallbackToPasswordLogin
+    override fun fallbackClientId() = fallbackClientId
 
     override fun correctHashes() = correctHashes
 

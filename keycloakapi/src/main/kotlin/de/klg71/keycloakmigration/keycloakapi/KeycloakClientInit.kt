@@ -18,6 +18,11 @@ import io.github.resilience4j.retry.RetryConfig
 import java.time.Duration
 
 /**
+ * Client used for the password login when a client credentials login falls back to it
+ */
+const val DEFAULT_FALLBACK_CLIENT_ID = "admin-cli"
+
+/**
  * Builds the [KeycloakClient]
  */
 fun initKeycloakClient(baseUrl: String,
@@ -31,12 +36,15 @@ fun initKeycloakClient(baseUrl: String,
     loginWithClientCredentials: Boolean = false,
     logger: Logger? = null,
     totp: String = "",
-    tokenOffsetMs: Long = 1000) = initObjectMapper().let {
+    tokenOffsetMs: Long = 1000,
+    fallbackToPasswordLogin: Boolean = false,
+    fallbackClientId: String = DEFAULT_FALLBACK_CLIENT_ID) = initObjectMapper().let {
     TokenHolder(
         initKeycloakLoginClient(baseUrl, logger),
         adminUser, adminPassword,
         adminUseOauth, adminUseOauthLocalPort, baseUrl,
-        realm, clientId, clientSecret, totp, tokenOffsetMs, loginWithClientCredentials
+        realm, clientId, clientSecret, totp, tokenOffsetMs, loginWithClientCredentials,
+        fallbackToPasswordLogin, fallbackClientId
     ).let {
         initKeycloakClientWithTokenHolder(baseUrl, logger, it)
     }
