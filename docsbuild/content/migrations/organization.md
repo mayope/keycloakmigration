@@ -101,6 +101,18 @@ Deleted managed members can't be restored.
           alias: organization-alias
 ```
 
+To delete an organization that still has managed members (whose user accounts Keycloak removes
+along with the organization), set `deleteManagedMembers: true`:
+```yaml
+    id: delete-organization-with-managed-members
+    author: isaac.mercieca
+    realm: test
+    changes:
+      - deleteOrganization:
+          alias: organization-alias
+          deleteManagedMembers: true
+```
+
 ## linkIdentityProvider
 Links an existing identity provider to an organization.
 
