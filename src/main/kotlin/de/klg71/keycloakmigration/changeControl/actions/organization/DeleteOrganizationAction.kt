@@ -59,12 +59,18 @@ class DeleteOrganizationAction(
             AddOrganization(original.name, original.alias, original.redirectUrl, original.domains, original.attributes)
         )
         val recreated = client.organizationByAlias(alias, realm())
-        linkedIdentityProviders.forEach {
+        linkedIdentityProviders.forEach { identityProviderAlias ->
             client.linkIdentityProviderToOrganization(
                 realm = realm(),
                 orgId = recreated.id.toString(),
-                identityProviderAlias = it
-            )
+                identityProviderAlias = identityProviderAlias
+            ).run {
+                if (!isSuccessful())
+                    throw MigrationException(
+                        "Failed to re-link identity provider $identityProviderAlias to organization with " +
+                            "alias: $alias. Status: ${status()}, Reason: ${reason()}"
+                    )
+            }
         }
         unmanagedMembers.forEach { userId ->
             client.addOrganizationMember(realm(), recreated.id.toString(), userId).run {
