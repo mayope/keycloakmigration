@@ -18,7 +18,7 @@ class AddAdLdapFullNameMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapFullNameMapper() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
@@ -48,7 +48,7 @@ class AddAdLdapFullNameMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapFullNameMapper_Undo() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"

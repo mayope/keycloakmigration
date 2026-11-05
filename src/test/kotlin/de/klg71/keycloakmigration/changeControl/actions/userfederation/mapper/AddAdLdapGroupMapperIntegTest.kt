@@ -19,7 +19,7 @@ class AddAdLdapGroupMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapGroupMapper() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
@@ -51,7 +51,7 @@ class AddAdLdapGroupMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapGroupMapper_Undo() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"

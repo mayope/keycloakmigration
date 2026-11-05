@@ -20,7 +20,7 @@ class AddAdLdapMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapMapper() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
@@ -58,7 +58,7 @@ class AddAdLdapMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapMapper_duplicate() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
@@ -102,7 +102,7 @@ class AddAdLdapMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapMapper_Undo() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"

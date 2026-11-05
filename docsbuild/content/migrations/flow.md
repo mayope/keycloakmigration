@@ -208,6 +208,65 @@ changes:
       provider: my-custom-provider
 ```
 
+## AddSubFlow
+Adds a sub flow to an existing flow. The parent can be a top-level flow or another sub flow, so a sub
+flow can be nested in a sub flow by pointing `flowAlias` at it. Executions can be supplied inline via
+`executions`, or added afterwards with `addFlowExecution` using the sub flow's alias as `flowAlias`.
+Inline `executions` accept the same entries as a flow's executions: `authenticationExecutionImport`
+entries and nested sub flows.
+
+A sub flow's alias has to be unique in the realm, like any flow's alias. On rollback the sub flow is
+deleted together with everything added to it.
+
+### Parameters
+- realm: String, optional
+- flowAlias: String, not optional, alias of the parent flow or sub flow
+- alias: String, not optional, alias of the new sub flow
+- description: String, optional, default = ""
+- type: String = "basic-flow" | "form-flow", optional, default = "basic-flow"
+- provider: String, optional, the form provider of a "form-flow", e.g. "registration-page-form"
+- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL", optional, left unset applies Keycloak's default for a new sub flow execution (currently "DISABLED")
+- priority: Integer, optional, left unset applies Keycloak's default for a new sub flow execution
+- executions: List< AuthenticationExecutionImport | SubFlow >, optional, default = emptyList(), the executions to add into the new sub flow
+
+### Example
+```yaml
+id: add-sub-flow
+author: isaac.mercieca
+realm: integ-test
+changes:
+  - addSubFlow:
+      flowAlias: Custom Authentication Flow
+      alias: Custom Authentication Flow Organization
+      requirement: CONDITIONAL
+      priority: 20
+  - addSubFlow:
+      flowAlias: Custom Authentication Flow Organization
+      alias: Custom Authentication Flow Organization Identity Provider
+      requirement: REQUIRED
+  - addFlowExecution:
+      flowAlias: Custom Authentication Flow Organization Identity Provider
+      provider: identity-provider-redirector
+      executionAlias: organization identity provider
+      requirement: REQUIRED
+```
+
+The executions a sub flow should contain can also be passed inline with `executions`, using the same
+entries as `addFlow` (see the `AuthenticationExecutionImport` subclass above):
+```yaml
+id: add-sub-flow-with-executions
+author: isaac.mercieca
+realm: integ-test
+changes:
+  - addSubFlow:
+      flowAlias: Custom Authentication Flow
+      alias: Custom Authentication Flow Organization
+      requirement: CONDITIONAL
+      executions:
+        - requirement: ALTERNATIVE
+          providerId: auth-cookie
+```
+
 ## UpdateSubFlow
 Updates a sub flow, if one exists
 

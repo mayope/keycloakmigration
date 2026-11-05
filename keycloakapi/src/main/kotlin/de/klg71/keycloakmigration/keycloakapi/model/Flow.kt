@@ -1,5 +1,6 @@
 package de.klg71.keycloakmigration.keycloakapi.model
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import java.util.UUID
@@ -75,6 +76,19 @@ data class SubFlow(
     val providerId: String,
     val type: String,
     val authenticationExecutions: List<AuthenticationFlowAction>) : AuthenticationFlowAction
+
+/**
+ * Request body of POST .../flows/{alias}/executions/flow, which adds a subflow to the given flow or
+ * subflow. This type only models that request: Keycloak reads "provider" here (needed for a form-flow),
+ * not "providerId". The endpoint just creates the empty subflow; any executions it should contain are
+ * added afterwards with separate calls. For the read model (and nested executions) see [SubFlow].
+ */
+@JsonInclude(JsonInclude.Include.NON_NULL)
+data class AddSubFlow(
+    val alias: String,
+    val description: String,
+    val type: String,
+    val provider: String? = null)
 
 data class ImportFlow(
     val alias: String,

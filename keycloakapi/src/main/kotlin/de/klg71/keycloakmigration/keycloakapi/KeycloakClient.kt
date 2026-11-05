@@ -12,6 +12,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
 import de.klg71.keycloakmigration.keycloakapi.model.AddRole
 import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
+import de.klg71.keycloakmigration.keycloakapi.model.AddSubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AddUser
 import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederation
 import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederationMapper
@@ -43,7 +44,6 @@ import de.klg71.keycloakmigration.keycloakapi.model.ResourceRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.model.ServerInfo
-import de.klg71.keycloakmigration.keycloakapi.model.SubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
@@ -563,7 +563,7 @@ interface KeycloakClient {
     fun addSubFlow(
         @Param("realm") realm: String,
         @Param("alias") alias: String,
-        addFlow: SubFlow): Response
+        addSubFlow: AddSubFlow): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/executions/{executionId}/config")

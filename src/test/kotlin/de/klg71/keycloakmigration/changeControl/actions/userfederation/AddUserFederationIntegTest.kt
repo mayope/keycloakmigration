@@ -18,7 +18,7 @@ class AddUserFederationIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddUserFederation() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
@@ -43,7 +43,7 @@ class AddUserFederationIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddUserFederationAlreadyExists() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
@@ -71,7 +71,7 @@ class AddUserFederationIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddUserFederation_Rollback() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
