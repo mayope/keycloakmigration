@@ -34,4 +34,11 @@ data class OrganizationGroup(
     val path: String? = null,
     val attributes: Map<String, List<String>>? = null,
     val subGroups: List<OrganizationGroup>? = null
-)
+) {
+    /**
+     * A copy suitable as a create body: the server-assigned id and path are dropped, recursively,
+     * so Keycloak creates new groups rather than attempting to move groups by a now-deleted id.
+     */
+    fun forCreate(): OrganizationGroup =
+        copy(id = null, path = null, subGroups = subGroups?.map { it.forCreate() })
+}

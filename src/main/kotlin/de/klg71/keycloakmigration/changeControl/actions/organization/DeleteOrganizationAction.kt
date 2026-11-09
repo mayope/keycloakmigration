@@ -94,7 +94,9 @@ class DeleteOrganizationAction(
             }
         }
         organizationGroups.forEach { group ->
-            client.addOrganizationGroup(realm(), recreated.id.toString(), group).run {
+            // Strip the captured id/path: with an id present Keycloak treats the POST as a move of an
+            // existing group (which was deleted), returning 404. Without it, a new group is created.
+            client.addOrganizationGroup(realm(), recreated.id.toString(), group.forCreate()).run {
                 if (!isSuccessful())
                     throw MigrationException(
                         "Failed to restore group ${group.name} to organization with alias: $alias. " +
