@@ -145,24 +145,31 @@ class DeleteOrganizationAction(
     private fun restoreGroupMemberships(orgId: UUID) {
         if (groupMemberships.isEmpty()) return
         val survivingUsers = unmanagedMembers.toSet()
-        val groupIdByPath = mutableMapOf<String, UUID>()
-        fun index(group: OrganizationGroup) {
-            group.path?.let { path -> group.id?.let { id -> groupIdByPath[path] = id } }
-            group.subGroups?.forEach(::index)
-        }
-        client.allOrganizationGroups(realm(), orgId).forEach(::index)
+        val groupIdByPath = groupIdsByPath(client.allOrganizationGroups(realm(), orgId))
 
         groupMemberships.forEach { (path, userIds) ->
             val groupId = groupIdByPath[path] ?: return@forEach
-            userIds.filter { it in survivingUsers }.forEach { userId ->
-                client.addOrganizationGroupMember(realm(), orgId.toString(), groupId.toString(), userId).run {
-                    if (!isSuccessful())
-                        throw MigrationException(
-                            "Failed to restore membership of user $userId in group $path of organization " +
-                                "with alias: $alias. Status: ${status()}, Reason: ${reason()}"
-                        )
-                }
-            }
+            userIds.filter { it in survivingUsers }
+                .forEach { userId -> restoreGroupMembership(orgId, groupId, path, userId) }
+        }
+    }
+
+    /** Flattens the group tree into a path -> id map, so memberships can be matched by path. */
+    private fun groupIdsByPath(groups: List<OrganizationGroup>): Map<String, UUID> =
+        groups.flatMap { group ->
+            val path = group.path
+            val id = group.id
+            val self = if (path != null && id != null) listOf(path to id) else emptyList()
+            self + groupIdsByPath(group.subGroups ?: emptyList()).toList()
+        }.toMap()
+
+    private fun restoreGroupMembership(orgId: UUID, groupId: UUID, path: String, userId: String) {
+        client.addOrganizationGroupMember(realm(), orgId.toString(), groupId.toString(), userId).run {
+            if (!isSuccessful())
+                throw MigrationException(
+                    "Failed to restore membership of user $userId in group $path of organization " +
+                        "with alias: $alias. Status: ${status()}, Reason: ${reason()}"
+                )
         }
     }
 
