@@ -10,7 +10,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Organization
 import de.klg71.keycloakmigration.keycloakapi.organizationByAlias
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
 
-private const val MANAGED_MEMBERSHIP = "MANAGED"
+private const val UNMANAGED_MEMBERSHIP = "UNMANAGED"
 
 class DeleteOrganizationAction(
     realm: String?,
@@ -30,13 +30,16 @@ class DeleteOrganizationAction(
         linkedIdentityProviders = client.organizationIdentityProviders(realm(), original.id.toString())
             .map { it.alias }
 
-        // Keycloak deletes managed members' user accounts together with the organization
-        val (managed, unmanaged) = client.allOrganizationMembers(realm(), original.id)
-            .partition { it.membershipType == MANAGED_MEMBERSHIP }
+        // Keycloak deletes managed members' user accounts together with the organization. Only members
+        // Keycloak positively reports as UNMANAGED are treated as safe; a MANAGED, missing or unrecognised
+        // membershipType counts as managed, so the guard fails safe rather than risking user deletion.
+        val (unmanaged, managed) = client.allOrganizationMembers(realm(), original.id)
+            .partition { it.membershipType == UNMANAGED_MEMBERSHIP }
         if (managed.isNotEmpty() && !deleteManagedMembers)
             throw MigrationException(
-                "Organization with alias: $alias has ${managed.size} managed member(s), whose users Keycloak " +
-                    "deletes with the organization. Set deleteManagedMembers: true to delete it anyway."
+                "Organization with alias: $alias has ${managed.size} member(s) whose users Keycloak may " +
+                    "delete with the organization (membershipType is not UNMANAGED). Set deleteManagedMembers: " +
+                    "true to delete it anyway."
             )
         unmanagedMembers = unmanaged.map { it.id.toString() }
 

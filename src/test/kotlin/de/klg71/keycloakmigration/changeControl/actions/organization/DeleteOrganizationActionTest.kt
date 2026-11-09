@@ -68,7 +68,7 @@ class DeleteOrganizationActionTest : KoinTest {
     fun testRefusesToDeleteOrganizationWithManagedMembers() {
         assertThatThrownBy { DeleteOrganizationAction(realmName, alias).executeIt() }
             .isInstanceOf(MigrationException::class.java)
-            .hasMessageContaining("1 managed member(s)")
+            .hasMessageContaining("1 member(s)")
 
         verify(exactly = 0) { client.deleteOrganization(any(), any()) }
     }
@@ -78,6 +78,20 @@ class DeleteOrganizationActionTest : KoinTest {
         DeleteOrganizationAction(realmName, alias, deleteManagedMembers = true).executeIt()
 
         verify(exactly = 1) { client.deleteOrganization(organization.id, realmName) }
+    }
+
+    @Test
+    fun testTreatsNonUnmanagedMembershipAsManaged() {
+        every { client.organizationMembers(realmName, organization.id.toString(), 0, any()) } returns listOf(
+            OrganizationMember(UUID.randomUUID(), "null-type-user", null),
+            OrganizationMember(UUID.randomUUID(), "unknown-type-user", "SOMETHING_NEW")
+        )
+
+        assertThatThrownBy { DeleteOrganizationAction(realmName, alias).executeIt() }
+            .isInstanceOf(MigrationException::class.java)
+            .hasMessageContaining("2 member(s)")
+
+        verify(exactly = 0) { client.deleteOrganization(any(), any()) }
     }
 
     private fun noContent() = Response.builder()
