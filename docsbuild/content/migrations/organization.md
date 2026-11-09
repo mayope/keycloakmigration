@@ -71,6 +71,48 @@ Updates an existing organization. The alias may not be updated.
 - name: String,
 - verified: Boolean, optional, default=false
 
+## deleteOrganization
+Deletes an existing organization, identified by its alias. Identity providers linked to the
+organization are unlinked but not deleted.
+
+What happens to members depends on how they joined:
+- Unmanaged members (users added to the organization) only lose their membership.
+- Managed members (users created by signing in through the organization's identity provider) are
+  deleted from the realm by Keycloak together with the organization. To protect them, the action
+  fails if the organization has managed members, unless `deleteManagedMembers` is set.
+
+On rollback, the organization is recreated with its name, alias, redirectUrl, domains and
+attributes. Its identity providers are linked again and its unmanaged members are added back.
+Deleted managed members can't be restored.
+
+### Parameters
+- realm: String, optional,
+- alias: String, not optional,
+- deleteManagedMembers: Boolean, optional, default=false, also delete the organization if this
+  deletes its managed members' users
+
+### Example
+```yaml
+    id: delete-organization
+    author: isaac.mercieca
+    realm: test
+    changes:
+      - deleteOrganization:
+          alias: organization-alias
+```
+
+To delete an organization that still has managed members (whose user accounts Keycloak removes
+along with the organization), set `deleteManagedMembers: true`:
+```yaml
+    id: delete-organization-with-managed-members
+    author: isaac.mercieca
+    realm: test
+    changes:
+      - deleteOrganization:
+          alias: organization-alias
+          deleteManagedMembers: true
+```
+
 ## linkIdentityProvider
 Links an existing identity provider to an organization.
 
