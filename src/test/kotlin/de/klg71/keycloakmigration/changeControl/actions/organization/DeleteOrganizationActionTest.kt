@@ -56,6 +56,7 @@ class DeleteOrganizationActionTest : KoinTest {
             OrganizationMember(UUID.randomUUID(), "managed-user", "MANAGED"),
             OrganizationMember(UUID.randomUUID(), "unmanaged-user", "UNMANAGED")
         )
+        every { client.organizationGroups(realmName, organization.id.toString(), 0, any()) } returns emptyList()
         every { client.deleteOrganization(organization.id, realmName) } returns noContent()
     }
 

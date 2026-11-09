@@ -3,12 +3,16 @@ package de.klg71.keycloakmigration.changeControl.actions.organization
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
 import de.klg71.keycloakmigration.keycloakapi.addOrganization
+import de.klg71.keycloakmigration.keycloakapi.allOrganizationGroupMembers
+import de.klg71.keycloakmigration.keycloakapi.allOrganizationGroups
 import de.klg71.keycloakmigration.keycloakapi.allOrganizationMembers
 import de.klg71.keycloakmigration.keycloakapi.isSuccessful
 import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.Organization
+import de.klg71.keycloakmigration.keycloakapi.model.OrganizationGroup
 import de.klg71.keycloakmigration.keycloakapi.organizationByAlias
 import de.klg71.keycloakmigration.keycloakapi.realmExistsById
+import java.util.UUID
 
 private const val UNMANAGED_MEMBERSHIP = "UNMANAGED"
 
@@ -21,6 +25,9 @@ class DeleteOrganizationAction(
     private lateinit var original: Organization
     private var linkedIdentityProviders: List<String> = emptyList()
     private var unmanagedMembers: List<String> = emptyList()
+    private var organizationGroups: List<OrganizationGroup> = emptyList()
+    // group path -> ids of the users that were members of that group, captured before delete
+    private var groupMemberships: Map<String, List<String>> = emptyMap()
 
     override fun execute() {
         if (!client.realmExistsById(realm()))
@@ -43,6 +50,12 @@ class DeleteOrganizationAction(
             )
         unmanagedMembers = unmanaged.map { it.id.toString() }
 
+        // Captured before the delete so undo can rebuild the organization's group hierarchy and the
+        // memberships within it. Memberships are keyed by group path, which is stable across the
+        // recreate (ids are not), and only surviving (unmanaged) users can actually be re-added.
+        organizationGroups = client.allOrganizationGroups(realm(), original.id)
+        groupMemberships = captureGroupMemberships(original.id, organizationGroups)
+
         client.deleteOrganization(original.id, realm()).run {
             if (!isSuccessful())
                 throw MigrationException(
@@ -53,8 +66,13 @@ class DeleteOrganizationAction(
     }
 
     /**
-     * Recreates the organization, re-links its identity providers and re-adds its unmanaged members.
-     * Managed members' users were deleted by Keycloak and can't be restored.
+     * Recreates the organization, re-links its identity providers, restores its group hierarchy,
+     * re-adds its unmanaged members and restores those members' group memberships.
+     *
+     * The recreated organization and groups get fresh ids, so groups are matched back to their
+     * captured memberships by path. Managed members' users were deleted by Keycloak with the
+     * organization and cannot be restored, so only surviving (unmanaged) users are re-added to the
+     * organization and to their groups; a membership of a user that no longer exists is skipped.
      */
     override fun undo() {
         client.addOrganization(
@@ -75,6 +93,16 @@ class DeleteOrganizationAction(
                     )
             }
         }
+        organizationGroups.forEach { group ->
+            client.addOrganizationGroup(realm(), recreated.id.toString(), group).run {
+                if (!isSuccessful())
+                    throw MigrationException(
+                        "Failed to restore group ${group.name} to organization with alias: $alias. " +
+                            "Status: ${status()}, Reason: ${reason()}"
+                    )
+            }
+        }
+        // Members must be re-added to the organization before they can be re-added to its groups.
         unmanagedMembers.forEach { userId ->
             client.addOrganizationMember(realm(), recreated.id.toString(), userId).run {
                 if (!isSuccessful())
@@ -82,6 +110,56 @@ class DeleteOrganizationAction(
                         "Failed to re-add member $userId to organization with alias: $alias. " +
                             "Status: ${status()}, Reason: ${reason()}"
                     )
+            }
+        }
+        restoreGroupMemberships(recreated.id)
+    }
+
+    /**
+     * Walks the captured group tree and records, per group path, the ids of the users that were
+     * members of each group. Group paths are stable across the recreate; group ids are not.
+     */
+    private fun captureGroupMemberships(
+        orgId: UUID,
+        groups: List<OrganizationGroup>
+    ): Map<String, List<String>> {
+        val memberships = mutableMapOf<String, List<String>>()
+        fun visit(group: OrganizationGroup) {
+            val path = group.path ?: return
+            val groupId = group.id ?: return
+            memberships[path] = client.allOrganizationGroupMembers(realm(), orgId, groupId)
+                .map { it.id.toString() }
+            group.subGroups?.forEach(::visit)
+        }
+        groups.forEach(::visit)
+        return memberships
+    }
+
+    /**
+     * Re-adds each captured membership to the recreated organization's groups, matching groups by
+     * path. Users that no longer exist (managed members deleted with the organization) are skipped,
+     * since they cannot and should not be re-added.
+     */
+    private fun restoreGroupMemberships(orgId: UUID) {
+        if (groupMemberships.isEmpty()) return
+        val survivingUsers = unmanagedMembers.toSet()
+        val groupIdByPath = mutableMapOf<String, UUID>()
+        fun index(group: OrganizationGroup) {
+            group.path?.let { path -> group.id?.let { id -> groupIdByPath[path] = id } }
+            group.subGroups?.forEach(::index)
+        }
+        client.allOrganizationGroups(realm(), orgId).forEach(::index)
+
+        groupMemberships.forEach { (path, userIds) ->
+            val groupId = groupIdByPath[path] ?: return@forEach
+            userIds.filter { it in survivingUsers }.forEach { userId ->
+                client.addOrganizationGroupMember(realm(), orgId.toString(), groupId.toString(), userId).run {
+                    if (!isSuccessful())
+                        throw MigrationException(
+                            "Failed to restore membership of user $userId in group $path of organization " +
+                                "with alias: $alias. Status: ${status()}, Reason: ${reason()}"
+                        )
+                }
             }
         }
     }

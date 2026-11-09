@@ -21,3 +21,17 @@ data class OrganizationMember(
     val username: String,
     val membershipType: String? = null
 )
+
+/**
+ * An organization group as returned by GET .../organizations/{orgId}/groups and accepted as the body
+ * of the matching POST. Only the fields needed to restore a deleted organization's group structure
+ * are modelled: the name, its attributes, and its nested subgroups. Keycloak assigns a fresh id when
+ * the group is recreated, and the id is read-only on create, so it is intentionally not sent back.
+ */
+data class OrganizationGroup(
+    val id: UUID? = null,
+    val name: String,
+    val path: String? = null,
+    val attributes: Map<String, List<String>>? = null,
+    val subGroups: List<OrganizationGroup>? = null
+)

@@ -7,6 +7,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Client
 import de.klg71.keycloakmigration.keycloakapi.model.ClientScope
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.Organization
+import de.klg71.keycloakmigration.keycloakapi.model.OrganizationGroup
 import de.klg71.keycloakmigration.keycloakapi.model.OrganizationMember
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
@@ -295,14 +296,34 @@ fun KeycloakClient.organizationByAlias(alias: String, realm: String): Organizati
     throw KeycloakApiException("Organization with alias: $alias does not exist in realm: $realm!")
 }
 
-private const val ORGANIZATION_MEMBERS_PAGE_SIZE = 100
+private const val ORGANIZATION_PAGE_SIZE = 100
 
 fun KeycloakClient.allOrganizationMembers(realm: String, orgId: UUID): List<OrganizationMember> {
     val members = mutableListOf<OrganizationMember>()
     do {
-        val page = organizationMembers(realm, orgId.toString(), members.size, ORGANIZATION_MEMBERS_PAGE_SIZE)
+        val page = organizationMembers(realm, orgId.toString(), members.size, ORGANIZATION_PAGE_SIZE)
         members += page
-    } while (page.size == ORGANIZATION_MEMBERS_PAGE_SIZE)
+    } while (page.size == ORGANIZATION_PAGE_SIZE)
+    return members
+}
+
+fun KeycloakClient.allOrganizationGroups(realm: String, orgId: UUID): List<OrganizationGroup> {
+    val groups = mutableListOf<OrganizationGroup>()
+    do {
+        val page = organizationGroups(realm, orgId.toString(), groups.size, ORGANIZATION_PAGE_SIZE)
+        groups += page
+    } while (page.size == ORGANIZATION_PAGE_SIZE)
+    return groups
+}
+
+fun KeycloakClient.allOrganizationGroupMembers(realm: String, orgId: UUID, groupId: UUID): List<OrganizationMember> {
+    val members = mutableListOf<OrganizationMember>()
+    do {
+        val page = organizationGroupMembers(
+            realm, orgId.toString(), groupId.toString(), members.size, ORGANIZATION_PAGE_SIZE
+        )
+        members += page
+    } while (page.size == ORGANIZATION_PAGE_SIZE)
     return members
 }
 

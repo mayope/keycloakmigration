@@ -6,9 +6,12 @@ import de.klg71.keycloakmigration.changeControl.actions.realm.UpdateRealmAction
 import de.klg71.keycloakmigration.changeControl.actions.user.AddUserAction
 import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
 import de.klg71.keycloakmigration.keycloakapi.KeycloakClient
+import de.klg71.keycloakmigration.keycloakapi.allOrganizationGroupMembers
+import de.klg71.keycloakmigration.keycloakapi.allOrganizationGroups
 import de.klg71.keycloakmigration.keycloakapi.allOrganizationMembers
 import de.klg71.keycloakmigration.keycloakapi.isSuccessful
 import de.klg71.keycloakmigration.keycloakapi.model.OrganizationDomain
+import de.klg71.keycloakmigration.keycloakapi.model.OrganizationGroup
 import de.klg71.keycloakmigration.keycloakapi.organizationByAlias
 import de.klg71.keycloakmigration.keycloakapi.userByName
 import org.assertj.core.api.Assertions.assertThat
@@ -63,6 +66,19 @@ class DeleteOrganizationIntegTest : AbstractIntegrationTest() {
         assertThat(client.addOrganizationMember(testRealm, organization.id.toString(), userId).isSuccessful()).isTrue()
     }
 
+    private val groupName = "delete-group"
+
+    private fun addOrganizationGroup() {
+        val organization = client.organizationByAlias(alias, testRealm)
+        assertThat(
+            client.addOrganizationGroup(
+                testRealm,
+                organization.id.toString(),
+                OrganizationGroup(name = groupName, attributes = mapOf("custom" to listOf("value")))
+            ).isSuccessful()
+        ).isTrue()
+    }
+
     @Test
     fun testDeleteOrganization() {
         addOrganization()
@@ -98,6 +114,45 @@ class DeleteOrganizationIntegTest : AbstractIntegrationTest() {
 
         assertThatThrownBy { DeleteOrganizationAction(testRealm, "missing-alias").executeIt() }
             .isInstanceOf(KeycloakApiException::class.java)
+    }
+
+    @Test
+    fun testUndoDeleteOrganizationRestoresGroups() {
+        addOrganization()
+        addOrganizationGroup()
+        val original = client.organizationByAlias(alias, testRealm)
+        val originalGroups = client.allOrganizationGroups(testRealm, original.id).map { it.name }
+
+        val action = DeleteOrganizationAction(testRealm, alias)
+        action.executeIt()
+        action.undoIt()
+
+        val restored = client.organizationByAlias(alias, testRealm)
+        assertThat(client.allOrganizationGroups(testRealm, restored.id).map { it.name })
+            .containsExactlyInAnyOrderElementsOf(originalGroups)
+            .contains(groupName)
+    }
+
+    @Test
+    fun testUndoDeleteOrganizationRestoresGroupMemberships() {
+        addOrganization()
+        addOrganizationGroup()
+        addUnmanagedMember()
+        val org = client.organizationByAlias(alias, testRealm)
+        val groupId = client.allOrganizationGroups(testRealm, org.id).first { it.name == groupName }.id!!
+        val userId = client.userByName(memberName, testRealm).id.toString()
+        assertThat(
+            client.addOrganizationGroupMember(testRealm, org.id.toString(), groupId.toString(), userId).isSuccessful()
+        ).isTrue()
+
+        val action = DeleteOrganizationAction(testRealm, alias)
+        action.executeIt()
+        action.undoIt()
+
+        val restored = client.organizationByAlias(alias, testRealm)
+        val restoredGroupId = client.allOrganizationGroups(testRealm, restored.id).first { it.name == groupName }.id!!
+        assertThat(client.allOrganizationGroupMembers(testRealm, restored.id, restoredGroupId).map { it.username })
+            .contains(memberName)
     }
 
     @Test
