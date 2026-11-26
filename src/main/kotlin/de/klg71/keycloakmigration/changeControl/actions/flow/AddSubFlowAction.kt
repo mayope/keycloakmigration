@@ -13,7 +13,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.Flow
 import feign.FeignException
 import java.util.UUID
 
-private val SUB_FLOW_TYPES = setOf("basic-flow", "form-flow")
+internal val SUB_FLOW_TYPES = setOf("basic-flow", "form-flow")
 
 /**
  * Adds a subflow to an existing flow. The parent can itself be a subflow, which nests one subflow in another.

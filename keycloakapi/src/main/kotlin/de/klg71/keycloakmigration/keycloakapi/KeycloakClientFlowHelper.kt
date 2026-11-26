@@ -221,9 +221,17 @@ fun KeycloakClient.restoreFlowSnapshot(realm: String, flowAlias: String, nodes: 
 
 /**
  * Creates the top-level flow [flow] and fills it with the executions of a [flowSnapshot]. Returns its id.
+ * [onCreated] gets the id as soon as the flow exists, before it is filled.
  */
-fun KeycloakClient.createFlowFromSnapshot(realm: String, flow: AddFlow, nodes: List<FlowNode>): UUID =
-    addFlow(realm, flow).extractLocationUUID().also { restoreFlowSnapshot(realm, flow.alias, nodes) }
+fun KeycloakClient.createFlowFromSnapshot(
+    realm: String,
+    flow: AddFlow,
+    nodes: List<FlowNode>,
+    onCreated: (UUID) -> Unit = {}
+): UUID = addFlow(realm, flow).extractLocationUUID().also {
+    onCreated(it)
+    restoreFlowSnapshot(realm, flow.alias, nodes)
+}
 
 /**
  * Adds an execution of [providerId] to the flow (or sub flow) [flowAlias] and returns its id. A

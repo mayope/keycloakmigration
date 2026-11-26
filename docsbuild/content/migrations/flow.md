@@ -158,6 +158,80 @@ changes:
     alias: trust-foreign-idp
 ```
 
+## ReplaceFlow
+Makes a top-level flow match the declared tree of executions and sub flows, whatever it looks like now.
+If no flow has this alias, it is created.
+
+- **Matching flows are left alone.** The flow is compared first: if its description, provider and whole
+  tree already match, nothing changes, so running the change again is safe.
+- **No half-built flow is ever in use.** Otherwise the new tree is built next to the old flow under
+  temporary aliases ending in ` replacing-<id>`. Everything that uses the old flow then moves to the new
+  one, one update each: the realm's flow settings (browser, direct grant, reset credentials and so on),
+  client authentication flow overrides and identity provider first and post broker login flows. Then
+  the old flow is deleted, and the new flow, its sub flows and its configs get their final aliases.
+- **Rollback** puts the old flow back as it was, with everything that used it.
+- Built-in flows can't be replaced.
+- Keycloak masks some config values when they are read: secrets, and keys the provider doesn't declare.
+  Those can't be compared, so they count as equal: changing only such a value doesn't trigger a
+  replacement. They can't be recreated either, so a flow whose configs have such values isn't replaced:
+  a rollback couldn't rebuild it.
+- Sub flow and config aliases are unique in the realm. If another flow already uses one of the declared
+  aliases, the change fails before anything changes. Only configs that some execution uses can be
+  checked: Keycloak has no call to list a realm's configs, and it doesn't check aliases when a config is
+  renamed. A config no execution uses that has a declared alias ends up sharing it.
+- A temporary flow left behind by a run that was stopped is deleted on the next run if nothing uses it.
+  If it is in use and no flow has the final alias, the run was stopped after it deleted the old flow:
+  the next run finishes the rename and carries on. In any other case the change fails and the flow needs
+  to be looked at.
+
+### Parameters
+- realm: String, optional
+- alias: String, not optional, alias of the top-level flow
+- description: String, optional, default = ""
+- providerId: String, optional, default = "basic-flow"
+- executions: List< FlowEntry >, optional, default = emptyList(), the whole tree of the flow
+
+#### FlowEntry
+An entry with `providerId` is an execution, an entry with `alias` is a sub flow.
+- providerId: String, the authenticator of an execution
+- alias: String, the alias of a sub flow, unique in the realm
+- requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL", not optional
+- priority: Integer, optional, default = the position in the list times 10
+- config: Map<String, String>, optional, executions only, default = no config. Keycloak drops empty values, so they are ignored
+- configAlias: String, optional, executions only, default = "<parent alias> <providerId>"
+- type: String = "basic-flow" | "form-flow", optional, sub flows only, default = "basic-flow"
+- provider: String, optional, sub flows only, the form provider of a "form-flow"
+- description: String, optional, sub flows only, default = ""
+- executions: List< FlowEntry >, optional, sub flows only, default = emptyList()
+
+### Example
+```yaml
+id: replace-flow
+author: isaac.mercieca
+realm: integ-test
+changes:
+  - replaceFlow:
+      alias: Browser With MFA
+      description: Browser login with mandatory MFA
+      executions:
+        - providerId: auth-cookie
+          requirement: ALTERNATIVE
+        - alias: Browser With MFA forms
+          requirement: ALTERNATIVE
+          executions:
+            - providerId: auth-username-password-form
+              requirement: REQUIRED
+            - alias: Browser With MFA - MFA Selection
+              requirement: CONDITIONAL
+              executions:
+                - providerId: conditional-user-configured
+                  requirement: REQUIRED
+                - providerId: webauthn-authenticator
+                  requirement: ALTERNATIVE
+                - providerId: auth-otp-form
+                  requirement: ALTERNATIVE
+```
+
 ## CopyFlow
 Copies an authentication flow
 
