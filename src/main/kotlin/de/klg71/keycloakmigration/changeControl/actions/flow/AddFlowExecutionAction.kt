@@ -1,11 +1,10 @@
 package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.keycloakapi.extractLocationUUID
-import de.klg71.keycloakmigration.keycloakapi.model.AddFlowExecution
+import de.klg71.keycloakmigration.keycloakapi.addExecutionConfig
+import de.klg71.keycloakmigration.keycloakapi.addExecutionToFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticatorConfig
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import java.util.UUID
 
 @Suppress("LongParameterList")
@@ -22,32 +21,16 @@ class AddFlowExecutionAction(
     private lateinit var executionId: UUID
 
     override fun execute() {
-        executionId = client.addFlowExecution(realm(), flowAlias, AddFlowExecution(provider)).extractLocationUUID()
-
-        if (requirement != null || priority != null) {
-            val executions = client.flowExecutions(realm(), flowAlias)
-            val execution = executions.first { it.id == executionId }
-
-            client.updateFlowExecution(
-                realm(),
-                flowAlias,
-                UpdateFlowExecution(
-                    executionId,
-                    requirement ?: execution.requirement,
-                    execution.level,
-                    execution.index,
-                    priority ?: execution.priority,
-                    execution.providerId
-                )
-            )
+        // Marked executed as soon as the execution exists, so it is rolled back if a later call fails
+        client.addExecutionToFlow(realm(), flowAlias, provider, requirement, priority) {
+            executionId = it
+            setExecuted()
         }
 
+        // Checked: Keycloak refuses a config alias that is already taken, which used to leave the execution
+        // silently without its config. The execution is rolled back instead.
         if (config.isNotEmpty())
-            client.updateFlowExecutionWithNewConfiguration(
-                realm(),
-                executionId.toString(),
-                AuthenticatorConfig(executionAlias, config)
-            )
+            client.addExecutionConfig(realm(), executionId, AuthenticatorConfig(executionAlias, config))
     }
 
     override fun undo() {

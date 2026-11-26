@@ -18,7 +18,7 @@ class AddAdLdapUserControlMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapUserControlMapper() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
@@ -45,7 +45,7 @@ class AddAdLdapUserControlMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapUserControlMapper_Undo() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"

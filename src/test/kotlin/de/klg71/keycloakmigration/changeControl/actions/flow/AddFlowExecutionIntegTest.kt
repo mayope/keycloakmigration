@@ -112,4 +112,20 @@ class AddFlowExecutionIntegTest : AbstractIntegrationTest() {
         }.isInstanceOf(KeycloakApiException::class.java).hasMessageContaining("Parent flow doesn't exist")
     }
 
+    @Test
+    fun testTakenConfigAliasIsRolledBack() {
+        val alias = "ConfigAliasFlow"
+        AddFlowAction(testRealm, alias).executeIt()
+        AddFlowExecutionAction(
+            testRealm, alias, "identity-provider-redirector", "taken alias", mapOf("defaultProvider" to "a")
+        ).executeIt()
+
+        assertThatThrownBy {
+            AddFlowExecutionAction(
+                testRealm, alias, "identity-provider-redirector", "taken alias", mapOf("defaultProvider" to "b")
+            ).executeIt()
+        }.isInstanceOf(KeycloakApiException::class.java).hasMessageContaining("taken alias")
+
+        assertThat(client.flowExecutions(testRealm, alias)).hasSize(1)
+    }
 }

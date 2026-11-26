@@ -15,7 +15,7 @@ class DeleteUserFederationIntegTest : AbstractIntegrationTest() {
     @Test
     fun testDeleteUserFederation() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"

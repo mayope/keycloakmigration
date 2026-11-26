@@ -12,6 +12,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.AddOrganization
 import de.klg71.keycloakmigration.keycloakapi.model.AddRealm
 import de.klg71.keycloakmigration.keycloakapi.model.AddRole
 import de.klg71.keycloakmigration.keycloakapi.model.AddSimpleClient
+import de.klg71.keycloakmigration.keycloakapi.model.AddSubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AddUser
 import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederation
 import de.klg71.keycloakmigration.keycloakapi.model.AddUserFederationMapper
@@ -27,6 +28,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ClientScopeItem
 import de.klg71.keycloakmigration.keycloakapi.model.ClientSecret
 import de.klg71.keycloakmigration.keycloakapi.model.CopyFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
+import de.klg71.keycloakmigration.keycloakapi.model.FlowSummary
 import de.klg71.keycloakmigration.keycloakapi.model.Group
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProvider
@@ -43,7 +45,6 @@ import de.klg71.keycloakmigration.keycloakapi.model.ResourceRepresentation
 import de.klg71.keycloakmigration.keycloakapi.model.Role
 import de.klg71.keycloakmigration.keycloakapi.model.RoleListItem
 import de.klg71.keycloakmigration.keycloakapi.model.ServerInfo
-import de.klg71.keycloakmigration.keycloakapi.model.SubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlow
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.UpdateGroup
@@ -432,6 +433,49 @@ interface KeycloakClient {
     @RequestLine("DELETE /admin/realms/{realm-id}")
     fun deleteRealm(@Param("realm-id") id: String)
 
+    // Raw representations: reading and writing these as maps keeps every field Keycloak returns, including
+    // ones the typed models don't cover, so changing one field doesn't reset the others.
+
+    @RequestLine("GET /admin/realms/{realm}")
+    fun realmRepresentation(@Param("realm") realm: String): Map<String, Any?>
+
+    @RequestLine("PUT /admin/realms/{realm}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateRealmRepresentation(@Param("realm") realm: String, representation: Map<String, Any?>): Response
+
+    @RequestLine("GET /admin/realms/{realm}/clients")
+    fun clientRepresentations(@Param("realm") realm: String): List<Map<String, Any?>>
+
+    @RequestLine("GET /admin/realms/{realm}/clients/{id}")
+    fun clientRepresentation(@Param("realm") realm: String, @Param("id") id: String): Map<String, Any?>
+
+    @RequestLine("PUT /admin/realms/{realm}/clients/{id}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateClientRepresentation(
+        @Param("realm") realm: String,
+        @Param("id") id: String,
+        representation: Map<String, Any?>
+    ): Response
+
+    @RequestLine("GET /admin/realms/{realm}/identity-provider/instances/{alias}")
+    fun identityProviderRepresentation(@Param("realm") realm: String, @Param("alias") alias: String): Map<String, Any?>
+
+    // Keycloak returns at most 100 identity providers when max isn't given
+    @RequestLine("GET /admin/realms/{realm}/identity-provider/instances?first={first}&max={max}")
+    fun identityProviderRepresentations(
+        @Param("realm") realm: String,
+        @Param("first") first: Int,
+        @Param("max") max: Int
+    ): List<Map<String, Any?>>
+
+    @RequestLine("PUT /admin/realms/{realm}/identity-provider/instances/{alias}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateIdentityProviderRepresentation(
+        @Param("realm") realm: String,
+        @Param("alias") alias: String,
+        representation: Map<String, Any?>
+    ): Response
+
     @RequestLine("GET /admin/realms/{realm}/users/{user-id}/role-mappings/realm/composite")
     fun userRealmRolesExpanded(@Param("realm") realm: String, @Param("user-id") id: UUID): List<RoleListItem>
 
@@ -532,6 +576,9 @@ interface KeycloakClient {
     @RequestLine("GET /admin/realms/{realm}/authentication/flows")
     fun flows(@Param("realm") realm: String): List<Flow>
 
+    @RequestLine("GET /admin/realms/{realm}/authentication/flows/{id}")
+    fun flowById(@Param("realm") realm: String, @Param("id") flowId: UUID): FlowSummary
+
     @RequestLine("GET /admin/realms/{realm}/authentication/flows/{alias}/executions")
     fun flowExecutions(@Param("realm") realm: String, @Param("alias") alias: String): List<AuthenticationExecution>
 
@@ -563,12 +610,18 @@ interface KeycloakClient {
     fun addSubFlow(
         @Param("realm") realm: String,
         @Param("alias") alias: String,
-        addFlow: SubFlow): Response
+        addSubFlow: AddSubFlow): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")
     @RequestLine("POST /admin/realms/{realm}/authentication/executions/{executionId}/config")
     fun updateFlowExecutionWithNewConfiguration(@Param("realm") realm: String,
         @Param("executionId") executionId: String,
+        authenticatorConfig: AuthenticatorConfig): Response
+
+    @RequestLine("PUT /admin/realms/{realm}/authentication/config/{configurationId}")
+    @Headers("Content-Type: application/json; charset=utf-8")
+    fun updateAuthenticatorConfiguration(@Param("realm") realm: String,
+        @Param("configurationId") configurationId: String,
         authenticatorConfig: AuthenticatorConfig): Response
 
     @Headers("Content-Type: application/json; charset=utf-8")

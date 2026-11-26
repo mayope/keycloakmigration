@@ -38,9 +38,11 @@ import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.AddCl
 import de.klg71.keycloakmigration.changeControl.actions.clientscope.mapper.DeleteClientScopeMapperAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.AddFlowExecutionAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.AddSubFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.CopyFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.DeleteFlowExecutionAction
+import de.klg71.keycloakmigration.changeControl.actions.flow.ReplaceFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.flow.UpdateSubFlowAction
 import de.klg71.keycloakmigration.changeControl.actions.group.AddGroupAction
@@ -218,9 +220,11 @@ class ActionFactory(private val objectMapper: ObjectMapper) {
             "deleteFlow" -> objectMapper.readValue<DeleteFlowAction>(actionJson)
             "updateFlow" -> objectMapper.readValue<UpdateFlowAction>(actionJson)
             "copyFlow" -> objectMapper.readValue<CopyFlowAction>(actionJson)
+            "replaceFlow" -> objectMapper.readValue<ReplaceFlowAction>(actionJson)
 
             "addFlowExecution" -> objectMapper.readValue<AddFlowExecutionAction>(actionJson)
             "deleteFlowExecution" -> objectMapper.readValue<DeleteFlowExecutionAction>(actionJson)
+            "addSubFlow" -> objectMapper.readValue<AddSubFlowAction>(actionJson)
             "updateSubFlow" -> objectMapper.readValue<UpdateSubFlowAction>(actionJson)
 
             "updateRequiredAction" -> objectMapper.readValue<UpdateRequiredActionAction>(actionJson)

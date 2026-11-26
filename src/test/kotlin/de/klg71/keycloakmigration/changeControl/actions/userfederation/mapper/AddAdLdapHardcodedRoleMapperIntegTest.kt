@@ -22,7 +22,7 @@ class AddAdLdapHardcodedRoleMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapHardcodedRoleMapper() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
@@ -52,7 +52,7 @@ class AddAdLdapHardcodedRoleMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapHardcodedRoleMapper_clientRole() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
@@ -81,7 +81,7 @@ class AddAdLdapHardcodedRoleMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapHardcodedRoleMapper_noRoleFound() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"
@@ -107,7 +107,7 @@ class AddAdLdapHardcodedRoleMapperIntegTest : AbstractIntegrationTest() {
     @Test
     fun testAddAdLdapHardcodedRoleMapper_Undo() {
         val ldapConfig = mapOf(
-            "connectionUrl" to "https://testUrl",
+            "connectionUrl" to "ldap://testUrl",
             "usersDn" to "usersTestDn",
             "bindCredential" to "testPassword",
             "bindDn" to "testBindDn"

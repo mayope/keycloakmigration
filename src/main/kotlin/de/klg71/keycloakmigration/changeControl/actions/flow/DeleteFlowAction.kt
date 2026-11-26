@@ -1,40 +1,42 @@
 package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
-import de.klg71.keycloakmigration.keycloakapi.executionsToImport
-import de.klg71.keycloakmigration.keycloakapi.importFlow
-import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecutionImport
+import de.klg71.keycloakmigration.keycloakapi.createFlowFromSnapshot
+import de.klg71.keycloakmigration.keycloakapi.flowSnapshot
+import de.klg71.keycloakmigration.keycloakapi.model.AddFlow
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
-import de.klg71.keycloakmigration.keycloakapi.model.ImportFlow
+import de.klg71.keycloakmigration.keycloakapi.model.FlowNode
+import de.klg71.keycloakmigration.keycloakapi.model.maskedConfigs
 
+/**
+ * Deletes a flow, if one with this alias exists.
+ *
+ * Undo recreates the flow and rebuilds its executions from a snapshot taken before the delete, sub
+ * flows included.
+ */
 class DeleteFlowAction(
     realm: String?,
     private val alias: String,
 ) : Action(realm) {
 
     private var oldFlow: Flow? = null
-    private val oldExecutions: MutableList<AuthenticationExecutionImport> = mutableListOf()
+    private var oldExecutions: List<FlowNode> = emptyList()
 
     override fun execute() {
-        client.flows(realm())
-            .firstOrNull { it.alias == alias }?.let {
-                oldFlow = it
-                oldExecutions.addAll(client.executionsToImport(realm(), alias))
-                client.deleteFlow(realm(), it.id)
-            }
+        val flow = client.flows(realm()).firstOrNull { it.alias == alias } ?: return
+        oldExecutions = client.flowSnapshot(realm(), alias)
+        refuseMaskedConfigs(name(), oldExecutions.maskedConfigs())
+        client.deleteFlow(realm(), flow.id)
+        oldFlow = flow
     }
 
     override fun undo() {
-        oldFlow?.let {
-            client.importFlow(
-                realm(), ImportFlow(
-                    alias, it.description, it.providerId, it.topLevel, it.builtIn,
-                    oldExecutions
-                )
-            )
-        }
+        val flow = oldFlow ?: return
+        client.createFlowFromSnapshot(
+            realm(), AddFlow(flow.alias, flow.builtIn, flow.description, flow.providerId, flow.topLevel), oldExecutions
+        )
+        oldFlow = null
     }
 
     override fun name() = "DeleteFlow $alias"
 }
-
