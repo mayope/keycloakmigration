@@ -2,13 +2,14 @@ package de.klg71.keycloakmigration.changeControl.actions.flow
 
 import de.klg71.keycloakmigration.changeControl.actions.Action
 import de.klg71.keycloakmigration.changeControl.actions.MigrationException
+import de.klg71.keycloakmigration.keycloakapi.KeycloakApiException
 import de.klg71.keycloakmigration.keycloakapi.addExecutions
-import de.klg71.keycloakmigration.keycloakapi.isSuccessful
+import de.klg71.keycloakmigration.keycloakapi.addSubFlowToFlow
+import de.klg71.keycloakmigration.keycloakapi.findSubFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AddSubFlow
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationExecution
 import de.klg71.keycloakmigration.keycloakapi.model.AuthenticationFlowAction
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
-import de.klg71.keycloakmigration.keycloakapi.model.UpdateFlowExecution
 import feign.FeignException
 import java.util.UUID
 
@@ -43,52 +44,23 @@ class AddSubFlowAction(
             throw MigrationException("Flow $flowAlias does not exist!", e)
         }
 
-        client.addSubFlow(realm(), flowAlias, AddSubFlow(alias, description, type, provider)).run {
-            if (!isSuccessful())
-                throw MigrationException(
-                    "Failed to add subflow $alias to $flowAlias in realm: ${realm()}. " +
-                        "Status: ${status()}, Reason: ${reason()}"
-                )
+        val execution = try {
+            // Marked executed as soon as the subflow exists, so it is rolled back if a later call fails.
+            // Not before: if the alias is taken, undo would find and delete the subflow that holds it.
+            client.addSubFlowToFlow(
+                realm(), flowAlias, AddSubFlow(alias, description, type, provider), requirement, priority
+            ) { setExecuted() }
+        } catch (e: KeycloakApiException) {
+            throw MigrationException("${e.message} (realm: ${realm()})", e)
         }
-
-        // The subflow now exists, so mark executed before anything else can fail: this guarantees the
-        // orphaned subflow is rolled back even if the following retrieval or updates throw.
-        setExecuted()
-
-        val execution = subFlowExecution()
         executionId = execution.id
 
         // The create endpoint only makes the empty subflow, so add the requested executions into it
         client.addExecutions(realm(), alias, executions)
-
-        if (requirement != null || priority != null) {
-            client.updateFlowExecution(
-                realm(),
-                flowAlias,
-                UpdateFlowExecution(
-                    execution.id,
-                    requirement ?: execution.requirement,
-                    execution.level,
-                    execution.index,
-                    priority ?: execution.priority,
-                    execution.providerId
-                )
-            ).run {
-                if (!isSuccessful())
-                    throw MigrationException(
-                        "Failed to set requirement/priority of subflow $alias in $flowAlias. " +
-                            "Status: ${status()}, Reason: ${reason()}"
-                    )
-            }
-        }
     }
 
-    // A subflow's alias is unique in the realm and is its execution's display name
     private fun findSubFlowExecution(): AuthenticationExecution? =
-        client.flowExecutions(realm(), flowAlias).firstOrNull { it.authenticationFlow && it.displayName == alias }
-
-    private fun subFlowExecution(): AuthenticationExecution =
-        findSubFlowExecution() ?: throw MigrationException("SubFlow $alias was added but not found in $flowAlias!")
+        client.findSubFlowExecution(realm(), flowAlias, alias)
 
     /**
      * Deleting the subflow's execution also deletes the subflow and everything in it.

@@ -76,8 +76,16 @@ changes:
 ```
 ## UpdateFlow
 Updates an authentication flow in place.
-Only updates provided values.
+Only updates provided values. Without `executions` the flow's executions, sub flows included, are left
+unchanged. With `executions` they replace all of the flow's executions.
 For an update of the flow `alias` use the oldAlias as `alias` and the newAlias in `newAlias`.
+
+On rollback the flow's alias, description, provider and top-level flag are put back. If the executions
+were replaced, they are rebuilt as they were before the change, including sub flows with their
+requirement and priority, and authenticator configs.
+Keycloak hides some authenticator config values when they are read: secrets, and keys the provider
+doesn't declare. Those can't be recreated, so a change whose rollback would need them isn't run. Here that means the
+executions of a flow with such a value can't be replaced; its alias and description still can.
 
 ### Parameters
 - realm: String, optional
@@ -121,7 +129,13 @@ changes:
           providerId: console-username-password
 ```
 ## DeleteFlow
-Deletes a flow, if one with this alias exists
+Deletes a flow, if one with this alias exists.
+
+On rollback the flow is recreated with its executions as they were before the delete, including sub
+flows with their requirement and priority, and authenticator configs.
+Keycloak hides some authenticator config values when they are read: secrets, and keys the provider
+doesn't declare. Those can't be recreated, so a change whose rollback would need them isn't run. Here that means a flow
+with such a value can't be deleted with this change.
 
 ### Parameters
 - realm: String, optional
@@ -170,7 +184,7 @@ Adds a flow execution
 - realm: String, optional
 - flowAlias: String, not optional
 - provider: String, not optional
-- executionAlias: String, not optional
+- executionAlias: String, not optional, the alias of the execution's config; config aliases are unique in the realm, and the change fails (and is rolled back) if it is taken
 - config: Map<String, String>, optional, default = empty
 - requirement: Flow.Requirement = "ALTERNATIVE" | "DISABLED" | "REQUIRED" | "CONDITIONAL" | "OPTIONAL", optional, default = no update
 - priority: Integer, optional, default = no update
@@ -190,12 +204,20 @@ changes:
 ```
 
 ## DeleteFlowExecution
-Deletes a flow execution from a specified flow.
+Deletes a flow execution from a specified flow. The first execution with the given provider is
+deleted, including one nested in a sub flow of `flowAlias`. Sub flows can't be deleted with this
+change: if the provider matches a sub flow, the change fails without deleting anything.
+
+On rollback the deleted execution is added back to the flow or sub flow it came from, with its
+requirement, priority and authenticator config. The rest of the flow isn't changed.
+Keycloak hides some authenticator config values when they are read: secrets, and keys the provider
+doesn't declare. Those can't be recreated, so a change whose rollback would need them isn't run. Here that means an
+execution whose config has such a value can't be deleted with this change.
 
 ### Parameters
 - realm: String, optional
-- flowAlias: String, not optional
-- provider: String, not optional
+- flowAlias: String, not optional, alias of the flow to search, sub flows included
+- provider: String, not optional, provider id of the execution to delete
 
 ### Example
 ```yaml

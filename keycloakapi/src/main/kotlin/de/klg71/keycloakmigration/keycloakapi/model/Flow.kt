@@ -37,7 +37,10 @@ data class AuthenticationExecution(
     val index: Int,
     val priority: Int,
     val authenticationConfig: String? = null,
-    val authenticationFlow: Boolean
+    val authenticationFlow: Boolean,
+    val description: String? = null,
+    // Set for sub flows: the id of the sub flow itself
+    val flowId: UUID? = null
 )
 
 data class AddFlow(val alias: String,

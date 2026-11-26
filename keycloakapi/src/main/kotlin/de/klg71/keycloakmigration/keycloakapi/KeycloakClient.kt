@@ -28,6 +28,7 @@ import de.klg71.keycloakmigration.keycloakapi.model.ClientScopeItem
 import de.klg71.keycloakmigration.keycloakapi.model.ClientSecret
 import de.klg71.keycloakmigration.keycloakapi.model.CopyFlowExecution
 import de.klg71.keycloakmigration.keycloakapi.model.Flow
+import de.klg71.keycloakmigration.keycloakapi.model.FlowSummary
 import de.klg71.keycloakmigration.keycloakapi.model.Group
 import de.klg71.keycloakmigration.keycloakapi.model.GroupListItem
 import de.klg71.keycloakmigration.keycloakapi.model.IdentityProvider
@@ -531,6 +532,9 @@ interface KeycloakClient {
 
     @RequestLine("GET /admin/realms/{realm}/authentication/flows")
     fun flows(@Param("realm") realm: String): List<Flow>
+
+    @RequestLine("GET /admin/realms/{realm}/authentication/flows/{id}")
+    fun flowById(@Param("realm") realm: String, @Param("id") flowId: UUID): FlowSummary
 
     @RequestLine("GET /admin/realms/{realm}/authentication/flows/{alias}/executions")
     fun flowExecutions(@Param("realm") realm: String, @Param("alias") alias: String): List<AuthenticationExecution>
